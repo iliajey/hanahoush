@@ -6,6 +6,7 @@ import { PageWrapper } from "@/app/layouts/PageWrapper"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
+import { BrandLogo } from "@/components/brand/BrandLogo"
 
 function TokenCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -38,9 +39,7 @@ export function DesignPlayground() {
         <TokenCard title="Brand Identity">
           <div className="flex flex-col items-center gap-6 rounded-2xl border bg-gradient-to-br from-brand-600 to-brand-950 p-10 sm:flex-row sm:justify-between">
             <div className="flex items-center gap-4">
-              <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/15 text-4xl font-black text-white backdrop-blur">
-                ه
-              </span>
+              <BrandLogo alt="Hanahoush" className="h-16 w-auto drop-shadow" eager />
               <div>
                 <p className="text-2xl font-bold text-white">Hanahoush</p>
                 <p className="text-sm text-white/70">Enterprise software, engineered like a product.</p>
@@ -48,9 +47,9 @@ export function DesignPlayground() {
             </div>
             <div className="flex flex-col items-end gap-1 text-right">
               <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white">
-                brand-600 → brand-950
+                real logo · measurement-backed tokens
               </span>
-              <span className="text-xs text-white/70">the "ه" mark gradient</span>
+              <span className="text-xs text-white/70">the organizational mark renders as-is</span>
             </div>
           </div>
         </TokenCard>

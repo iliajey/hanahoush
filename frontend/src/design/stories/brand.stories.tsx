@@ -4,6 +4,7 @@ import type { ReactNode } from "react"
 import { brand, semantic } from "@/design/colors"
 import { gradients } from "@/design/gradients"
 import { typography } from "@/design/typography"
+import { BrandLogo } from "@/components/brand/BrandLogo"
 
 /**
  * Hanahoush Brand Showcase — the single visual source of truth for the brand:
@@ -12,11 +13,8 @@ import { typography } from "@/design/typography"
  */
 
 const Mark = ({ size = 64 }: { size?: number }) => (
-  <span
-    className="flex items-center justify-center rounded-2xl bg-gradient-to-br from-brand-600 to-brand-950 font-black text-white shadow-lg"
-    style={{ width: size, height: size, fontSize: size * 0.55 }}
-  >
-    ه
+  <span className="inline-flex" style={{ height: size }}>
+    <BrandLogo alt="Hanahoush mark" className="h-full w-auto" eager />
   </span>
 )
 
@@ -52,14 +50,15 @@ const Section = ({ title, children }: { title: string; children: ReactNode }) =>
 const Showcase = () => (
   <div className="flex flex-col gap-6 bg-background p-8 text-foreground">
     {/* Identity */}
-    <Section title="Brand Identity · the ه mark">
+    <Section title="Brand Identity · the organizational mark">
       <div className="flex items-center gap-6">
         <Mark size={80} />
         <div className="flex flex-col gap-1">
           <p className="text-3xl font-bold tracking-tight">Hanahoush</p>
           <p className="text-muted-foreground">Enterprise software, engineered like a product.</p>
           <p className="mt-2 text-xs text-muted-foreground">
-            The mark renders on the intrinsic magenta → deep indigo gradient (brand-600 → brand-950).
+            The real organizational logo (icon lockup) renders as-is; the surround uses the measured
+            magenta → deep indigo tokens.
           </p>
         </div>
       </div>

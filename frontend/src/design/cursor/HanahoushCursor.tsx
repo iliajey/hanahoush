@@ -3,12 +3,18 @@
  *
  * Three-layer glowing cursor: a large ambient glow (slow lag), a core orb
  * (snappy), and a trailing ring (medium lag). Theme-aware via CSS variables
- * (`--ring`), GPU friendly (`translate3d`), disabled on touch / low-perf and
- * with `prefers-reduced-motion`.
+ * (`--ring`), GPU friendly (`translate3d` via the CSS `translate` property),
+ * disabled on touch / low-perf and with `prefers-reduced-motion`.
+ *
+ * Primary pointer experience on fine-pointer desktops: while enabled the
+ * system cursor is suppressed with CSS (`html.hh-live-cursor`) and the living
+ * cursor morphs per element state (link / button / card / draggable / text /
+ * disabled). Text-entry surfaces keep the native I-beam; keyboard navigation,
+ * touch and reduced-motion users are completely unaffected.
  */
 import { useEffect, useRef, useState } from "react"
 
-import { cursorTokens } from "./index"
+import { classifyCursorState, cursorTokens, type CursorState } from "./index"
 
 /** Detect whether the living cursor should be active. */
 export function useCursorEnabled(): boolean {
@@ -53,9 +59,22 @@ export function HanahoushCursor() {
   const orbRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
   const enabledRef = useRef(enabled)
+  const [state, setState] = useState<CursorState>("default")
+  const stateRef = useRef<CursorState>("default")
 
   useEffect(() => {
     enabledRef.current = enabled
+  }, [enabled])
+
+  // While active, let CSS suppress the system cursor on fine-pointer desktops.
+  useEffect(() => {
+    const root = document.documentElement
+    if (enabled) {
+      root.classList.add("hh-live-cursor")
+    } else {
+      root.classList.remove("hh-live-cursor")
+    }
+    return () => root.classList.remove("hh-live-cursor")
   }, [enabled])
 
   useEffect(() => {
@@ -77,6 +96,11 @@ export function HanahoushCursor() {
     const onPointerMove = (event: PointerEvent) => {
       if (!enabledRef.current) return
       target = { x: event.clientX, y: event.clientY }
+      const next = classifyCursorState(event.target)
+      if (next !== stateRef.current) {
+        stateRef.current = next
+        setState(next)
+      }
       if (!visible) {
         glow = { ...target }
         orb = { ...target }
@@ -90,9 +114,9 @@ export function HanahoushCursor() {
       orb = lerp(orb, target, cursorTokens.motion.interpolation)
       ring = lerp(ring, target, cursorTokens.motion.ringInterpolation)
 
-      glowEl.style.transform = `translate3d(${glow.x}px, ${glow.y}px, 0)`
-      orbEl.style.transform = `translate3d(${orb.x}px, ${orb.y}px, 0)`
-      ringEl.style.transform = `translate3d(${ring.x}px, ${ring.y}px, 0)`
+      glowEl.style.translate = `${glow.x}px ${glow.y}px`
+      orbEl.style.translate = `${orb.x}px ${orb.y}px`
+      ringEl.style.translate = `${ring.x}px ${ring.y}px`
       raf = requestAnimationFrame(tick)
     }
 
@@ -120,13 +144,14 @@ export function HanahoushCursor() {
     marginLeft: -size / 2,
     marginTop: -size / 2,
     borderRadius: "50%",
-    willChange: "transform",
+    willChange: "translate, transform, opacity",
   })
 
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[9999]">
+    <div aria-hidden="true" data-state={state} className="hh-cursor pointer-events-none fixed inset-0 z-[9999]">
       <div
         ref={glowRef}
+        className="hh-cursor-glow"
         style={{
           ...layerStyle(glowSize),
           background: "radial-gradient(circle, hsl(var(--ring) / 0.14) 0%, transparent 70%)",
@@ -134,16 +159,19 @@ export function HanahoushCursor() {
       />
       <div
         ref={orbRef}
+        className="hh-cursor-orb"
         style={{
           ...layerStyle(orbSize),
+          transform: "scale(1)",
           background: "radial-gradient(circle, hsl(var(--ring) / 0.7) 0%, hsl(var(--ring) / 0) 70%)",
         }}
       />
       <div
         ref={ringRef}
+        className="hh-cursor-ring"
         style={{
           ...layerStyle(ringSize),
-          border: "1.5px solid hsl(var(--ring) / 0.5)",
+          transform: "scale(1)",
         }}
       />
     </div>

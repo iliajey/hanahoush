@@ -15,6 +15,7 @@ import { useUser } from "@/features/auth/hooks/useUser"
 import { getDisplayName } from "@/features/auth/utils"
 import { useNavigation, useSiteSettings } from "@/features/cms"
 import { SearchCommand } from "@/features/search"
+import { BrandLogo } from "@/components/brand/BrandLogo"
 
 /**
  * App navigation. CMS pages (services/projects/articles/about) are driven by
@@ -80,12 +81,10 @@ export function Navbar() {
             <img
               src={settings.data.logo.file}
               alt={brandName}
-              className="h-8 w-8 rounded-lg object-contain"
+              className="h-8 w-auto rounded-lg object-contain"
             />
           ) : (
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-600 to-brand-950 text-sm font-black text-white shadow-sm">
-              ه
-            </span>
+            <BrandLogo alt={brandName} className="h-8 w-auto" eager />
           )}
           <span className="text-lg">{brandName}</span>
         </Link>

@@ -6,6 +6,7 @@ import { cn } from "@/shared/lib/cn"
 const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
   <div
     ref={ref}
+    data-cursor="card"
     className={cn("rounded-xl border bg-card text-card-foreground shadow", className)}
     {...props}
   />

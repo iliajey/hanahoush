@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="520" viewBox="0 0 620 520"><title>Mobile / touch fallback</title><style>text{font-family='system-ui, Segoe UI, sans-serif'} .cap{fill:#7E5691} .h{font-weight:700} .mono{font-family:ui-monospace,Consolas,monospace}</style><rect width="620" height="520" fill="#ffffff"/><rect x="0" y="0" width="620" height="520" fill="#FDFBFC" /><text x="24" y="34" class="h" font-size="20">Mobile / touch fallback</text><text x="24" y="54" font-size="12" class="cap">MOCKUP — token-accurate render, NOT a browser screenshot</text><line x1="24" y1="68" x2="596" y2="68" stroke="#E9DFEA" stroke-width="1"/>
+<g>
+  <rect x="210" y="96" width="200" height="360" rx="28" fill="#0D0A19" stroke="#2C2544" stroke-width="3"/>
+  <rect x="295" y="112" width="30" height="6" rx="3" fill="#2C2544"/>
+  <rect x="226" y="132" width="168" height="300" rx="6" fill="#161226"/>
+  <text x="310" y="176" text-anchor="middle" font-size="14" fill="#ECE5F2">Grid concept preserved</text>
+  <text x="310" y="196" text-anchor="middle" font-size="11" fill="#AB9DBA">static (CSS pan reduced)</text>
+  <text x="310" y="282" text-anchor="middle" font-size="11" fill="#AB9DBA">no particles</text>
+  <text x="310" y="300" text-anchor="middle" font-size="11" fill="#AB9DBA">no parallax</text>
+  <text x="310" y="318" text-anchor="middle" font-size="11" fill="#AB9DBA">no energy nudge</text>
+  <text x="310" y="336" text-anchor="middle" font-size="11" fill="#AB9DBA">native touch cursor</text>
+  <text x="310" y="400" text-anchor="middle" font-size="10" class="cap">pointer: coarse → effects gated off</text>
+</g>
+<line x1="24" y1="480" x2="596" y2="480" stroke="#E9DFEA" stroke-width="1"/><text x="24" y="496" font-size="11" class="cap">The visual concept (grid + mesh wording) stays; computational/visual complexity is cut on coarse pointers.</text></svg>

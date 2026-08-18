@@ -17,12 +17,14 @@ export * from "./glass"
 export * from "./icons"
 export * from "./illustrations"
 export * from "./cursor"
+export * from "./visual-states"
 
 // Components (cursor / background / effects)
 export { HanahoushCursor, useCursorEnabled } from "./cursor/HanahoushCursor"
 export {
   SiteBackground,
   AnimatedGrid,
+  GridEnergy,
   NoiseLayer,
   GradientMesh,
   Particles,

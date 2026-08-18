@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next"
 import { cn } from "@/shared/lib/cn"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { BrandLogo } from "@/components/brand/BrandLogo"
 
 interface FooterColumn { title: string; links: { label: string; href: string }[] }
 
@@ -102,7 +103,10 @@ export function EnterpriseFooter({ columns, socials, newsletter, company, classN
         </div>
         {company ? (
           <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 sm:flex-row">
-            <p className="text-sm text-muted-foreground">© {company.year} {company.name}. {t("footer.rights")}</p>
+            <div className="flex flex-col items-center gap-3 sm:flex-row">
+              <BrandLogo alt={company.name} className="h-7 w-auto" />
+              <p className="text-sm text-muted-foreground">© {company.year} {company.name}. {t("footer.rights")}</p>
+            </div>
             {socials ? (
               <div className="flex gap-3">
                 {socials.map((s) => (

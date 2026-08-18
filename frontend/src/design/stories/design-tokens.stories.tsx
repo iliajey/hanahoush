@@ -6,14 +6,13 @@ import { radius } from "@/design/radius"
 import { shadow } from "@/design/shadows"
 import { motion } from "@/design/motion"
 import { GlassCard } from "@/design/effects"
+import { BrandLogo } from "@/components/brand/BrandLogo"
 
 const TokenShowcase = () => (
   <div className="flex flex-col gap-10 p-6">
     <section className="rounded-2xl border bg-gradient-to-br from-brand-600 to-brand-950 p-8 text-white">
       <div className="flex items-center gap-5">
-        <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/15 text-4xl font-black backdrop-blur">
-          ه
-        </span>
+        <BrandLogo alt="Hanahoush" className="h-16 w-auto" eager />
         <div>
           <p className="text-2xl font-bold">Hanahoush — Brand System</p>
           <p className="text-sm text-white/75">

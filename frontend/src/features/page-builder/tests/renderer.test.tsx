@@ -46,6 +46,7 @@ const mockPage: Page = {
     { id: 2, type: "services", title: null, is_enabled: true, order: 2, config: {} }, // duplicate
     { id: 3, type: "cta", title: null, is_enabled: false, order: 3, config: {} }, // disabled
     { id: 4, type: "mystery", title: null, is_enabled: true, order: 4, config: {} }, // unknown
+    { id: 5, type: "faq", title: null, is_enabled: true, order: 5, config: {} }, // neutral -> default
   ],
 }
 
@@ -82,6 +83,20 @@ describe("PageRenderer", () => {
     }, { timeout: 5000 })
     expect(screen.getByText("mystery")).toBeInTheDocument()
     void container
+  })
+
+  it("annotates every section slot with a token-driven visual state", async () => {
+    const { wrapper } = createTestProviders()
+    const { container } = render(<PageRenderer page={mockPage} />, { wrapper })
+
+    await waitFor(() => expect(screen.getByText("Web Development")).toBeInTheDocument(), { timeout: 5000 })
+
+    const servicesSlot = container.querySelector('[data-section-type="services"]')
+    expect(servicesSlot?.getAttribute("data-visual-state")).toBe("services")
+
+    // Registered but neutral sections fall back to the calm default state.
+    const faqSlot = container.querySelector('[data-section-type="faq"]')
+    expect(faqSlot?.getAttribute("data-visual-state")).toBe("default")
   })
 
   it("renders empty state when a page has no enabled sections", () => {

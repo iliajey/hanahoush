@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card"
+import { BrandLogo } from "@/components/brand/BrandLogo"
 
 export interface AuthShellProps {
   title: string
@@ -18,9 +19,7 @@ export function AuthShell({ title, description, children, footer }: AuthShellPro
     <div className="flex min-h-[80vh] items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="mb-6 flex items-center justify-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-600 text-lg font-black text-white">
-            ه
-          </span>
+          <BrandLogo alt={t("app.title")} className="h-9 w-auto" eager />
           <span className="text-xl font-bold">{t("app.title")}</span>
         </div>
         <Card>

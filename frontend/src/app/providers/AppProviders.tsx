@@ -8,6 +8,7 @@ import { AuthProvider } from "../../features/auth/services/AuthProvider"
 import LanguageProvider from "../language/LanguageProvider"
 import ThemeProvider from "../theme/ThemeProvider"
 import ErrorBoundary from "./ErrorBoundary"
+import { VisualStateProvider } from "@/design/visual-states/VisualStateProvider"
 
 /**
  * Root application providers.
@@ -32,13 +33,15 @@ export default function AppProviders({ children }: { readonly children: ReactNod
       <ThemeProvider>
         <MotionConfig reducedMotion="user">
           <LanguageProvider>
-            <QueryProvider>
-              <AxiosProvider>
-                <AuthProvider>
-                  <ToastProvider>{children}</ToastProvider>
-                </AuthProvider>
-              </AxiosProvider>
-            </QueryProvider>
+            <VisualStateProvider>
+              <QueryProvider>
+                <AxiosProvider>
+                  <AuthProvider>
+                    <ToastProvider>{children}</ToastProvider>
+                  </AuthProvider>
+                </AxiosProvider>
+              </QueryProvider>
+            </VisualStateProvider>
           </LanguageProvider>
         </MotionConfig>
       </ThemeProvider>

@@ -1,49 +1,52 @@
-# Hanahoush — Next Phase Preparation
+# Hanahoush — Next Phase Preparation (docs/reports/next-phase.md)
 
 ---
 
 ## Current project status
 
-Phase 9E delivered the **production UX & content polish pass** (localization
-completeness, error/loading/empty policy completion, RTL popover corrections, mobile
-drawer keyboard behaviour, announcement-bar colour fix, i18n key-drift guard) — no ERP
-work, no architecture rewrite. See `docs/reports/phase-09E-report.md`.
+Phase 9F delivered the **immersive brand identity & living visual system** — the real
+organizational logo as the primary site mark, a living grid (scroll parallax +
+section-aware energy), a token-driven scroll visual-state mechanism, and the Living
+Cursor elevated to the primary desktop pointer experience. No ERP work, no architecture
+rewrite. See `docs/reports/phase-09F-report.md`.
 
-- **Localization** — shared UI chrome (theme/language toggles, dialog close, breadcrumb,
-  spinner, announcement bar, navbar, footer, error/empty defaults, auth brand) now reads
-  from i18n in EN/FA/AR; auth validation is localized via schema factories; contact form
-  fallback options localized; a new locale-parity test guards against key drift.
-- **Error policy completed** — `CmsAsync`, `SearchResults`/`SearchCommand`,
-  `NewsletterCTA`, `ContactForm` and `ErrorBoundary` no longer leak raw exception or
-  English backend messages; generic localized copy + retry everywhere.
-- **Interaction & a11y** — mobile drawer closes on Escape with focus return +
-  `aria-controls`; route-error SEO uses the active locale; search shortcut is
-  platform-correct (Ctrl K / ⌘K).
-- **RTL & visuals** — select/dropdown popovers use logical properties; announcement bar
-  custom colours render correctly (dead Tailwind class fixed).
-- **Brand & ERP safety** — brand anchors preserved (`#932990`/`#272161`/`#FDFBFC`);
-  `ERP_ENABLED=false`, `ERP_PROVIDER=null`, Phase 9A/9B foundation untouched.
-- **Visual QA** — `docs/screenshots/phase-09E/production-polish.svg` (token-accurate).
+- **Logo** — processed (not redrawn) source mark served from `public/brand/`, rendered
+  through a shared `BrandLogo` component in Navbar, Footer, AuthShell, Design Playground
+  and the brand Storybook showcase; favicon / apple-touch-icon / manifest icons added
+  (wide-mark caveat documented).
+- **Living grid** — CSS layers consume `--vs-*` visual-state variables; a transform-only
+  rAF engine adds subtle parallax + pointer nudge that stops at idle; gated on
+  fine-pointer / non-reduced-motion / concurrency.
+- **Scroll story** — `PageRenderer` adds `data-visual-state`
+  (hero → services → erp → projects → articles → cta); `VisualStateProvider`
+  (IntersectionObserver) publishes CSS variables on `<html>`; no per-component hacks.
+- **Living Cursor** — element-state morphing (link/button/card/draggable/text/disabled);
+  system cursor suppressed only on fine-pointer desktops via `html.hh-live-cursor`;
+  text-entry surfaces keep a native I-beam; touch/reduced-motion unaffected.
+- **Palette** — re-measured the logo (k-means `#90298E`/`#272260`) vs existing tokens
+  (`#932990`/`#272161`): accurate, **no token changes**; all new visuals consume the
+  existing brand/ring tokens.
+- **ERP safety** — `ERP_ENABLED=false`, `ERP_PROVIDER=null`, `NullProvider` active, no
+  ERP network calls; Phase 9A/9B foundation untouched.
 
-## Verification summary (Phase 9E)
+## Verification summary (Phase 9F)
 
 | Check | Result |
 |---|---|
 | `npm run typecheck` | ✅ 0 errors |
 | `npm run lint` | ✅ 0 errors |
-| `npm run test` | ✅ 154 passed (29 files) |
+| `npm run test` | ✅ 168 passed (31 files) |
 | `npm run build` | ✅ |
 | `npm run build-storybook` | ✅ |
 | `manage.py check` | ✅ |
 | `makemigrations --check` | ✅ no changes |
 | `migrate` | ✅ no-op |
 | `bootstrap` | ✅ idempotent |
-| Backend pytest | ✅ 274 passed (`USE_SQLITE=true` fallback) |
-| API smoke (public endpoints) | ✅ 200 |
-| ERP health + admin dashboard (anon) | ✅ 401 |
+| Backend pytest | ✅ 274 passed (`USE_SQLITE=true`) |
 | Production bundle dev-artifact scan | ✅ clean |
-| i18n locale parity | ✅ enforced by test |
-| ERP safety | ✅ `ERP_ENABLED=false`, `null` provider, no credentials |
+| Logo asset referenced | ✅ `BrandLogo` → `/brand/hanahoush-logo.png` (+ full) |
+| Cursor suppression scope | ✅ `(pointer:fine)` + reduced-motion `no-preference` only |
+| ERP runtime | ✅ `ERP_ENABLED=false`, `null` provider, `NullProvider`, no network calls |
 
 ## Completed phases
 
@@ -56,35 +59,39 @@ work, no architecture rewrite. See `docs/reports/phase-09E-report.md`.
 | 9B | ERP connector foundation (port + NullProvider + HTTP base + config) | ✅ |
 | 9C | Brand identity integration + visual system refinement (frontend) | ✅ |
 | 9D | Production UX, content & website excellence | ✅ |
-| 9E | Production UX & content polish (this phase) | ✅ |
+| 9E | Production UX & content polish | ✅ |
+| 9F | Immersive brand identity & living visual system (this phase) | ✅ |
 
 ## Recommended next phase
 
 The ERP track stays **parked until the real Odoo 19 ERP is deployed** — the Phase 9A/9B
-connector foundation is untouched and `ERP_ENABLED=false`. Two candidate continuations:
+connector foundation is untouched and `ERP_ENABLED=false`.
 
 **Option A (recommended when Odoo 19 is deployed):**
-**Phase 10 — Website → ERP operational flows**: outbox table + dispatcher +
-lead/contact/newsletter events using the Phase 9B provider port, in a staged sandbox, per
+**Phase 10 — Website → ERP operational flows**: outbox table + dispatcher + lead/contact/
+newsletter events using the Phase 9B provider port, in a staged sandbox, per
 `docs/architecture/hanrp-odoo-compatibility.md`.
 
 **Option B (if the site continues to lead):**
-**Phase 10 — Verification & delivery hardening**: browser-based responsive/a11y/SEO
-verification harness (Playwright-style), Storybook viewport sweeps, prerender/SSR
-feasibility, and centralising the i18n + backend-seed copy source of truth (the frontend
-locale-parity test now prevents key drift; unifying the backend seed copy remains).
+**Phase 10 — Verification & delivery hardening (priority)**: browser-based
+responsive/a11y/SEO harness (Playwright-style) to verify the Phase 9F living-cursor
+suppression, grid parallax and visual-state transitions in a real browser; Storybook
+viewport sweeps; prerender/SSR feasibility; centralising i18n + backend-seed copy.
+Optional 9F follow-ups: a dedicated **square logo glyph** variant for crisper
+favicon/app-icon marks, and live-browser **tuning** of visual-state/parallax intensities.
 
 ## Risks
 
-- **SPA SEO ceiling** — metadata is applied client-side; non-JS crawlers see the static
-  `index.html` head (hardened in 9D). Pre-render/SSR remains a candidate.
-- **Copy drift (backend ↔ frontend)** — frontend locale files and backend seed copy both
-  carry EN/FA/AR strings; frontend key drift is now test-guarded, but the two sources are
-  still maintained manually.
+- **SPA SEO ceiling** — metadata applied client-side; static `index.html` head hardened
+  in 9D; prerender/SSR remains a candidate.
+- **Copy drift (backend ↔ frontend)** — frontend key drift is test-guarded; backend seed
+  copy is still manual.
 - **Bootstrap copy overwrite** — `_sync_section` reapplies canonical demo copy on each
-  `bootstrap`; editorial changes must be made in the CMS after bootstrap.
-- Browser-harness verification (pixel-level responsive, screen-reader, keyboard-only)
-  remains to be executed when the environment permits.
-- Local PostgreSQL role still cannot create test DBs; backend tests use the documented
-  SQLite CI fallback.
+  `bootstrap`.
+- **Browser-harness gap** — Phase 9F living-background/cursor behaviours are code- and
+  token-verified but not pixel-verified in a real browser.
+- **Visual-state tuning** — intensity defaults may be tuned after a real-browser pass
+  (single-file token change).
+- Local PostgreSQL role cannot create test DBs (backend tests use the documented SQLite
+  CI fallback).
 - Repo is not under version control in this environment.

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="520" viewBox="0 0 620 520"><title>Reduced-motion fallback</title><style>text{font-family='system-ui, Segoe UI, sans-serif'} .cap{fill:#7E5691} .h{font-weight:700} .mono{font-family:ui-monospace,Consolas,monospace}</style><rect width="620" height="520" fill="#ffffff"/><rect x="0" y="0" width="620" height="520" fill="#FDFBFC" /><text x="24" y="34" class="h" font-size="20">Reduced-motion fallback</text><text x="24" y="54" font-size="12" class="cap">MOCKUP — token-accurate render, NOT a browser screenshot</text><line x1="24" y1="68" x2="596" y2="68" stroke="#E9DFEA" stroke-width="1"/><pattern id="rg" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M 48 0 L 0 0 0 48" fill="none" stroke="#E9DFEA" stroke-width="1"/></pattern>
+<g>
+  <rect x="60" y="96" width="500" height="300" rx="10" fill="#FDFBFC" stroke="#E9DFEA"/>
+  <rect x="60" y="96" width="500" height="300" fill="url(#rg)"/>
+  <text x="310" y="230" text-anchor="middle" font-size="14" class="h" fill="#272161">prefers-reduced-motion: reduce</text>
+  <text x="310" y="258" text-anchor="middle" font-size="12" class="cap">animations → 0.001ms / none · grid dimmed (opacity .5)</text>
+  <text x="310" y="276" text-anchor="middle" font-size="12" class="cap">visual states still apply (no motion carries info)</text>
+  <text x="310" y="294" text-anchor="middle" font-size="12" class="cap">living cursor disabled → native cursor visible</text>
+  <text x="310" y="312" text-anchor="middle" font-size="12" class="cap">keyboard navigation &amp; focus rings unchanged</text>
+</g>
+<line x1="24" y1="480" x2="596" y2="480" stroke="#E9DFEA" stroke-width="1"/><text x="24" y="496" font-size="11" class="cap">Gates: useCursorEnabled() honours pointer-reduced-motion + hardware concurrency; global CSS zeroes durations.</text></svg>

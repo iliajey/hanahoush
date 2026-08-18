@@ -5,6 +5,7 @@ import { Container } from "@/components/layout"
 import { EnterpriseFooter } from "@/components/marketing/footer"
 import { useFooter } from "@/features/cms"
 import { mapFooter } from "@/features/cms/mappers"
+import { BrandLogo } from "@/components/brand/BrandLogo"
 
 const PLATFORM_ICONS: Record<string, LucideIcon> = {
   linkedin: Linkedin,
@@ -31,9 +32,12 @@ export function Footer() {
     return (
       <footer className="border-t py-8">
         <Container className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} {t("app.title")}
-          </p>
+          <div className="flex items-center gap-3">
+            <BrandLogo alt={t("app.title")} className="h-6 w-auto" />
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} {t("app.title")}
+            </p>
+          </div>
           <p className="text-sm text-muted-foreground">{t("app.tagline")}</p>
         </Container>
       </footer>

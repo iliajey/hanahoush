@@ -11,6 +11,7 @@ import { getSectionComponent } from "../registry"
 import type { Page, PageSection } from "../types"
 import { recordSectionRender } from "./analytics"
 import { SectionBoundary } from "./SectionBoundary"
+import { visualStateForSectionType } from "@/design/visual-states"
 
 export interface PageRendererProps {
   page: Page
@@ -101,7 +102,12 @@ function SectionSlot({ section }: { section: PageSection }) {
   }
 
   return (
-    <div data-section-type={section.type} data-section-order={section.order} ref={visibilityRef}>
+    <div
+      data-section-type={section.type}
+      data-section-order={section.order}
+      data-visual-state={visualStateForSectionType(section.type)}
+      ref={visibilityRef}
+    >
       <SectionBoundary onError={() => record("error")}>
         <Suspense fallback={<SectionSkeleton />}>
           <SectionReporter

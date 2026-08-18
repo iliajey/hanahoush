@@ -4,6 +4,102 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ---
 
+## [Phase 9F] — 2026-08-18 — Immersive Brand Identity & Living Visual System
+
+### Real organizational logo (source: `E:\Ilia Jamali\Hana\IMG_2854 (1).PNG`)
+- Programmatic source analysis (dimensions 1080×1080, pure-white ~81% bg, mark =
+  icon lockup x[145..1031] y[166..613] + Persian wordmark below; ~0.9% interior white
+  design holes → background removed via border-connected flood-fill transparency).
+- Processed, non-redrawn assets in `frontend/public/brand/`: `hanahoush-logo.png`
+  (icon-only mark, transparent, 512px), `hanahoush-logo-full.png` (full lockup),
+  `icon-192/512.png` (manifest). Also `favicon.png` (32×32) + `apple-touch-icon.png`
+  (180×180); `index.html` + `manifest.webmanifest` updated (docs caveat: wide mark is
+  small at 16/32px — a dedicated square glyph remains deferred).
+- New shared `BrandLogo` component (`src/components/brand/BrandLogo.tsx`) + asset
+  constants (`src/config/brand.ts`). Replaced the gradient "ه" placeholder in Navbar
+  (desktop + mobile/drawer header), Footer (company block + loading bar), AuthShell,
+  Design Playground and the brand/design-token Storybook showcases. CMS logo override
+  still takes precedence in the navbar. Mark renders as-is in light/dark + RTL (alt
+  text localized, `h-*/w-auto` sizing, no layout shift).
+
+### Living grid / immersive background
+- `SiteBackground` upgraded: `hh-backdrop` oversized fixed canvas (parallax-safe),
+  `GridEnergy` section-aware energy bloom, visual-state-driven grid density morph
+  (`--vs-grid-scale`), mesh opacity, plus a transform-only rAF engine for subtle
+  scroll parallax (±60px) and pointer nudge (±7/5px). Engine stops when settled and
+  is gated to fine-pointer, non-reduced-motion, non-low-concurrency devices.
+- Existing `AnimatedGrid`/`GradientMesh`/`NoiseLayer`/`Particles` primitives reused;
+  no second effect library, no new dependency.
+
+### Scroll visual states (the "scroll story")
+- New token-driven mechanism `src/design/visual-states/` (`index.ts` +
+  `VisualStateProvider.tsx`): sections are annotated `data-visual-state` centrally by
+  `PageRenderer` (`visualStateForSectionType`), an IntersectionObserver publishes
+  `--vs-grid-size/-scale/-energy-*/--vs-mesh-opacity` on `<html>`, and the background
+  interpolates (700ms CSS transitions).
+- Story: hero (strongest) → services (settles) → erp (denser) → projects (spatial) →
+  articles (calm) → cta (energy return). No per-component page hacks.
+
+### Living Cursor as primary pointer experience
+- Renamed/extended ternary visuals + element-state engine: link / button / card /
+  draggable (dashed ring) / text (orb+ring hidden → native I-beam) / disabled.
+- System cursor suppressed by CSS only on `(pointer:fine)` +
+  `prefers-reduced-motion:no-preference` while `html.hh-live-cursor` is present;
+  text-entry surfaces always keep a native cursor; touch / coarse /
+  reduced-motion are never suppressed. `pointer-events:none` retained; keyboard
+  navigation untouched.
+- `classifyCursorState()` is pure/exported + unit-tested; `Card` carries an explicit
+  `data-cursor="card"` hook.
+
+### Palette verification (Part E)
+- K-means re-measurement of the actual logo: magenta cluster `#90298E` vs token
+  `#932990`, indigo `#272260` vs ink `#272161` — existing palette accurate, **no
+  token changes introduced**. Grid energy, cursor glow, CTA gradients and focus
+  states all consume the existing brand/ring tokens.
+
+### Video decision
+- CSS/SVG/token prototype judged to already deliver the premium effect; video
+  deferred. `VIDEO ASSET SPECIFICATION — OPTIONAL FUTURE ENHANCEMENT` documented in
+  the phase report (§12) — no stock footage, no video code.
+
+### Accessibility
+- Reduced-motion: animations zeroed, visual states still apply (no motion carries
+  information), living cursor disabled, native cursor visible, grid dimmed.
+- Text selection, keyboard nav, focus rings, RTL/LTR, light/dark all preserved.
+
+### Tests & verification
+- New tests: `src/design/tests/visual-states.test.ts` (tokens, section mapping,
+  scroll-story ordering, cursor state classification), `BrandLogo.test.tsx`,
+  `PageRenderer` data-visual-state annotation test.
+- Frontend: `typecheck` ✅ 0 · `lint` ✅ 0 · `test` **168 passed (31 files)** ·
+  `build` ✅ · `build-storybook` ✅. Production bundle scanned clean of dev-only
+  artifacts and includes the brand assets via `public/`.
+- Backend: `check` ✅ · `makemigrations --check` ✅ no changes · `migrate` ✅ ·
+  `bootstrap` ✅ idempotent · `pytest` **274 passed** (`USE_SQLITE=true`).
+- ERP runtime: `ERP_ENABLED=false`, `ERP_PROVIDER=null`, no credentials,
+  `NullProvider` active, no ERP network calls.
+
+### Visual QA
+- `docs/screenshots/phase-09F/`: `logo-integration.svg`, `light-theme-grid.svg`,
+  `dark-theme-grid.svg`, `scroll-states.svg`, `cursor-states.svg`,
+  `mobile-fallback.svg`, `reduced-motion-fallback.svg` (token-accurate mockups,
+  clearly labelled, not browser screenshots).
+
+### ERP & scope safety
+- No ERP/Odoo/hanRP work; no migrations; no new npm/pip dependencies; no new
+  architecture (one token system, one cursor, one background engine, one Page
+  Builder).
+
+### Verification
+Frontend `typecheck` ✅ · `lint` ✅ · `test` **168 passed (31 files)** ✅ · `build` ✅ ·
+`build-storybook` ✅. Backend `check` ✅ · `makemigrations --check` ✅ no changes ·
+`migrate` ✅ · `bootstrap` ✅ idempotent · `pytest` **274 passed** ✅. ERP runtime
+`ERP_ENABLED=false`, `ERP_PROVIDER=null`, `NullProvider`, no network calls. Production
+bundle clean of dev-only artifacts; logo asset present and referenced; cursor
+suppression CSS confirmed scoped to fine-pointer/desktop contexts.
+
+---
+
 ## [Phase 9E] — 2026-08-17 — Production UX & Content Polish
 
 ### Audit-first

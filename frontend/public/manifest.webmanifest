@@ -1,10 +1,23 @@
 {
-  "name": "hanahoush",
-  "shortName": "hanahoush",
-  "description": "Hanahoush enterprise platform",
-  "startUrl": ".",
+  "name": "Hanahoush",
+  "short_name": "Hanahoush",
+  "description": "Hanahoush — enterprise software, ERP, AI and web engineering.",
+  "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#932990",
   "background_color": "#ffffff",
-  "icons": []
+  "icons": [
+    {
+      "src": "/brand/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/brand/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }
