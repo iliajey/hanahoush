@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="560" viewBox="0 0 1280 560" font-family="Inter, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+  </defs>
+  <rect width="1280" height="560" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#e2e8f0" font-size="24" font-weight="700">Project Gallery + lightbox (Phase 8E visual QA)</text>
+
+  <g font-size="12">
+    <rect x="60" y="90" width="250" height="170" rx="10" fill="#334155" stroke="#334155"/><text x="185" y="180" fill="#cbd5e1" text-anchor="middle">Dashboard</text>
+    <rect x="330" y="90" width="250" height="170" rx="10" fill="#334155" stroke="#334155"/><text x="455" y="180" fill="#cbd5e1" text-anchor="middle">Reports</text>
+    <rect x="600" y="90" width="250" height="170" rx="10" fill="#334155" stroke="#334155"/><text x="725" y="180" fill="#cbd5e1" text-anchor="middle">Mobile view</text>
+  </g>
+  <text x="60" y="300" fill="#94a3b8" font-size="13">Click any thumbnail → fullscreen lightbox (role="dialog") with keyboard navigation (← → Esc) and captions.</text>
+
+  <!-- lightbox mock -->
+  <rect x="240" y="330" width="800" height="180" rx="14" fill="#0f172a" stroke="#38bdf8"/>
+  <rect x="360" y="350" width="520" height="120" rx="10" fill="#1e293b"/>
+  <text x="620" y="415" fill="#e2e8f0" font-size="15" text-anchor="middle">Fullscreen image · lazy-loaded · object-contain</text>
+  <circle cx="340" cy="410" r="18" fill="#334155"/><text x="340" y="415" fill="#fff" font-size="16" text-anchor="middle">‹</text>
+  <circle cx="900" cy="410" r="18" fill="#334155"/><text x="900" y="415" fill="#fff" font-size="16" text-anchor="middle">›</text>
+  <text x="620" y="490" fill="#94a3b8" font-size="12" text-anchor="middle">caption · project_gallery_open / project_gallery_image_view tracked</text>
+</svg>

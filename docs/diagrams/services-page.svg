@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" font-family="Inter, Vazirmatn, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+  </defs>
+  <rect width="1280" height="820" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#e2e8f0" font-size="24" font-weight="700">Services page — rendered experience (Phase 8D)</text>
+  <text x="40" y="78" fill="#94a3b8" font-size="14">Composed by &lt;PageRenderer /&gt; from GET /api/v1/pages/services/ — no hardcoded layout.</text>
+
+  <!-- Hero -->
+  <rect x="40" y="100" width="1200" height="96" rx="12" fill="#1e293b" stroke="#38bdf8"/>
+  <text x="70" y="136" fill="#f8fafc" font-size="20" font-weight="700">1 · Services Hero</text>
+  <text x="70" y="166" fill="#94a3b8" font-size="13">Cinematic heading · animated background · living cursor · dynamic subtitle + CTAs (config)</text>
+
+  <!-- Journey -->
+  <rect x="40" y="212" width="1200" height="84" rx="12" fill="#1e293b" stroke="#334155"/>
+  <text x="70" y="246" fill="#f8fafc" font-size="17" font-weight="600">2 · Service Journey</text>
+  <text x="70" y="272" fill="#38bdf8" font-size="12.5">Problem → Solution → Technology → Result (animated storytelling, reveal on scroll)</text>
+
+  <!-- Core services -->
+  <rect x="40" y="312" width="1200" height="120" rx="12" fill="#1e293b" stroke="#334155"/>
+  <text x="70" y="346" fill="#f8fafc" font-size="17" font-weight="600">3 · Core Services</text>
+  <g font-size="12">
+    <rect x="70" y="360" width="150" height="46" rx="8" fill="#0f172a" stroke="#334155"/><text x="145" y="382" fill="#e2e8f0" text-anchor="middle">Software Dev</text><text x="145" y="398" fill="#64748b" text-anchor="middle">Python·Django·React</text>
+    <rect x="232" y="360" width="150" height="46" rx="8" fill="#0f172a" stroke="#334155"/><text x="307" y="382" fill="#e2e8f0" text-anchor="middle">ERP</text><text x="307" y="398" fill="#64748b" text-anchor="middle">hanRP·Finance·HR</text>
+    <rect x="394" y="360" width="150" height="46" rx="8" fill="#0f172a" stroke="#334155"/><text x="469" y="382" fill="#e2e8f0" text-anchor="middle">hanRP</text><text x="469" y="398" fill="#64748b" text-anchor="middle">Modular·Cloud</text>
+    <rect x="556" y="360" width="150" height="46" rx="8" fill="#0f172a" stroke="#334155"/><text x="631" y="382" fill="#e2e8f0" text-anchor="middle">Odoo</text><text x="631" y="398" fill="#64748b" text-anchor="middle">Implementation</text>
+    <rect x="718" y="360" width="150" height="46" rx="8" fill="#0f172a" stroke="#334155"/><text x="793" y="382" fill="#e2e8f0" text-anchor="middle">AI Automation</text><text x="793" y="398" fill="#64748b" text-anchor="middle">LLM·RAG·NLP</text>
+    <rect x="880" y="360" width="150" height="46" rx="8" fill="#0f172a" stroke="#334155"/><text x="955" y="382" fill="#e2e8f0" text-anchor="middle">Web Apps</text><text x="955" y="398" fill="#64748b" text-anchor="middle">React·PWA</text>
+    <rect x="1042" y="360" width="150" height="46" rx="8" fill="#0f172a" stroke="#334155"/><text x="1117" y="382" fill="#e2e8f0" text-anchor="middle">Consulting</text><text x="1117" y="398" fill="#64748b" text-anchor="middle">Audit·Mentoring</text>
+  </g>
+  <text x="70" y="422" fill="#64748b" font-size="11.5">icon + animation + technology tags + CTA per service (config-driven)</text>
+
+  <!-- Comparison -->
+  <rect x="40" y="448" width="1200" height="74" rx="12" fill="#1e293b" stroke="#334155"/>
+  <text x="70" y="482" fill="#f8fafc" font-size="17" font-weight="600">4 · Comparison</text>
+  <text x="70" y="508" fill="#94a3b8" font-size="12.5">Traditional Solutions  ✗ ··· VS ··· ✓  Hanahoush Approach (Architecture · Time · Cost)</text>
+
+  <!-- Stack + Process -->
+  <rect x="40" y="538" width="1200" height="74" rx="12" fill="#1e293b" stroke="#334155"/>
+  <text x="70" y="572" fill="#f8fafc" font-size="17" font-weight="600">5 · Technology Stack</text>
+  <text x="70" y="598" fill="#94a3b8" font-size="12.5">Python · Django · React · TypeScript · PostgreSQL · Redis · Kubernetes · Odoo · … (animated)</text>
+
+  <rect x="40" y="628" width="1200" height="74" rx="12" fill="#1e293b" stroke="#334155"/>
+  <text x="70" y="662" fill="#f8fafc" font-size="17" font-weight="600">6 · Process</text>
+  <text x="70" y="688" fill="#94a3b8" font-size="12.5">Discovery → Planning → Architecture → Development → Testing → Deployment → Support</text>
+
+  <!-- FAQ / projects / articles / cta -->
+  <rect x="40" y="718" width="580" height="60" rx="12" fill="#1e293b" stroke="#334155"/>
+  <text x="70" y="752" fill="#f8fafc" font-size="16" font-weight="600">7 · FAQ (CMS)</text>
+  <text x="660" y="752" fill="#94a3b8" font-size="12.5">8 · Related Projects (CMS) · 9 · Related Articles (CMS)</text>
+  <rect x="660" y="718" width="580" height="60" rx="12" fill="#1e293b" stroke="#334155"/>
+  <text x="690" y="746" fill="#94a3b8" font-size="12">loaded from useFAQs / useFeaturedProjects / useFeaturedArticles</text>
+  <text x="690" y="766" fill="#94a3b8" font-size="12">10 · Final CTA (config) — cta_click tracked</text>
+</svg>

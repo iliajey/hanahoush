@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" font-family="Inter,Vazirmatn,system-ui,sans-serif">
+  <rect width="800" height="600" fill="#fafbff"/>
+  <text x="30" y="36" font-size="20" font-weight="700" fill="#0f172a">Landing Page Section Flow</text>
+  <text x="30" y="56" font-size="12" fill="#7f8797">13 sections, narrative arc, cinematic transitions</text>
+
+  <rect x="30" y="80" width="740" height="42" rx="8" fill="#4f46e5"/>
+  <text x="400" y="106" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">1. Hero — "Enterprise software, engineered like a product." · CTAs · Grid bg · Living Cursor</text>
+
+  <rect x="30" y="128" width="740" height="36" rx="8" fill="#e0e7ff"/>
+  <text x="400" y="152" font-size="13" fill="#3730a3" text-anchor="middle">2. Statistics — animated counters · 8yrs · 120+ projects · 45 engineers · 98% satisfaction</text>
+
+  <rect x="30" y="172" width="740" height="36" rx="8" fill="#e0e7ff"/>
+  <text x="400" y="196" font-size="13" fill="#3730a3" text-anchor="middle">3. Services — 6 cards · Enterprise SW · hanRP · Odoo · AI · Web Apps · Programming</text>
+
+  <rect x="30" y="216" width="740" height="42" rx="8" fill="#3730a3"/>
+  <text x="400" y="240" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">4. ERP — hanRP modules · Architecture diagram · Feature cards · Trust anchor</text>
+
+  <rect x="30" y="264" width="740" height="36" rx="8" fill="#e0e7ff"/>
+  <text x="400" y="288" font-size="13" fill="#3730a3" text-anchor="middle">5. Projects — 3 featured projects · Technology chips · Category labels</text>
+
+  <rect x="30" y="308" width="740" height="36" rx="8" fill="#e0e7ff"/>
+  <text x="400" y="332" font-size="13" fill="#3730a3" text-anchor="middle">6. Articles — 3 latest articles · Category badges · Reading time</text>
+
+  <rect x="30" y="352" width="740" height="36" rx="8" fill="#e0e7ff"/>
+  <text x="400" y="376" font-size="13" fill="#3730a3" text-anchor="middle">7. Technology Stack — Logo marquee (Django · React · PostgreSQL · Redis · TS · K8s · Odoo)</text>
+
+  <rect x="30" y="396" width="740" height="36" rx="8" fill="#e0e7ff"/>
+  <text x="400" y="420" font-size="13" fill="#3730a3" text-anchor="middle">8. Timeline — 6 milestones from 2017 to 2025 · Vertical timeline</text>
+
+  <rect x="30" y="440" width="740" height="36" rx="8" fill="#e0e7ff"/>
+  <text x="400" y="464" font-size="13" fill="#3730a3" text-anchor="middle">9. Testimonials — 3 client quotes · Star ratings · Avatars · Company logos</text>
+
+  <rect x="30" y="484" width="740" height="36" rx="8" fill="#e0e7ff"/>
+  <text x="400" y="508" font-size="13" fill="#3730a3" text-anchor="middle">10. Partners — Logo marquee · Ecosystem trust</text>
+
+  <rect x="30" y="528" width="740" height="36" rx="8" fill="#e0e7ff"/>
+  <text x="400" y="552" font-size="13" fill="#3730a3" text-anchor="middle">11. FAQ — 6 Q&amp;A · Accordion · Objection removal</text>
+
+  <rect x="30" y="572" width="740" height="28" rx="8" fill="#4f46e5"/>
+  <text x="400" y="592" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">12. Final CTA · "Ready to build something exceptional?" · 13. Footer</text>
+</svg>

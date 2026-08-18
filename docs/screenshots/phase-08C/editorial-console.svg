@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" font-family="Inter, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+  </defs>
+  <rect width="1280" height="760" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#e2e8f0" font-size="24" font-weight="700">Editorial Console — workflow state (Phase 8C)</text>
+
+  <!-- stage machine -->
+  <g font-size="12.5">
+    <rect x="40" y="90" width="150" height="44" rx="10" fill="#1e293b" stroke="#94a3b8"/><text x="115" y="117" fill="#94a3b8" text-anchor="middle">Draft</text>
+    <rect x="200" y="90" width="150" height="44" rx="10" fill="#1e293b" stroke="#f59e0b"/><text x="275" y="117" fill="#f59e0b" text-anchor="middle">In Review</text>
+    <rect x="360" y="90" width="150" height="44" rx="10" fill="#1e293b" stroke="#38bdf8"/><text x="435" y="117" fill="#38bdf8" text-anchor="middle">SEO Review</text>
+    <rect x="520" y="90" width="150" height="44" rx="10" fill="#1e293b" stroke="#10b981"/><text x="595" y="117" fill="#10b981" text-anchor="middle">Approved</text>
+    <rect x="680" y="90" width="150" height="44" rx="10" fill="#1e293b" stroke="#a78bfa"/><text x="755" y="117" fill="#a78bfa" text-anchor="middle">Scheduled</text>
+    <rect x="840" y="90" width="150" height="44" rx="10" fill="#1e293b" stroke="#34d399"/><text x="915" y="117" fill="#34d399" text-anchor="middle" font-weight="700">Published</text>
+    <rect x="1000" y="90" width="150" height="44" rx="10" fill="#1e293b" stroke="#64748b"/><text x="1075" y="117" fill="#64748b" text-anchor="middle">Archived</text>
+  </g>
+  <text x="40" y="160" fill="#64748b" font-size="12">Live flow: draft → in_review → seo_review → approved → scheduled → published (soft) — verified via API. Rejected/pending approvals block forward moves; send-back to draft allowed.</text>
+
+  <!-- revision chain -->
+  <rect x="40" y="190" width="640" height="150" rx="12" fill="#0f172a" stroke="#38bdf8"/>
+  <text x="60" y="220" fill="#38bdf8" font-size="14" font-weight="700">Revision chain (v1..v6)</text>
+  <g font-size="12" fill="#94a3b8">
+    <text x="60" y="250">v1 draft · v2 →In Review · v3 →SEO Review · v4 →Approved · v5 →Scheduled · v6 published</text>
+    <text x="60" y="278">Diff v1→v6: 1 change (title_en) — structured {field, kind, old, new}</text>
+    <text x="60" y="306">Rollback: restore_snapshot → new revision (history immutable)</text>
+  </g>
+
+  <!-- approval + lock -->
+  <rect x="700" y="190" width="540" height="150" rx="12" fill="#0f172a" stroke="#334155"/>
+  <text x="720" y="220" fill="#e2e8f0" font-size="14" font-weight="700">Approval chain &amp; locks</text>
+  <g font-size="12" fill="#94a3b8">
+    <text x="720" y="250">Approval #1 review: approved · Approval #2 seo: approved</text>
+    <text x="720" y="278">ApprovalQueue: pending_approvals_count per workflow</text>
+    <text x="720" y="306">Lock: acquired → conflict on 2nd user → released · auto-unlock 15 min</text>
+  </g>
+
+  <!-- audit -->
+  <rect x="40" y="360" width="1200" height="160" rx="12" fill="#1e293b" stroke="#334155"/>
+  <text x="60" y="390" fill="#e2e8f0" font-size="14" font-weight="700">Audit trail (16 events) — who / when / old / new / IP</text>
+  <g font-size="12.5" fill="#94a3b8">
+    <text x="60" y="420">workflow.transition  · revision.created · approval.decided · schedule.created</text>
+    <text x="60" y="444">workflow.publish (old:{scheduled} new:{published, soft:true}) · comment.created · comment.resolved</text>
+    <text x="60" y="468">lock.acquired · lock.released · revision.rollback</text>
+    <text x="60" y="492">each row records actor, ip_address (REMOTE_ADDR), old_value, new_value, created_at</text>
+  </g>
+
+  <!-- quality gate -->
+  <text x="40" y="560" fill="#e2e8f0" font-size="15" font-weight="600">Quality gates</text>
+  <g font-size="12.5">
+    <rect x="40" y="576" width="280" height="44" rx="8" fill="#1e293b" stroke="#334155"/><text x="180" y="603" fill="#34d399" text-anchor="middle">version rollback ✓ (test)</text>
+    <rect x="340" y="576" width="280" height="44" rx="8" fill="#1e293b" stroke="#334155"/><text x="480" y="603" fill="#34d399" text-anchor="middle">diff accuracy ✓ (test)</text>
+    <rect x="640" y="576" width="280" height="44" rx="8" fill="#1e293b" stroke="#334155"/><text x="780" y="603" fill="#34d399" text-anchor="middle">transitions + approvals ✓</text>
+    <rect x="940" y="576" width="300" height="44" rx="8" fill="#1e293b" stroke="#334155"/><text x="1090" y="603" fill="#34d399" text-anchor="middle">scheduling · locks · audit · perms ✓</text>
+  </g>
+  <text x="40" y="700" fill="#64748b" font-size="12">Backend 112 tests · Frontend 80 tests · check/makemigrations/migrate/bootstrap ✓ · tsc/eslint/vite/storybook ✓ · ruff clean ✓</text>
+</svg>

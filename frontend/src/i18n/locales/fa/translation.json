@@ -1,0 +1,340 @@
+{
+  "app": {
+    "title": "هانه‌هوش",
+    "tagline": "پلتفرم سازمانی",
+    "toggleTheme": "تغییر حالت نمایش",
+    "toggleLanguage": "تغییر زبان",
+    "announcement": "اعلامیه",
+    "readMore": "بیشتر بخوانید",
+    "dismissAnnouncement": "بستن اعلامیه",
+    "theme": {
+      "light": "روشن",
+      "dark": "تیره",
+      "system": "سیستمی"
+    }
+  },
+  "nav": {
+    "main": "منوی اصلی",
+    "home": "خانه",
+    "services": "خدمات",
+    "projects": "پروژه‌ها",
+    "articles": "مقالات",
+    "about": "درباره ما",
+    "contact": "تماس",
+    "search": "جستجو",
+    "login": "ورود",
+    "logout": "خروج",
+    "dashboard": "داشبورد",
+    "toggleMenu": "تغییر وضعیت منو"
+  },
+  "common": {
+    "save": "ذخیره",
+    "cancel": "لغو",
+    "delete": "حذف",
+    "confirm": "تایید",
+    "success": "موفقیت",
+    "error": "خطا",
+    "loading": "در حال بارگذاری",
+    "empty": "موردی وجود ندارد",
+    "back": "بازگشت",
+    "submit": "ارسال",
+    "close": "بستن",
+    "breadcrumb": "مسیر صفحه"
+  },
+  "errors": {
+    "unexpected": "خطای غیرمنتظره‌ای رخ داده است",
+    "retry": "تلاش مجدد",
+    "loadingPageTitle": "امکان بارگذاری این صفحه وجود نداشت",
+    "loadingPageDescription": "هنگام دریافت این صفحه خطایی رخ داد. لطفاً دوباره تلاش کنید.",
+    "routeFallbackDescription": "هنگام نمایش این صفحه خطای غیرمنتظره‌ای رخ داد. لطفاً دوباره تلاش کنید یا به خانه برگردید.",
+    "sectionTitle": "بارگذاری محتوا ممکن نشد",
+    "sectionDescription": "هنگام بارگذاری این بخش خطایی رخ داد. لطفاً دوباره تلاش کنید.",
+    "emptySectionTitle": "هنوز محتوایی منتشر نشده است",
+    "emptySectionDescription": "به‌زودی بازگردید — محتوا در راه است."
+  },
+  "notFound": {
+    "title": "صفحه پیدا نشد",
+    "description": "صفحه‌ای که به دنبال آن هستید وجود ندارد."
+  },
+  "auth": {
+    "login": "ورود",
+    "loginDescription": "وارد حساب کاربری خود شوید",
+    "loginFailed": "ورود ناموفق بود",
+    "loginFailedDescription": "نام کاربری و رمز عبور را بررسی کنید و دوباره تلاش کنید.",
+    "logout": "خروج",
+    "username": "نام کاربری",
+    "password": "رمز عبور",
+    "email": "ایمیل",
+    "rememberMe": "مرا به خاطر بسپار",
+    "forgotPassword": "رمز عبور را فراموش کرده‌اید؟",
+    "forgotPasswordDescription": "ایمیل خود را وارد کنید تا لینک بازیابی برای شما ارسال شود.",
+    "sendResetLink": "ارسال لینک بازیابی",
+    "resetLinkError": "ارسال لینک بازیابی ممکن نشد. لطفاً دوباره تلاش کنید.",
+    "resetLinkSent": "لینک بازیابی ارسال شد",
+    "checkEmail": "اگر حسابی با این ایمیل وجود داشته باشد، لینک بازیابی ارسال شده است.",
+    "resetPassword": "بازیابی رمز عبور",
+    "resetPasswordDescription": "رمز عبور جدیدی برای حساب خود انتخاب کنید.",
+    "newPassword": "رمز عبور جدید",
+    "confirmPassword": "تکرار رمز عبور",
+    "invalidResetLink": "این لینک بازیابی نامعتبر یا منقضی شده است.",
+    "requestNewLink": "درخواست لینک جدید",
+    "passwordResetSuccess": "رمز عبور با موفقیت تغییر کرد",
+    "goToLogin": "رفتن به ورود",
+    "resetFailed": "بازیابی رمز عبور ناموفق بود",
+    "welcomeBack": "خوش آمدید",
+    "sessionExpiredTitle": "نشست منقضی شد",
+    "sessionExpiredDescription": "نشست شما منقضی شده است. لطفاً دوباره وارد شوید.",
+    "unauthorizedTitle": "دسترسی غیرمجاز",
+    "unauthorizedDescription": "شما اجازه دسترسی به این صفحه را ندارید.",
+    "validation": {
+      "usernameRequired": "نام کاربری الزامی است",
+      "emailRequired": "یک آدرس ایمیل معتبر وارد کنید",
+      "emailInvalid": "یک آدرس ایمیل معتبر وارد کنید",
+      "passwordMin": "رمز عبور باید حداقل ۸ کاراکتر باشد",
+      "passwordMismatch": "رمزهای عبور یکسان نیستند",
+      "currentPasswordRequired": "رمز عبور فعلی الزامی است"
+    }
+  },
+  "home": {
+    "hero": {
+      "headline": "نرم‌افزار سازمانی، مهندسی‌شده مانند یک محصول.",
+      "subtitle": "ERP، هوش مصنوعی، اپلیکیشن‌های وب، پیاده‌سازی Odoo و خدمات برنامه‌نویسی — دوزبانه، ابری و مهندسی‌شده تا استاندارد تولید.",
+      "primaryCta": "شروع پروژه",
+      "secondaryCta": "مشاهده خدمات"
+    },
+    "stats": {
+      "eyebrow": "در یک نگاه",
+      "title": "مهندسی که نتیجه می‌سازد.",
+      "description": "آمار زنده از پلتفرم محتوای هانه‌هوش.",
+      "projects": "پروژه‌های تحویل‌شده",
+      "articles": "مقالات منتشرشده",
+      "team": "اعضای تیم",
+      "partners": "همکاران"
+    },
+    "services": { "eyebrow": "چه کاری انجام می‌دهیم", "title": "خدمات ما.", "description": "تحویل کامل — از معماری تا استقرار." },
+    "projects": { "eyebrow": "کارهای ما", "title": "پروژه‌های شاخص.", "description": "هر پروژه یک همکاری است؛ از معماری تا تحویل." },
+    "articles": { "eyebrow": "یادداشت‌ها", "title": "آخرین مقالات.", "description": "مقاله‌ها و راهنماهایی درباره مهندسی روزمره ما." },
+    "about": { "eyebrow": "درباره هانه‌هوش", "title": "ماموریت و چشم‌انداز ما.", "description": "چرا می‌سازیم و به کجا می‌رویم.", "mission": "ماموریت", "vision": "چشم‌انداز" },
+    "team": { "eyebrow": "تیم", "title": "افراد پشت پلتفرم.", "description": "مهندسان، طراحان و اپراتورهایی که با هم تحویل می‌دهند." },
+    "timeline": { "eyebrow": "داستان ما", "title": "نقاط عطف.", "description": "تاریخچه‌ای کوتاه از هانه‌هوش." },
+    "testimonials": { "eyebrow": "صدای مشتریان", "title": "نظرات مشتریان.", "description": "همکاری‌های بلندمدت با سازمان‌هایی که کیفیت می‌خواهند." },
+    "partners": { "eyebrow": "اکوسیستم", "title": "همکاران و پلتفرم‌ها.", "description": "سازمان‌هایی که با آن‌ها کار می‌کنیم و بر پایه آن‌ها می‌سازیم." },
+    "faq": { "eyebrow": "سوالات متداول", "title": "سوالاتی که ممکن است داشته باشید.", "description": "همه‌چیز درباره فرآیند، زمان‌بندی و پشتیبانی ما." },
+    "cta": {
+      "title": "آماده‌اید چیزی فوق‌العاده بسازید؟",
+      "description": "تیم مهندسی ما آماده گفتگو درباره پروژه شماست. بدون تعهد — فقط یک گفتگو درباره امکانات.",
+      "primary": "شروع پروژه",
+      "secondary": "گفتگو با مهندسان"
+    }
+  },
+  "services": {
+    "notFoundTitle": "خدمات در دسترس نیست",
+    "notFoundDescription": "کاتالوگ خدمات ما موقتاً در دسترس نیست. لطفاً دوباره تلاش کنید."
+  },
+  "projects": {
+    "notFoundTitle": "پروژه پیدا نشد",
+    "notFoundDescription": "این پروژه ممکن است منتشر نشده باشد یا لینک نادرست است."
+  },
+  "articles": {
+    "notFoundTitle": "مقاله پیدا نشد",
+    "notFoundDescription": "این مقاله ممکن است منتشر نشده باشد یا لینک نادرست است."
+  },
+  "article": {
+    "loading": "در حال بارگذاری مقاله…",
+    "unavailable": "مقاله در دسترس نیست.",
+    "toc": "فهرست مطالب",
+    "tocHide": "پنهان کردن فهرست مطالب",
+    "onThisPage": "در این صفحه",
+    "metaBy": "نوشته",
+    "metaPublished": "منتشرشده در",
+    "relatedArticles": "مقالات مرتبط",
+    "relatedProjects": "پروژه‌های مرتبط",
+    "relatedServices": "خدمات مرتبط",
+    "newsletterTitle": "از این مقاله لذت بردید؟",
+    "newsletterDescription": "هر ماه محتوای تازه مهندسی را در ایمیل خود دریافت کنید.",
+    "caseStudyLabel": "مطالعه موردی",
+    "serviceLabel": "خدمت"
+  },
+  "articleList": {
+    "loadingFeatured": "در حال بارگذاری مقاله شاخص…",
+    "loading": "در حال بارگذاری مقالات…",
+    "error": "بارگذاری مقالات ناموفق بود.",
+    "empty": "مقاله‌ای با این فیلترها یافت نشد.",
+    "count_one": "{{count}} مقاله",
+    "count_other": "{{count}} مقاله",
+    "loadMore": "نمایش بیشتر"
+  },
+  "articleCTA": {
+    "title": "پروژه‌ای در ذهن دارید؟",
+    "body": "دوست داریم درباره اینکه مهندسی این‌چنینی چگونه می‌تواند به سازمان شما کمک کند گفتگو کنیم.",
+    "talk": "گفتگو با مهندسان ما",
+    "caseStudy": "مطالعه موردی مرتبط را بخوانید",
+    "contact": "تماس با هانه‌هوش"
+  },
+  "filters": {
+    "category": "دسته",
+    "topic": "موضوع",
+    "technology": "فناوری",
+    "year": "سال تکمیل",
+    "sort": "مرتب‌سازی",
+    "allCategories": "همه دسته‌ها",
+    "allTopics": "همه موضوع‌ها",
+    "allTechnologies": "همه فناوری‌ها",
+    "allYears": "همه سال‌ها",
+    "newestFirst": "جدیدترین",
+    "oldestFirst": "قدیمی‌ترین",
+    "titleAtoZ": "عنوان الف–ی",
+    "searchArticles": "جستجو در مقالات…",
+    "searchProjects": "جستجو در پروژه‌ها…",
+    "featured": "ویژه",
+    "featuredOnly": "فقط ویژه",
+    "clear": "پاک کردن",
+    "projectCount_one": "{{count}} پروژه یافت شد",
+    "projectCount_other": "{{count}} پروژه یافت شد"
+  },
+  "projectResults": {
+    "heading": "نتایج و تأثیر",
+    "empty": "اطلاعات نتیجهٔ پروژه پس از تعریف، اینجا نمایش داده می‌شود."
+  },
+  "caseStudy": {
+    "loading": "در حال بارگذاری مطالعه موردی…",
+    "unavailable": "این مطالعه موردی در دسترس نیست.",
+    "featured": "ویژه",
+    "clientPrefix": "مشتری",
+    "stage": "مرحله {{count}}",
+    "challengeLabel": "چالش",
+    "challengeTitle": "مسئله‌ای که از ما خواسته شد حل کنیم",
+    "objectivesLabel": "هدف‌ها",
+    "objectivesTitle": "موفقیت چگونه تعریف شد",
+    "solutionLabel": "راه‌حل",
+    "solutionTitle": "رویکرد هانه‌هوش",
+    "architectureLabel": "معماری",
+    "architectureTitle": "سیستم چگونه ساخته شده است",
+    "technologyLabel": "فناوری",
+    "technologyTitle": "پشته فناوری پشت این ساخت",
+    "journeyLabel": "مسیر",
+    "journeyTitle": "مراحل پیاده‌سازی",
+    "journeyEmpty": "مراحل پیاده‌سازی هنوز تعریف نشده است.",
+    "galleryLabel": "گالری",
+    "galleryTitle": "پروژه در تصویر",
+    "relatedWorkLabel": "کارهای مرتبط",
+    "relatedWorkTitle": "پروژه‌های دیگری که ارزش دیدن دارند",
+    "readMoreLabel": "بیشتر بخوانید",
+    "readMoreTitle": "مقالات مرتبط",
+    "ctaTitle": "پروژه‌ای در ذهن دارید؟",
+    "ctaDescription": "بیایید درباره ساختن چیزی مشابه برای سازمان شما گفتگو کنیم."
+  },
+  "about": {
+    "title": "درباره هانه‌هوش",
+    "description": "شرکت مهندسی پشت هانه‌هوش.",
+    "teamClick": "مشاهده پروفایل عضو تیم",
+    "cta": {
+      "title": "آماده‌اید چیزی فوق‌العاده بسازید؟",
+      "description": "با مهندسان ما درباره پروژه‌تان گفتگو کنید.",
+      "primary": "شروع گفتگو",
+      "secondary": "مشاهده خدمات"
+    },
+    "faqTitle": "سوالات متداول درباره هانه‌هوش."
+  },
+  "contact": {
+    "title": "گفتگو را شروع کنیم",
+    "description": "درباره پروژه‌تان بنویسید — هر درخواست توسط تیم مهندسی ما بررسی می‌شود.",
+    "name": "نام و نام خانوادگی",
+    "email": "ایمیل",
+    "phone": "شماره تماس (اختیاری)",
+    "company": "شرکت (اختیاری)",
+    "subject": "موضوع",
+    "serviceCategory": "خدمت",
+    "projectType": "نوع پروژه",
+    "budgetRange": "بازه بودجه (اختیاری)",
+    "preferredContact": "روش تماس ترجیحی",
+    "preferredAny": "ایمیل یا تلفن",
+    "preferredEmail": "فقط ایمیل",
+    "preferredPhone": "فقط تلفن",
+    "message": "چطور می‌توانیم کمک کنیم؟",
+    "consent": "موافقم برای این درخواست با من تماس گرفته شود.",
+    "submit": "ارسال درخواست",
+    "submitting": "در حال ارسال…",
+    "successTitle": "درخواست دریافت شد",
+    "successBody": "متشکریم — درخواست شما ثبت شد و تیم ما به شما پاسخ خواهد داد.",
+    "errorTitle": "مشکلی پیش آمد",
+    "errorBody": "درخواست شما ارسال نشد. لطفاً دوباره تلاش کنید.",
+    "duplicateBlocked": "این فرم در حال ارسال است. لطفاً صبر کنید.",
+    "budgetUnder10k": "کمتر از ۱۰ هزار دلار",
+    "budget10to25": "۱۰ تا ۲۵ هزار دلار",
+    "budget25to50": "۲۵ تا ۵۰ هزار دلار",
+    "budget50to100": "۵۰ تا ۱۰۰ هزار دلار",
+    "budgetOver100": "بیش از ۱۰۰ هزار دلار",
+    "validation": {
+      "nameRequired": "لطفاً نام خود را وارد کنید.",
+      "emailRequired": "لطفاً آدرس ایمیل را وارد کنید.",
+      "emailInvalid": "لطفاً یک آدرس ایمیل معتبر وارد کنید.",
+      "messageRequired": "لطفاً کمی درباره پروژه‌تان بنویسید.",
+      "consentRequired": "لطفاً تأیید کنید که اجازه تماس دارید."
+    },
+    "serviceOptions": {
+      "erp": "سامانه‌های ERP",
+      "software": "توسعه نرم‌افزار",
+      "web": "اپلیکیشن‌های وب",
+      "ai": "اتوماسیون هوش مصنوعی",
+      "odoo": "پیاده‌سازی Odoo",
+      "consulting": "مشاوره"
+    },
+    "projectTypes": {
+      "enterprise": "سازمانی",
+      "web": "وب",
+      "mobile": "موبایل",
+      "other": "سایر"
+    },
+    "aria": {
+      "formStatus": "وضعیت فرم تماس"
+    }
+  },
+  "newsletter": {
+    "title": "مطالب جدید را از دست ندهید.",
+    "description": "هر ماه، بهترین مقالات ما در ایمیل شما.",
+    "emailPlaceholder": "you@company.com",
+    "subscribe": "عضویت",
+    "success": "عضویت شما ثبت شد.",
+    "duplicate": "شما قبلاً عضو شده‌اید.",
+    "error": "عضویت ناموفق بود — دوباره تلاش کنید.",
+    "viewState": "وضعیت خبرنامه"
+  },
+  "footer": {
+    "heading": "خبرنامه",
+    "emailLabel": "آدرس ایمیل",
+    "subscribe": "عضویت",
+    "subscribed": "عضویت شما ثبت شد.",
+    "subscribeError": "عضویت ناموفق بود — دوباره تلاش کنید.",
+    "rights": "همه حقوق محفوظ است."
+  },
+  "search": {
+    "open": "جستجو",
+    "title": "جستجو",
+    "description": "جستجو در مقالات، پروژه‌ها، خدمات و صفحات.",
+    "placeholder": "جستجو در مقالات، پروژه‌ها و خدمات…",
+    "filterLabel": "فیلتر بر اساس نوع",
+    "clear": "پاک کردن جستجو",
+    "allTypes": "همه انواع",
+    "types": {
+      "article": "مقالات",
+      "project": "پروژه‌ها",
+      "service": "خدمات",
+      "page": "صفحات"
+    },
+    "resultCount_one": "{{count}} نتیجه",
+    "resultCount_other": "{{count}} نتیجه",
+    "emptyTitle": "نتیجه‌ای یافت نشد",
+    "emptyDescription": "برای «{{query}}» نتیجه‌ای یافت نشد. کلمه دیگری را امتحان کنید.",
+    "errorTitle": "جستجو در دسترس نیست"
+  },
+  "dashboard": {
+    "intro": "وارد شده‌اید — نمای کلی حساب شما و سایت عمومی.",
+    "accountTitle": "حساب کاربری",
+    "role": "نقش",
+    "session": "نشست",
+    "sessionActive": "فعال",
+    "quickLinksTitle": "مرور سایت",
+    "quickLinksDescription": "به هر بخش عمومی بروید."
+  }
+}

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="840" viewBox="0 0 1280 840" font-family="Inter, Vazirmatn, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+  </defs>
+  <rect width="1280" height="840" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#e2e8f0" font-size="24" font-weight="700">Home — composed from /api/v1/pages/home/ (Phase 8B)</text>
+  <text x="40" y="76" fill="#94a3b8" font-size="14">12 sections assembled by &lt;PageRenderer /&gt; — no hardcoded layout. Order: hero → statistics → services → projects → articles → about → team → timeline → testimonials → partners → faq → cta</text>
+
+  <!-- Section bands -->
+  <g>
+    <rect x="40" y="100" width="1200" height="56" rx="10" fill="#1e293b" stroke="#334155"/>
+    <circle cx="70" cy="128" r="8" fill="#059669"/><text x="90" y="133" fill="#f8fafc" font-size="14" font-weight="600">1 · hero</text>
+    <text x="420" y="133" fill="#38bdf8" font-size="12">GET /pages/home/ · GET /hero/ · site-settings tagline</text>
+    <text x="980" y="133" fill="#34d399" font-size="12">loaded · 41 ms</text>
+
+    <rect x="40" y="164" width="1200" height="48" rx="10" fill="#1e293b" stroke="#334155"/>
+    <circle cx="70" cy="188" r="8" fill="#059669"/><text x="90" y="193" fill="#f8fafc" font-size="14" font-weight="600">2 · statistics</text>
+    <text x="420" y="193" fill="#38bdf8" font-size="12">live counts: projects/articles/team/partners</text>
+    <text x="980" y="193" fill="#34d399" font-size="12">loaded · 36 ms</text>
+
+    <rect x="40" y="220" width="1200" height="56" rx="10" fill="#1e293b" stroke="#334155"/>
+    <circle cx="70" cy="248" r="8" fill="#059669"/><text x="90" y="253" fill="#f8fafc" font-size="14" font-weight="600">3 · services</text>
+    <text x="420" y="253" fill="#38bdf8" font-size="12">useServices() → ServiceGrid (4 services)</text>
+    <text x="980" y="253" fill="#34d399" font-size="12">loaded · 52 ms</text>
+
+    <rect x="40" y="284" width="1200" height="48" rx="10" fill="#1e293b" stroke="#334155"/>
+    <circle cx="70" cy="308" r="8" fill="#059669"/><text x="90" y="313" fill="#f8fafc" font-size="14" font-weight="600">4 · projects</text>
+    <text x="420" y="313" fill="#38bdf8" font-size="12">useFeaturedProjects() → ProjectGrid</text>
+    <text x="980" y="313" fill="#34d399" font-size="12">loaded · 48 ms</text>
+
+    <rect x="40" y="340" width="1200" height="48" rx="10" fill="#1e293b" stroke="#334155"/>
+    <circle cx="70" cy="364" r="8" fill="#059669"/><text x="90" y="369" fill="#f8fafc" font-size="14" font-weight="600">5 · articles</text>
+    <text x="420" y="369" fill="#38bdf8" font-size="12">useFeaturedArticles() → ArticleGrid</text>
+    <text x="980" y="369" fill="#34d399" font-size="12">loaded · 45 ms</text>
+
+    <rect x="40" y="396" width="1200" height="48" rx="10" fill="#1e293b" stroke="#334155"/>
+    <circle cx="70" cy="420" r="8" fill="#059669"/><text x="90" y="425" fill="#f8fafc" font-size="14" font-weight="600">6-11 · about → team → timeline → testimonials → partners → faq</text>
+    <text x="420" y="425" fill="#38bdf8" font-size="12">useAbout() · useTeam() · useTimeline() · useTestimonials() · usePartners() · useFAQs()</text>
+    <text x="980" y="425" fill="#34d399" font-size="12">all loaded</text>
+
+    <rect x="40" y="452" width="1200" height="48" rx="10" fill="#1e293b" stroke="#334155"/>
+    <circle cx="70" cy="476" r="8" fill="#059669"/><text x="90" y="481" fill="#f8fafc" font-size="14" font-weight="600">12 · cta</text>
+    <text x="420" y="481" fill="#38bdf8" font-size="12">config-driven GradientCTA</text>
+    <text x="980" y="481" fill="#34d399" font-size="12">loaded · 29 ms</text>
+  </g>
+
+  <!-- Inspector panel -->
+  <rect x="40" y="520" width="1200" height="130" rx="12" fill="#1e293b" stroke="#38bdf8"/>
+  <text x="60" y="552" fill="#38bdf8" font-size="14" font-weight="700">/dev/page-builder inspector</text>
+  <g font-size="12.5" fill="#94a3b8">
+    <text x="60" y="580">Section order: hero(1) statistics(2) services(3) projects(4) articles(5) about(6) team(7) timeline(8) testimonials(9) partners(10) faq(11) cta(12)</text>
+    <text x="60" y="604">Analytics: loaded=12 · fallback=0 · errors=0 · avg render 40 ms · all chunks lazy-loaded (React.lazy + Suspense)</text>
+    <text x="60" y="628">Checks: language fa/ar ✓ · no duplicated sections (DB unique + renderer dedupe) ✓ · per-section error boundaries ✓ · cache invalidation ✓</text>
+  </g>
+</svg>

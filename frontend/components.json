@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": false,
+  "tsx": true,
+  "systemColor": "hsl",
+  "darkMode": "class",
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/shared/lib",
+    "ui": "@/components/ui",
+    "hooks": "@/shared/hooks",
+    "types": "@/shared/types"
+  },
+  "iconDependencies": ["@radix-ui/react-icons"],
+  "iconAliasesPrefix": ["icon", "Icon"]
+}

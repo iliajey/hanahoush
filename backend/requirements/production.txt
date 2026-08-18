@@ -1,0 +1,4 @@
+-r base.txt
+
+# Production-only additions land here (e.g. sentry-sdk, gunicorn tuning).
+# Celery/Redis workers and monitoring are a later-phase concern.

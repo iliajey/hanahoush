@@ -1,0 +1,352 @@
+{
+  "app": {
+    "title": "هاناهوش",
+    "tagline": "منصة مؤسسية",
+    "toggleTheme": "تبديل المظهر",
+    "toggleLanguage": "تبديل اللغة",
+    "announcement": "إعلان",
+    "readMore": "اقرأ المزيد",
+    "dismissAnnouncement": "إغلاق الإعلان",
+    "theme": {
+      "light": "فاتح",
+      "dark": "داكن",
+      "system": "تلقائي"
+    }
+  },
+  "nav": {
+    "main": "القائمة الرئيسية",
+    "home": "الرئيسية",
+    "services": "الخدمات",
+    "projects": "المشاريع",
+    "articles": "المقالات",
+    "about": "من نحن",
+    "contact": "اتصل بنا",
+    "search": "بحث",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "dashboard": "لوحة التحكم",
+    "toggleMenu": "تبديل القائمة"
+  },
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "confirm": "تأكيد",
+    "success": "نجاح",
+    "error": "خطأ",
+    "loading": "جارٍ التحميل",
+    "empty": "لا توجد عناصر بعد",
+    "back": "رجوع",
+    "submit": "إرسال",
+    "close": "إغلاق",
+    "breadcrumb": "مسار الصفحة"
+  },
+  "errors": {
+    "unexpected": "حدث خطأ غير متوقع",
+    "retry": "إعادة المحاولة",
+    "loadingPageTitle": "تعذّر تحميل هذه الصفحة",
+    "loadingPageDescription": "حدث خطأ أثناء جلب هذه الصفحة. يرجى المحاولة مرة أخرى.",
+    "routeFallbackDescription": "حدث خطأ غير متوقع أثناء عرض هذه الصفحة. يرجى المحاولة مرة أخرى أو العودة إلى الرئيسية.",
+    "sectionTitle": "تعذّر تحميل المحتوى",
+    "sectionDescription": "حدث خطأ أثناء تحميل هذا القسم. يرجى المحاولة مرة أخرى.",
+    "emptySectionTitle": "لا يوجد محتوى منشور بعد",
+    "emptySectionDescription": "عد لاحقاً — المحتوى قادم."
+  },
+  "notFound": {
+    "title": "الصفحة غير موجودة",
+    "description": "الصفحة التي تبحث عنها غير موجودة."
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "loginDescription": "سجل الدخول إلى حسابك",
+    "loginFailed": "فشل تسجيل الدخول",
+    "loginFailedDescription": "تحقق من اسم المستخدم وكلمة المرور وحاول مرة أخرى.",
+    "logout": "تسجيل الخروج",
+    "username": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "email": "البريد الإلكتروني",
+    "rememberMe": "تذكرني",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "forgotPasswordDescription": "أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة التعيين.",
+    "sendResetLink": "إرسال رابط إعادة التعيين",
+    "resetLinkError": "تعذر إرسال رابط إعادة التعيين. يرجى المحاولة مرة أخرى.",
+    "resetLinkSent": "تم إرسال رابط إعادة التعيين",
+    "checkEmail": "إذا كان هناك حساب بهذا البريد، فقد تم إرسال رابط إعادة التعيين.",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "resetPasswordDescription": "اختر كلمة مرور جديدة لحسابك.",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "invalidResetLink": "رابط إعادة التعيين غير صالح أو منتهي الصلاحية.",
+    "requestNewLink": "طلب رابط جديد",
+    "passwordResetSuccess": "تمت إعادة تعيين كلمة المرور بنجاح",
+    "goToLogin": "الذهاب إلى تسجيل الدخول",
+    "resetFailed": "فشلت إعادة تعيين كلمة المرور",
+    "welcomeBack": "مرحبًا بعودتك",
+    "sessionExpiredTitle": "انتهت الجلسة",
+    "sessionExpiredDescription": "انتهت جلستك. يرجى تسجيل الدخول مرة أخرى.",
+    "unauthorizedTitle": "غير مصرح",
+    "unauthorizedDescription": "ليس لديك إذن للوصول إلى هذه الصفحة.",
+    "validation": {
+      "usernameRequired": "اسم المستخدم مطلوب",
+      "emailRequired": "أدخل بريداً إلكترونياً صحيحاً",
+      "emailInvalid": "أدخل بريداً إلكترونياً صحيحاً",
+      "passwordMin": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+      "passwordMismatch": "كلمتا المرور غير متطابقتين",
+      "currentPasswordRequired": "كلمة المرور الحالية مطلوبة"
+    }
+  },
+  "home": {
+    "hero": {
+      "headline": "برمجيات مؤسسية مُهندَسة كمنتج.",
+      "subtitle": "ERP والذكاء الاصطناعي وتطبيقات الويب وتنفيذ Odoo وخدمات البرمجة — ثنائية اللغة وسحابية ومُهندَسة بمعايير الإنتاج.",
+      "primaryCta": "ابدأ مشروعاً",
+      "secondaryCta": "استكشف الخدمات"
+    },
+    "stats": {
+      "eyebrow": "بالأرقام",
+      "title": "هندسة تحقق النتائج.",
+      "description": "إحصاءات حية من منصة محتوى هاناهوش.",
+      "projects": "مشاريع أُنجزت",
+      "articles": "مقالات منشورة",
+      "team": "أعضاء الفريق",
+      "partners": "شركاء"
+    },
+    "services": { "eyebrow": "ماذا نقدم", "title": "خدماتنا.", "description": "خدمات متكاملة — من البنية إلى النشر." },
+    "projects": { "eyebrow": "أعمالنا", "title": "مشاريع مميزة.", "description": "كل مشروع شراكة من البنية حتى التسليم." },
+    "articles": { "eyebrow": "رؤى", "title": "أحدث المقالات.", "description": "مقالات وأدلة حول الهندسة التي نمارسها كل يوم." },
+    "about": { "eyebrow": "عن هاناهوش", "title": "رسالتنا ورؤيتنا.", "description": "لماذا نبني، وإلى أين نتجه.", "mission": "الرسالة", "vision": "الرؤية" },
+    "team": { "eyebrow": "الفريق", "title": "الأشخاص خلف المنصة.", "description": "مهندسون ومصممون ومشغلون يعملون معاً." },
+    "timeline": { "eyebrow": "قصتنا", "title": "معالم.", "description": "تاريخ موجز لهاناهوش." },
+    "testimonials": { "eyebrow": "يثق بنا عملاؤنا", "title": "ماذا يقول عملاؤنا.", "description": "شراكات طويلة مع مؤسسات تطلب الجودة." },
+    "partners": { "eyebrow": "النظام البيئي", "title": "شركاء ومنصات.", "description": "المنظمات التي نعمل معها ونبني عليها." },
+    "faq": { "eyebrow": "الأسئلة الشائعة", "title": "أسئلة قد تدور في ذهنك.", "description": "كل ما يخص عمليتنا وجدولنا الزمني ودعمنا." },
+    "cta": {
+      "title": "مستعد لبناء شيء استثنائي؟",
+      "description": "فريقنا الهندسي جاهز لمناقشة مشروعك. بدون التزام — مجرد محادثة حول الإمكانيات.",
+      "primary": "ابدأ مشروعاً",
+      "secondary": "تحدث إلى فريق الهندسة"
+    }
+  },
+  "services": {
+    "notFoundTitle": "الخدمات غير متاحة",
+    "notFoundDescription": "كتالوج خدماتنا غير متاح مؤقتاً. يرجى المحاولة مرة أخرى."
+  },
+  "projects": {
+    "notFoundTitle": "دراسة الحالة غير موجودة",
+    "notFoundDescription": "قد يكون هذا المشروع غير منشور أو أن الرابط غير صحيح."
+  },
+  "articles": {
+    "notFoundTitle": "المقال غير موجود",
+    "notFoundDescription": "قد يكون هذا المقال غير منشور أو أن الرابط غير صحيح."
+  },
+  "article": {
+    "loading": "جارٍ تحميل المقال…",
+    "unavailable": "المقال غير متاح.",
+    "toc": "فهرس المحتويات",
+    "tocHide": "إخفاء فهرس المحتويات",
+    "onThisPage": "في هذه الصفحة",
+    "metaBy": "بقلم",
+    "metaPublished": "نُشر في",
+    "relatedArticles": "مقالات ذات صلة",
+    "relatedProjects": "مشاريع ذات صلة",
+    "relatedServices": "خدمات ذات صلة",
+    "newsletterTitle": "هل أعجبك هذا المقال؟",
+    "newsletterDescription": "احصل على كتابات هندسية جديدة في بريدك كل شهر.",
+    "caseStudyLabel": "دراسة حالة",
+    "serviceLabel": "خدمة"
+  },
+  "articleList": {
+    "loadingFeatured": "جارٍ تحميل المقال المميز…",
+    "loading": "جارٍ تحميل المقالات…",
+    "error": "تعذّر تحميل المقالات.",
+    "empty": "لا توجد مقالات تطابق عوامل التصفية.",
+    "count_zero": "لا توجد مقالات",
+    "count_one": "{{count}} مقال",
+    "count_two": "{{count}} مقالان",
+    "count_few": "{{count}} مقالات",
+    "count_many": "{{count}} مقال",
+    "count_other": "{{count}} مقال",
+    "loadMore": "عرض المزيد"
+  },
+  "articleCTA": {
+    "title": "لديك مشروع في ذهنك؟",
+    "body": "يسرنا مناقشة كيف يمكن لهندسة كهذه أن تساعد مؤسستك.",
+    "talk": "تحدث مع مهندسينا",
+    "caseStudy": "اقرأ دراسة الحالة ذات الصلة",
+    "contact": "تواصل مع هاناهوش"
+  },
+  "filters": {
+    "category": "الفئة",
+    "topic": "الموضوع",
+    "technology": "التقنية",
+    "year": "سنة الإنجاز",
+    "sort": "الترتيب",
+    "allCategories": "جميع الفئات",
+    "allTopics": "جميع المواضيع",
+    "allTechnologies": "جميع التقنيات",
+    "allYears": "جميع السنوات",
+    "newestFirst": "الأحدث أولاً",
+    "oldestFirst": "الأقدم أولاً",
+    "titleAtoZ": "العنوان أ–ي",
+    "searchArticles": "ابحث في المقالات…",
+    "searchProjects": "ابحث في المشاريع…",
+    "featured": "مميز",
+    "featuredOnly": "مميز فقط",
+    "clear": "مسح",
+    "projectCount_zero": "لا توجد مشاريع",
+    "projectCount_one": "{{count}} مشروع",
+    "projectCount_two": "{{count}} مشروعان",
+    "projectCount_few": "{{count}} مشاريع",
+    "projectCount_many": "{{count}} مشروع",
+    "projectCount_other": "{{count}} مشروع"
+  },
+  "projectResults": {
+    "heading": "النتائج والأثر",
+    "empty": "ستظهر معلومات النتائج هنا فور تحديدها لهذا المشروع."
+  },
+  "caseStudy": {
+    "loading": "جارٍ تحميل دراسة الحالة…",
+    "unavailable": "دراسة الحالة هذه غير متاحة.",
+    "featured": "مميز",
+    "clientPrefix": "العميل",
+    "stage": "المرحلة {{count}}",
+    "challengeLabel": "التحدي",
+    "challengeTitle": "المشكلة التي طُلب منا حلها",
+    "objectivesLabel": "الأهداف",
+    "objectivesTitle": "ماذا يعني النجاح",
+    "solutionLabel": "الحل",
+    "solutionTitle": "نهج هاناهوش",
+    "architectureLabel": "البنية",
+    "architectureTitle": "كيف بُنِي النظام",
+    "technologyLabel": "التقنيات",
+    "technologyTitle": "التقنيات المستخدمة في البناء",
+    "journeyLabel": "الرحلة",
+    "journeyTitle": "مراحل التنفيذ",
+    "journeyEmpty": "لم تُحدَّد مراحل التنفيذ بعد.",
+    "galleryLabel": "المعرض",
+    "galleryTitle": "المشروع بالصور",
+    "relatedWorkLabel": "أعمال ذات صلة",
+    "relatedWorkTitle": "مزيد من المشاريع تستحق الاطلاع",
+    "readMoreLabel": "اقرأ المزيد",
+    "readMoreTitle": "مقالات ذات صلة",
+    "ctaTitle": "هل لديك مشروع في ذهنك؟",
+    "ctaDescription": "لنتحدث عن بناء شيء مماثل لمؤسستك."
+  },
+  "about": {
+    "title": "عن هاناهوش",
+    "description": "شركة الهندسة وراء هاناهوش.",
+    "teamClick": "عرض ملف عضو الفريق",
+    "cta": {
+      "title": "مستعد لبناء شيء استثنائي؟",
+      "description": "تحدث مع مهندسينا حول مشروعك.",
+      "primary": "ابدأ محادثة",
+      "secondary": "اطلع على خدماتنا"
+    },
+    "faqTitle": "الأسئلة الشائعة عن هاناهوش."
+  },
+  "contact": {
+    "title": "لنبدأ المحادثة",
+    "description": "أخبرنا عن مشروعك — كل استفسار يراجعه فريقنا الهندسي.",
+    "name": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف (اختياري)",
+    "company": "الشركة (اختياري)",
+    "subject": "الموضوع",
+    "serviceCategory": "الخدمة",
+    "projectType": "نوع المشروع",
+    "budgetRange": "نطاق الميزانية (اختياري)",
+    "preferredContact": "طريقة التواصل المفضلة",
+    "preferredAny": "البريد أو الهاتف",
+    "preferredEmail": "البريد فقط",
+    "preferredPhone": "الهاتف فقط",
+    "message": "كيف يمكننا المساعدة؟",
+    "consent": "أوافق على التواصل بخصوص هذا الاستفسار.",
+    "submit": "إرسال الاستفسار",
+    "submitting": "جارٍ الإرسال…",
+    "successTitle": "تم استلام الاستفسار",
+    "successBody": "شكراً لك — تم تسجيل طلبك وسيتواصل معك فريقنا.",
+    "errorTitle": "حدث خطأ ما",
+    "errorBody": "تعذر إرسال استفسارك. يرجى المحاولة مرة أخرى.",
+    "duplicateBlocked": "يتم إرسال هذا النموذج حالياً. يرجى الانتظار.",
+    "budgetUnder10k": "أقل من 10 آلاف دولار",
+    "budget10to25": "10–25 ألف دولار",
+    "budget25to50": "25–50 ألف دولار",
+    "budget50to100": "50–100 ألف دولار",
+    "budgetOver100": "أكثر من 100 ألف دولار",
+    "validation": {
+      "nameRequired": "يرجى إدخال اسمك.",
+      "emailRequired": "يرجى إدخال بريدك الإلكتروني.",
+      "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح.",
+      "messageRequired": "يرجى كتابة نبذة عن مشروعك.",
+      "consentRequired": "يرجى تأكيد موافقتك على التواصل."
+    },
+    "serviceOptions": {
+      "erp": "أنظمة ERP",
+      "software": "تطوير البرمجيات",
+      "web": "تطبيقات الويب",
+      "ai": "أتمتة الذكاء الاصطناعي",
+      "odoo": "تنفيذ Odoo",
+      "consulting": "استشارات"
+    },
+    "projectTypes": {
+      "enterprise": "مؤسسي",
+      "web": "ويب",
+      "mobile": "جوال",
+      "other": "أخرى"
+    },
+    "aria": {
+      "formStatus": "حالة نموذج التواصل"
+    }
+  },
+  "newsletter": {
+    "title": "لا تفوّت كتاباتنا الهندسية الجديدة.",
+    "description": "أفضل مقالاتنا في بريدك كل شهر.",
+    "emailPlaceholder": "you@company.com",
+    "subscribe": "اشترك",
+    "success": "تم الاشتراك — مرحباً بك.",
+    "duplicate": "أنت مشترك بالفعل.",
+    "error": "فشل الاشتراك — حاول مرة أخرى.",
+    "viewState": "حالة النشرة"
+  },
+  "footer": {
+    "heading": "النشرة البريدية",
+    "emailLabel": "البريد الإلكتروني",
+    "subscribe": "اشترك",
+    "subscribed": "تم الاشتراك — مرحباً بك.",
+    "subscribeError": "فشل الاشتراك — حاول مرة أخرى.",
+    "rights": "جميع الحقوق محفوظة."
+  },
+  "search": {
+    "open": "بحث",
+    "title": "بحث",
+    "description": "ابحث في المقالات والمشاريع والخدمات والصفحات.",
+    "placeholder": "ابحث في المقالات والمشاريع والخدمات…",
+    "filterLabel": "تصفية حسب النوع",
+    "clear": "مسح البحث",
+    "allTypes": "جميع الأنواع",
+    "types": {
+      "article": "مقالات",
+      "project": "مشاريع",
+      "service": "خدمات",
+      "page": "صفحات"
+    },
+    "resultCount_zero": "لا توجد نتائج",
+    "resultCount_one": "{{count}} نتيجة",
+    "resultCount_two": "{{count}} نتيجتان",
+    "resultCount_few": "{{count}} نتائج",
+    "resultCount_many": "{{count}} نتيجة",
+    "resultCount_other": "{{count}} نتيجة",
+    "emptyTitle": "لا توجد نتائج",
+    "emptyDescription": "لا توجد نتائج لـ «{{query}}». جرّب كلمة مختلفة.",
+    "errorTitle": "البحث غير متاح"
+  },
+  "dashboard": {
+    "intro": "تم تسجيل الدخول — نظرة سريعة على حسابك والموقع العام.",
+    "accountTitle": "الحساب",
+    "role": "الدور",
+    "session": "الجلسة",
+    "sessionActive": "نشطة",
+    "quickLinksTitle": "استكشف الموقع",
+    "quickLinksDescription": "انتقل إلى أي قسم عام."
+  }
+}

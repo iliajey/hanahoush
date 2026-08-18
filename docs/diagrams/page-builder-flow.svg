@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" font-family="Inter, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#38bdf8"/></marker>
+  </defs>
+  <rect width="1280" height="820" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#e2e8f0" font-size="24" font-weight="700">Page Builder — flow</text>
+
+  <!-- Admin -->
+  <rect x="40" y="90" width="360" height="300" rx="14" fill="#1e293b" stroke="#334155"/>
+  <text x="60" y="122" fill="#38bdf8" font-size="15" font-weight="700">Django Admin</text>
+  <text x="60" y="150" fill="#94a3b8" font-size="13">· drag-and-drop section ordering</text>
+  <text x="60" y="172" fill="#94a3b8" font-size="13">· inline section editing</text>
+  <text x="60" y="194" fill="#94a3b8" font-size="13">· enable/disable toggles</text>
+  <text x="60" y="216" fill="#94a3b8" font-size="13">· live preview URLs</text>
+  <text x="60" y="238" fill="#94a3b8" font-size="13">· singleton protection</text>
+  <text x="60" y="260" fill="#94a3b8" font-size="13">· JSON section config</text>
+  <rect x="60" y="286" width="220" height="36" rx="8" fill="#0f172a" stroke="#334155"/>
+  <text x="170" y="309" fill="#e2e8f0" font-size="12" text-anchor="middle">Page · PageSection · Nav · Footer · SEO</text>
+
+  <!-- Backend -->
+  <rect x="460" y="90" width="360" height="300" rx="14" fill="#1e293b" stroke="#334155"/>
+  <text x="480" y="122" fill="#38bdf8" font-size="15" font-weight="700">apps/page_builder/</text>
+  <text x="480" y="150" fill="#94a3b8" font-size="13">· models.py (10 models)</text>
+  <text x="480" y="172" fill="#94a3b8" font-size="13">· admin.py (sortable inlines)</text>
+  <text x="480" y="194" fill="#94a3b8" font-size="13">· api/ views + serializers</text>
+  <text x="480" y="216" fill="#94a3b8" font-size="13">· localization.resolve_section_config()</text>
+  <text x="480" y="238" fill="#94a3b8" font-size="13">· seed.py (registry + home page)</text>
+  <rect x="480" y="286" width="220" height="36" rx="8" fill="#0f172a" stroke="#334155"/>
+  <text x="590" y="309" fill="#e2e8f0" font-size="12" text-anchor="middle">version bump · draft protection</text>
+
+  <!-- Frontend -->
+  <rect x="880" y="90" width="360" height="300" rx="14" fill="#1e293b" stroke="#334155"/>
+  <text x="900" y="122" fill="#38bdf8" font-size="15" font-weight="700">src/features/page-builder</text>
+  <text x="900" y="150" fill="#94a3b8" font-size="13">· registry/ (lazy section map)</text>
+  <text x="900" y="172" fill="#94a3b8" font-size="13">· renderer/ PageRenderer</text>
+  <text x="900" y="194" fill="#94a3b8" font-size="13">· hooks/ usePage, useAnnouncement…</text>
+  <text x="900" y="216" fill="#94a3b8" font-size="13">· components/ AnnouncementBar</text>
+  <text x="900" y="238" fill="#94a3b8" font-size="13">· dev/ /dev/page-builder console</text>
+  <rect x="900" y="286" width="220" height="36" rx="8" fill="#0f172a" stroke="#334155"/>
+  <text x="1010" y="309" fill="#e2e8f0" font-size="12" text-anchor="middle">PageRenderer(page JSON)</text>
+
+  <!-- Arrows -->
+  <line x1="400" y1="240" x2="460" y2="240" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="410" y="228" fill="#64748b" font-size="11" text-anchor="middle">save</text>
+  <line x1="820" y1="240" x2="880" y2="240" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="838" y="228" fill="#64748b" font-size="11" text-anchor="middle">GET /api/v1/*</text>
+
+  <!-- Request/response -->
+  <rect x="460" y="430" width="360" height="150" rx="14" fill="#0f172a" stroke="#38bdf8"/>
+  <text x="480" y="462" fill="#38bdf8" font-size="14" font-weight="700">GET /api/v1/pages/home/</text>
+  <text x="480" y="490" fill="#94a3b8" font-size="12.5">Accept-Language: fa|en|ar</text>
+  <text x="480" y="514" fill="#94a3b8" font-size="12.5">→ composed page: seo + sections[]</text>
+  <text x="480" y="538" fill="#94a3b8" font-size="12.5">→ each section: type, order, is_enabled,</text>
+  <text x="480" y="562" fill="#94a3b8" font-size="12.5">   config (language-resolved)</text>
+
+  <rect x="880" y="430" width="360" height="150" rx="14" fill="#0f172a" stroke="#38bdf8"/>
+  <text x="900" y="462" fill="#38bdf8" font-size="14" font-weight="700">PageRenderer</text>
+  <text x="900" y="490" fill="#94a3b8" font-size="12.5">· skip disabled · dedupe types</text>
+  <text x="900" y="514" fill="#94a3b8" font-size="12.5">· lazy import per section (Suspense)</text>
+  <text x="900" y="538" fill="#94a3b8" font-size="12.5">· per-section ErrorBoundary</text>
+  <text x="900" y="562" fill="#94a3b8" font-size="12.5">· unknown-section fallback · analytics</text>
+
+  <line x1="820" y1="500" x2="880" y2="500" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Quality gates -->
+  <text x="40" y="640" fill="#e2e8f0" font-size="16" font-weight="600">Quality gates</text>
+  <g font-size="12.5">
+    <rect x="40" y="656" width="280" height="44" rx="8" fill="#1e293b" stroke="#334155"/><text x="180" y="683" fill="#34d399" text-anchor="middle">language switching (fa/en/ar)</text>
+    <rect x="340" y="656" width="280" height="44" rx="8" fill="#1e293b" stroke="#334155"/><text x="480" y="683" fill="#34d399" text-anchor="middle">lazy loading + per-section timing</text>
+    <rect x="640" y="656" width="280" height="44" rx="8" fill="#1e293b" stroke="#334155"/><text x="780" y="683" fill="#34d399" text-anchor="middle">no duplicated sections</text>
+    <rect x="940" y="656" width="300" height="44" rx="8" fill="#1e293b" stroke="#334155"/><text x="1090" y="683" fill="#34d399" text-anchor="middle">cache invalidation + no console errors</text>
+  </g>
+  <text x="40" y="760" fill="#64748b" font-size="12">Models: Page · PageSection · SectionConfiguration · NavigationMenu · NavigationItem · FooterConfiguration · AnnouncementBar · HeroConfiguration · SEOConfiguration · RedirectRule</text>
+</svg>

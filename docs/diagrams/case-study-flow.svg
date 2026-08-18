@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="660" viewBox="0 0 1280 660" font-family="Inter, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#38bdf8"/></marker>
+  </defs>
+  <rect width="1280" height="660" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#e2e8f0" font-size="24" font-weight="700">Case study — /projects/:slug</text>
+
+  <rect x="60" y="90" width="300" height="80" rx="12" fill="#1e293b" stroke="#334155"/>
+  <text x="210" y="122" fill="#e2e8f0" font-size="13" text-anchor="middle" font-weight="600">/projects/:slug</text>
+  <text x="210" y="148" fill="#94a3b8" font-size="11" text-anchor="middle">useProjectBySlug(slug)</text>
+
+  <line x1="360" y1="130" x2="420" y2="130" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <rect x="420" y="90" width="300" height="80" rx="12" fill="#1e293b" stroke="#38bdf8"/>
+  <text x="570" y="124" fill="#38bdf8" font-size="13" text-anchor="middle" font-weight="600">GET /projects/by-slug/{slug}/</text>
+  <text x="570" y="150" fill="#94a3b8" font-size="11" text-anchor="middle">draft-protected · localized case_study + related</text>
+
+  <line x1="720" y1="130" x2="780" y2="130" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <rect x="780" y="90" width="440" height="80" rx="12" fill="#1e293b" stroke="#334155"/>
+  <text x="1000" y="124" fill="#e2e8f0" font-size="13" text-anchor="middle" font-weight="600">buildCaseStudyPage(slug) + &lt;PageRenderer /&gt;</text>
+  <text x="1000" y="150" fill="#94a3b8" font-size="11" text-anchor="middle">reuses registry · lazy · SectionBoundary · fallback</text>
+
+  <!-- case sections -->
+  <g font-size="11.5">
+    <rect x="60" y="230" width="180" height="42" rx="8" fill="#0f172a" stroke="#334155"/><text x="150" y="255" fill="#e2e8f0" text-anchor="middle">case_hero</text>
+    <rect x="252" y="230" width="180" height="42" rx="8" fill="#0f172a" stroke="#334155"/><text x="342" y="255" fill="#e2e8f0" text-anchor="middle">case_challenge</text>
+    <rect x="444" y="230" width="180" height="42" rx="8" fill="#0f172a" stroke="#334155"/><text x="534" y="255" fill="#e2e8f0" text-anchor="middle">case_objectives</text>
+    <rect x="636" y="230" width="180" height="42" rx="8" fill="#0f172a" stroke="#334155"/><text x="726" y="255" fill="#e2e8f0" text-anchor="middle">case_solution</text>
+    <rect x="828" y="230" width="180" height="42" rx="8" fill="#0f172a" stroke="#334155"/><text x="918" y="255" fill="#e2e8f0" text-anchor="middle">case_architecture</text>
+    <rect x="1020" y="230" width="200" height="42" rx="8" fill="#0f172a" stroke="#334155"/><text x="1120" y="255" fill="#e2e8f0" text-anchor="middle">case_technology</text>
+
+    <rect x="60" y="284" width="180" height="42" rx="8" fill="#0f172a" stroke="#334155"/><text x="150" y="309" fill="#e2e8f0" text-anchor="middle">case_journey</text>
+    <rect x="252" y="284" width="180" height="42" rx="8" fill="#0f172a" stroke="#334155"/><text x="342" y="309" fill="#e2e8f0" text-anchor="middle">case_gallery</text>
+    <rect x="444" y="284" width="180" height="42" rx="8" fill="#0f172a" stroke="#334155"/><text x="534" y="309" fill="#e2e8f0" text-anchor="middle">case_results</text>
+    <rect x="636" y="284" width="180" height="42" rx="8" fill="#0f172a" stroke="#334155"/><text x="726" y="309" fill="#e2e8f0" text-anchor="middle">related_projects</text>
+    <rect x="828" y="284" width="180" height="42" rx="8" fill="#0f172a" stroke="#334155"/><text x="918" y="309" fill="#e2e8f0" text-anchor="middle">related_articles</text>
+    <rect x="1020" y="284" width="200" height="42" rx="8" fill="#0f172a" stroke="#334155"/><text x="1120" y="309" fill="#e2e8f0" text-anchor="middle">case_cta</text>
+  </g>
+
+  <!-- content sources -->
+  <rect x="60" y="380" width="1160" height="120" rx="12" fill="#0f172a" stroke="#38bdf8"/>
+  <text x="80" y="412" fill="#38bdf8" font-size="14" font-weight="700">Case-study content (all CMS-driven)</text>
+  <g font-size="12.5" fill="#94a3b8">
+    <text x="80" y="442">challenge · objectives · solution_approach · architecture (nodes) · implementation_stages · results — from Project.case_study (localized)</text>
+    <text x="80" y="466">technologies → Project.technologies · gallery → ProjectImage (MediaFile) · related projects → category/technology overlap · related articles → tag overlap</text>
+    <text x="80" y="490">Never invented: missing architecture/results → graceful fallback (ArchitectureViewer / ProjectResults)</text>
+  </g>
+
+  <rect x="60" y="520" width="1160" height="90" rx="12" fill="#1e293b" stroke="#334155"/>
+  <text x="80" y="552" fill="#e2e8f0" font-size="13" font-weight="600">Editorial + SEO + Analytics</text>
+  <g font-size="12" fill="#94a3b8">
+    <text x="80" y="578">workflow (8C): drafts never public · by-slug uses published queryset · project_view · case_study_section_visible · project_cta_click</text>
+    <text x="80" y="598">gallery_open/image_view · related clicks · useSeoMeta (title/desc/canonical/OG) + BreadcrumbList + CreativeWork JSON-LD</text>
+  </g>
+</svg>

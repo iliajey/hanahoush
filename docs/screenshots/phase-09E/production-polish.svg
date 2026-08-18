@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1560" viewBox="0 0 1280 1560" font-family="Inter, Vazirmatn, sans-serif">
+  <!-- Phase 9E production-polish visual QA: rendered from the actual token values (brand anchors #932990/#272161/#FDFBFC).
+       Honest renders of the implemented system — NOT browser captures (no browser harness in this environment). -->
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#932990"/>
+      <stop offset="1" stop-color="#272161"/>
+    </linearGradient>
+    <linearGradient id="hairline" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00000000"/>
+      <stop offset="0.5" stop-color="#932990A0"/>
+      <stop offset="1" stop-color="#00000000"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="1560" fill="#FDFBFC"/>
+  <text x="40" y="46" font-size="26" font-weight="700" fill="#272161">Phase 9E — Production UX &amp; content polish · visual QA</text>
+  <text x="40" y="72" font-size="14" fill="#7E5691">Token-accurate SVGs follow the prior-phase convention. Brand anchors preserved: #932990 · #272161 · #FDFBFC. No new token system, no browser captures.</text>
+
+  <!-- 1. Localized chrome: theme toggle, language toggle, dialog close, announcement bar -->
+  <text x="40" y="120" font-size="18" font-weight="700" fill="#272161">1 · Localized interface chrome (FA / EN / AR)</text>
+  <rect x="40" y="136" width="1200" height="252" rx="16" fill="#FFFFFF" stroke="#E9DFEA"/>
+
+  <!-- announcement bar -->
+  <rect x="40" y="136" width="1200" height="40" rx="12" fill="#932990"/>
+  <text x="80" y="161" font-size="13" fill="#FFFFFF">نسخه جدید هانه‌هوش منتشر شد.</text>
+  <text x="360" y="161" font-size="13" fill="#FFFFFF" font-weight="600" text-decoration="underline">بیشتر بخوانید</text>
+  <rect x="1216" y="148" width="18" height="18" rx="9" fill="#00000000"/>
+  <text x="1225" y="161" font-size="13" fill="#FFFFFF">×</text>
+  <text x="46" y="196" font-size="12" fill="#7E5691">aria-label="اعلامیه" · dismiss button labelled "بستن اعلامیه" · custom colors now render via inline style (the bg-[…] JIT dead-class bug fixed)</text>
+
+  <!-- theme toggle (localized) -->
+  <g>
+    <rect x="64" y="216" width="196" height="34" rx="17" fill="#F3EBF5"/>
+    <rect x="70" y="222" width="60" height="22" rx="11" fill="#FFFFFF"/>
+    <text x="100" y="237" font-size="12" fill="#1F1853" text-anchor="middle">روشن</text>
+    <text x="154" y="237" font-size="12" fill="#7E5691" text-anchor="middle">تیره</text>
+    <text x="238" y="237" font-size="12" fill="#7E5691" text-anchor="middle">سیستمی</text>
+  </g>
+  <text x="280" y="238" font-size="12" fill="#7E5691">← aria-label="تغییر حالت نمایش" (was hardcoded "Theme")</text>
+
+  <!-- language toggle -->
+  <rect x="64" y="262" width="64" height="30" rx="15" fill="none" stroke="#E9DFEA"/>
+  <text x="96" y="281" font-size="12" fill="#1F1853" text-anchor="middle">FA</text>
+  <text x="140" y="281" font-size="12" fill="#7E5691">← aria-label/title "تغییر زبان" (was hardcoded "Switch language")</text>
+
+  <!-- auth brand + schema messages -->
+  <text x="64" y="326" font-size="13" fill="#1F1853">Auth shell brand now reads t("app.title")</text>
+  <rect x="430" y="140" width="250" height="30" rx="6" fill="#FDF1F3" stroke="#F2B8C0"/>
+  <text x="446" y="160" font-size="12.5" fill="#DC2626">رمز عبور باید حداقل ۸ کاراکتر باشد</text>
+  <text x="430" y="196" font-size="12" fill="#7E5691">zod validation messages are now localized (auth schema factories)</text>
+  <text x="430" y="214" font-size="12" fill="#7E5691">login / forgot / reset error alerts use localized copy — no raw English backend messages</text>
+  <rect x="430" y="240" width="250" height="30" rx="6" fill="#FDF1F3" stroke="#F2B8C0"/>
+  <text x="446" y="260" font-size="12.5" fill="#DC2626">We couldn't send the reset link. Please try again.</text>
+
+  <!-- 2. Mobile drawer: Escape + aria-controls + focus management -->
+  <text x="40" y="424" font-size="18" font-weight="700" fill="#272161">2 · Mobile drawer interaction (Escape closes, focus returns, aria-controls)</text>
+  <rect x="40" y="440" width="580" height="300" rx="16" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <rect x="72" y="452" width="60" height="24" rx="12" fill="#932990"/>
+  <text x="102" y="468" font-size="12" fill="#FFFFFF" text-anchor="middle">Menu</text>
+  <rect x="72" y="484" width="516" height="240" rx="12" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <g font-size="13" fill="#1F1853">
+    <text x="92" y="512">خانه</text>
+    <text x="92" y="536">خدمات</text>
+    <text x="92" y="560">پروژه‌ها</text>
+    <text x="92" y="584">مقالات</text>
+    <text x="92" y="608">درباره ما</text>
+    <text x="92" y="632">تماس</text>
+    <rect x="92" y="646" width="22" height="22" rx="6" fill="#F3EBF5"/>
+    <text x="103" y="662" text-anchor="middle" fill="#7E5691">⌕</text>
+    <text x="124" y="662">جستجو</text>
+    <rect x="86" y="682" width="488" height="1" fill="#E9DFEA"/>
+    <text x="92" y="704" font-size="12" fill="#7E5691">Escape بستن · focus به دکمهٔ منو برمی‌گردد · aria-controls="mobile-nav"</text>
+  </g>
+  <text x="660" y="470" font-size="13" fill="#7E5691">Keyboard path: Tab → toggle → Enter opens → Escape closes →</text>
+  <text x="660" y="490" font-size="13" fill="#7E5691">focus returns to the toggle (aria-expanded + aria-controls wired).</text>
+  <text x="660" y="514" font-size="12" fill="#7E5691">Mobile drawer keeps feature parity with desktop (search entry,</text>
+  <text x="660" y="530" font-size="12" fill="#7E5691">theme row, authenticated Dashboard/Logout) without overcrowding.</text>
+
+  <!-- 3. Localized error / empty / loading states (no raw errors) -->
+  <text x="40" y="780" font-size="18" font-weight="700" fill="#272161">3 · Loading / error / empty states — generic, localized, retry-capable</text>
+  <rect x="40" y="796" width="1200" height="300" rx="16" fill="#FFFFFF" stroke="#E9DFEA"/>
+
+  <!-- error -->
+  <rect x="64" y="820" width="340" height="150" rx="12" fill="#FDF1F3" stroke="#F2B8C0"/>
+  <circle cx="100" cy="856" r="18" fill="#FBE7EA"/>
+  <text x="100" y="862" text-anchor="middle" font-size="14" fill="#DC2626">!</text>
+  <text x="134" y="852" font-size="13.5" font-weight="600" fill="#1F1853">تعذّر تحميل المحتوى</text>
+  <text x="134" y="874" font-size="12" fill="#7E5691">حدث خطأ أثناء تحميل هذا القسم.</text>
+  <text x="134" y="892" font-size="12" fill="#7E5691">يرجى المحاولة مرة أخرى.</text>
+  <rect x="134" y="906" width="110" height="30" rx="15" fill="none" stroke="#7A2477"/>
+  <text x="189" y="925" text-anchor="middle" font-size="12" fill="#7A2477" font-weight="600">إعادة المحاولة</text>
+  <text x="64" y="994" font-size="11.5" fill="#7E5691">CmsAsync + SearchResults + ErrorBoundary + newsletter + contact: no raw exception or</text>
+  <text x="64" y="1010" font-size="11.5" fill="#7E5691">English backend message ever reaches the user; retry preserved; keys errors.section* added.</text>
+
+  <!-- empty -->
+  <rect x="460" y="820" width="340" height="150" rx="12" fill="#FFFFFF" stroke="#E9DFEA" stroke-dasharray="4 4"/>
+  <circle cx="496" cy="856" r="18" fill="#F3EBF5"/>
+  <text x="496" y="862" text-anchor="middle" font-size="12" fill="#7E5691">□</text>
+  <text x="530" y="852" font-size="13.5" font-weight="600" fill="#1F1853">No content published yet</text>
+  <text x="530" y="874" font-size="12" fill="#7E5691">Check back soon — content is on its way.</text>
+
+  <!-- loading -->
+  <rect x="856" y="820" width="340" height="150" rx="12" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <rect x="880" y="844" width="180" height="12" rx="6" fill="#F0E8F2"/>
+  <rect x="880" y="868" width="280" height="12" rx="6" fill="#F0E8F2"/>
+  <rect x="880" y="892" width="240" height="12" rx="6" fill="#F0E8F2"/>
+  <rect x="880" y="920" width="180" height="26" rx="13" fill="#F3EBF5"/>
+  <text x="880" y="980" font-size="11.5" fill="#7E5691">aria-busy skeletons — no padding jump, no unexplained spinners</text>
+
+  <!-- 4. RTL-corrected menus (logical properties) -->
+  <text x="40" y="1136" font-size="18" font-weight="700" fill="#272161">4 · RTL-corrected popovers (logical properties, mirrors correctly)</text>
+  <rect x="40" y="1152" width="1200" height="180" rx="16" fill="#FFFFFF" stroke="#E9DFEA"/>
+
+  <!-- select in RTL -->
+  <rect x="64" y="1176" width="300" height="132" rx="12" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="80" y="1202" font-size="12" fill="#7E5691">خدمت (RTL select)</text>
+  <rect x="80" y="1214" width="268" height="34" rx="8" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="96" y="1235" font-size="12.5" fill="#1F1853">توسعه نرم‌افزار</text>
+  <text x="332" y="1235" font-size="12" fill="#7E5691">▾</text>
+  <rect x="80" y="1256" width="268" height="40" rx="8" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="96" y="1280" font-size="12.5" fill="#1F1853">پیاده‌سازی Odoo</text>
+  <path d="M 324 1264 l 8 8 l 8 -8" fill="none" stroke="#7A2477" stroke-width="2"/>
+  <text x="330" y="1284" font-size="11" fill="#7E5691">check on inline-end</text>
+  <text x="400" y="1200" font-size="12" fill="#7E5691">SelectItem + DropdownMenu indicators now use logical</text>
+  <text x="400" y="1216" font-size="12" fill="#7E5691">padding (ps/pe) and inset-inline-end (end-2): the check</text>
+  <text x="400" y="1232" font-size="12" fill="#7E5691">lands on the correct visual side in both LTR and RTL.</text>
+
+  <!-- dropdown in RTL -->
+  <rect x="680" y="1176" width="300" height="132" rx="12" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="696" y="1202" font-size="12" fill="#7E5691">پروفایل (RTL dropdown)</text>
+  <rect x="696" y="1214" width="268" height="34" rx="8" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="712" y="1235" font-size="12.5" fill="#1F1853">داشبورد</text>
+  <rect x="696" y="1256" width="268" height="40" rx="8" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="712" y="1280" font-size="12.5" fill="#DC2626">خروج</text>
+  <text x="1024" y="1216" font-size="11" fill="#7E5691">radio/checkbox items use ps-8/pe-2 + start-2</text>
+
+  <!-- footer -->
+  <rect x="40" y="1348" width="1200" height="2" fill="url(#hairline)"/>
+  <text x="40" y="1380" font-size="12" fill="#7E5691">EnterpriseFooter strings now localized (Newsletter/Subscribe/rights/email label). Search command shortcut shows Ctrl K on Windows/Linux, ⌘K on macOS.</text>
+  <text x="40" y="1404" font-size="12" fill="#7E5691">AnnouncementBar, Breadcrumb, Dialog close, Spinner, ErrorState/EmptyState defaults, CmsAsync, SearchInput, LanguageToggle, ThemeToggle, AuthShell: all consume i18n.</text>
+  <text x="40" y="1440" font-size="12" fill="#7E5691">Verification: typecheck 0 · lint 0 · vitest 154 (29 files) · build ✅ · build-storybook ✅ · backend check/migrate/bootstrap ✅ · pytest 274 ✅ · ERP_ENABLED=false, ERP_PROVIDER=null.</text>
+</svg>

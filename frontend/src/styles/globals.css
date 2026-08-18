@@ -1,0 +1,396 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ */
+/* Hanahoush Design Tokens (CSS variables)                             */
+/* ------------------------------------------------------------------ */
+:root {
+  --radius: 0.5rem;
+
+  /* Brand palette (violet-magenta → deep indigo, from the brand mark) */
+  --brand-50: 253 246 251;
+  --brand-100: 247 232 247;
+  --brand-200: 237 209 236;
+  --brand-300: 221 171 219;
+  --brand-400: 197 126 194;
+  --brand-500: 166 82 163;
+  --brand-600: 147 41 144;
+  --brand-700: 122 36 119;
+  --brand-800: 93 32 97;
+  --brand-900: 63 28 88;
+  --brand-950: 39 33 97;
+
+  /* Semantic colors — light */
+  --background: 330 33% 99%;
+  --foreground: 247 55% 21%;
+  --card: 0 0% 100%;
+  --card-foreground: 247 55% 21%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 247 55% 21%;
+  --primary: 302 56% 37%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 288 33% 94%;
+  --secondary-foreground: 247 55% 21%;
+  --muted: 288 33% 95%;
+  --muted-foreground: 281 26% 45%;
+  --accent: 309 44% 94%;
+  --accent-foreground: 302 54% 31%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 294 21% 90%;
+  --input: 294 21% 90%;
+  --ring: 302 56% 37%;
+  --success: 142 72% 29%;
+  --warning: 26 90% 37%;
+  --error: 0 72% 51%;
+  --info: 302 56% 37%;
+
+  /* Fonts */
+  --font-sans: "Vazirmatn", "Inter Variable", system-ui, sans-serif;
+  --font-mono: "SFMono-Regular", "Menlo", "Consolas", monospace;
+
+  color-scheme: light;
+}
+
+.dark,
+[data-theme="dark"] {
+  /* Semantic colors — dark */
+  --background: 252 43% 7%;
+  --foreground: 272 33% 92%;
+  --card: 252 36% 11%;
+  --card-foreground: 272 33% 92%;
+  --popover: 252 36% 11%;
+  --popover-foreground: 272 33% 92%;
+  --primary: 302 49% 57%;
+  --primary-foreground: 250 56% 14%;
+  --secondary: 253 28% 20%;
+  --secondary-foreground: 272 33% 92%;
+  --muted: 253 28% 18%;
+  --muted-foreground: 269 17% 67%;
+  --accent: 270 52% 23%;
+  --accent-foreground: 285 45% 88%;
+  --destructive: 3 84% 62%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 254 30% 21%;
+  --input: 254 30% 21%;
+  --ring: 303 56% 69%;
+  --success: 158 64% 52%;
+  --warning: 43 96% 56%;
+  --error: 3 84% 62%;
+  --info: 302 49% 57%;
+
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------ */
+/* Fonts — import once via main.tsx (@fontsource-variable/*)           */
+/* ------------------------------------------------------------------ */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html[dir="rtl"] {
+    font-family: "Vazirmatn", "Inter Variable", system-ui, sans-serif;
+  }
+
+  html[dir="ltr"] {
+    font-family: "Inter Variable", "Vazirmatn", system-ui, sans-serif;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    font-feature-settings: "liga" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  ::selection {
+    @apply bg-primary/20 text-foreground;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Component helpers                                                    */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .container-hanahoush {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* ================================================================== */
+/* Phase 7B — Design System extension                                  */
+/* ================================================================== */
+
+/* ---- Interaction + extended tokens (light) ---- */
+:root {
+  --primary-hover: 302 54% 31%;
+  --secondary-hover: 288 33% 89%;
+  --destructive-hover: 0 68% 52%;
+  --muted-hover: 288 33% 89%;
+  --accent-hover: 309 44% 90%;
+  --selection-bg: 302 44% 89%;
+  --selection-fg: 247 55% 21%;
+  --scrollbar-thumb: 291 16% 83%;
+  --scrollbar-track: 291 30% 96%;
+  --scrollbar-thumb-hover: 290 16% 71%;
+  --ring-offset: 330 33% 99%;
+  --focus-ring-width: 2px;
+
+  /* Glass */
+  --glass-bg-subtle: 0 0% 100% / 0.5;
+  --glass-bg: 0 0% 100% / 0.65;
+  --glass-bg-strong: 0 0% 100% / 0.85;
+  --glass-blur-subtle: 8px;
+  --glass-blur: 16px;
+  --glass-blur-strong: 24px;
+  --glass-border-subtle: 294 21% 90% / 0.5;
+  --glass-border: 294 21% 90% / 0.6;
+  --glass-border-strong: 294 21% 90% / 0.8;
+
+  /* Elevation shadows */
+  --shadow-flat: 0 0 #0000;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 8px -2px rgb(28 12 44 / 0.08), 0 2px 4px -2px rgb(28 12 44 / 0.05);
+  --shadow-lg: 0 12px 24px -6px rgb(28 12 44 / 0.12), 0 4px 8px -4px rgb(28 12 44 / 0.06);
+  --shadow-xl: 0 20px 40px -8px rgb(28 12 44 / 0.16), 0 8px 16px -8px rgb(28 12 44 / 0.08);
+  --shadow-2xl: 0 32px 64px -12px rgb(28 12 44 / 0.22);
+
+  /* Gradients (magenta → deep indigo, mirroring the brand mark) */
+  --gradient-brand: linear-gradient(135deg, hsl(302 56% 37%), hsl(246 49% 26%));
+  --gradient-hero: radial-gradient(60% 50% at 50% 0%, hsl(302 56% 37% / 0.18), transparent 70%);
+  --gradient-cta: linear-gradient(135deg, hsl(302 56% 37%), hsl(278 54% 31%));
+  --gradient-mesh: radial-gradient(40% 40% at 20% 20%, hsl(302 56% 37% / 0.12), transparent 70%),
+    radial-gradient(40% 40% at 80% 60%, hsl(270 52% 24% / 0.12), transparent 70%),
+    radial-gradient(30% 30% at 60% 20%, hsl(310 60% 55% / 0.08), transparent 70%);
+
+  /* Cursor */
+  --cursor-orb-color: hsl(302 56% 37% / 0.55);
+  --cursor-orb-glow: hsl(302 56% 37% / 0.18);
+  --cursor-ring-color: hsl(302 56% 37% / 0.6);
+}
+
+/* ---- Interaction + extended tokens (dark) ---- */
+.dark,
+[data-theme="dark"] {
+  --primary-hover: 303 52% 64%;
+  --secondary-hover: 254 29% 24%;
+  --destructive-hover: 3 88% 67%;
+  --muted-hover: 254 29% 22%;
+  --accent-hover: 270 52% 27%;
+  --selection-bg: 302 54% 31%;
+  --selection-fg: 317 64% 98%;
+  --scrollbar-thumb: 256 23% 29%;
+  --scrollbar-track: 252 36% 11%;
+  --scrollbar-thumb-hover: 257 21% 39%;
+  --ring-offset: 252 43% 7%;
+
+  --glass-bg-subtle: 252 36% 13% / 0.5;
+  --glass-bg: 252 36% 13% / 0.65;
+  --glass-bg-strong: 252 36% 13% / 0.85;
+  --glass-border-subtle: 254 30% 28% / 0.4;
+  --glass-border: 254 30% 28% / 0.5;
+  --glass-border-strong: 254 30% 28% / 0.7;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 8px -2px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 12px 24px -6px rgb(0 0 0 / 0.55), 0 4px 8px -4px rgb(0 0 0 / 0.35);
+  --shadow-xl: 0 20px 40px -8px rgb(0 0 0 / 0.6), 0 8px 16px -8px rgb(0 0 0 / 0.4);
+  --shadow-2xl: 0 32px 64px -12px rgb(0 0 0 / 0.7);
+
+  --gradient-brand: linear-gradient(135deg, hsl(302 49% 57%), hsl(246 49% 32%));
+  --gradient-hero: radial-gradient(60% 50% at 50% 0%, hsl(302 49% 57% / 0.2), transparent 70%);
+  --gradient-cta: linear-gradient(135deg, hsl(302 49% 57%), hsl(270 52% 34%));
+
+  --cursor-orb-color: hsl(303 56% 69% / 0.6);
+  --cursor-orb-glow: hsl(303 56% 69% / 0.2);
+  --cursor-ring-color: hsl(303 56% 69% / 0.6);
+}
+
+/* ---- Selection, scrollbar, focus ---- */
+@layer base {
+  ::selection {
+    background-color: hsl(var(--selection-bg));
+    color: hsl(var(--selection-fg));
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--scrollbar-thumb)) hsl(var(--scrollbar-track));
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--scrollbar-track));
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--scrollbar-thumb));
+    border-radius: 999px;
+    border: 2px solid hsl(var(--scrollbar-track));
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--scrollbar-thumb-hover));
+  }
+
+  :focus-visible {
+    outline: var(--focus-ring-width) solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+/* ---- Theme switching transition ---- */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition:
+    background-color 300ms ease,
+    border-color 300ms ease,
+    color 200ms ease,
+    fill 300ms ease,
+    box-shadow 300ms ease !important;
+}
+
+/* ---- Glass surfaces ---- */
+.glass-subtle {
+  background: hsl(var(--glass-bg-subtle));
+  backdrop-filter: blur(var(--glass-blur-subtle)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-subtle)) saturate(140%);
+  border: 1px solid hsl(var(--glass-border-subtle));
+}
+.glass {
+  background: hsl(var(--glass-bg));
+  backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  border: 1px solid hsl(var(--glass-border));
+}
+.glass-strong {
+  background: hsl(var(--glass-bg-strong));
+  backdrop-filter: blur(var(--glass-blur-strong)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(140%);
+  border: 1px solid hsl(var(--glass-border-strong));
+}
+
+/* ---- Glow + border glow ---- */
+.glow {
+  box-shadow: 0 0 24px 0 hsl(var(--ring) / 0.35);
+}
+.border-glow {
+  position: relative;
+  background:
+    linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
+    linear-gradient(135deg, hsl(var(--primary)), hsl(var(--ring))) border-box;
+  border: 1px solid transparent;
+}
+
+/* ---- Animated grid background ---- */
+.hh-grid {
+  background-image:
+    linear-gradient(to right, hsl(var(--border) / 0.6) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--border) / 0.6) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 40%, transparent 100%);
+}
+.hh-grid-animated {
+  animation: hh-grid-pan 24s linear infinite;
+}
+@keyframes hh-grid-pan {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 48px 48px;
+  }
+}
+
+/* ---- Noise overlay ---- */
+.hh-noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- Gradient mesh ---- */
+.hh-mesh {
+  background-image: var(--gradient-mesh);
+}
+
+/* ---- Floating card idle motion ---- */
+@keyframes hh-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.hh-float {
+  animation: hh-float 6s ease-in-out infinite;
+}
+
+/** Infinite marquee for partner logos. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hh-grid-animated,
+  .hh-float,
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .hh-noise,
+  .hh-grid {
+    opacity: 0.5;
+  }
+}
+
+/* ---- High contrast / forced colors ---- */
+@media (forced-colors: active) {
+  :root {
+    --ring: 217 91% 40%;
+  }
+  .glass,
+  .glass-subtle,
+  .glass-strong {
+    backdrop-filter: none;
+    border: 1px solid CanvasText;
+  }
+  .border-glow {
+    background: transparent;
+    border: 1px solid CanvasText;
+  }
+}
+

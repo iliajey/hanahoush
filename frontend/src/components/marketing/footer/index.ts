@@ -1,0 +1,1 @@
+export { EnterpriseFooter } from "./Footer"

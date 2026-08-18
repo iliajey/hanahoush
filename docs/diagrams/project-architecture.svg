@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" font-family="Inter, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#38bdf8"/></marker>
+  </defs>
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#e2e8f0" font-size="24" font-weight="700">Project architecture — ArchitectureViewer (CMS-driven, honest)</text>
+  <text x="40" y="78" fill="#94a3b8" font-size="14">Renders ONLY the layers/nodes supplied by Project.case_study.architecture — no invented claims.</text>
+
+  <!-- layers -->
+  <g font-size="13">
+    <rect x="120" y="150" width="180" height="70" rx="12" fill="#1e293b" stroke="#38bdf8"/>
+    <text x="155" y="182" fill="#38bdf8" font-weight="700">Frontend</text>
+    <text x="155" y="206" fill="#94a3b8">React · TypeScript</text>
+
+    <rect x="390" y="150" width="180" height="70" rx="12" fill="#1e293b" stroke="#10b981"/>
+    <text x="470" y="162" fill="#10b981" font-weight="700">Backend</text>
+    <text x="470" y="206" fill="#94a3b8">Django · REST API</text>
+
+    <rect x="660" y="150" width="180" height="70" rx="12" fill="#1e293b" stroke="#a78bfa"/>
+    <text x="740" y="162" fill="#a78bfa" font-weight="700">Database</text>
+    <text x="740" y="206" fill="#94a3b8">PostgreSQL</text>
+
+    <rect x="930" y="150" width="180" height="70" rx="12" fill="#1e293b" stroke="#f59e0b"/>
+    <text x="1030" y="162" fill="#f59e0b" font-weight="700">Services</text>
+    <text x="1030" y="206" fill="#94a3b8">External services</text>
+  </g>
+
+  <!-- data model -->
+  <rect x="120" y="300" width="12" height="40" fill="#334155"/>
+  <rect x="390" y="300" width="12" height="40" fill="#334155"/>
+  <rect x="660" y="300" width="12" height="40" fill="#334155"/>
+  <rect x="930" y="300" width="12" height="40" fill="#334155"/>
+
+  <rect x="40" y="360" width="1200" height="120" rx="12" fill="#0f172a" stroke="#38bdf8"/>
+  <text x="60" y="392" fill="#38bdf8" font-size="14" font-weight="700">case_study.architecture contract</text>
+  <g font-size="12.5" fill="#94a3b8">
+    <text x="60" y="420">{"description": "…", "nodes": [{"layer": "Frontend", "labels": ["React", "TypeScript"]}, …]}</text>
+    <text x="60" y="444">labels may be string[] or {en: string[]} — ArchitectureViewer resolves per language (leniently)</text>
+    <text x="60" y="468">no nodes / no field → clean fallback: "Architecture information is not available for this project yet."</text>
+  </g>
+
+  <rect x="40" y="500" width="1200" height="90" rx="12" fill="#1e293b" stroke="#334155"/>
+  <text x="60" y="532" fill="#e2e8f0" font-size="13" font-weight="600">Extensibility</text>
+  <g font-size="12" fill="#94a3b8">
+    <text x="60" y="558">Add layers/nodes in the CMS → the viewer renders them automatically (no code change).</text>
+    <text x="60" y="578">Layer icons map by name (frontend/backend/database/services/…) with a generic fallback icon.</text>
+  </g>
+</svg>

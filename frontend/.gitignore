@@ -1,0 +1,15 @@
+# Node
+node_modules/
+
+# Build output
+dist/
+storybook-static/
+
+# Vite / TypeScript
+*.tsbuildinfo
+.vite/
+.eslintcache
+
+# IDE
+.vscode/
+.idea/

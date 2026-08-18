@@ -1,0 +1,1 @@
+export { contactAnalytics } from "../analytics/domains"

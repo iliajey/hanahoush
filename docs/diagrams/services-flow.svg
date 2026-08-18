@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="700" viewBox="0 0 1280 700" font-family="Inter, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#38bdf8"/></marker>
+  </defs>
+  <rect width="1280" height="700" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#e2e8f0" font-size="24" font-weight="700">Services page — data flow</text>
+
+  <!-- Admin -->
+  <rect x="40" y="90" width="360" height="150" rx="14" fill="#1e293b" stroke="#334155"/>
+  <text x="60" y="122" fill="#38bdf8" font-size="15" font-weight="700">Django Admin — Page Builder</text>
+  <text x="60" y="150" fill="#94a3b8" font-size="12.5">· Page "services" + ordered sections</text>
+  <text x="60" y="172" fill="#94a3b8" font-size="12.5">· section config: hero, journey, core</text>
+  <text x="60" y="194" fill="#94a3b8" font-size="12.5">  services, comparison, stack, process, cta</text>
+  <text x="60" y="216" fill="#94a3b8" font-size="12.5">· localized copy (fa/en/ar) + SEO</text>
+
+  <line x1="400" y1="170" x2="460" y2="170" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="422" y="158" fill="#64748b" font-size="11" text-anchor="middle">save</text>
+
+  <!-- Backend -->
+  <rect x="460" y="90" width="360" height="150" rx="14" fill="#1e293b" stroke="#334155"/>
+  <text x="480" y="122" fill="#38bdf8" font-size="15" font-weight="700">API</text>
+  <text x="480" y="150" fill="#94a3b8" font-size="12.5">· GET /api/v1/pages/services/</text>
+  <text x="480" y="172" fill="#94a3b8" font-size="12.5">  → composed page (seo + sections)</text>
+  <text x="480" y="194" fill="#94a3b8" font-size="12.5">· Accept-Language resolves copy</text>
+  <text x="480" y="216" fill="#94a3b8" font-size="12.5">· CMS content: /projects /articles /faqs</text>
+
+  <line x1="820" y1="170" x2="880" y2="170" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Frontend -->
+  <rect x="880" y="90" width="360" height="150" rx="14" fill="#1e293b" stroke="#334155"/>
+  <text x="900" y="122" fill="#38bdf8" font-size="15" font-weight="700">/services route</text>
+  <text x="900" y="150" fill="#94a3b8" font-size="12.5">· usePage("services")</text>
+  <text x="900" y="172" fill="#94a3b8" font-size="12.5">· <PageRenderer page={…} /></text>
+  <text x="900" y="194" fill="#94a3b8" font-size="12.5">· lazy sections + IntersectionObserver</text>
+  <text x="900" y="216" fill="#94a3b8" font-size="12.5">· SEO meta · scroll depth analytics</text>
+
+  <!-- section composition -->
+  <rect x="40" y="300" width="1200" height="180" rx="14" fill="#0f172a" stroke="#38bdf8"/>
+  <text x="60" y="332" fill="#38bdf8" font-size="14" font-weight="700">Section composition (10 sections, lazy-loaded)</text>
+  <g font-size="12">
+    <rect x="60" y="348" width="104" height="40" rx="8" fill="#1e293b" stroke="#334155"/><text x="112" y="372" fill="#e2e8f0" text-anchor="middle">hero</text>
+    <rect x="176" y="348" width="104" height="40" rx="8" fill="#1e293b" stroke="#334155"/><text x="228" y="372" fill="#e2e8f0" text-anchor="middle">journey</text>
+    <rect x="292" y="348" width="104" height="40" rx="8" fill="#1e293b" stroke="#334155"/><text x="344" y="372" fill="#e2e8f0" text-anchor="middle">services</text>
+    <rect x="408" y="348" width="118" height="40" rx="8" fill="#1e293b" stroke="#334155"/><text x="467" y="372" fill="#e2e8f0" text-anchor="middle">comparison</text>
+    <rect x="538" y="348" width="96" height="40" rx="8" fill="#1e293b" stroke="#334155"/><text x="586" y="372" fill="#e2e8f0" text-anchor="middle">stack</text>
+    <rect x="646" y="348" width="96" height="40" rx="8" fill="#1e293b" stroke="#334155"/><text x="694" y="372" fill="#e2e8f0" text-anchor="middle">process</text>
+    <rect x="754" y="348" width="96" height="40" rx="8" fill="#1e293b" stroke="#334155"/><text x="802" y="372" fill="#e2e8f0" text-anchor="middle">faq</text>
+    <rect x="862" y="348" width="104" height="40" rx="8" fill="#1e293b" stroke="#334155"/><text x="914" y="372" fill="#e2e8f0" text-anchor="middle">projects</text>
+    <rect x="978" y="348" width="104" height="40" rx="8" fill="#1e293b" stroke="#334155"/><text x="1030" y="372" fill="#e2e8f0" text-anchor="middle">articles</text>
+    <rect x="1094" y="348" width="96" height="40" rx="8" fill="#1e293b" stroke="#334155"/><text x="1142" y="372" fill="#e2e8f0" text-anchor="middle">cta</text>
+  </g>
+  <text x="60" y="420" fill="#94a3b8" font-size="12.5">config-driven: hero · journey · comparison · stack · process · cta  +  curated core services  +  CMS-loaded: projects · articles · faq</text>
+  <text x="60" y="446" fill="#64748b" font-size="12">Each section: React.lazy → Suspense(skeleton) → SectionBoundary → component(config). Unknown types fall back gracefully.</text>
+
+  <!-- analytics -->
+  <rect x="40" y="520" width="1200" height="120" rx="14" fill="#1e293b" stroke="#334155"/>
+  <text x="60" y="552" fill="#38bdf8" font-size="14" font-weight="700">Analytics (features/analytics)</text>
+  <g font-size="12.5" fill="#94a3b8">
+    <text x="60" y="580">section_visible · cta_click (primary/secondary) · accordion_open · scroll_depth (25/50/75/100)</text>
+    <text x="60" y="606">render analytics (page-builder): type · status · timing → visible in /dev/services</text>
+    <text x="60" y="630">IntersectionObserver (passive) + passive scroll listener — zero layout shifts, no console errors</text>
+  </g>
+</svg>

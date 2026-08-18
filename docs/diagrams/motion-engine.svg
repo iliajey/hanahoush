@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="440" viewBox="0 0 900 440" font-family="Inter, system-ui, sans-serif">
+  <rect width="900" height="440" fill="#fafbff"/>
+  <text x="30" y="40" font-size="22" font-weight="700" fill="#0f172a">Motion Engine</text>
+  <text x="30" y="64" font-size="13" fill="#7f8797">Presets → triggers → gates (reduced motion / pointer / perf)</text>
+
+  <!-- Presets -->
+  <rect x="40" y="110" width="260" height="200" rx="10" fill="#e0e7ff" stroke="#c7d2fe"/>
+  <text x="170" y="134" font-size="14" font-weight="700" fill="#3730a3" text-anchor="middle">Presets</text>
+  <text x="170" y="160" font-size="11" fill="#4338ca" text-anchor="middle">fast · 120ms — micro feedback</text>
+  <text x="170" y="180" font-size="11" fill="#4338ca" text-anchor="middle">medium · 200ms — hover/press</text>
+  <text x="170" y="200" font-size="11" fill="#4338ca" text-anchor="middle">slow · 300ms — panels/modals</text>
+  <text x="170" y="220" font-size="11" fill="#4338ca" text-anchor="middle">elastic/smooth/premium · 400-600ms</text>
+  <text x="170" y="240" font-size="11" fill="#4338ca" text-anchor="middle">easings: standard / emphasized</text>
+  <text x="170" y="260" font-size="11" fill="#4338ca" text-anchor="middle">(cubic-bezier 0.2,0,0,1 etc.)</text>
+
+  <!-- Triggers -->
+  <rect x="340" y="110" width="240" height="200" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="460" y="134" font-size="14" font-weight="700" fill="#3730a3" text-anchor="middle">Triggers</text>
+  <text x="460" y="160" font-size="11" fill="#4338ca" text-anchor="middle">hover (cards, buttons)</text>
+  <text x="460" y="180" font-size="11" fill="#4338ca" text-anchor="middle">scroll reveal (IntersectionObserver)</text>
+  <text x="460" y="200" font-size="11" fill="#4338ca" text-anchor="middle">route transition (AnimatePresence)</text>
+  <text x="460" y="220" font-size="11" fill="#4338ca" text-anchor="middle">pointer (glow, tilt, magnetic)</text>
+  <text x="460" y="240" font-size="11" fill="#4338ca" text-anchor="middle">loading (skeleton, brand loader)</text>
+
+  <!-- Gates -->
+  <rect x="620" y="110" width="250" height="200" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="745" y="134" font-size="14" font-weight="700" fill="#3730a3" text-anchor="middle">Gates</text>
+  <text x="745" y="160" font-size="11" fill="#4338ca" text-anchor="middle">prefers-reduced-motion → fade only</text>
+  <text x="745" y="180" font-size="11" fill="#4338ca" text-anchor="middle">pointer: fine required for cursor</text>
+  <text x="745" y="200" font-size="11" fill="#4338ca" text-anchor="middle">hardwareConcurrency < 4 → reduce</text>
+  <text x="745" y="220" font-size="11" fill="#4338ca" text-anchor="middle">touch → no hover/parallax</text>
+  <text x="745" y="240" font-size="11" fill="#4338ca" text-anchor="middle">GPU: transform/opacity only</text>
+
+  <line x1="300" y1="210" x2="340" y2="210" stroke="#818cf8" stroke-width="2"/>
+  <line x1="580" y1="210" x2="620" y2="210" stroke="#818cf8" stroke-width="2"/>
+
+  <rect x="40" y="350" width="830" height="50" rx="10" fill="#f5f7fa" stroke="#e2e8f0"/>
+  <text x="60" y="376" font-size="12" fill="#0f172a">Tools: Framer Motion (declarative, AnimatePresence) + GSAP (ScrollTrigger parallax) · tokens from src/design/motion</text>
+</svg>

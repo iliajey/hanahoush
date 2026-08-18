@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1180" viewBox="0 0 720 1180" font-family="Inter, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+  </defs>
+  <rect width="720" height="1180" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#e2e8f0" font-size="22" font-weight="700">Projects — mobile (Phase 8E)</text>
+  <text x="40" y="76" fill="#94a3b8" font-size="13">Editorial hierarchy preserved — not a vertical card dump.</text>
+
+  <rect x="40" y="100" width="640" height="90" rx="12" fill="#1e293b" stroke="#38bdf8"/>
+  <text x="360" y="140" fill="#f8fafc" font-size="17" font-weight="700" text-anchor="middle">Projects that solved real challenges.</text>
+  <text x="360" y="168" fill="#94a3b8" font-size="12" text-anchor="middle">What we've built</text>
+
+  <rect x="40" y="210" width="640" height="180" rx="12" fill="#1e293b" stroke="#334155"/>
+  <rect x="42" y="166" width="636" height="128" rx="12" fill="#334155"/>
+  <text x="340" y="330" fill="#e2e8f0" font-size="15" font-weight="600" text-anchor="middle">Enterprise Resource Planning System</text>
+  <text x="340" y="356" fill="#94a3b8" font-size="12" text-anchor="middle">ERP · 2025 · Featured ✦ · Django React PostgreSQL</text>
+  <text x="340" y="378" fill="#38bdf8" font-size="12" text-anchor="middle">Read the case study ↗</text>
+
+  <rect x="40" y="410" width="640" height="240" rx="12" fill="#1e293b" stroke="#334155"/>
+  <text x="360" y="450" fill="#f8fafc" font-size="15" font-weight="600" text-anchor="middle">Discover projects</text>
+  <text x="90" y="486" fill="#e2e8f0" font-size="13" text-anchor="start">Category ▾ · Technology ▾ · Year ▾ · Search</text>
+  <rect x="70" y="500" width="580" height="200" rx="12" fill="#0f172a" stroke="#334155"/>
+  <rect x="90" y="518" width="250" height="70" rx="10" fill="#1e293b" stroke="#334155"/><text x="215" y="555" fill="#e2e8f0" font-size="13" text-anchor="middle">Online Shop Platform</text>
+  <rect x="350" y="518" width="280" height="70" rx="10" fill="#1e293b" stroke="#334155"/><text x="490" y="540" fill="#e2e8f0" font-size="13" text-anchor="middle">Analytics</text><text x="490" y="566" fill="#64748b" font-size="11" text-anchor="middle">Dashboard</text>
+  <rect x="90" y="600" width="250" height="70" rx="10" fill="#1e293b" stroke="#334155"/><text x="190" y="629" fill="#e2e8f0" font-size="13" text-anchor="middle">Mobile App</text>
+  <rect x="350" y="600" width="280" height="70" rx="10" fill="#1e293b" stroke="#334155"/><text x="490" y="629" fill="#e2e8f0" font-size="13" text-anchor="middle">Corporate Website</text>
+
+  <rect x="40" y="670" width="640" height="150" rx="12" fill="#1e293b" stroke="#334155"/>
+  <text x="70" y="700" fill="#f8fafc" font-size="15" font-weight="600">Portfolio evolution</text>
+  <text x="90" y="740" fill="#94a3b8" font-size="13">2025 · 2 projects</text>
+  <text x="90" y="770" fill="#94a3b8" font-size="13">2024 · 2 projects</text>
+  <text x="90" y="800" fill="#94a3b8" font-size="13">— animated timeline</text>
+
+  <rect x="40" y="840" width="640" height="90" rx="14" fill="#0f172a" stroke="#38bdf8"/>
+  <text x="360" y="880" fill="#f8fafc" font-size="17" font-weight="700" text-anchor="middle">Have a project in mind?</text>
+  <text x="360" y="912" fill="#94a3b8" font-size="13" text-anchor="middle">Start a conversation</text>
+
+  <text x="40" y="980" fill="#64748b" font-size="12">· RTL fa/ar, LTR en via LanguageProvider · touch-friendly filters · sticky CTA</text>
+</svg>

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" font-family="Inter, Segoe UI, sans-serif">
+<rect width="1200" height="820" fill="#ffffff"/>
+<text x="48" y="52" font-size="28" font-weight="800" fill="#1F1853">Semantic token themes</text>
+<text x="48" y="78" font-size="14" fill="#6b5a6e">Light and dark theme surfaces, text and status tokens wired through the one CSS-variable pipeline (hsl(var(--…))).</text>
+<text x="48" y="118" font-size="18" font-weight="700" fill="#3a2f3d">Light theme</text>
+<rect x="48" y="142" width="300" height="56" rx="9" fill="#FDFBFC"/>
+<text x="62" y="165" font-size="13" font-weight="700" fill="#1F1853">--background</text>
+<text x="62" y="184" font-family="Consolas, monospace" font-size="10" fill="#1F1853" opacity="0.85">#FDFBFC</text>
+<rect x="48" y="208" width="300" height="56" rx="9" fill="#FFFFFF"/>
+<text x="62" y="231" font-size="13" font-weight="700" fill="#1F1853">--card/surface</text>
+<text x="62" y="250" font-family="Consolas, monospace" font-size="10" fill="#1F1853" opacity="0.85">#FFFFFF</text>
+<rect x="48" y="274" width="300" height="56" rx="9" fill="#1F1853"/>
+<text x="62" y="297" font-size="13" font-weight="700" fill="#FDFBFC">--text/foreground</text>
+<text x="62" y="316" font-family="Consolas, monospace" font-size="10" fill="#FDFBFC" opacity="0.85">#1F1853</text>
+<rect x="48" y="340" width="300" height="56" rx="9" fill="#7E5691"/>
+<text x="62" y="363" font-size="13" font-weight="700" fill="#FDFBFC">--text-muted</text>
+<text x="62" y="382" font-family="Consolas, monospace" font-size="10" fill="#FDFBFC" opacity="0.85">#7E5691</text>
+<rect x="48" y="406" width="300" height="56" rx="9" fill="#E9DFEA"/>
+<text x="62" y="429" font-size="13" font-weight="700" fill="#6b5a6e">--border</text>
+<text x="62" y="448" font-family="Consolas, monospace" font-size="10" fill="#6b5a6e" opacity="0.85">#E9DFEA</text>
+<rect x="48" y="472" width="300" height="56" rx="9" fill="#932990"/>
+<text x="62" y="495" font-size="13" font-weight="700" fill="#ffffff">--primary</text>
+<text x="62" y="514" font-family="Consolas, monospace" font-size="10" fill="#ffffff" opacity="0.85">#932990</text>
+<rect x="48" y="538" width="300" height="56" rx="9" fill="#F6E8F4"/>
+<text x="62" y="561" font-size="13" font-weight="700" fill="#7A2477">--accent surface</text>
+<text x="62" y="580" font-family="Consolas, monospace" font-size="10" fill="#7A2477" opacity="0.85">#F6E8F4</text>
+<rect x="48" y="604" width="300" height="56" rx="9" fill="#16A34A"/>
+<text x="62" y="627" font-size="13" font-weight="700" fill="#ffffff">--success</text>
+<text x="62" y="646" font-family="Consolas, monospace" font-size="10" fill="#ffffff" opacity="0.85">#16A34A</text>
+<rect x="48" y="670" width="300" height="56" rx="9" fill="#D97706"/>
+<text x="62" y="693" font-size="13" font-weight="700" fill="#ffffff">--warning</text>
+<text x="62" y="712" font-family="Consolas, monospace" font-size="10" fill="#ffffff" opacity="0.85">#D97706</text>
+<rect x="48" y="736" width="300" height="56" rx="9" fill="#E4453C"/>
+<text x="62" y="759" font-size="13" font-weight="700" fill="#ffffff">--error</text>
+<text x="62" y="778" font-family="Consolas, monospace" font-size="10" fill="#ffffff" opacity="0.85">#E4453C</text>
+<rect x="48" y="802" width="300" height="56" rx="9" fill="#932990"/>
+<text x="62" y="825" font-size="13" font-weight="700" fill="#ffffff">--info</text>
+<text x="62" y="844" font-family="Consolas, monospace" font-size="10" fill="#ffffff" opacity="0.85">#932990</text>
+<rect x="48" y="868" width="300" height="56" rx="9" fill="#932990"/>
+<text x="62" y="891" font-size="13" font-weight="700" fill="#ffffff">--ring/focus</text>
+<text x="62" y="910" font-family="Consolas, monospace" font-size="10" fill="#ffffff" opacity="0.85">#932990</text>
+<g transform="translate(410,0)"><text x="48" y="118" font-size="18" font-weight="700" fill="#3a2f3d">Dark theme</text>
+<rect x="48" y="142" width="300" height="56" rx="9" fill="#0D0A19"/>
+<text x="62" y="165" font-size="13" font-weight="700" fill="#ECE5F2">--background</text>
+<text x="62" y="184" font-family="Consolas, monospace" font-size="10" fill="#ECE5F2" opacity="0.85">#0D0A19</text>
+<rect x="48" y="208" width="300" height="56" rx="9" fill="#161226"/>
+<text x="62" y="231" font-size="13" font-weight="700" fill="#ECE5F2">--card/surface</text>
+<text x="62" y="250" font-family="Consolas, monospace" font-size="10" fill="#ECE5F2" opacity="0.85">#161226</text>
+<rect x="48" y="274" width="300" height="56" rx="9" fill="#ECE5F2"/>
+<text x="62" y="297" font-size="13" font-weight="700" fill="#0D0A19">--text/foreground</text>
+<text x="62" y="316" font-family="Consolas, monospace" font-size="10" fill="#0D0A19" opacity="0.85">#ECE5F2</text>
+<rect x="48" y="340" width="300" height="56" rx="9" fill="#AB9DBA"/>
+<text x="62" y="363" font-size="13" font-weight="700" fill="#0D0A19">--text-muted</text>
+<text x="62" y="382" font-family="Consolas, monospace" font-size="10" fill="#0D0A19" opacity="0.85">#AB9DBA</text>
+<rect x="48" y="406" width="300" height="56" rx="9" fill="#2C2544"/>
+<text x="62" y="429" font-size="13" font-weight="700" fill="#b9b0c2">--border</text>
+<text x="62" y="448" font-family="Consolas, monospace" font-size="10" fill="#b9b0c2" opacity="0.85">#2C2544</text>
+<rect x="48" y="472" width="300" height="56" rx="9" fill="#C75BC3"/>
+<text x="62" y="495" font-size="13" font-weight="700" fill="#1F1853">--primary</text>
+<text x="62" y="514" font-family="Consolas, monospace" font-size="10" fill="#1F1853" opacity="0.85">#C75BC3</text>
+<rect x="48" y="538" width="300" height="56" rx="9" fill="#3A1C58"/>
+<text x="62" y="561" font-size="13" font-weight="700" fill="#E7D2EE">--accent surface</text>
+<text x="62" y="580" font-family="Consolas, monospace" font-size="10" fill="#E7D2EE" opacity="0.85">#3A1C58</text>
+<rect x="48" y="604" width="300" height="56" rx="9" fill="#34D399"/>
+<text x="62" y="627" font-size="13" font-weight="700" fill="#0a0f0c">--success</text>
+<text x="62" y="646" font-family="Consolas, monospace" font-size="10" fill="#0a0f0c" opacity="0.85">#34D399</text>
+<rect x="48" y="670" width="300" height="56" rx="9" fill="#FBBF24"/>
+<text x="62" y="693" font-size="13" font-weight="700" fill="#1a1403">--warning</text>
+<text x="62" y="712" font-family="Consolas, monospace" font-size="10" fill="#1a1403" opacity="0.85">#FBBF24</text>
+<rect x="48" y="736" width="300" height="56" rx="9" fill="#F0564D"/>
+<text x="62" y="759" font-size="13" font-weight="700" fill="#2a0806">--error</text>
+<text x="62" y="778" font-family="Consolas, monospace" font-size="10" fill="#2a0806" opacity="0.85">#F0564D</text>
+<rect x="48" y="802" width="300" height="56" rx="9" fill="#C75BC3"/>
+<text x="62" y="825" font-size="13" font-weight="700" fill="#1F1853">--info</text>
+<text x="62" y="844" font-family="Consolas, monospace" font-size="10" fill="#1F1853" opacity="0.85">#C75BC3</text>
+<rect x="48" y="868" width="300" height="56" rx="9" fill="#DC82D7"/>
+<text x="62" y="891" font-size="13" font-weight="700" fill="#0D0A19">--ring/focus</text>
+<text x="62" y="910" font-family="Consolas, monospace" font-size="10" fill="#0D0A19" opacity="0.85">#DC82D7</text></g>
+<text x="48" y="786" font-size="12" fill="#6b5a6e">All values are WCAG-verified (see phase-09C-report.md §6).</text>
+</svg>

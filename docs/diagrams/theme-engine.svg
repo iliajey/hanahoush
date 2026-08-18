@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="440" viewBox="0 0 900 440" font-family="Inter, system-ui, sans-serif">
+  <rect width="900" height="440" fill="#fafbff"/>
+  <text x="30" y="40" font-size="22" font-weight="700" fill="#0f172a">Theme Engine</text>
+  <text x="30" y="64" font-size="13" fill="#7f8797">Provider state → apply → animate → persist → react to system</text>
+
+  <!-- Init -->
+  <rect x="40" y="110" width="170" height="90" rx="10" fill="#e0e7ff" stroke="#c7d2fe"/>
+  <text x="125" y="140" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">Initialize</text>
+  <text x="125" y="160" font-size="11" fill="#4338ca" text-anchor="middle">read localStorage</text>
+  <text x="125" y="178" font-size="11" fill="#4338ca" text-anchor="middle">fallback: system</text>
+
+  <!-- Resolve -->
+  <rect x="260" y="110" width="170" height="90" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="345" y="140" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">Resolve</text>
+  <text x="345" y="160" font-size="11" fill="#4338ca" text-anchor="middle">system → matchMedia</text>
+  <text x="345" y="178" font-size="11" fill="#4338ca" text-anchor="middle">set resolvedTheme</text>
+
+  <!-- Apply -->
+  <rect x="480" y="110" width="170" height="90" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="565" y="140" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">Apply</text>
+  <text x="565" y="160" font-size="11" fill="#4338ca" text-anchor="middle">toggle .dark</text>
+  <text x="565" y="178" font-size="11" fill="#4338ca" text-anchor="middle">set data-theme + scheme</text>
+
+  <!-- Animate -->
+  <rect x="700" y="110" width="170" height="90" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="785" y="140" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">Animate</text>
+  <text x="785" y="160" font-size="11" fill="#4338ca" text-anchor="middle">add .theme-transition</text>
+  <text x="785" y="178" font-size="11" fill="#4338ca" text-anchor="middle">remove after 360ms</text>
+
+  <line x1="210" y1="155" x2="260" y2="155" stroke="#818cf8" stroke-width="2"/>
+  <line x1="430" y1="155" x2="480" y2="155" stroke="#818cf8" stroke-width="2"/>
+  <line x1="650" y1="155" x2="700" y2="155" stroke="#818cf8" stroke-width="2"/>
+
+  <!-- Side inputs -->
+  <rect x="40" y="250" width="400" height="80" rx="10" fill="#f5f7fa" stroke="#e2e8f0"/>
+  <text x="60" y="278" font-size="13" font-weight="700" fill="#0f172a">Persist</text>
+  <text x="60" y="300" font-size="11" fill="#7f8797">setTheme writes localStorage["hanahoush-theme"]</text>
+  <text x="60" y="318" font-size="11" fill="#7f8797">used again on next startup (no flash)</text>
+
+  <rect x="460" y="250" width="410" height="80" rx="10" fill="#f5f7fa" stroke="#e2e8f0"/>
+  <text x="480" y="278" font-size="13" font-weight="700" fill="#0f172a">System listener</text>
+  <text x="480" y="300" font-size="11" fill="#7f8797">in system mode, matchMedia("prefers-color-scheme")</text>
+  <text x="480" y="318" font-size="11" fill="#7f8797">change handler re-applies the resolved theme</text>
+
+  <!-- Accessibility -->
+  <rect x="40" y="360" width="830" height="50" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="60" y="386" font-size="12" fill="#4338ca">Accessibility: theme transitions are disabled under prefers-reduced-motion; forced-colors mode overrides glass/borders.</text>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="400" viewBox="0 0 1440 400" font-family="Inter,Vazirmatn,system-ui,sans-serif">
+  <rect width="1440" height="400" fill="#fafbff"/><text x="40" y="28" font-size="14" font-weight="700" fill="#7f8797">HERO · 1440×400 · animated grid + particle bg · living cursor · framer motion stagger</text>
+  <rect x="0" y="50" width="1440" height="6" fill="url(#grid)"/><defs><linearGradient id="grid" x2="1"><stop offset="0" stop-color="#e0e7ff"/><stop offset="1" stop-color="#fdfdff"/></linearGradient></defs>
+  <text x="720" y="180" font-size="44" font-weight="800" fill="#0f172a" text-anchor="middle">Enterprise software, engineered like a product.</text>
+  <text x="720" y="220" font-size="17" fill="#7f8797" text-anchor="middle">ERP · AI · Web Applications · Odoo · Programming — bilingual, cloud-native, beautifully designed.</text>
+  <rect x="560" y="245" width="140" height="45" rx="22" fill="#4f46e5"/><text x="630" y="272" font-size="14" font-weight="600" fill="#fff" text-anchor="middle">Start a project →</text>
+  <rect x="720" y="245" width="160" height="45" rx="22" fill="#fff" stroke="#e2e8f0"/><text x="800" y="272" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">Explore services →</text>
+  <text x="720" y="330" font-size="20" font-weight="800" fill="#c7d2e0" text-anchor="middle">⤓ ⤓ ⤓</text>
+</svg>

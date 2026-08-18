@@ -1,0 +1,340 @@
+{
+  "app": {
+    "title": "Hanahoush",
+    "tagline": "Enterprise Platform",
+    "toggleTheme": "Toggle theme",
+    "toggleLanguage": "Toggle language",
+    "announcement": "Announcement",
+    "readMore": "Read more",
+    "dismissAnnouncement": "Dismiss announcement",
+    "theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    }
+  },
+  "nav": {
+    "main": "Main",
+    "home": "Home",
+    "services": "Services",
+    "projects": "Projects",
+    "articles": "Articles",
+    "about": "About",
+    "contact": "Contact",
+    "search": "Search",
+    "login": "Login",
+    "logout": "Logout",
+    "dashboard": "Dashboard",
+    "toggleMenu": "Toggle menu"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "success": "Success",
+    "error": "Error",
+    "loading": "Loading",
+    "empty": "No items yet",
+    "back": "Back",
+    "submit": "Submit",
+    "close": "Close",
+    "breadcrumb": "Breadcrumb"
+  },
+  "errors": {
+    "unexpected": "An unexpected error occurred",
+    "retry": "Try again",
+    "loadingPageTitle": "Couldn't load this page",
+    "loadingPageDescription": "Something went wrong while fetching this page. Please try again.",
+    "routeFallbackDescription": "An unexpected error occurred while rendering this page. Please try again or return home.",
+    "sectionTitle": "Couldn't load content",
+    "sectionDescription": "Something went wrong while loading this section. Please try again.",
+    "emptySectionTitle": "No content published yet",
+    "emptySectionDescription": "Check back soon — content is on its way."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist."
+  },
+  "auth": {
+    "login": "Login",
+    "loginDescription": "Sign in to your account",
+    "loginFailed": "Login failed",
+    "loginFailedDescription": "Check your username and password and try again.",
+    "logout": "Logout",
+    "username": "Username",
+    "password": "Password",
+    "email": "Email",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "forgotPasswordDescription": "Enter your email and we will send you a reset link.",
+    "sendResetLink": "Send reset link",
+    "resetLinkError": "We couldn't send the reset link. Please try again.",
+    "resetLinkSent": "Reset link sent",
+    "checkEmail": "If an account exists with that email, a reset link has been sent.",
+    "resetPassword": "Reset password",
+    "resetPasswordDescription": "Choose a new password for your account.",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "invalidResetLink": "This reset link is invalid or expired.",
+    "requestNewLink": "Request a new link",
+    "passwordResetSuccess": "Password reset successfully",
+    "goToLogin": "Go to login",
+    "resetFailed": "Password reset failed",
+    "welcomeBack": "Welcome back",
+    "sessionExpiredTitle": "Session expired",
+    "sessionExpiredDescription": "Your session has expired. Please sign in again.",
+    "unauthorizedTitle": "Unauthorized",
+    "unauthorizedDescription": "You do not have permission to access this page.",
+    "validation": {
+      "usernameRequired": "Username is required",
+      "emailRequired": "Enter a valid email address",
+      "emailInvalid": "Enter a valid email address",
+      "passwordMin": "Password must be at least 8 characters",
+      "passwordMismatch": "Passwords do not match",
+      "currentPasswordRequired": "Current password is required"
+    }
+  },
+  "home": {
+    "hero": {
+      "headline": "Enterprise software, engineered like a product.",
+      "subtitle": "ERP, AI, web applications, Odoo and programming services — bilingual, cloud-native and engineered to a production standard.",
+      "primaryCta": "Start a project",
+      "secondaryCta": "Explore services"
+    },
+    "stats": {
+      "eyebrow": "By the numbers",
+      "title": "Engineering that delivers.",
+      "description": "Live statistics pulled from the Hanahoush content platform.",
+      "projects": "Projects delivered",
+      "articles": "Published articles",
+      "team": "Team members",
+      "partners": "Partners"
+    },
+    "services": { "eyebrow": "What we do", "title": "Our services.", "description": "Delivered end-to-end — from architecture to deployment." },
+    "projects": { "eyebrow": "Our work", "title": "Featured projects.", "description": "Every project is a partnership from architecture through delivery." },
+    "articles": { "eyebrow": "Insights", "title": "Latest articles.", "description": "Essays and guides on the engineering we practise every day." },
+    "about": { "eyebrow": "About Hanahoush", "title": "Our mission and vision.", "description": "Why we build, and where we're headed.", "mission": "Mission", "vision": "Vision" },
+    "team": { "eyebrow": "The team", "title": "People behind the platform.", "description": "Engineers, designers and operators who ship together." },
+    "timeline": { "eyebrow": "Our story", "title": "Milestones.", "description": "A short history of Hanahoush." },
+    "testimonials": { "eyebrow": "Client voices", "title": "What our clients say.", "description": "Long-term partnerships with enterprises that demand quality." },
+    "partners": { "eyebrow": "Ecosystem", "title": "Partners and platforms.", "description": "The organisations we work with and build on." },
+    "faq": { "eyebrow": "FAQ", "title": "Questions you might have.", "description": "Everything about our process, timeline and support." },
+    "cta": {
+      "title": "Ready to build something exceptional?",
+      "description": "Our engineering team is ready to discuss your project. No commitment — just a conversation about what's possible.",
+      "primary": "Start a project",
+      "secondary": "Talk to engineering"
+    }
+  },
+  "services": {
+    "notFoundTitle": "Services unavailable",
+    "notFoundDescription": "Our services catalogue is temporarily unavailable. Please try again."
+  },
+  "projects": {
+    "notFoundTitle": "Case study not found",
+    "notFoundDescription": "This project may be unpublished or the link is incorrect."
+  },
+  "articles": {
+    "notFoundTitle": "Article not found",
+    "notFoundDescription": "This article may be unpublished or the link is incorrect."
+  },
+  "article": {
+    "loading": "Loading article…",
+    "unavailable": "Article unavailable.",
+    "toc": "Table of contents",
+    "tocHide": "Hide table of contents",
+    "onThisPage": "On this page",
+    "metaBy": "By",
+    "metaPublished": "Published",
+    "relatedArticles": "Related articles",
+    "relatedProjects": "Related projects",
+    "relatedServices": "Related services",
+    "newsletterTitle": "Enjoyed this article?",
+    "newsletterDescription": "Get new engineering writing in your inbox every month.",
+    "caseStudyLabel": "Case study",
+    "serviceLabel": "Service"
+  },
+  "articleCTA": {
+    "title": "Have a project in mind?",
+    "body": "We'd love to discuss how engineering like this could help your organisation.",
+    "talk": "Talk to our engineers",
+    "caseStudy": "Read the related case study",
+    "contact": "Contact Hanahoush"
+  },
+  "filters": {
+    "category": "Category",
+    "topic": "Topic",
+    "technology": "Technology",
+    "year": "Completion year",
+    "sort": "Sort",
+    "allCategories": "All categories",
+    "allTopics": "All topics",
+    "allTechnologies": "All technologies",
+    "allYears": "All years",
+    "newestFirst": "Newest first",
+    "oldestFirst": "Oldest first",
+    "titleAtoZ": "Title A–Z",
+    "searchArticles": "Search articles…",
+    "searchProjects": "Search projects…",
+    "featured": "Featured",
+    "featuredOnly": "Featured only",
+    "clear": "Clear",
+    "projectCount_one": "{{count}} project matches",
+    "projectCount_other": "{{count}} projects match"
+  },
+  "projectResults": {
+    "heading": "Results & impact",
+    "empty": "Outcome information will appear here once it is defined for this project."
+  },
+  "articleList": {
+    "loadingFeatured": "Loading featured article…",
+    "loading": "Loading articles…",
+    "error": "Failed to load articles.",
+    "empty": "No articles match the current filters.",
+    "count_one": "{{count}} article",
+    "count_other": "{{count}} articles",
+    "loadMore": "Load more"
+  },
+  "caseStudy": {
+    "loading": "Loading case study…",
+    "unavailable": "This case study is unavailable.",
+    "featured": "Featured",
+    "clientPrefix": "Client",
+    "stage": "Stage {{count}}",
+    "challengeLabel": "Challenge",
+    "challengeTitle": "The problem we were asked to solve",
+    "objectivesLabel": "Objectives",
+    "objectivesTitle": "What success looked like",
+    "solutionLabel": "Solution",
+    "solutionTitle": "The Hanahoush approach",
+    "architectureLabel": "Architecture",
+    "architectureTitle": "How the system is built",
+    "technologyLabel": "Technology",
+    "technologyTitle": "The stack behind the build",
+    "journeyLabel": "Journey",
+    "journeyTitle": "Implementation stages",
+    "journeyEmpty": "Implementation stages are not defined yet.",
+    "galleryLabel": "Gallery",
+    "galleryTitle": "Project in pictures",
+    "relatedWorkLabel": "Related work",
+    "relatedWorkTitle": "More projects worth a look",
+    "readMoreLabel": "Read more",
+    "readMoreTitle": "Related articles",
+    "ctaTitle": "Have a project in mind?",
+    "ctaDescription": "Let's talk about building something like this for your organisation."
+  },
+  "about": {
+    "title": "About Hanahoush",
+    "description": "The engineering company behind Hanahoush.",
+    "teamClick": "View team profile",
+    "cta": {
+      "title": "Ready to build something exceptional?",
+      "description": "Talk to our engineers about your project.",
+      "primary": "Start a conversation",
+      "secondary": "See our services"
+    },
+    "faqTitle": "Frequently asked questions about Hanahoush."
+  },
+  "contact": {
+    "title": "Start a conversation",
+    "description": "Tell us about your project — every inquiry is reviewed by our engineering team.",
+    "name": "Full name",
+    "email": "Email address",
+    "phone": "Phone number (optional)",
+    "company": "Company (optional)",
+    "subject": "Subject",
+    "serviceCategory": "Service",
+    "projectType": "Project type",
+    "budgetRange": "Budget range (optional)",
+    "preferredContact": "Preferred contact method",
+    "preferredAny": "Email or phone",
+    "preferredEmail": "Email only",
+    "preferredPhone": "Phone only",
+    "message": "How can we help?",
+    "consent": "I agree to be contacted about this inquiry.",
+    "submit": "Send inquiry",
+    "submitting": "Sending…",
+    "successTitle": "Inquiry received",
+    "successBody": "Thank you — your request has been logged and our team will get back to you.",
+    "errorTitle": "Something went wrong",
+    "errorBody": "Your inquiry could not be sent. Please try again.",
+    "duplicateBlocked": "This form is being submitted. Please wait.",
+    "budgetUnder10k": "Under $10k",
+    "budget10to25": "$10k – $25k",
+    "budget25to50": "$25k – $50k",
+    "budget50to100": "$50k – $100k",
+    "budgetOver100": "$100k+",
+    "validation": {
+      "nameRequired": "Please enter your name.",
+      "emailRequired": "Please enter your email address.",
+      "emailInvalid": "Please enter a valid email address.",
+      "messageRequired": "Please tell us a little about your project.",
+      "consentRequired": "Please confirm you agree to be contacted."
+    },
+    "serviceOptions": {
+      "erp": "ERP systems",
+      "software": "Software development",
+      "web": "Web applications",
+      "ai": "AI automation",
+      "odoo": "Odoo implementation",
+      "consulting": "Consulting"
+    },
+    "projectTypes": {
+      "enterprise": "Enterprise",
+      "web": "Web",
+      "mobile": "Mobile",
+      "other": "Other"
+    },
+    "aria": {
+      "formStatus": "Contact form status"
+    }
+  },
+  "newsletter": {
+    "title": "Don't miss new engineering writing.",
+    "description": "Our best articles, in your inbox every month.",
+    "emailPlaceholder": "you@company.com",
+    "subscribe": "Subscribe",
+    "success": "Subscribed — welcome aboard.",
+    "duplicate": "You're already subscribed.",
+    "error": "Subscription failed — please try again.",
+    "viewState": "Newsletter status"
+  },
+  "footer": {
+    "heading": "Newsletter",
+    "emailLabel": "Email address",
+    "subscribe": "Subscribe",
+    "subscribed": "Subscribed — welcome aboard.",
+    "subscribeError": "Subscription failed — please try again.",
+    "rights": "All rights reserved."
+  },
+  "search": {
+    "open": "Search",
+    "title": "Search",
+    "description": "Search articles, projects, services and pages.",
+    "placeholder": "Search articles, projects, services…",
+    "filterLabel": "Filter by type",
+    "clear": "Clear search",
+    "allTypes": "All types",
+    "types": {
+      "article": "Articles",
+      "project": "Projects",
+      "service": "Services",
+      "page": "Pages"
+    },
+    "resultCount_one": "{{count}} result",
+    "resultCount_other": "{{count}} results",
+    "emptyTitle": "No results",
+    "emptyDescription": "No results found for “{{query}}”. Try a different keyword.",
+    "errorTitle": "Search unavailable"
+  },
+  "dashboard": {
+    "intro": "Signed in — here is a quick overview of your account and the public site.",
+    "accountTitle": "Account",
+    "role": "Role",
+    "session": "Session",
+    "sessionActive": "Active",
+    "quickLinksTitle": "Explore the site",
+    "quickLinksDescription": "Jump to any public section."
+  }
+}

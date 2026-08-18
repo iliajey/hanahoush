@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" font-family="Inter, system-ui, sans-serif">
+  <rect width="900" height="360" fill="#fafbff"/>
+  <text x="30" y="36" font-size="20" font-weight="700" fill="#0f172a">Marketing Component Relationships</text>
+
+  <!-- Design Foundation -->
+  <rect x="30" y="70" width="200" height="90" rx="10" fill="#e0e7ff" stroke="#c7d2fe"/>
+  <text x="130" y="98" font-size="14" font-weight="700" fill="#3730a3" text-anchor="middle">Phase 7B Design System</text>
+  <text x="130" y="120" font-size="11" fill="#4338ca" text-anchor="middle">tokens · effects · background</text>
+  <text x="130" y="138" font-size="11" fill="#4338ca" text-anchor="middle">theme · cursor · CSS variables</text>
+
+  <!-- Common primitives -->
+  <rect x="290" y="70" width="180" height="90" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="380" y="98" font-size="14" font-weight="700" fill="#3730a3" text-anchor="middle">Common Primitives</text>
+  <text x="380" y="120" font-size="11" fill="#4338ca" text-anchor="middle">SectionHeader · RevealContainer</text>
+  <text x="380" y="138" font-size="11" fill="#4338ca" text-anchor="middle">GlassPanel · Spotlight · GlowBorder</text>
+
+  <!-- Marketing Components -->
+  <rect x="530" y="55" width="340" height="120" rx="10" fill="#f5f7fa" stroke="#e2e8f0"/>
+  <text x="700" y="80" font-size="14" font-weight="700" fill="#0f172a" text-anchor="middle">Marketing Components (43)</text>
+  <text x="700" y="102" font-size="11" fill="#7f8797" text-anchor="middle">Hero · Statistics · Services · Projects · Articles</text>
+  <text x="700" y="118" font-size="11" fill="#7f8797" text-anchor="middle">ERP · Timeline · Testimonials · Partners · FAQ</text>
+  <text x="700" y="134" font-size="11" fill="#7f8797" text-anchor="middle">CTA · Contact · Footer</text>
+  <text x="700" y="154" font-size="11" fill="#7f8797" text-anchor="middle">each imports from common + design tokens</text>
+
+  <line x1="230" y1="115" x2="290" y2="115" stroke="#818cf8" stroke-width="2"/>
+  <line x1="470" y1="115" x2="530" y2="115" stroke="#818cf8" stroke-width="2"/>
+
+  <!-- Page composition -->
+  <rect x="30" y="200" width="840" height="50" rx="10" fill="#f5f7fa" stroke="#e2e8f0"/>
+  <text x="50" y="228" font-size="13" font-weight="700" fill="#0f172a">Page Composition</text>
+  <text x="50" y="244" font-size="11" fill="#7f8797">Pages import from marketing/ + common/ · each section wraps children in SectionHeader + RevealContainer · background from design/background</text>
+
+  <!-- Dev tools -->
+  <rect x="30" y="270" width="840" height="60" rx="10" fill="#e0e7ff" stroke="#c7d2fe"/>
+  <text x="50" y="296" font-size="12" fill="#4338ca">Dev preview: /dev/marketing · Storybook: Design System/* · All components tested with vitest · Verified: tsc, eslint, build, storybook</text>
+  <text x="50" y="316" font-size="12" fill="#4338ca">Quality target: Stripe · Linear · Framer · Raycast · Apple · Arc Browser — no Bootstrap, no MUI, no admin templates</text>
+</svg>

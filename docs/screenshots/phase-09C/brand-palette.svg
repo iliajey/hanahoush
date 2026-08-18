@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780" font-family="Inter, Segoe UI, sans-serif">
+<rect width="1200" height="780" fill="#FDFBFC"/>
+<text x="48" y="52" font-size="28" font-weight="800" fill="#1F1853">Hanahoush Brand Palette</text>
+<text x="48" y="78" font-size="14" fill="#7E5691">Measured programmatically from the brand mark (IMG_2854.PNG) — violet-magenta #932990 + deep indigo #272161 on near-white.</text>
+<text x="48" y="122" font-size="18" font-weight="700" fill="#1F1853">Brand scale (magenta → deep indigo)</text>
+<rect x="48" y="140" width="92" height="84" rx="10" fill="#FDF6FB"/>
+<text x="48" y="242" font-size="13" font-weight="600" fill="#1F1853">50</text>
+<text x="48" y="258" font-family="Consolas, monospace" font-size="10" fill="#7E5691">#FDF6FB</text>
+<rect x="152" y="140" width="92" height="84" rx="10" fill="#F7E8F7"/>
+<text x="152" y="242" font-size="13" font-weight="600" fill="#1F1853">100</text>
+<text x="152" y="258" font-family="Consolas, monospace" font-size="10" fill="#7E5691">#F7E8F7</text>
+<rect x="256" y="140" width="92" height="84" rx="10" fill="#EDD1EC"/>
+<text x="256" y="242" font-size="13" font-weight="600" fill="#1F1853">200</text>
+<text x="256" y="258" font-family="Consolas, monospace" font-size="10" fill="#7E5691">#EDD1EC</text>
+<rect x="360" y="140" width="92" height="84" rx="10" fill="#DDABDB"/>
+<text x="360" y="242" font-size="13" font-weight="600" fill="#1F1853">300</text>
+<text x="360" y="258" font-family="Consolas, monospace" font-size="10" fill="#7E5691">#DDABDB</text>
+<rect x="464" y="140" width="92" height="84" rx="10" fill="#C57EC2"/>
+<text x="464" y="242" font-size="13" font-weight="600" fill="#1F1853">400</text>
+<text x="464" y="258" font-family="Consolas, monospace" font-size="10" fill="#7E5691">#C57EC2</text>
+<rect x="568" y="140" width="92" height="84" rx="10" fill="#A652A3"/>
+<text x="568" y="242" font-size="13" font-weight="600" fill="#1F1853">500</text>
+<text x="568" y="258" font-family="Consolas, monospace" font-size="10" fill="#7E5691">#A652A3</text>
+<rect x="672" y="140" width="92" height="84" rx="10" fill="#932990"/>
+<text x="672" y="242" font-size="13" font-weight="600" fill="#1F1853">600</text>
+<text x="672" y="258" font-family="Consolas, monospace" font-size="10" fill="#7E5691">#932990</text>
+<rect x="776" y="140" width="92" height="84" rx="10" fill="#7A2477"/>
+<text x="776" y="242" font-size="13" font-weight="600" fill="#1F1853">700</text>
+<text x="776" y="258" font-family="Consolas, monospace" font-size="10" fill="#7E5691">#7A2477</text>
+<rect x="880" y="140" width="92" height="84" rx="10" fill="#5D2061"/>
+<text x="880" y="242" font-size="13" font-weight="600" fill="#1F1853">800</text>
+<text x="880" y="258" font-family="Consolas, monospace" font-size="10" fill="#7E5691">#5D2061</text>
+<rect x="984" y="140" width="92" height="84" rx="10" fill="#3F1C58"/>
+<text x="984" y="242" font-size="13" font-weight="600" fill="#1F1853">900</text>
+<text x="984" y="258" font-family="Consolas, monospace" font-size="10" fill="#7E5691">#3F1C58</text>
+<rect x="1088" y="140" width="92" height="84" rx="10" fill="#272161"/>
+<text x="1088" y="242" font-size="13" font-weight="600" fill="#1F1853">950</text>
+<text x="1088" y="258" font-family="Consolas, monospace" font-size="10" fill="#7E5691">#272161</text>
+<text x="48" y="316" font-size="18" font-weight="700" fill="#1F1853">Brand role tokens (contrast-paired)</text>
+<rect x="48" y="340" width="357" height="110" rx="12" fill="#FFFFFF"/>
+<text x="66" y="370" font-size="15" font-weight="700" fill="#932990">brand.primary</text>
+<text x="66" y="392" font-family="Consolas, monospace" font-size="11" fill="#932990" opacity="0.9">#932990 · on #FFFFFF</text>
+<text x="66" y="414" font-size="11" fill="#932990" opacity="0.75">primary action</text>
+<rect x="433" y="340" width="357" height="110" rx="12" fill="#FFFFFF"/>
+<text x="451" y="370" font-size="15" font-weight="700" fill="#7A2477">brand.primaryHover</text>
+<text x="451" y="392" font-family="Consolas, monospace" font-size="11" fill="#7A2477" opacity="0.9">#7A2477 · on #FFFFFF</text>
+<text x="451" y="414" font-size="11" fill="#7A2477" opacity="0.75">hover state</text>
+<rect x="818" y="340" width="357" height="110" rx="12" fill="#FFFFFF"/>
+<text x="836" y="370" font-size="15" font-weight="700" fill="#691E68">brand.primaryActive</text>
+<text x="836" y="392" font-family="Consolas, monospace" font-size="11" fill="#691E68" opacity="0.9">#691E68 · on #FFFFFF</text>
+<text x="836" y="414" font-size="11" fill="#691E68" opacity="0.75">pressed state</text>
+<rect x="48" y="470" width="357" height="110" rx="12" fill="#FDF6FB"/>
+<text x="66" y="500" font-size="15" font-weight="700" fill="#272161">brand.secondary</text>
+<text x="66" y="522" font-family="Consolas, monospace" font-size="11" fill="#272161" opacity="0.9">#272161 · on #FDF6FB</text>
+<text x="66" y="544" font-size="11" fill="#272161" opacity="0.75">deep indigo ink</text>
+<rect x="433" y="470" width="357" height="110" rx="12" fill="#FDF6FB"/>
+<text x="451" y="500" font-size="15" font-weight="700" fill="#1F1853">brand.secondaryHover</text>
+<text x="451" y="522" font-family="Consolas, monospace" font-size="11" fill="#1F1853" opacity="0.9">#1F1853 · on #FDF6FB</text>
+<text x="451" y="544" font-size="11" fill="#1F1853" opacity="0.75">ink hover</text>
+<rect x="818" y="470" width="357" height="110" rx="12" fill="#FDF6FB"/>
+<text x="836" y="500" font-size="15" font-weight="700" fill="#C75BC3">brand.accent</text>
+<text x="836" y="522" font-family="Consolas, monospace" font-size="11" fill="#C75BC3" opacity="0.9">#C75BC3 · on #FDF6FB</text>
+<text x="836" y="544" font-size="11" fill="#C75BC3" opacity="0.75">vivid accent</text>
+<rect x="48" y="600" width="357" height="110" rx="12" fill="#932990"/>
+<text x="66" y="630" font-size="15" font-weight="700" fill="#F6E8F4">brand.accentSoft</text>
+<text x="66" y="652" font-family="Consolas, monospace" font-size="11" fill="#F6E8F4" opacity="0.9">#F6E8F4 · on #932990</text>
+<text x="66" y="674" font-size="11" fill="#F6E8F4" opacity="0.75">soft accent surface</text>
+<rect x="433" y="600" width="357" height="110" rx="12" fill="#932990"/>
+<text x="451" y="630" font-size="15" font-weight="700" fill="#FFFFFF">brand.onPrimary</text>
+<text x="451" y="652" font-family="Consolas, monospace" font-size="11" fill="#FFFFFF" opacity="0.9">#FFFFFF · on #932990</text>
+<text x="451" y="674" font-size="11" fill="#FFFFFF" opacity="0.75">text on primary</text>
+<rect x="818" y="600" width="357" height="110" rx="12" fill="#272161"/>
+<text x="836" y="630" font-size="15" font-weight="700" fill="#FDF6FB">brand.onSecondary</text>
+<text x="836" y="652" font-family="Consolas, monospace" font-size="11" fill="#FDF6FB" opacity="0.9">#FDF6FB · on #272161</text>
+<text x="836" y="674" font-size="11" fill="#FDF6FB" opacity="0.75">text on secondary</text>
+<text x="48" y="740" font-size="12" fill="#7E5691">Artifact: docs/screenshots/phase-09C/brand-palette.svg — token-accurate render of the implemented system.</text>
+</svg>

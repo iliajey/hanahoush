@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="440" viewBox="0 0 900 440" font-family="Inter, system-ui, sans-serif">
+  <rect width="900" height="440" fill="#fafbff"/>
+  <text x="30" y="40" font-size="22" font-weight="700" fill="#0f172a">Cursor Engine (Living Cursor)</text>
+  <text x="30" y="64" font-size="13" fill="#7f8797">Gates → pointer tracking → rAF interpolation → three GPU layers</text>
+
+  <!-- Gates -->
+  <rect x="40" y="110" width="220" height="200" rx="10" fill="#e0e7ff" stroke="#c7d2fe"/>
+  <text x="150" y="134" font-size="14" font-weight="700" fill="#3730a3" text-anchor="middle">Enablement Gates</text>
+  <text x="150" y="160" font-size="11" fill="#4338ca" text-anchor="middle">pointer: fine (not touch)</text>
+  <text x="150" y="180" font-size="11" fill="#4338ca" text-anchor="middle">not prefers-reduced-motion</text>
+  <text x="150" y="200" font-size="11" fill="#4338ca" text-anchor="middle">hardwareConcurrency >= 4</text>
+  <text x="150" y="220" font-size="11" fill="#4338ca" text-anchor="middle">deviceMemory >= 4GB (if any)</text>
+
+  <!-- Track -->
+  <rect x="300" y="110" width="200" height="200" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="400" y="134" font-size="14" font-weight="700" fill="#3730a3" text-anchor="middle">Track</text>
+  <text x="400" y="160" font-size="11" fill="#4338ca" text-anchor="middle">pointermove (passive)</text>
+  <text x="400" y="180" font-size="11" fill="#4338ca" text-anchor="middle">target x/y updated</text>
+  <text x="400" y="200" font-size="11" fill="#4338ca" text-anchor="middle">first move snaps to cursor</text>
+
+  <!-- Interpolate -->
+  <rect x="540" y="110" width="200" height="200" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="640" y="134" font-size="14" font-weight="700" fill="#3730a3" text-anchor="middle">Interpolate (rAF)</text>
+  <text x="640" y="160" font-size="11" fill="#4338ca" text-anchor="middle">lerp(target, current, factor)</text>
+  <text x="640" y="180" font-size="11" fill="#4338ca" text-anchor="middle">glow: 0.4 × interpolation</text>
+  <text x="640" y="200" font-size="11" fill="#4338ca" text-anchor="middle">orb: interpolation (snappy)</text>
+  <text x="640" y="220" font-size="11" fill="#4338ca" text-anchor="middle">ring: ringInterpolation (lag)</text>
+
+  <!-- Render -->
+  <rect x="780" y="110" width="90" height="200" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="825" y="134" font-size="12" font-weight="700" fill="#3730a3" text-anchor="middle">Render</text>
+  <text x="825" y="160" font-size="10" fill="#4338ca" text-anchor="middle">glow</text>
+  <text x="825" y="184" font-size="10" fill="#4338ca" text-anchor="middle">orb</text>
+  <text x="825" y="208" font-size="10" fill="#4338ca" text-anchor="middle">ring</text>
+  <text x="825" y="240" font-size="10" fill="#4338ca" text-anchor="middle">translate3d</text>
+
+  <line x1="260" y1="210" x2="300" y2="210" stroke="#818cf8" stroke-width="2"/>
+  <line x1="500" y1="210" x2="540" y2="210" stroke="#818cf8" stroke-width="2"/>
+  <line x1="740" y1="210" x2="780" y2="210" stroke="#818cf8" stroke-width="2"/>
+
+  <rect x="40" y="350" width="830" height="50" rx="10" fill="#f5f7fa" stroke="#e2e8f0"/>
+  <text x="60" y="376" font-size="12" fill="#0f172a">Colors via CSS var(--ring) → automatically dark/light aware · pointer-events: none · aria-hidden · z-index 9999</text>
+</svg>

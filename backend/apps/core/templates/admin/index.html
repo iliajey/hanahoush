@@ -1,0 +1,61 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% block content %}
+<div id="content-main">
+  <div class="module" style="margin-bottom:1.25rem;">
+    <h2 style="margin-bottom:0.75rem;">Platform overview</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.75rem;">
+      <div style="background:#f8f9fa;border-radius:8px;padding:0.9rem;"><div style="font-size:1.5rem;font-weight:700;">{{ dashboard.articles_published }}</div><div style="font-size:0.8rem;color:#666;">Published articles</div></div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:0.9rem;"><div style="font-size:1.5rem;font-weight:700;">{{ dashboard.articles_drafts }}</div><div style="font-size:0.8rem;color:#666;">Draft / review</div></div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:0.9rem;"><div style="font-size:1.5rem;font-weight:700;">{{ dashboard.projects_published }}</div><div style="font-size:0.8rem;color:#666;">Published projects</div></div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:0.9rem;"><div style="font-size:1.5rem;font-weight:700;">{{ dashboard.services }}</div><div style="font-size:0.8rem;color:#666;">Services</div></div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:0.9rem;"><div style="font-size:1.5rem;font-weight:700;">{{ dashboard.pages }}</div><div style="font-size:0.8rem;color:#666;">Pages</div></div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:0.9rem;"><div style="font-size:1.5rem;font-weight:700;">{{ dashboard.media }}</div><div style="font-size:0.8rem;color:#666;">Media files</div></div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:0.9rem;"><div style="font-size:1.5rem;font-weight:700;">{{ dashboard.subscribers }}</div><div style="font-size:0.8rem;color:#666;">Subscribers</div></div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:0.9rem;"><div style="font-size:1.5rem;font-weight:700;">{{ dashboard.users }}</div><div style="font-size:0.8rem;color:#666;">Users</div></div>
+    </div>
+    <div style="margin-top:1rem;">
+      <h3 style="margin-bottom:0.5rem;">Contact requests by status</h3>
+      <p style="font-size:0.9rem;">
+        New: <strong>{{ dashboard.contact_statuses.new }}</strong> ·
+        In progress: <strong>{{ dashboard.contact_statuses.in_progress }}</strong> ·
+        Resolved: <strong>{{ dashboard.contact_statuses.resolved }}</strong> ·
+        Closed: <strong>{{ dashboard.contact_statuses.closed }}</strong> ·
+        Spam: <strong>{{ dashboard.contact_statuses.spam }}</strong>
+      </p>
+    </div>
+    <div style="margin-top:1rem;">
+      <h3 style="margin-bottom:0.5rem;">Recent editorial activity</h3>
+      <ul style="font-size:0.9rem;margin:0;padding-left:1.2rem;">
+        {% for action, details, at in dashboard.recent_activity %}
+        <li><code>{{ action }}</code>{% if details %} — {{ details|truncatechars:80 }}{% endif %} · <span style="color:#666;">{{ at }}</span></li>
+        {% empty %}
+        <li>No editorial activity yet.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  {% if app_list %}
+    {% for app in app_list %}
+      <div class="app-{{ app.app_label }} module">
+        <table style="width:100%;">
+          <caption><a href="{{ app.app_url }}" class="section">{{ app.name }}</a></caption>
+          {% for model in app.models %}
+          <tr class="model-{{ model.object_name|lower }}">
+            <th scope="row">
+              {% if model.admin_url %}<a href="{{ model.admin_url }}">{{ model.name }}</a>{% else %}{{ model.name }}{% endif %}
+            </th>
+            {% if model.add_url %}<td><a href="{{ model.add_url }}" class="addlink">{% translate 'Add' %}</a></td>{% else %}<td>&nbsp;</td>{% endif %}
+            {% if model.admin_url and show_changelinks %}<td><a href="{{ model.admin_url }}" class="changelink">{% translate 'Change' %}</a></td>{% else %}<td>&nbsp;</td>{% endif %}
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>{% translate 'You don’t have permission to view or edit anything.' %}</p>
+  {% endif %}
+</div>
+{% endblock %}
+{% block sidebar %}{% endblock %}

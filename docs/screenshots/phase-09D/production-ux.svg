@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1520" viewBox="0 0 1280 1520" font-family="Inter, Vazirmatn, sans-serif">
+  <!-- Phase 9D production-UX visual QA: rendered from the actual token values (brand anchors #932990/#272161/#FDFBFC) -->
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#932990"/>
+      <stop offset="1" stop-color="#272161"/>
+    </linearGradient>
+    <linearGradient id="hairline" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00000000"/>
+      <stop offset="0.5" stop-color="#932990A0"/>
+      <stop offset="1" stop-color="#00000000"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="1520" fill="#FDFBFC"/>
+  <text x="40" y="46" font-size="26" font-weight="700" fill="#272161">Phase 9D — Production UX visual QA</text>
+  <text x="40" y="72" font-size="14" fill="#7E5691">Token-accurate SVGs follow the prior-phase convention (honest renders of the implemented system — not browser captures). Brand anchors preserved: #932990 · #272161 · #FDFBFC.</text>
+
+  <!-- 1. Desktop navigation + mobile drawer (authenticated) -->
+  <text x="40" y="120" font-size="18" font-weight="700" fill="#272161">1 · Navigation (desktop bar + authenticated mobile drawer)</text>
+  <rect x="40" y="136" width="1200" height="360" rx="16" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <rect x="40" y="136" width="1200" height="52" rx="16" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <rect x="40" y="174" width="1200" height="1" fill="#E9DFEA"/>
+  <rect x="64" y="148" width="30" height="30" rx="8" fill="url(#brand)"/>
+  <text x="72" y="168" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">ه</text>
+  <text x="106" y="169" font-size="15" font-weight="700" fill="#1F1853">Hanahoush</text>
+  <g font-size="13" fill="#1F1853">
+    <text x="360" y="169">Home</text>
+    <rect x="420" y="150" width="64" height="24" rx="12" fill="#F6E8F4"/>
+    <text x="452" y="167" text-anchor="middle" fill="#7A2477" font-weight="600">Services</text>
+    <text x="525" y="169">Projects</text>
+    <text x="590" y="169">Articles</text>
+    <text x="652" y="169">About</text>
+    <text x="710" y="169">Contact</text>
+  </g>
+  <rect x="940" y="150" width="74" height="26" rx="13"/>
+  <rect x="1020" y="150" width="74" height="26" rx="13" fill="#932990"/>
+  <text x="1057" y="167" text-anchor="middle" font-size="12" fill="#FFFFFF" font-weight="600">Login</text>
+  <rect x="1104" y="150" width="30" height="26" rx="13" fill="none" stroke="#E9DFEA"/>
+  <rect x="1142" y="150" width="30" height="26" rx="13" fill="none" stroke="#E9DFEA"/>
+
+  <!-- mobile drawer -->
+  <rect x="72" y="200" width="340" height="286" rx="14" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <g font-size="13" fill="#1F1853">
+    <text x="92" y="230">Home</text>
+    <text x="92" y="256">Services</text>
+    <text x="92" y="282">Projects</text>
+    <text x="92" y="308">Articles</text>
+    <text x="92" y="334">About</text>
+    <text x="92" y="360">Contact</text>
+    <rect x="92" y="374" width="24" height="24" rx="6" fill="#F3EBF5"/>
+    <text x="104" y="391" text-anchor="middle" fill="#7E5691">⌕</text>
+    <text x="126" y="391">Search</text>
+    <rect x="86" y="412" width="312" height="1" fill="#E9DFEA"/>
+    <text x="92" y="438" font-size="12" fill="#7E5691">Toggle theme</text>
+    <rect x="340" y="424" width="40" height="20" rx="10" fill="#932990"/>
+    <circle cx="356" cy="434" r="7" fill="#FFFFFF"/>
+  </g>
+  <rect x="86" y="452" width="312" height="1" fill="#E9DFEA"/>
+  <text x="92" y="478" font-size="13" font-weight="600" fill="#1F1853">R. Tehrani</text>
+  <text x="92" y="496" font-size="11" fill="#7E5691">rita@example.org</text>
+  <rect x="92" y="506" width="130" height="26" rx="13" fill="#F3EBF5"/>
+  <text x="157" y="524" text-anchor="middle" font-size="12" fill="#1F1853">Dashboard</text>
+  <text x="336" y="524" font-size="12" fill="#DC2626" font-weight="600">Logout</text>
+
+  <!-- 2. Breadcrumb + 404 with navigation -->
+  <text x="440" y="230" font-size="18" font-weight="700" fill="#272161">2 · Breadcrumbs on detail pages + branded 404</text>
+  <rect x="440" y="246" width="800" height="240" rx="16" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <g font-size="12.5">
+    <text x="464" y="282" fill="#7E5691">Home</text>
+    <text x="506" y="282" fill="#E9DFEA">›</text>
+    <text x="524" y="282" fill="#7E5691">Projects</text>
+    <text x="566" y="282" fill="#E9DFEA">›</text>
+    <text x="584" y="282" fill="#1F1853" font-weight="600">ERP System — case study</text>
+  </g>
+  <text x="464" y="332" font-size="20" font-weight="700" fill="#272161">ERP System</text>
+  <text x="464" y="356" font-size="13" fill="#7E5691">Enterprise-grade implementation delivered end-to-end.</text>
+  <rect x="464" y="366" width="22" height="22" rx="11" fill="#F6E8F4"/>
+  <text x="475" y="381" text-anchor="middle" font-size="10" fill="#7A2477">★</text>
+  <text x="496" y="381" font-size="12" fill="#7A2477" font-weight="600">Featured</text>
+  <rect x="546" y="366" width="74" height="22" rx="11" fill="#F3EBF5"/>
+  <text x="583" y="381" text-anchor="middle" font-size="11" fill="#1F1853">Enterprise</text>
+  <text x="464" y="408" font-size="12" fill="#7E5691">Client · An e-commerce business</text>
+
+  <rect x="760" y="246" width="460" height="240" rx="16" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="990" y="300" text-anchor="middle" font-size="40" font-weight="900" fill="#932990" opacity="0.55">404</text>
+  <text x="990" y="330" text-anchor="middle" font-size="16" font-weight="700" fill="#1F1853">Page not found</text>
+  <text x="990" y="352" text-anchor="middle" font-size="12" fill="#7E5691">The page you are looking for does not exist.</text>
+  <rect x="906" y="368" width="168" height="34" rx="17" fill="url(#brand)"/>
+  <text x="990" y="390" text-anchor="middle" font-size="13" fill="#FFFFFF" font-weight="600">Back to home</text>
+  <rect x="806" y="414" width="84" height="26" rx="13" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <rect x="898" y="414" width="84" height="26" rx="13" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <rect x="990" y="414" width="84" height="26" rx="13" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <rect x="1082" y="414" width="84" height="26" rx="13" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="848" y="432" text-anchor="middle" font-size="11" fill="#1F1853">Search</text>
+  <text x="940" y="432" text-anchor="middle" font-size="11" fill="#1F1853">Services</text>
+  <text x="1032" y="432" text-anchor="middle" font-size="11" fill="#1F1853">Projects</text>
+  <text x="1124" y="432" text-anchor="middle" font-size="11" fill="#1F1853">Articles</text>
+
+  <!-- 3. Not-found detail state + form states -->
+  <text x="40" y="540" font-size="18" font-weight="700" fill="#272161">3 · Detail not-found (retry + navigation) · newsletter + contact form states</text>
+  <rect x="40" y="556" width="380" height="300" rx="16" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <rect x="70" y="584" width="34" height="34" rx="17" fill="#FDFBFC" stroke="#E9DFEA"/>
+  <text x="87" y="608" text-anchor="middle" font-size="14" fill="#932990">ⓘ</text>
+  <text x="116" y="604" font-size="15" font-weight="700" fill="#1F1853">Case study not found</text>
+  <text x="116" y="626" font-size="12" fill="#7E5691">This project may be unpublished or the link is incorrect.</text>
+  <rect x="70" y="648" width="150" height="34" rx="17" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="145" y="670" text-anchor="middle" font-size="13" fill="#1F1853">↻ Try again</text>
+  <rect x="232" y="648" width="120" height="34" rx="17" fill="url(#brand)"/>
+  <text x="292" y="670" text-anchor="middle" font-size="13" fill="#FFFFFF" font-weight="600">Back to home</text>
+  <text x="70" y="706" font-size="12" fill="#7E5691">Error text is human-readable; no raw exceptions are</text>
+  <text x="70" y="724" font-size="12" fill="#7E5691">leaked, and every dead end now offers a next action.</text>
+
+  <rect x="440" y="556" width="380" height="300" rx="16" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="630" y="588" text-anchor="middle" font-size="15" font-weight="700" fill="#1F1853">Newsletter · form semantics</text>
+  <rect x="468" y="604" width="200" height="36" rx="10" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="480" y="627" font-size="12" fill="#7E5691">you@company.com</text>
+  <rect x="680" y="604" width="112" height="36" rx="10" fill="#932990"/>
+  <text x="736" y="627" text-anchor="middle" font-size="12" fill="#FFFFFF" font-weight="600">Subscribe</text>
+  <text x="468" y="660" font-size="11.5" fill="#7E5691">Real &#60;form /&#62; · submit guard (no duplicate Enter)</text>
+  <text x="468" y="680" font-size="11.5" fill="#7E5691">· aria-live status · disabled during loading</text>
+  <rect x="468" y="700" width="40" height="22" rx="11" fill="#15803D"/>
+  <circle cx="482" cy="711" r="6" fill="#FFFFFF"/>
+  <text x="520" y="716" font-size="12.5" fill="#15803D" font-weight="600">Subscribed — welcome aboard.</text>
+
+  <rect x="840" y="556" width="400" height="300" rx="16" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="1040" y="588" text-anchor="middle" font-size="15" font-weight="700" fill="#1F1853">Contact form · success &amp; failure</text>
+  <rect x="136" y="0" width="0" height="0"/>
+  <rect x="868" y="606" width="344" height="58" rx="10" fill="#15803D10" stroke="#15803D40"/>
+  <text x="888" y="628" font-size="13" font-weight="700" fill="#15803D">Inquiry received</text>
+  <text x="888" y="650" font-size="12" fill="#15803D">Thank you — your request has been logged.</text>
+  <rect x="868" y="676" width="344" height="58" rx="10" fill="#DC26260F" stroke="#DC262640"/>
+  <text x="888" y="698" font-size="13" font-weight="700" fill="#DC2626">Something went wrong</text>
+  <text x="888" y="720" font-size="12" fill="#DC2626">Your inquiry could not be sent. Please try again.</text>
+  <text x="868" y="764" font-size="11.5" fill="#7E5691">honeypot + 10/min throttle (server) · submit-guard + focus-on-</text>
+  <text x="868" y="782" font-size="11.5" fill="#7E5691">success + aria-live (client). Labels and validation are localized.</text>
+  <text x="868" y="820" font-size="11.5" fill="#7E5691">Newsletter copy and CTA are real — no unwired controls remain.</text>
+
+  <!-- 4. Auth pages SEO + h1 + dashboard -->
+  <text x="40" y="896" font-size="18" font-weight="700" fill="#272161">4 · Auth pages (noindex + real h1) · starter dashboard (noindex)</text>
+  <rect x="40" y="912" width="560" height="300" rx="16" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="320" y="938" text-anchor="middle" font-size="12" fill="#7E5691">meta robots=noindex,follow · dynamic title per page</text>
+  <rect x="320" y="950" width="120" height="30" rx="15" fill="url(#brand)"/>
+  <text x="380" y="970" text-anchor="middle" font-size="13" fill="#FFFFFF" font-weight="700">ه</text>
+  <text x="410" y="970" font-size="13" font-weight="700" fill="#1F1853">Hanahoush</text>
+  <rect x="308" y="996" width="300" height="40" rx="12" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="458" y="1022" text-anchor="middle" font-size="14" font-weight="700" fill="#1F1853">Sign in to your account  (h1)</text>
+  <rect x="348" y="1050" width="220" height="34" rx="10" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <rect x="348" y="1092" width="220" height="34" rx="10" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <rect x="348" y="1134" width="220" height="40" rx="10" fill="#932990"/>
+  <text x="458" y="1159" text-anchor="middle" font-size="13" fill="#FFFFFF" font-weight="600">Login</text>
+  <text x="468" y="1194" text-anchor="middle" font-size="11.5" fill="#7E5691">Auth pages now emit a single h1 (previously an h3).</text>
+
+  <rect x="620" y="912" width="620" height="300" rx="16" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="930" y="938" text-anchor="middle" font-size="15" font-weight="700" fill="#1F1853">Dashboard — account overview</text>
+  <rect x="660" y="952" width="260" height="80" rx="12" fill="#F3EBF5"/>
+  <circle cx="706" cy="992" r="22" fill="#932990"/>
+  <text x="706" y="999" text-anchor="middle" font-size="14" fill="#FFFFFF" font-weight="700">RT</text>
+  <text x="742" y="986" font-size="13.5" font-weight="600" fill="#1F1853">R. Tehrani</text>
+  <text x="742" y="1006" font-size="11.5" fill="#7E5691">rita@example.org</text>
+  <rect x="660" y="1044" width="260" height="34" rx="10" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="676" y="1066" font-size="12" fill="#7E5691">Session</text>
+  <rect x="820" y="1050" width="82" height="22" rx="11" fill="#15803D15"/>
+  <text x="861" y="1065" text-anchor="middle" font-size="11" fill="#15803D" font-weight="600">Active</text>
+  <rect x="660" y="1084" width="260" height="34" rx="10" fill="#FFFFFF" stroke="#E9DFEA"/>
+  <text x="676" y="1106" font-size="12" fill="#7E5691">Role</text>
+  <text x="902" y="1106" font-size="12" font-weight="600" fill="#1F1853">Content Manager</text>
+  <text x="660" y="1144" font-size="12" fill="#7E5691">Quick links to every public section — no "under construction".</text>
+  <g>
+    <rect x="660" y="1160" width="120" height="28" rx="14" fill="#FFFFFF" stroke="#E9DFEA"/>
+    <rect x="790" y="1160" width="120" height="28" rx="14" fill="#FFFFFF" stroke="#E9DFEA"/>
+    <rect x="920" y="1160" width="120" height="28" rx="14" fill="#FFFFFF" stroke="#E9DFEA"/>
+    <text x="720" y="1179" text-anchor="middle" font-size="11" fill="#1F1853">Services</text>
+    <text x="850" y="1179" text-anchor="middle" font-size="11" fill="#1F1853">Projects</text>
+    <text x="980" y="1179" text-anchor="middle" font-size="11" fill="#1F1853">Articles</text>
+  </g>
+
+  <!-- 5. Footer links + reduced motion -->
+  <text x="40" y="1252" font-size="18" font-weight="700" fill="#272161">5 · Footer navigation (router Links, no full reloads) · accessibility pass</text>
+  <rect x="40" y="1268" width="1200" height="1" fill="url(#hairline)"/>
+  <g font-size="12" fill="#7E5691">
+    <text x="64" y="1300" font-weight="700" fill="#1F1853">Company</text>
+    <text x="64" y="1324">About</text>
+    <text x="64" y="1346">Projects</text>
+    <text x="64" y="1368">Contact</text>
+    <text x="340" y="1300" font-weight="700" fill="#1F1853">Services</text>
+    <text x="340" y="1324">Enterprise Software</text>
+    <text x="340" y="1346">ERP · hanRP</text>
+    <text x="340" y="1368">Odoo</text>
+    <text x="680" y="1300" font-weight="700" fill="#1F1853">Resources</text>
+    <text x="680" y="1324">Articles</text>
+    <text x="680" y="1346">FAQ</text>
+    <text x="680" y="1368">Search</text>
+  </g>
+  <rect x="1000" y="1300" width="180" height="1"/>
+  <text x="1000" y="1420" font-size="12" fill="#7E5691">© 2026 Hanahoush · All rights reserved.</text>
+  <text x="64" y="1452" font-size="12.5" fill="#1F1853" font-weight="600">Accessibility &amp; motion</text>
+  <text x="64" y="1474" font-size="11.5" fill="#7E5691">MotionConfig reducedMotion="user" — framer-motion honours prefers-reduced-motion globally.</text>
+  <text x="64" y="1492" font-size="11.5" fill="#7E5691">Focus rings, labels, aria-live, single-h1 pages, RTL logical properties, 44px touch targets retained.</text>
+</svg>

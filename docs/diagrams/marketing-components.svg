@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 900 500" font-family="Inter, system-ui, sans-serif">
+  <rect width="900" height="500" fill="#fafbff"/>
+  <text x="30" y="36" font-size="20" font-weight="700" fill="#0f172a">Marketing Component Library</text>
+  <text x="30" y="56" font-size="12" fill="#7f8797">14 categories · 43 components · built on Phase 7B design tokens + effects</text>
+
+  <!-- Row 1 -->
+  <rect x="30" y="80" width="120" height="70" rx="8" fill="#e0e7ff" stroke="#c7d2fe"/>
+  <text x="90" y="110" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">Hero</text><text x="90" y="128" font-size="10" fill="#4338ca" text-anchor="middle">1 comp</text>
+  <rect x="160" y="80" width="120" height="70" rx="8" fill="#e0e7ff" stroke="#c7d2fe"/>
+  <text x="220" y="110" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">Statistics</text><text x="220" y="128" font-size="10" fill="#4338ca" text-anchor="middle">2 comps</text>
+  <rect x="290" y="80" width="120" height="70" rx="8" fill="#e0e7ff" stroke="#c7d2fe"/>
+  <text x="350" y="110" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">Services</text><text x="350" y="128" font-size="10" fill="#4338ca" text-anchor="middle">3 comps</text>
+  <rect x="420" y="80" width="120" height="70" rx="8" fill="#e0e7ff" stroke="#c7d2fe"/>
+  <text x="480" y="110" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">Projects</text><text x="480" y="128" font-size="10" fill="#4338ca" text-anchor="middle">4 comps</text>
+  <rect x="550" y="80" width="120" height="70" rx="8" fill="#e0e7ff" stroke="#c7d2fe"/>
+  <text x="610" y="110" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">Articles</text><text x="610" y="128" font-size="10" fill="#4338ca" text-anchor="middle">4 comps</text>
+  <rect x="680" y="80" width="120" height="70" rx="8" fill="#e0e7ff" stroke="#c7d2fe"/>
+  <text x="740" y="110" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">ERP</text><text x="740" y="128" font-size="10" fill="#4338ca" text-anchor="middle">4 comps</text>
+  <rect x="810" y="80" width="60" height="70" rx="8" fill="#e0e7ff" stroke="#c7d2fe"/>
+  <text x="840" y="110" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">...</text>
+
+  <!-- Row 2 -->
+  <rect x="30" y="170" width="120" height="70" rx="8" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="90" y="200" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">Timeline</text><text x="90" y="218" font-size="10" fill="#4338ca" text-anchor="middle">3 comps</text>
+  <rect x="160" y="170" width="120" height="70" rx="8" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="220" y="200" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">Testimonials</text><text x="220" y="218" font-size="10" fill="#4338ca" text-anchor="middle">2 comps</text>
+  <rect x="290" y="170" width="120" height="70" rx="8" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="350" y="200" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">Partners</text><text x="350" y="218" font-size="10" fill="#4338ca" text-anchor="middle">2 comps</text>
+  <rect x="420" y="170" width="120" height="70" rx="8" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="480" y="200" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">FAQ</text><text x="480" y="218" font-size="10" fill="#4338ca" text-anchor="middle">3 comps</text>
+  <rect x="550" y="170" width="120" height="70" rx="8" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="610" y="200" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">CTA</text><text x="610" y="218" font-size="10" fill="#4338ca" text-anchor="middle">4 comps</text>
+  <rect x="680" y="170" width="120" height="70" rx="8" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="740" y="200" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">Contact</text><text x="740" y="218" font-size="10" fill="#4338ca" text-anchor="middle">3 comps</text>
+  <rect x="810" y="170" width="80" height="70" rx="8" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="850" y="200" font-size="13" font-weight="700" fill="#3730a3" text-anchor="middle">Footer</text>
+
+  <!-- Common foundation -->
+  <rect x="30" y="270" width="860" height="60" rx="10" fill="#f5f7fa" stroke="#e2e8f0"/>
+  <text x="50" y="296" font-size="13" font-weight="700" fill="#0f172a">Common primitives (7)</text>
+  <text x="50" y="316" font-size="11" fill="#7f8797">SectionHeader · RevealContainer · GlassPanel · SpotlightContainer · AnimatedDivider · GlowBorder · FloatingBadge</text>
+
+  <!-- Design token foundation -->
+  <rect x="30" y="350" width="860" height="50" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="50" y="378" font-size="12" fill="#4338ca">Built on Phase 7B design tokens + effects (colors, typography, spacing, shadows, gradients, motion, glass, glow, reveal, magnetic, tilt, spotlight). Every component: scroll reveal, reduced motion, hover, focus, theme switching, RTL-safe.</text>
+
+  <!-- Preview -->
+  <rect x="30" y="420" width="860" height="50" rx="8" fill="#e0e7ff" stroke="#c7d2fe"/>
+  <text x="50" y="442" font-size="13" font-weight="700" fill="#3730a3">Dev preview: /dev/marketing · Storybook: Design System/* · src/components/marketing/ · 14 categories · 43 components</text>
+</svg>
