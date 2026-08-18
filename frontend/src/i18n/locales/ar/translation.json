@@ -346,7 +346,410 @@
     "role": "الدور",
     "session": "الجلسة",
     "sessionActive": "نشطة",
-    "quickLinksTitle": "استكشف الموقع",
-    "quickLinksDescription": "انتقل إلى أي قسم عام."
+    "quickLinksTitle": "اختصارات مساحة العمل",
+    "quickLinksDescription": "انتقل إلى أي قسم متاح في مساحة العمل.",
+    "errorTitle": "لوحة المعلومات غير متاحة",
+    "errorDescription": "تعذّر تحميل لوحة المعلومات التشغيلية. تحقق من صلاحياتك وحاول مرة أخرى.",
+    "profile": {
+      "noRole": "لم يتم تعيين دور",
+      "noPermissions": "لم تُمنح أي صلاحيات",
+      "permsTitle": "الصلاحيات"
+    },
+    "host": {
+      "title": "مساحة عمل الموظفين",
+      "description": "نظرة عامة تشغيلية مبنية على الدور لمساحة عملك.",
+      "role": {
+        "SUPER_ADMIN": {
+          "title": "مركز العمليات",
+          "description": "إشراف كامل على المنصة: المحتوى والتحرير والاتصالات وحالة النظام."
+        },
+        "COMPANY_ADMIN": {
+          "title": "مساحة عمل الشركة والمحتوى",
+          "description": "إدارة محتوى الشركة والمشاريع والوسائط والاستفسارات."
+        },
+        "CONTENT_MANAGER": {
+          "title": "مساحة المحتوى",
+          "description": "تأليف ومراجعة وجدولة المقالات ومحتوى الشركة."
+        },
+        "PROJECT_MANAGER": {
+          "title": "مساحة المشاريع",
+          "description": "إدارة مشاريع المحفظة ودراسات الحالة."
+        },
+        "EDITOR": {
+          "title": "مساحة التحرير",
+          "description": "مراجعة وصقل المحتوى عبر مسار العمل التحريري."
+        },
+        "VIEWER": {
+          "title": "نظرة عامة",
+          "description": "ملخص للقراءة فقط للمحتوى الذي يمكنك الوصول إليه."
+        },
+        "CUSTOM": {
+          "title": "مساحة عمل",
+          "description": "مساحة عمل مبنية على الدور لهذا الحساب."
+        }
+      }
+    },
+    "widgets": {
+      "content": {
+        "title": "المحتوى",
+        "description": "المحتوى المنشور والمسودات والمجدول."
+      },
+      "editorial": {
+        "title": "التحرير",
+        "description": "الموافقات والأقفال والمراجعات الأخيرة."
+      },
+      "engagement": {
+        "title": "التفاعل",
+        "description": "الزيارات والاستفسارات والاشتراكات."
+      },
+      "operations": {
+        "title": "العمليات",
+        "description": "النشاط الأخير عبر المنصة.",
+        "media": "آخر عمليات الرفع",
+        "contact": "آخر الاستفسارات",
+        "editorial": "آخر النشاط التحريري"
+      },
+      "system": {
+        "title": "النظام",
+        "description": "الصحة التشغيلية لخدمات المنصة."
+      },
+      "empty": "لا توجد بيانات بعد",
+      "metrics": {
+        "articlesPublished": "المقالات المنشورة",
+        "articlesDrafts": "مسودات المقالات",
+        "articlesAwaitingReview": "في انتظار المراجعة",
+        "articlesScheduled": "المقالات المجدولة",
+        "projectsPublished": "المشاريع المنشورة",
+        "projectsDrafts": "مسودات المشاريع",
+        "services": "الخدمات",
+        "pendingApprovals": "موافقات معلّقة",
+        "rejectedApprovals": "موافقات مرفوضة",
+        "scheduledPublications": "منشورات مجدولة",
+        "activeLocks": "أقفال محتوى نشطة",
+        "recentRevisions": "مراجعات (30 يوماً)",
+        "pageViews": "مشاهدات الصفحات",
+        "pageViews30d": "مشاهدات الصفحات (30 يوماً)",
+        "articleViews": "مشاهدات المقالات",
+        "projectViews": "مشاهدات المشاريع",
+        "contactRequests": "طلبات تواصل مفتوحة",
+        "newsletterSubscriptions": "مشتركو النشرة",
+        "searchActivity": "أحداث البحث",
+        "database": "قاعدة البيانات",
+        "cache": "الذاكرة المؤقتة",
+        "migrations": "الترحيلات",
+        "environment": "البيئة",
+        "version": "الإصدار",
+        "debug": "وضع التصحيح"
+      }
+    },
+    "overview": {
+      "readOnly": {
+        "title": "نظرة عامة للقراءة فقط",
+        "description": "تصفح المحتوى الذي يسمح به دورك. إجراءات الإدارة مخصصة لأدوار الموظفين."
+      },
+      "editorial": {
+        "title": "مساحة التحرير",
+        "description": "مراجعة المحتوى والموافقة عليه ونشره."
+      }
+    }
+  },
+  "roles": {
+    "SUPER_ADMIN": {
+      "name": "مدير عام",
+      "description": "وصول كامل للمنصة بما في ذلك إدارة المستخدمين والأدوار."
+    },
+    "COMPANY_ADMIN": {
+      "name": "مدير الشركة",
+      "description": "يدير كل محتوى الشركة والوسائط والمستخدمين."
+    },
+    "CONTENT_MANAGER": {
+      "name": "مدير المحتوى",
+      "description": "ينشئ ويدير المقالات والخدمات ومحتوى الشركة."
+    },
+    "PROJECT_MANAGER": {
+      "name": "مدير المشاريع",
+      "description": "يدير مشاريع المحفظة."
+    },
+    "EDITOR": {
+      "name": "محرر",
+      "description": "يكتب ويحرر المقالات."
+    },
+    "VIEWER": {
+      "name": "مشاهد",
+      "description": "وصول للقراءة فقط إلى المحتوى العام."
+    },
+    "custom": {
+      "name": "دور مخصص",
+      "description": "يحمل هذا الحساب دوراً خارج الكتالوج القياسي."
+    }
+  },
+  "navWorkspace": {
+    "main": "مساحة العمل",
+    "label": "مساحة العمل",
+    "openMenu": "فتح القائمة",
+    "closeMenu": "إغلاق القائمة",
+    "viewSite": "عرض الموقع",
+    "logout": "تسجيل الخروج",
+    "dashboard": "لوحة المعلومات",
+    "dashboardDescription": "نظرة عامة مبنية على الدور",
+    "content": "المحتوى",
+    "articles": "المقالات",
+    "articlesDescription": "إدارة المقالات ومسار عملها",
+    "projects": "المشاريع",
+    "projectsDescription": "إدارة المشاريع ودراسات الحالة",
+    "editorial": "التحرير",
+    "editorialDescription": "قائمة المراجعة والمراجعات والموافقات",
+    "workflowDetail": "مسار العمل",
+    "workflowDetailDescription": "تفاصيل مسار العمل",
+    "media": "الوسائط",
+    "mediaDescription": "مكتبة الوسائط",
+    "communication": "الاتصالات",
+    "contact": "طلبات التواصل",
+    "contactDescription": "الاستفسارات والمتابعات",
+    "newsletter": "النشرة البريدية",
+    "newsletterDescription": "المشتركون والتصدير"
+  },
+  "workflowStage": {
+    "draft": "مسودة",
+    "in_review": "قيد المراجعة",
+    "seo_review": "مراجعة SEO",
+    "approved": "موافق عليه",
+    "scheduled": "مجدول",
+    "published": "منشور",
+    "archived": "مؤرشف"
+  },
+  "articleWorkspace": {
+    "title": "المقالات",
+    "subtitle": "أنشئ المقالات وعدّلها وحرّكها عبر مسار العمل التحريري.",
+    "searchPlaceholder": "ابحث في المقالات…",
+    "createDraft": "مسودة جديدة",
+    "statusAll": "الكل",
+    "statusDraft": "مسودة",
+    "statusReview": "قيد المراجعة",
+    "statusPublished": "منشور",
+    "statusArchived": "مؤرشف",
+    "noWorkflow": "لم يبدأ",
+    "startReview": "بدء المراجعة",
+    "submitForReview": "إرسال",
+    "submitComment": "جاهز للمراجعة",
+    "empty": "لا توجد مقالات",
+    "emptyDescription": "غيّر عوامل التصفية أو أنشئ مسودة جديدة.",
+    "errorTitle": "تعذّر تحميل المقالات",
+    "errorDescription": "حدث خطأ أثناء جلب قائمة المقالات.",
+    "column": {
+      "article": "المقالة",
+      "status": "الحالة",
+      "workflow": "مسار العمل",
+      "updated": "آخر تحديث",
+      "actions": "إجراءات"
+    },
+    "edit": "تعديل المقالة",
+    "view": "فتح المقالة العامة",
+    "form": {
+      "createTitle": "مقالة جديدة",
+      "editTitle": "تعديل المقالة",
+      "subtitle": "احفظ المسودات هنا؛ النشر يتم عبر مسار العمل التحريري.",
+      "identity": "الهوية",
+      "content": "المحتوى",
+      "publishing": "النشر",
+      "titleEn": "العنوان (إنجليزي)",
+      "titleFa": "العنوان (فارسي)",
+      "titleAr": "العنوان (عربي)",
+      "slug": "المعرّف",
+      "descriptionEn": "النص (إنجليزي)",
+      "descriptionFa": "النص (فارسي)",
+      "descriptionAr": "النص (عربي)",
+      "status": "الحالة",
+      "isFeatured": "مميز",
+      "isPublic": "عام"
+    }
+  },
+  "projectWorkspace": {
+    "title": "المشاريع",
+    "subtitle": "إدارة مشاريع المحفظة ودراسات الحالة.",
+    "searchPlaceholder": "ابحث في المشاريع…",
+    "newProject": "مشروع جديد",
+    "statusAll": "الكل",
+    "statusDraft": "مسودة",
+    "statusReview": "قيد المراجعة",
+    "statusPublished": "منشور",
+    "statusArchived": "مؤرشف",
+    "empty": "لا توجد مشاريع",
+    "emptyDescription": "غيّر عوامل التصفية أو أنشئ مشروعاً جديداً.",
+    "errorTitle": "تعذّر تحميل المشاريع",
+    "errorDescription": "حدث خطأ أثناء جلب قائمة المشاريع.",
+    "column": {
+      "project": "المشروع",
+      "status": "الحالة",
+      "client": "العميل",
+      "year": "السنة",
+      "actions": "إجراءات"
+    },
+    "edit": "تعديل المشروع",
+    "openCaseStudy": "فتح دراسة الحالة",
+    "form": {
+      "createTitle": "مشروع جديد",
+      "editTitle": "تعديل المشروع",
+      "subtitle": "احفظ بيانات المشروع هنا؛ النشر يتم عبر مسار العمل التحريري.",
+      "identity": "الهوية",
+      "content": "المحتوى",
+      "publishing": "النشر",
+      "titleEn": "العنوان (إنجليزي)",
+      "titleFa": "العنوان (فارسي)",
+      "titleAr": "العنوان (عربي)",
+      "slug": "المعرّف",
+      "client": "العميل",
+      "location": "الموقع",
+      "startDate": "تاريخ البدء",
+      "endDate": "تاريخ الانتهاء",
+      "liveUrl": "الرابط المباشر",
+      "descriptionEn": "الوصف (إنجليزي)",
+      "descriptionFa": "الوصف (فارسي)",
+      "descriptionAr": "الوصف (عربي)",
+      "status": "الحالة",
+      "isFeatured": "مميز",
+      "isPublic": "عام"
+    }
+  },
+  "mediaWorkspace": {
+    "title": "مكتبة الوسائط",
+    "subtitle": "ارفع الوسائط المستخدمة في الموقع ووسمها وإدارتها.",
+    "searchPlaceholder": "ابحث في الوسائط…",
+    "upload": "رفع",
+    "uploading": "جارٍ الرفع…",
+    "selectFile": "اختر ملفاً",
+    "allTypes": "الكل",
+    "images": "الصور",
+    "documents": "المستندات",
+    "editMeta": "تعديل البيانات الوصفية",
+    "deleteFile": "حذف الملف",
+    "metadataTitle": "البيانات الوصفية للوسائط",
+    "deleteConfirmTitle": "حذف الوسائط",
+    "deleteConfirmDescription": "يحذف الملف حذفاً ناعماً (تبقى المراجع قابلة للحل؛ ويُستعاد من لوحة Django).",
+    "uploadDialogTitle": "رفع وسائط",
+    "uploadDialogDescription": "اختر ملفاً وبيانات وصفية اختيارية.",
+    "referenceCount_zero": "لا مراجع",
+    "referenceCount_one": "مرجع واحد",
+    "referenceCount_two": "مرجعان",
+    "referenceCount_few": "{{count}} مراجع",
+    "referenceCount_many": "{{count}} مرجعاً",
+    "referenceCount_other": "{{count}} مرجعاً",
+    "title": "العنوان",
+    "empty": "لا توجد وسائط",
+    "emptyDescription": "غيّر عوامل التصفية أو ارفع ملفاً جديداً.",
+    "uploadSuccess": "تم رفع الوسائط",
+    "uploadFailed": "فشل الرفع",
+    "metadataSaved": "تم حفظ البيانات الوصفية",
+    "deleted": "تم حذف الوسائط",
+    "form": {
+      "titleFa": "العنوان (فارسي)",
+      "alt": "النص البديل (إنجليزي)",
+      "isPublic": "عام"
+    }
+  },
+  "contactWorkspace": {
+    "title": "طلبات التواصل",
+    "subtitle": "راجع الاستفسارات وتابع دورة حياتها.",
+    "searchPlaceholder": "ابحث في الاستفسارات…",
+    "allStatuses": "كل الحالات",
+    "statusNew": "جديد",
+    "statusInProgress": "قيد المعالجة",
+    "statusResolved": "تم الحل",
+    "statusClosed": "مغلق",
+    "statusSpam": "بريد مزعج",
+    "status": "الحالة",
+    "phone": "الهاتف",
+    "company": "الشركة",
+    "source": "المصدر",
+    "serviceCategory": "الخدمة",
+    "budgetRange": "نطاق الميزانية",
+    "message": "الرسالة",
+    "inspect": "فحص",
+    "updateStatus": "تحديث الحالة",
+    "markHandled": "وضع علامة معالَج",
+    "empty": "لا توجد استفسارات",
+    "emptyDescription": "غيّر عوامل التصفية.",
+    "errorTitle": "تعذّر تحميل الاستفسارات",
+    "errorDescription": "حدث خطأ أثناء جلب طلبات التواصل.",
+    "status": {
+      "new": "جديد",
+      "in_progress": "قيد المعالجة",
+      "resolved": "تم الحل",
+      "closed": "مغلق",
+      "spam": "بريد مزعج"
+    },
+    "column": {
+      "name": "الاسم",
+      "email": "البريد",
+      "subject": "الموضوع",
+      "status": "الحالة",
+      "received": "الاستلام",
+      "actions": "إجراءات"
+    }
+  },
+  "newsletterWorkspace": {
+    "title": "مشتركو النشرة",
+    "subtitle": "ابحث في المشتركين وصفّهم وأدر حالاتهم.",
+    "searchPlaceholder": "ابحث في المشتركين…",
+    "allStatuses": "الكل",
+    "statusActive": "نشط",
+    "statusInactive": "غير نشط",
+    "activate": "تفعيل",
+    "deactivate": "إلغاء التفعيل",
+    "export": "تصدير CSV",
+    "exportDone": "بدأ التصدير",
+    "exportFailed": "فشل التصدير",
+    "activated": "تم تفعيل المشترك",
+    "deactivated": "تم إلغاء تفعيل المشترك",
+    "privacyNote": "لا تُكشف رموز المشتركين أبداً؛ والتصدير لا يتضمنها.",
+    "empty": "لا يوجد مشتركون",
+    "emptyDescription": "غيّر عوامل التصفية.",
+    "errorTitle": "تعذّر تحميل المشتركين",
+    "errorDescription": "حدث خطأ أثناء جلب المشتركين.",
+    "column": {
+      "email": "البريد",
+      "locale": "اللغة",
+      "source": "المصدر",
+      "status": "الحالة",
+      "subscribedAt": "تاريخ الاشتراك",
+      "actions": "إجراءات"
+    }
+  },
+  "editorialWorkspace": {
+    "title": "مساحة التحرير",
+    "subtitle": "قائمة المراجعة والمراجعات والموافقات والجداول وسجل التدقيق.",
+    "tab": {
+      "review": "قائمة المراجعة",
+      "all": "كل مسارات العمل",
+      "schedule": "الجدولة",
+      "locks": "الأقفال",
+      "audit": "سجل التدقيق",
+      "revisions": "المراجعات",
+      "timeline": "الخط الزمني"
+    },
+    "open": "فتح",
+    "back": "رجوع",
+    "approvals": "الموافقات",
+    "comments": "التعليقات",
+    "publishing": "النشر",
+    "by": "بواسطة",
+    "unassigned": "غير معيّن",
+    "approve": "موافقة",
+    "reject": "رفض",
+    "noApprovals": "لا توجد موافقات مطلوبة في هذه المرحلة.",
+    "commentsDenied": "ليست لديك صلاحية التعليق على هذا العنصر.",
+    "publishingDenied": "النشر غير متاح لهذه المرحلة أو لدورك.",
+    "from": "من",
+    "to": "إلى",
+    "emptyRevisions": "لا توجد مراجعات بعد.",
+    "auditTrail": "سجل التدقيق",
+    "empty": "لا توجد مسارات عمل",
+    "emptyReview": "لا يوجد شيء في انتظار المراجعة",
+    "emptySchedule": "لا توجد منشورات مجدولة",
+    "emptyLocks": "لا توجد أقفال محتوى نشطة",
+    "emptyAudit": "لا توجد أحداث مسجلة",
+    "emptyDescription": "يتدفق المحتوى عبر مسار العمل التحريري من مساحات العمل.",
+    "errorTitle": "تعذّر تحميل مساحة التحرير",
+    "errorDescription": "حدث خطأ أثناء جلب البيانات التحريرية."
   }
 }

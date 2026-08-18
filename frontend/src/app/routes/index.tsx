@@ -2,8 +2,15 @@ import { createElement, lazy, type ComponentType } from "react"
 import { createBrowserRouter, type RouteObject } from "react-router-dom"
 
 import { AppLayout } from "../layouts/AppLayout"
+import { StaffLayout } from "../layouts/StaffLayout"
 import { GuestRoute } from "../../features/auth/components/GuestRoute"
 import { ProtectedRoute } from "../../features/auth/components/ProtectedRoute"
+import {
+  RequireAnyPermission,
+  RequirePermission,
+  RequireStaff,
+} from "../../features/auth/guards"
+import { PERMISSIONS } from "../../features/auth/permissions"
 import { RouteErrorFallback } from "./RouteErrorFallback"
 
 /**
@@ -41,7 +48,6 @@ const ArticleDetailPage = lazyPage(() =>
   import("@/features/articles/pages/ArticleDetailPage").then((m) => ({ default: m.ArticleDetailPage })),
 )
 const NotFoundPage = lazyPage(() => import("./pages/NotFoundPage").then((m) => ({ default: m.NotFoundPage })))
-const DashboardPage = lazyPage(() => import("./pages/DashboardPage").then((m) => ({ default: m.DashboardPage })))
 const LoginPage = lazyPage(() =>
   import("../../features/auth/pages/LoginPage").then((m) => ({ default: m.LoginPage })),
 )
@@ -56,6 +62,38 @@ const SessionExpiredPage = lazyPage(() =>
 )
 const UnauthorizedPage = lazyPage(() =>
   import("../../features/auth/pages/UnauthorizedPage").then((m) => ({ default: m.UnauthorizedPage })),
+)
+
+// Phase 9G staff workspace (role-aware).
+const DashboardPage = lazyPage(() =>
+  import("@/features/dashboard/pages/DashboardPage").then((m) => ({ default: m.DashboardPage })),
+)
+const EditorialWorkspaceHub = lazyPage(() =>
+  import("@/features/editorial/pages/EditorialWorkspaceHub").then((m) => ({ default: m.EditorialWorkspaceHub })),
+)
+const WorkflowDetailWorkspacePage = lazyPage(() =>
+  import("@/features/editorial/pages/WorkflowDetailWorkspacePage").then((m) => ({ default: m.WorkflowDetailWorkspacePage })),
+)
+const ArticlesWorkspacePage = lazyPage(() =>
+  import("@/features/articles/workspace/ArticlesWorkspacePage").then((m) => ({ default: m.ArticlesWorkspacePage })),
+)
+const ArticleEditPage = lazyPage(() =>
+  import("@/features/articles/workspace/ArticleEditPage").then((m) => ({ default: m.ArticleEditPage })),
+)
+const ProjectsWorkspacePage = lazyPage(() =>
+  import("@/features/projects/workspace/ProjectsWorkspacePage").then((m) => ({ default: m.ProjectsWorkspacePage })),
+)
+const ProjectEditPage = lazyPage(() =>
+  import("@/features/projects/workspace/ProjectEditPage").then((m) => ({ default: m.ProjectEditPage })),
+)
+const MediaWorkspacePage = lazyPage(() =>
+  import("@/features/media/workspace/MediaWorkspacePage").then((m) => ({ default: m.MediaWorkspacePage })),
+)
+const ContactWorkspacePage = lazyPage(() =>
+  import("@/features/contact/workspace/ContactWorkspacePage").then((m) => ({ default: m.ContactWorkspacePage })),
+)
+const NewsletterWorkspacePage = lazyPage(() =>
+  import("@/features/newsletter/workspace/NewsletterWorkspacePage").then((m) => ({ default: m.NewsletterWorkspacePage })),
 )
 
 /**
@@ -82,12 +120,13 @@ const devRoutes: RouteObject[] = import.meta.env.DEV
   : []
 
 /**
- * Centralized route table (Phase 6: authentication added; Phase 8H: search +
- * lazy routes; Phase 9D: development surfaces removed from production).
+ * Centralized route table (Phase 6 auth; Phase 8H lazy routes; Phase 9D dev
+ * surfaces removed from production; Phase 9G role-aware staff workspace).
  *
- * All business pages are fully implemented — no placeholders remain.
- * Protected routes are wrapped in <ProtectedRoute />, guest-only routes
- * (login, password reset) in <GuestRoute />.
+ * Every staff route is wrapped in an authorization guard AND nested inside
+ * StaffLayout. Guards reuse the same centralized permission catalog as the
+ * sidebar (workspaceConfig), so navigation and route protection can never
+ * drift apart. Public marketing routes are untouched.
  */
 const routes: RouteObject[] = [
   {
@@ -136,14 +175,105 @@ const routes: RouteObject[] = [
       { path: "unauthorized", element: <UnauthorizedPage /> },
       { path: "session-expired", element: <SessionExpiredPage /> },
 
-      // Protected area
+      // Staff workspace (Phase 9G): role-aware dashboard + management pages.
       {
         path: "dashboard",
         element: (
           <ProtectedRoute>
-            <DashboardPage />
+            <StaffLayout />
           </ProtectedRoute>
         ),
+        children: [
+          { index: true, element: <DashboardPage /> },
+          {
+            path: "editorial",
+            element: (
+              <RequirePermission permissions={[PERMISSIONS.EDITORIAL_VIEW]}>
+                <EditorialWorkspaceHub />
+              </RequirePermission>
+            ),
+          },
+          {
+            path: "editorial/:workflowId",
+            element: (
+              <RequirePermission permissions={[PERMISSIONS.EDITORIAL_VIEW]}>
+                <WorkflowDetailWorkspacePage />
+              </RequirePermission>
+            ),
+          },
+          {
+            path: "articles",
+            element: (
+              <RequireAnyPermission permissions={[PERMISSIONS.ARTICLES_VIEW]} staffOnly>
+                <ArticlesWorkspacePage />
+              </RequireAnyPermission>
+            ),
+          },
+          {
+            path: "articles/new",
+            element: (
+              <RequirePermission permissions={[PERMISSIONS.ARTICLES_UPDATE]} staffOnly>
+                <ArticleEditPage />
+              </RequirePermission>
+            ),
+          },
+          {
+            path: "articles/:id/edit",
+            element: (
+              <RequirePermission permissions={[PERMISSIONS.ARTICLES_UPDATE]} staffOnly>
+                <ArticleEditPage />
+              </RequirePermission>
+            ),
+          },
+          {
+            path: "projects",
+            element: (
+              <RequireAnyPermission permissions={[PERMISSIONS.PROJECTS_VIEW]} staffOnly>
+                <ProjectsWorkspacePage />
+              </RequireAnyPermission>
+            ),
+          },
+          {
+            path: "projects/new",
+            element: (
+              <RequirePermission permissions={[PERMISSIONS.PROJECTS_UPDATE]} staffOnly>
+                <ProjectEditPage />
+              </RequirePermission>
+            ),
+          },
+          {
+            path: "projects/:id/edit",
+            element: (
+              <RequirePermission permissions={[PERMISSIONS.PROJECTS_UPDATE]} staffOnly>
+                <ProjectEditPage />
+              </RequirePermission>
+            ),
+          },
+          {
+            path: "media",
+            element: (
+              <RequireAnyPermission permissions={[PERMISSIONS.MEDIA_UPLOAD, PERMISSIONS.MEDIA_MANAGE]} staffOnly>
+                <MediaWorkspacePage />
+              </RequireAnyPermission>
+            ),
+          },
+          {
+            path: "contact",
+            element: (
+              <RequireStaff>
+                <ContactWorkspacePage />
+              </RequireStaff>
+            ),
+          },
+          {
+            path: "newsletter",
+            element: (
+              <RequireStaff>
+                <NewsletterWorkspacePage />
+              </RequireStaff>
+            ),
+          },
+        ],
       },
 
       { path: "*", element: <NotFoundPage /> },

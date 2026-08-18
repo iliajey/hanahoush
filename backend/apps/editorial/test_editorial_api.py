@@ -10,6 +10,7 @@ from apps.accounts.models import Permission, Role
 from apps.articles.models import Article
 from apps.editorial.models import (
     AuditEvent,
+    ContentWorkflow,
 )
 from apps.editorial.services import (
     LockService,
@@ -238,6 +239,47 @@ class EditorialAPITests(EditorialBaseCase):
         wf = WorkflowService.get_or_create(self.article)
         response = self.client.post(f"/api/v1/editorial/workflows/{wf.pk}/submit-review/", {}, format="json")
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_ensure_creates_workflow(self):
+        self._auth(self.manager)
+        self.assertFalse(ContentWorkflow.objects.filter(object_id=self.article.pk).exists())
+        response = self.client.post(
+            "/api/v1/editorial/workflows/ensure/",
+            {"content_type": "articles.article", "object_id": self.article.pk},
+            format="json",
+        )
+        self.assertEqual(response.status_code, 200)
+        data = response.json()["data"]
+        self.assertEqual(data["stage"]["code"], "draft")
+        self.assertTrue(ContentWorkflow.objects.filter(object_id=self.article.pk).exists())
+
+    def test_ensure_is_idempotent(self):
+        self._auth(self.manager)
+        payload = {"content_type": "articles.article", "object_id": self.article.pk}
+        first = self.client.post("/api/v1/editorial/workflows/ensure/", payload, format="json")
+        second = self.client.post("/api/v1/editorial/workflows/ensure/", payload, format="json")
+        self.assertEqual(first.status_code, 200)
+        self.assertEqual(second.status_code, 200)
+        self.assertEqual(first.json()["data"]["id"], second.json()["data"]["id"])
+        self.assertEqual(ContentWorkflow.objects.filter(object_id=self.article.pk).count(), 1)
+
+    def test_ensure_requires_manage_permission(self):
+        self._auth(self.viewer)
+        response = self.client.post(
+            "/api/v1/editorial/workflows/ensure/",
+            {"content_type": "articles.article", "object_id": self.article.pk},
+            format="json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_ensure_unknown_object(self):
+        self._auth(self.manager)
+        response = self.client.post(
+            "/api/v1/editorial/workflows/ensure/",
+            {"content_type": "articles.article", "object_id": 999999},
+            format="json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_comments_and_resolution(self):
         self._auth(self.manager)

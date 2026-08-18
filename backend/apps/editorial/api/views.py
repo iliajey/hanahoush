@@ -119,6 +119,26 @@ class WorkflowViewSet(
         ctx["request"] = self.request
         return ctx
 
+    # -- workflow creation ----------------------------------------------
+    @action(detail=False, methods=["post"], url_path="ensure")
+    def ensure(self, request, pk=None):
+        """Return the workflow for a content object, creating it if absent.
+
+        Additive helper for the staff workspace: content created through the
+        CMS may not have a workflow yet; this lazily attaches the standard
+        draft workflow so the editorial pipeline (submit/review/approve/
+        schedule/publish) can run without leaving the API.
+        """
+        _require_perm(request.user, perms.can_manage)
+        serializer = LockInSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        ct = _resolve_content_type(serializer.validated_data["content_type"])
+        obj = _get_content_object(ct, serializer.validated_data["object_id"])
+        if obj is None:
+            raise NotFound("Content object not found.")
+        workflow = WorkflowService.get_or_create(obj)
+        return _detail(workflow, request)
+
     # -- workflow transitions -------------------------------------------
     @action(detail=True, methods=["post"], url_path="transition")
     def transition(self, request, pk=None):

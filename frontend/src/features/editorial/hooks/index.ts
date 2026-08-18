@@ -7,6 +7,7 @@ import {
   addComment,
   archiveWorkflow,
   decideApproval,
+  ensureWorkflow,
   fetchApprovals,
   fetchAuditEvents,
   fetchComments,
@@ -15,6 +16,7 @@ import {
   fetchRevisions,
   fetchSchedules,
   fetchWorkflow,
+  fetchWorkflowForContent,
   fetchWorkflows,
   publishWorkflow,
   releaseLock,
@@ -56,6 +58,27 @@ export function useWorkflows(params: WorkflowListParams = {}) {
   return useQuery<Workflow[]>({
     queryKey: [...editorialKeys.workflows, params],
     queryFn: ({ signal }) => fetchWorkflows(params, signal),
+  })
+}
+
+/** Live workflow lookup for one content object (e.g. an article). */
+export function useWorkflowForContent(contentType: string, objectId: number | undefined) {
+  return useQuery<Workflow[]>({
+    queryKey: [...editorialKeys.workflows, "content", contentType, objectId],
+    queryFn: ({ signal }) => fetchWorkflowForContent(contentType, objectId as number, signal),
+    enabled: objectId != null,
+  })
+}
+
+/** Lazily attach a workflow to a content object when none exists. */
+export function useEnsureWorkflowMutation(contentType: string, objectId: number) {
+  const queryClient = useQueryClient()
+  return useMutation<WorkflowDetail, Error>({
+    mutationFn: () => ensureWorkflow(contentType, objectId),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: editorialKeys.workflows })
+      queryClient.setQueryData(editorialKeys.workflow(data.id), data)
+    },
   })
 }
 

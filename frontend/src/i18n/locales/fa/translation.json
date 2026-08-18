@@ -334,7 +334,406 @@
     "role": "نقش",
     "session": "نشست",
     "sessionActive": "فعال",
-    "quickLinksTitle": "مرور سایت",
-    "quickLinksDescription": "به هر بخش عمومی بروید."
+    "quickLinksTitle": "میان‌برهای فضا‌ی کاری",
+    "quickLinksDescription": "به هر بخش در دسترس فضای کاری بروید.",
+    "errorTitle": "داشبورد در دسترس نیست",
+    "errorDescription": "داشبورد عملیاتی بارگذاری نشد. دسترسی‌ها را بررسی و دوباره تلاش کنید.",
+    "profile": {
+      "noRole": "نقشی اختصاص داده نشده",
+      "noPermissions": "هیچ دسترسی‌ای اختصاص داده نشده",
+      "permsTitle": "دسترسی‌ها"
+    },
+    "host": {
+      "title": "فضای کاری کارکنان",
+      "description": "نمای کلی عملیاتی مبتنی بر نقش برای فضای کاری شما.",
+      "role": {
+        "SUPER_ADMIN": {
+          "title": "مرکز عملیات",
+          "description": "نظارت کامل بر سکو: محتوا، ویراستاری، ارتباطات و وضعیت سیستم."
+        },
+        "COMPANY_ADMIN": {
+          "title": "فضای کاری شرکت و محتوا",
+          "description": "مدیریت محتوا، پروژه‌ها، رسانه و درخواست‌های تماس."
+        },
+        "CONTENT_MANAGER": {
+          "title": "فضای محتوا",
+          "description": "نویسندگی، بازبینی و زمان‌بندی مقالات و محتوای شرکت."
+        },
+        "PROJECT_MANAGER": {
+          "title": "فضای پروژه",
+          "description": "مدیریت پروژه‌های پرتفوی و مطالعات موردی."
+        },
+        "EDITOR": {
+          "title": "فضای ویراستاری",
+          "description": "بازبینی و اصلاح محتوا در جریان کار ویراستاری."
+        },
+        "VIEWER": {
+          "title": "نمای کلی",
+          "description": "خلاصه فقط‌خواندنی محتوایی که می‌توانید ببینید."
+        },
+        "CUSTOM": {
+          "title": "فضای کاری",
+          "description": "فضای کاری مبتنی بر نقش برای این حساب."
+        }
+      }
+    },
+    "widgets": {
+      "content": {
+        "title": "محتوا",
+        "description": "محتواهای منتشرشده، پیش‌نویس و زمان‌بندی‌شده."
+      },
+      "editorial": {
+        "title": "ویراستاری",
+        "description": "تأییدها، قفل‌ها و نسخه‌های اخیر."
+      },
+      "engagement": {
+        "title": "تعامل",
+        "description": "بازدیدها، درخواست‌ها و اشتراک‌ها."
+      },
+      "operations": {
+        "title": "عملیات",
+        "description": "فعالیت‌های اخیر در سراسر سکو.",
+        "media": "بارگذاری‌های اخیر",
+        "contact": "درخواست‌های اخیر",
+        "editorial": "فعالیت ویراستاری اخیر"
+      },
+      "system": {
+        "title": "سیستم",
+        "description": "سلامت عملیاتی سرویس‌های سکو."
+      },
+      "empty": "داده‌ای نیست",
+      "metrics": {
+        "articlesPublished": "مقالات منتشرشده",
+        "articlesDrafts": "پیش‌نویس مقالات",
+        "articlesAwaitingReview": "در انتظار بررسی",
+        "articlesScheduled": "مقالات زمان‌بندی‌شده",
+        "projectsPublished": "پروژه‌های منتشرشده",
+        "projectsDrafts": "پیش‌نویس پروژه‌ها",
+        "services": "خدمات",
+        "pendingApprovals": "تأییدهای در انتظار",
+        "rejectedApprovals": "تأییدهای ردشده",
+        "scheduledPublications": "انتشارهای زمان‌بندی‌شده",
+        "activeLocks": "قفل‌های فعال محتوا",
+        "recentRevisions": "نسخه‌ها (۳۰ روز)",
+        "pageViews": "بازدید صفحات",
+        "pageViews30d": "بازدید صفحات (۳۰ روز)",
+        "articleViews": "بازدید مقالات",
+        "projectViews": "بازدید پروژه‌ها",
+        "contactRequests": "درخواست‌های باز تماس",
+        "newsletterSubscriptions": "مشترکین خبرنامه",
+        "searchActivity": "رویدادهای جستجو",
+        "database": "پایگاه داده",
+        "cache": "حافظه نگاشت",
+        "migrations": "مهاجرت‌ها",
+        "environment": "محیط",
+        "version": "نسخه",
+        "debug": "حالت اشکال‌زدایی"
+      }
+    },
+    "overview": {
+      "readOnly": {
+        "title": "نمای فقط‌خواندنی",
+        "description": "محتواهایی را ببینید که نقش شما اجازه می‌دهد. اقدامات مدیریتی در اختیار نقش‌های کارکنان است."
+      },
+      "editorial": {
+        "title": "فضای ویراستاری",
+        "description": "بازبینی، تأیید و انتشار محتوا."
+      }
+    }
+  },
+  "roles": {
+    "SUPER_ADMIN": {
+      "name": "مدیر ارشد",
+      "description": "دسترسی کامل به سکو از جمله مدیریت کاربران و نقش‌ها."
+    },
+    "COMPANY_ADMIN": {
+      "name": "مدیر شرکت",
+      "description": "مدیریت همه محتوای شرکت، رسانه و کاربران."
+    },
+    "CONTENT_MANAGER": {
+      "name": "مدیر محتوا",
+      "description": "ایجاد و مدیریت مقالات، خدمات و محتوای شرکت."
+    },
+    "PROJECT_MANAGER": {
+      "name": "مدیر پروژه",
+      "description": "مدیریت پروژه‌های پرتفوی."
+    },
+    "EDITOR": {
+      "name": "ویراستار",
+      "description": "نوشتن و ویرایش مقالات."
+    },
+    "VIEWER": {
+      "name": "بیننده",
+      "description": "دسترسی فقط‌خواندنی به محتوای عمومی."
+    },
+    "custom": {
+      "name": "نقش سفارشی",
+      "description": "این حساب نقشی خارج از کاتالوگ استاندارد دارد."
+    }
+  },
+  "navWorkspace": {
+    "main": "فضای کاری",
+    "label": "فضای کاری",
+    "openMenu": "باز کردن منو",
+    "closeMenu": "بستن منو",
+    "viewSite": "مشاهده سایت",
+    "logout": "خروج",
+    "dashboard": "داشبورد",
+    "dashboardDescription": "نمای کلی مبتنی بر نقش",
+    "content": "محتوا",
+    "articles": "مقالات",
+    "articlesDescription": "مدیریت مقالات و جریان کار آنها",
+    "projects": "پروژه‌ها",
+    "projectsDescription": "مدیریت پروژه‌ها و مطالعات موردی",
+    "editorial": "ویراستاری",
+    "editorialDescription": "صف بررسی، نسخه‌ها و تأییدها",
+    "workflowDetail": "جریان کار",
+    "workflowDetailDescription": "جزئیات جریان کار",
+    "media": "رسانه",
+    "mediaDescription": "کتابخانه رسانه",
+    "communication": "ارتباطات",
+    "contact": "درخواست‌های تماس",
+    "contactDescription": "درخواست‌ها و پیگیری‌ها",
+    "newsletter": "خبرنامه",
+    "newsletterDescription": "مشترکین و خروجی‌ها"
+  },
+  "workflowStage": {
+    "draft": "پیش‌نویس",
+    "in_review": "در حال بررسی",
+    "seo_review": "بررسی سئو",
+    "approved": "تأییدشده",
+    "scheduled": "زمان‌بندی‌شده",
+    "published": "منتشرشده",
+    "archived": "بایگانی‌شده"
+  },
+  "articleWorkspace": {
+    "title": "مقالات",
+    "subtitle": "ایجاد، ویرایش و هدایت مقالات در جریان کار ویراستاری.",
+    "searchPlaceholder": "جستجوی مقالات…",
+    "createDraft": "پیش‌نویس جدید",
+    "statusAll": "همه",
+    "statusDraft": "پیش‌نویس",
+    "statusReview": "در حال بررسی",
+    "statusPublished": "منتشرشده",
+    "statusArchived": "بایگانی‌شده",
+    "noWorkflow": "شروع نشده",
+    "startReview": "شروع بررسی",
+    "submitForReview": "ارسال",
+    "submitComment": "آماده بررسی",
+    "empty": "مقاله‌ای یافت نشد",
+    "emptyDescription": "فیلترها را تغییر دهید یا پیش‌نویس جدیدی بسازید.",
+    "errorTitle": "مقالات بارگذاری نشد",
+    "errorDescription": "در دریافت فهرست مقالات خطایی رخ داد.",
+    "column": {
+      "article": "مقاله",
+      "status": "وضعیت",
+      "workflow": "جریان کار",
+      "updated": "به‌روزرسانی",
+      "actions": "اقدامات"
+    },
+    "edit": "ویرایش مقاله",
+    "view": "مشاهده مقاله عمومی",
+    "form": {
+      "createTitle": "مقاله جدید",
+      "editTitle": "ویرایش مقاله",
+      "subtitle": "پیش‌نویس‌ها را اینجا ذخیره کنید؛ انتشار از طریق جریان کار ویراستاری انجام می‌شود.",
+      "identity": "شناسنامه",
+      "content": "محتوا",
+      "publishing": "انتشار",
+      "titleEn": "عنوان (انگلیسی)",
+      "titleFa": "عنوان (فارسی)",
+      "titleAr": "عنوان (عربی)",
+      "slug": "شناسه",
+      "descriptionEn": "متن (انگلیسی)",
+      "descriptionFa": "متن (فارسی)",
+      "descriptionAr": "متن (عربی)",
+      "status": "وضعیت",
+      "isFeatured": "ویژه",
+      "isPublic": "عمومی"
+    }
+  },
+  "projectWorkspace": {
+    "title": "پروژه‌ها",
+    "subtitle": "مدیریت پروژه‌های پرتفوی و مطالعات موردی.",
+    "searchPlaceholder": "جستجوی پروژه‌ها…",
+    "newProject": "پروژه جدید",
+    "statusAll": "همه",
+    "statusDraft": "پیش‌نویس",
+    "statusReview": "در حال بررسی",
+    "statusPublished": "منتشرشده",
+    "statusArchived": "بایگانی‌شده",
+    "empty": "پروژه‌ای یافت نشد",
+    "emptyDescription": "فیلترها را تغییر دهید یا پروژه جدیدی بسازید.",
+    "errorTitle": "پروژه‌ها بارگذاری نشد",
+    "errorDescription": "در دریافت فهرست پروژه‌ها خطایی رخ داد.",
+    "column": {
+      "project": "پروژه",
+      "status": "وضعیت",
+      "client": "کارفرما",
+      "year": "سال",
+      "actions": "اقدامات"
+    },
+    "edit": "ویرایش پروژه",
+    "openCaseStudy": "مشاهده مطالعه موردی",
+    "form": {
+      "createTitle": "پروژه جدید",
+      "editTitle": "ویرایش پروژه",
+      "subtitle": "فراداده پروژه را اینجا ذخیره کنید؛ انتشار از طریق جریان کار ویراستاری انجام می‌شود.",
+      "identity": "شناسنامه",
+      "content": "محتوا",
+      "publishing": "انتشار",
+      "titleEn": "عنوان (انگلیسی)",
+      "titleFa": "عنوان (فارسی)",
+      "titleAr": "عنوان (عربی)",
+      "slug": "شناسه",
+      "client": "کارفرما",
+      "location": "موقعیت",
+      "startDate": "تاریخ شروع",
+      "endDate": "تاریخ پایان",
+      "liveUrl": "آدرس زنده",
+      "descriptionEn": "توضیحات (انگلیسی)",
+      "descriptionFa": "توضیحات (فارسی)",
+      "descriptionAr": "توضیحات (عربی)",
+      "status": "وضعیت",
+      "isFeatured": "ویژه",
+      "isPublic": "عمومی"
+    }
+  },
+  "mediaWorkspace": {
+    "title": "کتابخانه رسانه",
+    "subtitle": "بارگذاری، برچسب‌گذاری و مدیریت رسانه‌های مورد استفاده سایت.",
+    "searchPlaceholder": "جستجوی رسانه…",
+    "upload": "بارگذاری",
+    "uploading": "در حال بارگذاری…",
+    "selectFile": "انتخاب فایل",
+    "allTypes": "همه",
+    "images": "تصاویر",
+    "documents": "اسناد",
+    "editMeta": "ویرایش فراداده",
+    "deleteFile": "حذف فایل",
+    "metadataTitle": "فراداده رسانه",
+    "deleteConfirmTitle": "حذف رسانه",
+    "deleteConfirmDescription": "این فایل را به‌صورت نرم حذف می‌کند (ارجاع‌ها برقرار می‌مانند؛ از مدیریت جنگو قابل بازیابی).",
+    "uploadDialogTitle": "بارگذاری رسانه",
+    "uploadDialogDescription": "یک فایل و فراداده اختیاری انتخاب کنید.",
+    "referenceCount_one": "{{count}} ارجاع",
+    "referenceCount_other": "{{count}} ارجاع",
+    "title": "عنوان",
+    "empty": "رسانه‌ای یافت نشد",
+    "emptyDescription": "فیلترها را تغییر دهید یا فایل جدیدی بارگذاری کنید.",
+    "uploadSuccess": "رسانه بارگذاری شد",
+    "uploadFailed": "بارگذاری ناموفق بود",
+    "metadataSaved": "فراداده ذخیره شد",
+    "deleted": "رسانه حذف شد",
+    "form": {
+      "titleFa": "عنوان (فارسی)",
+      "alt": "متن جایگزین (انگلیسی)",
+      "isPublic": "عمومی"
+    }
+  },
+  "contactWorkspace": {
+    "title": "درخواست‌های تماس",
+    "subtitle": "بررسی درخواست‌ها و پیگیری چرخه حیات آنها.",
+    "searchPlaceholder": "جستجوی درخواست‌ها…",
+    "allStatuses": "همه وضعیت‌ها",
+    "statusNew": "جدید",
+    "statusInProgress": "در حال انجام",
+    "statusResolved": "حل‌شده",
+    "statusClosed": "بسته‌شده",
+    "statusSpam": "هرزنامه",
+    "status": "وضعیت",
+    "phone": "تلفن",
+    "company": "شرکت",
+    "source": "منبع",
+    "serviceCategory": "خدمت",
+    "budgetRange": "محدوده بودجه",
+    "message": "پیام",
+    "inspect": "بررسی",
+    "updateStatus": "به‌روزرسانی وضعیت",
+    "markHandled": "علامت‌گذاری رسیدگی‌شده",
+    "empty": "درخواستی یافت نشد",
+    "emptyDescription": "فیلترها را تغییر دهید.",
+    "errorTitle": "درخواست‌ها بارگذاری نشد",
+    "errorDescription": "در دریافت درخواست‌های تماس خطایی رخ داد.",
+    "status": {
+      "new": "جدید",
+      "in_progress": "در حال انجام",
+      "resolved": "حل‌شده",
+      "closed": "بسته‌شده",
+      "spam": "هرزنامه"
+    },
+    "column": {
+      "name": "نام",
+      "email": "ایمیل",
+      "subject": "موضوع",
+      "status": "وضعیت",
+      "received": "دریافت",
+      "actions": "اقدامات"
+    }
+  },
+  "newsletterWorkspace": {
+    "title": "مشترکین خبرنامه",
+    "subtitle": "جستجو، فیلتر و مدیریت وضعیت مشترکین.",
+    "searchPlaceholder": "جستجوی مشترکین…",
+    "allStatuses": "همه",
+    "statusActive": "فعال",
+    "statusInactive": "غیرفعال",
+    "activate": "فعال‌سازی",
+    "deactivate": "غیرفعال‌سازی",
+    "export": "خروجی CSV",
+    "exportDone": "خروجی شروع شد",
+    "exportFailed": "خروجی ناموفق بود",
+    "activated": "مشترک فعال شد",
+    "deactivated": "مشترک غیرفعال شد",
+    "privacyNote": "نشانه‌های مشترکین هرگز افشا نمی‌شوند؛ خروجی‌ها نیز شامل آنها نیست.",
+    "empty": "مشترکی یافت نشد",
+    "emptyDescription": "فیلترها را تغییر دهید.",
+    "errorTitle": "مشترکین بارگذاری نشد",
+    "errorDescription": "در دریافت مشترکین خطایی رخ داد.",
+    "column": {
+      "email": "ایمیل",
+      "locale": "زبان",
+      "source": "منبع",
+      "status": "وضعیت",
+      "subscribedAt": "عضویت",
+      "actions": "اقدامات"
+    }
+  },
+  "editorialWorkspace": {
+    "title": "فضای ویراستاری",
+    "subtitle": "صف بررسی، نسخه‌ها، تأییدها، زمان‌بندی‌ها و گزارش‌گیری.",
+    "tab": {
+      "review": "صف بررسی",
+      "all": "همه جریان‌های کار",
+      "schedule": "زمان‌بندی",
+      "locks": "قفل‌ها",
+      "audit": "گزارش اقدامات",
+      "revisions": "نسخه‌ها",
+      "timeline": "خط زمانی"
+    },
+    "open": "باز",
+    "back": "بازگشت",
+    "approvals": "تأییدها",
+    "comments": "دیدگاه‌ها",
+    "publishing": "انتشار",
+    "by": "توسط",
+    "unassigned": "اختصاص‌نیافته",
+    "approve": "تأیید",
+    "reject": "رد",
+    "noApprovals": "در این مرحله تأییدی لازم نیست.",
+    "commentsDenied": "مجاز به دیدگاه‌گذاشتن روی این مورد نیستید.",
+    "publishingDenied": "انتشار برای این مرحله یا نقش شما در دسترس نیست.",
+    "from": "از",
+    "to": "به",
+    "emptyRevisions": "هنوز نسخه‌ای ثبت نشده است.",
+    "auditTrail": "گزارش اقدامات",
+    "empty": "جریان کاری یافت نشد",
+    "emptyReview": "موردی در انتظار بررسی نیست",
+    "emptySchedule": "انتشاری زمان‌بندی نشده",
+    "emptyLocks": "قفل فعالی وجود ندارد",
+    "emptyAudit": "رویدادی ثبت نشده",
+    "emptyDescription": "محتوا از فضاهای کاری محتوا وارد جریان کار ویراستاری می‌شود.",
+    "errorTitle": "فضای ویراستاری بارگذاری نشد",
+    "errorDescription": "در دریافت داده‌های ویراستاری خطایی رخ داد."
   }
 }

@@ -125,7 +125,22 @@ export function ApprovalQueuePage({ onSelect }: { onSelect?: (id: number) => voi
 }
 
 /** Review panel — approvals, threaded comments and publish controls. */
-export function ReviewPanelPage({ workflowId }: { workflowId: number }) {
+export interface ReviewPanelPageProps {
+  workflowId: number
+  /** Authorization gates (default true keeps existing callers working). */
+  canApprove?: boolean
+  canSchedule?: boolean
+  canPublish?: boolean
+  canComment?: boolean
+}
+
+export function ReviewPanelPage({
+  workflowId,
+  canApprove = true,
+  canSchedule = true,
+  canPublish = true,
+  canComment = true,
+}: ReviewPanelPageProps) {
   const workflow = useWorkflow(workflowId)
   const addComment = useCommentMutation(workflowId)
   const resolveComment = useResolveCommentMutation(workflowId)
@@ -152,7 +167,7 @@ export function ReviewPanelPage({ workflowId }: { workflowId: number }) {
                   </div>
                   <div className="flex items-center gap-2">
                     <ApprovalStatus status={approval.status} />
-                    {approval.status === "pending" ? (
+                    {approval.status === "pending" && canApprove ? (
                       <div className="flex gap-1">
                         <Button size="sm" variant="outline" onClick={() => approve.mutate({ approvalId: approval.id, approved: true })}>
                           Approve
@@ -170,18 +185,27 @@ export function ReviewPanelPage({ workflowId }: { workflowId: number }) {
         </div>
         <div>
           <h3 className="mb-3 text-sm font-semibold text-muted-foreground">Comments</h3>
-          <CommentThread
-            comments={data.comments}
-            onCompose={(body) => addComment.mutate({ body })}
-            onResolve={(comment) => resolveComment.mutate(comment.id)}
-          />
+          {canComment ? (
+            <CommentThread
+              comments={data.comments}
+              onCompose={(body) => addComment.mutate({ body })}
+              onResolve={(comment) => resolveComment.mutate(comment.id)}
+            />
+          ) : (
+            <p className="text-sm text-muted-foreground">You do not have permission to comment on this item.</p>
+          )}
           <div className="mt-6">
             <h3 className="mb-3 text-sm font-semibold text-muted-foreground">Publishing</h3>
-            <PublishButton
-              canPublish={data.stage.code === "approved" || data.stage.code === "scheduled"}
-              onPublish={(soft) => publish.mutate({ soft })}
-              onSchedule={(when) => schedule.mutate(when)}
-            />
+            {(canPublish || canSchedule) && (data.stage.code === "approved" || data.stage.code === "scheduled") ? (
+              <PublishButton
+                canPublish={canPublish}
+                canSchedule={canSchedule}
+                onPublish={(soft) => publish.mutate({ soft })}
+                onSchedule={(when) => schedule.mutate(when)}
+              />
+            ) : (
+              <p className="text-sm text-muted-foreground">Publishing is not available for this workflow stage.</p>
+            )}
           </div>
         </div>
       </div>

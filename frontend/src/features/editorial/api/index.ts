@@ -31,6 +31,24 @@ export async function fetchWorkflows(params: WorkflowListParams = {}, signal?: A
   return getEnvelope<Workflow[]>(`${BASE}/workflows/`, { ...params }, signal)
 }
 
+/** Workflows attached to one content object (by content-type label + id). */
+export async function fetchWorkflowForContent(
+  contentType: string,
+  objectId: number,
+  signal?: AbortSignal,
+): Promise<Workflow[]> {
+  return fetchWorkflows({ content_type: contentType, object_id: objectId }, signal)
+}
+
+/** Return the workflow for a content object, creating it when absent
+ * (staff workspace flow — backend: POST /editorial/workflows/ensure/). */
+export async function ensureWorkflow(contentType: string, objectId: number): Promise<WorkflowDetail> {
+  return postEnvelope<WorkflowDetail>(`${BASE}/workflows/ensure/`, {
+    content_type: contentType,
+    object_id: objectId,
+  })
+}
+
 export async function fetchWorkflow(id: number, signal?: AbortSignal): Promise<WorkflowDetail> {
   return getEnvelope<WorkflowDetail>(`${BASE}/workflows/${id}/`, undefined, signal)
 }

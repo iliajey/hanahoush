@@ -8,11 +8,13 @@ import { cn } from "@/shared/lib/cn"
 /** Publish / schedule control for an approved workflow. */
 export function PublishButton({
   canPublish = true,
+  canSchedule = true,
   onPublish,
   onSchedule,
   className,
 }: {
   canPublish?: boolean
+  canSchedule?: boolean
   onPublish?: (soft: boolean) => void
   onSchedule?: (datetime: string) => void
   className?: string
@@ -42,7 +44,7 @@ export function PublishButton({
           size="sm"
           variant="outline"
           className="h-8 px-2"
-          disabled={!onSchedule || !when}
+          disabled={!canSchedule || !onSchedule || !when}
           onClick={() => when && onSchedule?.(new Date(when).toISOString())}
         >
           <CalendarClock className="h-3.5 w-3.5" /> Schedule

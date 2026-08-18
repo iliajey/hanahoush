@@ -334,7 +334,406 @@
     "role": "Role",
     "session": "Session",
     "sessionActive": "Active",
-    "quickLinksTitle": "Explore the site",
-    "quickLinksDescription": "Jump to any public section."
+    "quickLinksTitle": "Workspace shortcuts",
+    "quickLinksDescription": "Jump to any available workspace section.",
+    "errorTitle": "Dashboard unavailable",
+    "errorDescription": "The operational dashboard could not be loaded. Check your permissions and try again.",
+    "profile": {
+      "noRole": "No role assigned",
+      "noPermissions": "No permissions granted",
+      "permsTitle": "Permissions"
+    },
+    "host": {
+      "title": "Staff workspace",
+      "description": "Role-aware operational overview for your workspace.",
+      "role": {
+        "SUPER_ADMIN": {
+          "title": "Operations centre",
+          "description": "Full platform oversight: content, editorial, communication and system status."
+        },
+        "COMPANY_ADMIN": {
+          "title": "Company & content workspace",
+          "description": "Manage the company's content, projects, media and inquiries."
+        },
+        "CONTENT_MANAGER": {
+          "title": "Content workspace",
+          "description": "Author, review and schedule articles and company content."
+        },
+        "PROJECT_MANAGER": {
+          "title": "Project workspace",
+          "description": "Manage portfolio projects and their case studies."
+        },
+        "EDITOR": {
+          "title": "Editorial workspace",
+          "description": "Review and refine content through the editorial workflow."
+        },
+        "VIEWER": {
+          "title": "Overview",
+          "description": "Read-only summary of the content you can access."
+        },
+        "CUSTOM": {
+          "title": "Workspace",
+          "description": "Role-aware workspace for this account."
+        }
+      }
+    },
+    "widgets": {
+      "content": {
+        "title": "Content",
+        "description": "Published, draft and scheduled content."
+      },
+      "editorial": {
+        "title": "Editorial",
+        "description": "Approvals, locks and recent revisions."
+      },
+      "engagement": {
+        "title": "Engagement",
+        "description": "Traffic, inquiries and subscriptions."
+      },
+      "operations": {
+        "title": "Operations",
+        "description": "Recent activity across the platform.",
+        "media": "Recent uploads",
+        "contact": "Recent inquiries",
+        "editorial": "Recent editorial activity"
+      },
+      "system": {
+        "title": "System",
+        "description": "Operational health of the platform services."
+      },
+      "empty": "No data yet",
+      "metrics": {
+        "articlesPublished": "Published articles",
+        "articlesDrafts": "Article drafts",
+        "articlesAwaitingReview": "Awaiting review",
+        "articlesScheduled": "Scheduled articles",
+        "projectsPublished": "Published projects",
+        "projectsDrafts": "Project drafts",
+        "services": "Services",
+        "pendingApprovals": "Pending approvals",
+        "rejectedApprovals": "Rejected approvals",
+        "scheduledPublications": "Scheduled publications",
+        "activeLocks": "Active content locks",
+        "recentRevisions": "Revisions (30 days)",
+        "pageViews": "Page views",
+        "pageViews30d": "Page views (30 days)",
+        "articleViews": "Article views",
+        "projectViews": "Project views",
+        "contactRequests": "Open contact requests",
+        "newsletterSubscriptions": "Newsletter subscribers",
+        "searchActivity": "Search events",
+        "database": "Database",
+        "cache": "Cache",
+        "migrations": "Migrations",
+        "environment": "Environment",
+        "version": "Version",
+        "debug": "Debug mode"
+      }
+    },
+    "overview": {
+      "readOnly": {
+        "title": "Read-only overview",
+        "description": "Browse the content your role can access. Management actions are handled by staff roles."
+      },
+      "editorial": {
+        "title": "Editorial workspace",
+        "description": "Review, approve and publish content."
+      }
+    }
+  },
+  "roles": {
+    "SUPER_ADMIN": {
+      "name": "Super Admin",
+      "description": "Full platform access including user and role management."
+    },
+    "COMPANY_ADMIN": {
+      "name": "Company Admin",
+      "description": "Manages all company content, media and users."
+    },
+    "CONTENT_MANAGER": {
+      "name": "Content Manager",
+      "description": "Creates and manages articles, services and company content."
+    },
+    "PROJECT_MANAGER": {
+      "name": "Project Manager",
+      "description": "Manages portfolio projects."
+    },
+    "EDITOR": {
+      "name": "Editor",
+      "description": "Writes and edits articles."
+    },
+    "VIEWER": {
+      "name": "Viewer",
+      "description": "Read-only access to public content."
+    },
+    "custom": {
+      "name": "Custom role",
+      "description": "This account holds a role outside the standard catalog."
+    }
+  },
+  "navWorkspace": {
+    "main": "Workspace",
+    "label": "Workspace",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "viewSite": "View site",
+    "logout": "Log out",
+    "dashboard": "Dashboard",
+    "dashboardDescription": "Role-aware overview",
+    "content": "Content",
+    "articles": "Articles",
+    "articlesDescription": "Manage articles and their workflow",
+    "projects": "Projects",
+    "projectsDescription": "Manage projects and case studies",
+    "editorial": "Editorial",
+    "editorialDescription": "Review queue, revisions and approvals",
+    "workflowDetail": "Workflow",
+    "workflowDetailDescription": "Workflow detail",
+    "media": "Media",
+    "mediaDescription": "Media library",
+    "communication": "Communication",
+    "contact": "Contact requests",
+    "contactDescription": "Inquiries and follow-ups",
+    "newsletter": "Newsletter",
+    "newsletterDescription": "Subscribers and exports"
+  },
+  "workflowStage": {
+    "draft": "Draft",
+    "in_review": "In review",
+    "seo_review": "SEO review",
+    "approved": "Approved",
+    "scheduled": "Scheduled",
+    "published": "Published",
+    "archived": "Archived"
+  },
+  "articleWorkspace": {
+    "title": "Articles",
+    "subtitle": "Create, edit and move articles through the editorial workflow.",
+    "searchPlaceholder": "Search articles…",
+    "createDraft": "New draft",
+    "statusAll": "All",
+    "statusDraft": "Draft",
+    "statusReview": "In review",
+    "statusPublished": "Published",
+    "statusArchived": "Archived",
+    "noWorkflow": "Not started",
+    "startReview": "Start review",
+    "submitForReview": "Submit",
+    "submitComment": "Ready for review",
+    "empty": "No articles found",
+    "emptyDescription": "Try changing the filters, or create a new draft.",
+    "errorTitle": "Couldn't load articles",
+    "errorDescription": "Something went wrong while fetching the article list.",
+    "column": {
+      "article": "Article",
+      "status": "Status",
+      "workflow": "Workflow",
+      "updated": "Updated",
+      "actions": "Actions"
+    },
+    "edit": "Edit article",
+    "view": "Open public article",
+    "form": {
+      "createTitle": "New article",
+      "editTitle": "Edit article",
+      "subtitle": "Save drafts here; publishing runs through the editorial workflow.",
+      "identity": "Identity",
+      "content": "Content",
+      "publishing": "Publishing",
+      "titleEn": "Title (English)",
+      "titleFa": "Title (Persian)",
+      "titleAr": "Title (Arabic)",
+      "slug": "Slug",
+      "descriptionEn": "Body (English)",
+      "descriptionFa": "Body (Persian)",
+      "descriptionAr": "Body (Arabic)",
+      "status": "Status",
+      "isFeatured": "Featured",
+      "isPublic": "Public"
+    }
+  },
+  "projectWorkspace": {
+    "title": "Projects",
+    "subtitle": "Manage portfolio projects and their case studies.",
+    "searchPlaceholder": "Search projects…",
+    "newProject": "New project",
+    "statusAll": "All",
+    "statusDraft": "Draft",
+    "statusReview": "In review",
+    "statusPublished": "Published",
+    "statusArchived": "Archived",
+    "empty": "No projects found",
+    "emptyDescription": "Try changing the filters, or create a new project.",
+    "errorTitle": "Couldn't load projects",
+    "errorDescription": "Something went wrong while fetching the project list.",
+    "column": {
+      "project": "Project",
+      "status": "Status",
+      "client": "Client",
+      "year": "Year",
+      "actions": "Actions"
+    },
+    "edit": "Edit project",
+    "openCaseStudy": "Open case study",
+    "form": {
+      "createTitle": "New project",
+      "editTitle": "Edit project",
+      "subtitle": "Save project metadata here; publishing runs through the editorial workflow.",
+      "identity": "Identity",
+      "content": "Content",
+      "publishing": "Publishing",
+      "titleEn": "Title (English)",
+      "titleFa": "Title (Persian)",
+      "titleAr": "Title (Arabic)",
+      "slug": "Slug",
+      "client": "Client",
+      "location": "Location",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "liveUrl": "Live URL",
+      "descriptionEn": "Description (English)",
+      "descriptionFa": "Description (Persian)",
+      "descriptionAr": "Description (Arabic)",
+      "status": "Status",
+      "isFeatured": "Featured",
+      "isPublic": "Public"
+    }
+  },
+  "mediaWorkspace": {
+    "title": "Media library",
+    "subtitle": "Upload, tag and manage media used across the site.",
+    "searchPlaceholder": "Search media…",
+    "upload": "Upload",
+    "uploading": "Uploading…",
+    "selectFile": "Choose a file",
+    "allTypes": "All",
+    "images": "Images",
+    "documents": "Documents",
+    "editMeta": "Edit metadata",
+    "deleteFile": "Delete file",
+    "metadataTitle": "Media metadata",
+    "deleteConfirmTitle": "Delete media",
+    "deleteConfirmDescription": "This soft-deletes the file (references keep resolving; restorable from Django admin).",
+    "uploadDialogTitle": "Upload media",
+    "uploadDialogDescription": "Select a file and optional metadata.",
+    "referenceCount_one": "{{count}} reference",
+    "referenceCount_other": "{{count}} references",
+    "title": "Title",
+    "empty": "No media found",
+    "emptyDescription": "Try changing the filters, or upload a new file.",
+    "uploadSuccess": "Media uploaded",
+    "uploadFailed": "Upload failed",
+    "metadataSaved": "Metadata saved",
+    "deleted": "Media deleted",
+    "form": {
+      "titleFa": "Title (Persian)",
+      "alt": "Alt text (English)",
+      "isPublic": "Public"
+    }
+  },
+  "contactWorkspace": {
+    "title": "Contact requests",
+    "subtitle": "Review inquiries and track their lifecycle.",
+    "searchPlaceholder": "Search inquiries…",
+    "allStatuses": "All statuses",
+    "statusNew": "New",
+    "statusInProgress": "In progress",
+    "statusResolved": "Resolved",
+    "statusClosed": "Closed",
+    "statusSpam": "Spam",
+    "status": "Status",
+    "phone": "Phone",
+    "company": "Company",
+    "source": "Source",
+    "serviceCategory": "Service",
+    "budgetRange": "Budget range",
+    "message": "Message",
+    "inspect": "Inspect",
+    "updateStatus": "Update status",
+    "markHandled": "Mark handled",
+    "empty": "No inquiries found",
+    "emptyDescription": "Try changing the filters.",
+    "errorTitle": "Couldn't load inquiries",
+    "errorDescription": "Something went wrong while fetching contact requests.",
+    "status": {
+      "new": "New",
+      "in_progress": "In progress",
+      "resolved": "Resolved",
+      "closed": "Closed",
+      "spam": "Spam"
+    },
+    "column": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "status": "Status",
+      "received": "Received",
+      "actions": "Actions"
+    }
+  },
+  "newsletterWorkspace": {
+    "title": "Newsletter subscribers",
+    "subtitle": "Search, filter and manage subscriber status.",
+    "searchPlaceholder": "Search subscribers…",
+    "allStatuses": "All",
+    "statusActive": "Active",
+    "statusInactive": "Inactive",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "export": "Export CSV",
+    "exportDone": "Export started",
+    "exportFailed": "Export failed",
+    "activated": "Subscriber activated",
+    "deactivated": "Subscriber deactivated",
+    "privacyNote": "Subscriber tokens are never exposed; exports never include them.",
+    "empty": "No subscribers found",
+    "emptyDescription": "Try changing the filters.",
+    "errorTitle": "Couldn't load subscribers",
+    "errorDescription": "Something went wrong while fetching subscribers.",
+    "column": {
+      "email": "Email",
+      "locale": "Locale",
+      "source": "Source",
+      "status": "Status",
+      "subscribedAt": "Subscribed",
+      "actions": "Actions"
+    }
+  },
+  "editorialWorkspace": {
+    "title": "Editorial workspace",
+    "subtitle": "Review queue, revisions, approvals, schedules and the audit trail.",
+    "tab": {
+      "review": "Review queue",
+      "all": "All workflows",
+      "schedule": "Schedule",
+      "locks": "Locks",
+      "audit": "Audit trail",
+      "revisions": "Revisions",
+      "timeline": "Timeline"
+    },
+    "open": "Open",
+    "back": "Back",
+    "approvals": "Approvals",
+    "comments": "Comments",
+    "publishing": "Publishing",
+    "by": "by",
+    "unassigned": "unassigned",
+    "approve": "Approve",
+    "reject": "Reject",
+    "noApprovals": "No approvals required at this stage.",
+    "commentsDenied": "You do not have permission to comment on this item.",
+    "publishingDenied": "Publishing is not available for this workflow stage or your role.",
+    "from": "From",
+    "to": "To",
+    "emptyRevisions": "No revisions yet.",
+    "auditTrail": "Audit trail",
+    "empty": "No workflows found",
+    "emptyReview": "Nothing waiting for review",
+    "emptySchedule": "No publications scheduled",
+    "emptyLocks": "No active content locks",
+    "emptyAudit": "No audit events recorded",
+    "emptyDescription": "Content flows through the editorial workflow from the content workspaces.",
+    "errorTitle": "Couldn't load the editorial workspace",
+    "errorDescription": "Something went wrong while fetching editorial data."
   }
 }
