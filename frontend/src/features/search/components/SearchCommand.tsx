@@ -97,8 +97,8 @@ export function SearchCommand({ className }: SearchCommandProps) {
         onClick={() => setOpen(true)}
       >
         <SearchIcon className="h-4 w-4" aria-hidden />
-        <span className="hidden md:inline">{t("search.placeholder")}</span>
-        <kbd className="hidden rounded border bg-muted px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground md:inline">
+        <span className="hidden xl:inline">{t("search.placeholder")}</span>
+        <kbd className="hidden rounded border bg-muted px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground xl:inline">
           {isMac ? "⌘K" : "Ctrl K"}
         </kbd>
       </Button>

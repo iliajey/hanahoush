@@ -65,7 +65,16 @@
     "username": "اسم المستخدم",
     "password": "كلمة المرور",
     "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
     "rememberMe": "تذكرني",
+    "register": "تسجيل",
+    "registerDescription": "إنشاء حساب جديد",
+    "registerSuccess": "تم إنشاء الحساب بنجاح",
+    "registerFailed": "فشل التسجيل",
+    "hasAccount": "لديك حساب بالفعل؟",
+    "noAccount": "ليس لديك حساب؟",
     "forgotPassword": "نسيت كلمة المرور؟",
     "forgotPasswordDescription": "أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة التعيين.",
     "sendResetLink": "إرسال رابط إعادة التعيين",
@@ -81,18 +90,36 @@
     "passwordResetSuccess": "تمت إعادة تعيين كلمة المرور بنجاح",
     "goToLogin": "الذهاب إلى تسجيل الدخول",
     "resetFailed": "فشلت إعادة تعيين كلمة المرور",
+    "changePassword": "تغيير كلمة المرور",
+    "changePasswordDescription": "تحديث كلمة مرور حسابك.",
+    "currentPassword": "كلمة المرور الحالية",
     "welcomeBack": "مرحبًا بعودتك",
     "sessionExpiredTitle": "انتهت الجلسة",
     "sessionExpiredDescription": "انتهت جلستك. يرجى تسجيل الدخول مرة أخرى.",
     "unauthorizedTitle": "غير مصرح",
     "unauthorizedDescription": "ليس لديك إذن للوصول إلى هذه الصفحة.",
+    "profile": "الملف الشخصي",
+    "profileDescription": "إدارة إعدادات حسابك وعرض أذوناتك.",
+    "profileUpdated": "تم تحديث الملف الشخصي بنجاح",
+    "passwordChanged": "تم تغيير كلمة المرور بنجاح",
+    "staffStatus": "حالة الموظف",
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "staff": "موظف",
+    "memberSince": "عضو منذ",
+    "permissions": "الأذونات",
+    "noPermissions": "لم يتم تعيين أذونات",
     "validation": {
       "usernameRequired": "اسم المستخدم مطلوب",
+      "usernameFormat": "استخدم 3-150 حرف أو رقم أو رمز . _ -",
       "emailRequired": "أدخل بريداً إلكترونياً صحيحاً",
       "emailInvalid": "أدخل بريداً إلكترونياً صحيحاً",
       "passwordMin": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
       "passwordMismatch": "كلمتا المرور غير متطابقتين",
-      "currentPasswordRequired": "كلمة المرور الحالية مطلوبة"
+      "currentPasswordRequired": "كلمة المرور الحالية مطلوبة",
+      "firstNameRequired": "الاسم الأول مطلوب",
+      "lastNameRequired": "اسم العائلة مطلوب",
+      "phoneInvalid": "أدخل رقم هاتف صحيح"
     }
   },
   "home": {
@@ -111,15 +138,53 @@
       "team": "أعضاء الفريق",
       "partners": "شركاء"
     },
-    "services": { "eyebrow": "ماذا نقدم", "title": "خدماتنا.", "description": "خدمات متكاملة — من البنية إلى النشر." },
-    "projects": { "eyebrow": "أعمالنا", "title": "مشاريع مميزة.", "description": "كل مشروع شراكة من البنية حتى التسليم." },
-    "articles": { "eyebrow": "رؤى", "title": "أحدث المقالات.", "description": "مقالات وأدلة حول الهندسة التي نمارسها كل يوم." },
-    "about": { "eyebrow": "عن هاناهوش", "title": "رسالتنا ورؤيتنا.", "description": "لماذا نبني، وإلى أين نتجه.", "mission": "الرسالة", "vision": "الرؤية" },
-    "team": { "eyebrow": "الفريق", "title": "الأشخاص خلف المنصة.", "description": "مهندسون ومصممون ومشغلون يعملون معاً." },
-    "timeline": { "eyebrow": "قصتنا", "title": "معالم.", "description": "تاريخ موجز لهاناهوش." },
-    "testimonials": { "eyebrow": "يثق بنا عملاؤنا", "title": "ماذا يقول عملاؤنا.", "description": "شراكات طويلة مع مؤسسات تطلب الجودة." },
-    "partners": { "eyebrow": "النظام البيئي", "title": "شركاء ومنصات.", "description": "المنظمات التي نعمل معها ونبني عليها." },
-    "faq": { "eyebrow": "الأسئلة الشائعة", "title": "أسئلة قد تدور في ذهنك.", "description": "كل ما يخص عمليتنا وجدولنا الزمني ودعمنا." },
+    "services": {
+      "eyebrow": "ماذا نقدم",
+      "title": "خدماتنا.",
+      "description": "خدمات متكاملة — من البنية إلى النشر."
+    },
+    "projects": {
+      "eyebrow": "أعمالنا",
+      "title": "مشاريع مميزة.",
+      "description": "كل مشروع شراكة من البنية حتى التسليم."
+    },
+    "articles": {
+      "eyebrow": "رؤى",
+      "title": "أحدث المقالات.",
+      "description": "مقالات وأدلة حول الهندسة التي نمارسها كل يوم."
+    },
+    "about": {
+      "eyebrow": "عن هاناهوش",
+      "title": "رسالتنا ورؤيتنا.",
+      "description": "لماذا نبني، وإلى أين نتجه.",
+      "mission": "الرسالة",
+      "vision": "الرؤية"
+    },
+    "team": {
+      "eyebrow": "الفريق",
+      "title": "الأشخاص خلف المنصة.",
+      "description": "مهندسون ومصممون ومشغلون يعملون معاً."
+    },
+    "timeline": {
+      "eyebrow": "قصتنا",
+      "title": "معالم.",
+      "description": "تاريخ موجز لهاناهوش."
+    },
+    "testimonials": {
+      "eyebrow": "يثق بنا عملاؤنا",
+      "title": "ماذا يقول عملاؤنا.",
+      "description": "شراكات طويلة مع مؤسسات تطلب الجودة."
+    },
+    "partners": {
+      "eyebrow": "النظام البيئي",
+      "title": "شركاء ومنصات.",
+      "description": "المنظمات التي نعمل معها ونبني عليها."
+    },
+    "faq": {
+      "eyebrow": "الأسئلة الشائعة",
+      "title": "أسئلة قد تدور في ذهنك.",
+      "description": "كل ما يخص عمليتنا وجدولنا الزمني ودعمنا."
+    },
     "cta": {
       "title": "مستعد لبناء شيء استثنائي؟",
       "description": "فريقنا الهندسي جاهز لمناقشة مشروعك. بدون التزام — مجرد محادثة حول الإمكانيات.",
@@ -507,7 +572,11 @@
     "contact": "طلبات التواصل",
     "contactDescription": "الاستفسارات والمتابعات",
     "newsletter": "النشرة البريدية",
-    "newsletterDescription": "المشتركون والتصدير"
+    "newsletterDescription": "المشتركون والتصدير",
+    "profile": "الملف الشخصي",
+    "profileDescription": "إعدادات الحساب والأذونات",
+    "users": "المستخدمون",
+    "usersDescription": "إدارة الحسابات (المشرف الأعلى)"
   },
   "workflowStage": {
     "draft": "مسودة",
@@ -634,7 +703,6 @@
     "referenceCount_few": "{{count}} مراجع",
     "referenceCount_many": "{{count}} مرجعاً",
     "referenceCount_other": "{{count}} مرجعاً",
-    "title": "العنوان",
     "empty": "لا توجد وسائط",
     "emptyDescription": "غيّر عوامل التصفية أو ارفع ملفاً جديداً.",
     "uploadSuccess": "تم رفع الوسائط",
@@ -642,6 +710,7 @@
     "metadataSaved": "تم حفظ البيانات الوصفية",
     "deleted": "تم حذف الوسائط",
     "form": {
+      "title": "العنوان",
       "titleFa": "العنوان (فارسي)",
       "alt": "النص البديل (إنجليزي)",
       "isPublic": "عام"
@@ -657,7 +726,13 @@
     "statusResolved": "تم الحل",
     "statusClosed": "مغلق",
     "statusSpam": "بريد مزعج",
-    "status": "الحالة",
+    "status": {
+      "new": "جديد",
+      "in_progress": "قيد المعالجة",
+      "resolved": "تم الحل",
+      "closed": "مغلق",
+      "spam": "بريد مزعج"
+    },
     "phone": "الهاتف",
     "company": "الشركة",
     "source": "المصدر",
@@ -671,13 +746,6 @@
     "emptyDescription": "غيّر عوامل التصفية.",
     "errorTitle": "تعذّر تحميل الاستفسارات",
     "errorDescription": "حدث خطأ أثناء جلب طلبات التواصل.",
-    "status": {
-      "new": "جديد",
-      "in_progress": "قيد المعالجة",
-      "resolved": "تم الحل",
-      "closed": "مغلق",
-      "spam": "بريد مزعج"
-    },
     "column": {
       "name": "الاسم",
       "email": "البريد",
@@ -751,5 +819,126 @@
     "emptyDescription": "يتدفق المحتوى عبر مسار العمل التحريري من مساحات العمل.",
     "errorTitle": "تعذّر تحميل مساحة التحرير",
     "errorDescription": "حدث خطأ أثناء جلب البيانات التحريرية."
+  },
+  "users": {
+    "page": {
+      "title": "إدارة المستخدمين",
+      "description": "إنشاء حسابات الفريق وإدارتها والأدوار والصلاحيات."
+    },
+    "search": {
+      "placeholder": "ابحث حسب اسم المستخدم أو الاسم أو البريد الإلكتروني…"
+    },
+    "filters": {
+      "role": "تصفية حسب الدور",
+      "allRoles": "كل الأدوار",
+      "status": "تصفية حسب الحالة",
+      "allStatuses": "كل الحالات",
+      "staff": "تصفية حسب طاقم العمل",
+      "allStaff": "جميع حالات الطاقم"
+    },
+    "table": {
+      "caption": "حسابات المستخدمين",
+      "username": "اسم المستخدم",
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "role": "الدور",
+      "staff": "الطاقم",
+      "status": "الحالة",
+      "lastLogin": "آخر دخول",
+      "actions": "الإجراءات",
+      "sort": "تغيير الترتيب",
+      "pagination": "ترقيم قائمة المستخدمين",
+      "previous": "السابق",
+      "next": "التالي",
+      "pageOf": "صفحة {{current}} من {{total}}"
+    },
+    "status": {
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "staffYes": "طاقم",
+      "staffNo": "غير طاقم",
+      "superuser": "مستخدم خارق",
+      "yes": "نعم",
+      "no": "لا",
+      "never": "أبدًا"
+    },
+    "fields": {
+      "username": "اسم المستخدم",
+      "name": "الاسم",
+      "firstName": "الاسم الأول",
+      "lastName": "اسم العائلة",
+      "email": "البريد الإلكتروني",
+      "phone": "الهاتف",
+      "password": "كلمة المرور",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "newPassword": "كلمة المرور الجديدة",
+      "role": "الدور",
+      "rolePlaceholder": "اختر دورًا",
+      "active": "حساب نشط",
+      "activeHint": "الحسابات غير النشطة لا يمكنها تسجيل الدخول.",
+      "staff": "حالة الطاقم",
+      "staffHint": "حسابات الطاقم يمكنها دخول مساحة العمل.",
+      "lastLogin": "آخر دخول",
+      "dateJoined": "تاريخ الانضمام"
+    },
+    "actions": {
+      "create": "مستخدم جديد",
+      "edit": "تعديل",
+      "detail": "التفاصيل",
+      "activate": "تنشيط",
+      "deactivate": "تعطيل",
+      "setPassword": "تعيين كلمة المرور",
+      "savePassword": "حفظ كلمة المرور",
+      "viewRoles": "الأدوار والصلاحيات"
+    },
+    "dialog": {
+      "createTitle": "إنشاء مستخدم",
+      "editTitle": "تعديل المستخدم",
+      "saveChanges": "حفظ التغييرات",
+      "createUser": "إنشاء مستخدم"
+    },
+    "rolesDialog": {
+      "title": "الأدوار والصلاحيات"
+    },
+    "permissions": {
+      "title": "الصلاحيات الفعلية",
+      "empty": "لم تُمنح أي صلاحيات.",
+      "readOnlyNote": "الصلاحيات هنا للقراءة فقط؛ الخادم هو المرجع النهائي.",
+      "modules": {
+        "accounts": "الحسابات",
+        "analytics": "التحليلات",
+        "articles": "المقالات",
+        "company": "الشركة",
+        "editorial": "التحرير",
+        "integration": "التكامل",
+        "media_library": "الوسائط",
+        "projects": "المشاريع",
+        "services": "الخدمات"
+      }
+    },
+    "messages": {
+      "saveFailed": "تعذّر حفظ التغييرات.",
+      "passwordChanged": "تم تحديث كلمة المرور وإنهاء الجلسات النشطة لهذا الحساب.",
+      "selfEditNote": "للأمان لا يمكنك تعطيل حسابك أو إزالة حالة الطاقم الخاصة بك.",
+      "selfDetailNote": "أنت تعرض حسابك الخاص؛ تعطيل الذات محجوب في الخادم."
+    },
+    "empty": {
+      "title": "لا يوجد مستخدمون",
+      "description": "عدّل البحث أو المرشحات، أو أنشئ مستخدمًا جديدًا."
+    },
+    "errors": {
+      "loadTitle": "تعذّر تحميل المستخدمين",
+      "loadDescription": "قائمة المستخدمين غير متاحة الآن. حاول لاحقًا."
+    },
+    "validation": {
+      "usernameRequired": "اسم المستخدم مطلوب",
+      "usernameFormat": "استخدم ٣-١٥٠ حرفًا أو رقمًا أو الرموز . _ -",
+      "emailRequired": "أدخل بريدًا إلكترونيًا صحيحًا",
+      "phoneInvalid": "أدخل رقم هاتف محمول صحيحًا",
+      "passwordRequired": "كلمة المرور مطلوبة",
+      "passwordMin": "يجب أن تكون كلمة المرور ٨ أحرف على الأقل",
+      "passwordMismatch": "كلمتا المرور غير متطابقتين",
+      "roleRequired": "اختر دورًا"
+    }
   }
 }

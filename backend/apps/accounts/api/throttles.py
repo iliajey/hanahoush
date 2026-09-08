@@ -8,6 +8,12 @@ class LoginRateThrottle(ScopedRateThrottle):
     scope = "login"
 
 
+class RegisterRateThrottle(ScopedRateThrottle):
+    """Limits public account registrations per client (scope: ``register``)."""
+
+    scope = "register"
+
+
 class RefreshRateThrottle(ScopedRateThrottle):
     """Limits token refresh attempts (scope: ``refresh``)."""
 

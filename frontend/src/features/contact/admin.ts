@@ -52,16 +52,16 @@ export async function listContacts(params: ContactListParams = {}): Promise<Cont
   if (params.locale) query.locale = params.locale
   if (params.ordering) query.ordering = params.ordering
 
-  const { data } = await apiClient.get<PaginatedResponse<AdminContact>>("/api/v1/admin/contact/", { params: query })
+  const { data } = await apiClient.get<PaginatedResponse<AdminContact>>("/admin/contact/", { params: query })
   return { items: data.data ?? [], pagination: data.pagination }
 }
 
 export async function updateContactStatus(id: number, status: ContactStatus): Promise<AdminContact> {
-  const { data } = await apiClient.patch<ApiEnvelope<AdminContact>>(`/api/v1/admin/contact/${id}/`, { status })
+  const { data } = await apiClient.patch<ApiEnvelope<AdminContact>>(`/admin/contact/${id}/`, { status })
   return data.data
 }
 
 export async function markContactHandled(id: number): Promise<{ id: number }> {
-  const { data } = await apiClient.post<ApiEnvelope<{ id: number }>>(`/api/v1/admin/contact/${id}/mark-handled/`)
+  const { data } = await apiClient.post<ApiEnvelope<{ id: number }>>(`/admin/contact/${id}/mark-handled/`)
   return data.data
 }

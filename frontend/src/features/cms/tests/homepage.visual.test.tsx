@@ -77,8 +77,8 @@ describe("HomePage visual QA (headless, page-builder)", () => {
     const { wrapper } = createTestProviders()
     render(<HomePage />, { wrapper })
 
-    expect(screen.getByRole("main")).toBeInTheDocument()
-
+    // The single <main> landmark belongs to the app layout shell; the page
+    // itself renders content wrappers, so we assert on the composed content.
     await waitFor(() => expect(screen.getByText("Web Development")).toBeInTheDocument(), { timeout: 6000 })
     expect(screen.getByText("ERP Consulting")).toBeInTheDocument()
     expect(screen.getByText("Ready to build?")).toBeInTheDocument()

@@ -259,8 +259,12 @@ export function CaseRelatedArticlesSection({ config }: SectionProps) {
                 onClick={() => projectAnalytics.relatedArticleClick(article.slug)}
                 className="group rounded-2xl border bg-card p-5 transition-colors hover:border-brand-500/40"
               >
-                <h4 className="font-semibold group-hover:text-brand-700 dark:group-hover:text-brand-300">{article.title || ""}</h4>
-                <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{article.description}</p>
+                <h4 className="font-semibold group-hover:text-brand-700 dark:group-hover:text-brand-300">
+                  {article.title_en || article.title_fa || article.title_ar || article.slug}
+                </h4>
+                <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
+                  {article.short_description_en || article.short_description_fa || article.short_description_ar || ""}
+                </p>
               </a>
             ))}
           </div>

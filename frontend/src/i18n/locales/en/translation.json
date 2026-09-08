@@ -65,7 +65,16 @@
     "username": "Username",
     "password": "Password",
     "email": "Email",
+    "phone": "Phone",
+    "firstName": "First name",
+    "lastName": "Last name",
     "rememberMe": "Remember me",
+    "register": "Register",
+    "registerDescription": "Create a new account",
+    "registerSuccess": "Account created successfully",
+    "registerFailed": "Registration failed",
+    "hasAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
     "forgotPassword": "Forgot password?",
     "forgotPasswordDescription": "Enter your email and we will send you a reset link.",
     "sendResetLink": "Send reset link",
@@ -81,18 +90,36 @@
     "passwordResetSuccess": "Password reset successfully",
     "goToLogin": "Go to login",
     "resetFailed": "Password reset failed",
+    "changePassword": "Change password",
+    "changePasswordDescription": "Update your account password.",
+    "currentPassword": "Current password",
     "welcomeBack": "Welcome back",
     "sessionExpiredTitle": "Session expired",
     "sessionExpiredDescription": "Your session has expired. Please sign in again.",
     "unauthorizedTitle": "Unauthorized",
     "unauthorizedDescription": "You do not have permission to access this page.",
+    "profile": "Profile",
+    "profileDescription": "Manage your account settings and view your permissions.",
+    "profileUpdated": "Profile updated successfully",
+    "passwordChanged": "Password changed successfully",
+    "staffStatus": "Staff status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "staff": "Staff",
+    "memberSince": "Member since",
+    "permissions": "Permissions",
+    "noPermissions": "No permissions assigned",
     "validation": {
       "usernameRequired": "Username is required",
+      "usernameFormat": "Use 3-150 letters, numbers, or . _ - characters",
       "emailRequired": "Enter a valid email address",
       "emailInvalid": "Enter a valid email address",
       "passwordMin": "Password must be at least 8 characters",
       "passwordMismatch": "Passwords do not match",
-      "currentPasswordRequired": "Current password is required"
+      "currentPasswordRequired": "Current password is required",
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required",
+      "phoneInvalid": "Enter a valid mobile number"
     }
   },
   "home": {
@@ -111,15 +138,53 @@
       "team": "Team members",
       "partners": "Partners"
     },
-    "services": { "eyebrow": "What we do", "title": "Our services.", "description": "Delivered end-to-end — from architecture to deployment." },
-    "projects": { "eyebrow": "Our work", "title": "Featured projects.", "description": "Every project is a partnership from architecture through delivery." },
-    "articles": { "eyebrow": "Insights", "title": "Latest articles.", "description": "Essays and guides on the engineering we practise every day." },
-    "about": { "eyebrow": "About Hanahoush", "title": "Our mission and vision.", "description": "Why we build, and where we're headed.", "mission": "Mission", "vision": "Vision" },
-    "team": { "eyebrow": "The team", "title": "People behind the platform.", "description": "Engineers, designers and operators who ship together." },
-    "timeline": { "eyebrow": "Our story", "title": "Milestones.", "description": "A short history of Hanahoush." },
-    "testimonials": { "eyebrow": "Client voices", "title": "What our clients say.", "description": "Long-term partnerships with enterprises that demand quality." },
-    "partners": { "eyebrow": "Ecosystem", "title": "Partners and platforms.", "description": "The organisations we work with and build on." },
-    "faq": { "eyebrow": "FAQ", "title": "Questions you might have.", "description": "Everything about our process, timeline and support." },
+    "services": {
+      "eyebrow": "What we do",
+      "title": "Our services.",
+      "description": "Delivered end-to-end — from architecture to deployment."
+    },
+    "projects": {
+      "eyebrow": "Our work",
+      "title": "Featured projects.",
+      "description": "Every project is a partnership from architecture through delivery."
+    },
+    "articles": {
+      "eyebrow": "Insights",
+      "title": "Latest articles.",
+      "description": "Essays and guides on the engineering we practise every day."
+    },
+    "about": {
+      "eyebrow": "About Hanahoush",
+      "title": "Our mission and vision.",
+      "description": "Why we build, and where we're headed.",
+      "mission": "Mission",
+      "vision": "Vision"
+    },
+    "team": {
+      "eyebrow": "The team",
+      "title": "People behind the platform.",
+      "description": "Engineers, designers and operators who ship together."
+    },
+    "timeline": {
+      "eyebrow": "Our story",
+      "title": "Milestones.",
+      "description": "A short history of Hanahoush."
+    },
+    "testimonials": {
+      "eyebrow": "Client voices",
+      "title": "What our clients say.",
+      "description": "Long-term partnerships with enterprises that demand quality."
+    },
+    "partners": {
+      "eyebrow": "Ecosystem",
+      "title": "Partners and platforms.",
+      "description": "The organisations we work with and build on."
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Questions you might have.",
+      "description": "Everything about our process, timeline and support."
+    },
     "cta": {
       "title": "Ready to build something exceptional?",
       "description": "Our engineering team is ready to discuss your project. No commitment — just a conversation about what's possible.",
@@ -495,7 +560,11 @@
     "contact": "Contact requests",
     "contactDescription": "Inquiries and follow-ups",
     "newsletter": "Newsletter",
-    "newsletterDescription": "Subscribers and exports"
+    "newsletterDescription": "Subscribers and exports",
+    "profile": "Profile",
+    "profileDescription": "Account settings and permissions",
+    "users": "Users",
+    "usersDescription": "Super Admin account management"
   },
   "workflowStage": {
     "draft": "Draft",
@@ -618,7 +687,6 @@
     "uploadDialogDescription": "Select a file and optional metadata.",
     "referenceCount_one": "{{count}} reference",
     "referenceCount_other": "{{count}} references",
-    "title": "Title",
     "empty": "No media found",
     "emptyDescription": "Try changing the filters, or upload a new file.",
     "uploadSuccess": "Media uploaded",
@@ -626,6 +694,7 @@
     "metadataSaved": "Metadata saved",
     "deleted": "Media deleted",
     "form": {
+      "title": "Title",
       "titleFa": "Title (Persian)",
       "alt": "Alt text (English)",
       "isPublic": "Public"
@@ -641,7 +710,13 @@
     "statusResolved": "Resolved",
     "statusClosed": "Closed",
     "statusSpam": "Spam",
-    "status": "Status",
+    "status": {
+      "new": "New",
+      "in_progress": "In progress",
+      "resolved": "Resolved",
+      "closed": "Closed",
+      "spam": "Spam"
+    },
     "phone": "Phone",
     "company": "Company",
     "source": "Source",
@@ -655,13 +730,6 @@
     "emptyDescription": "Try changing the filters.",
     "errorTitle": "Couldn't load inquiries",
     "errorDescription": "Something went wrong while fetching contact requests.",
-    "status": {
-      "new": "New",
-      "in_progress": "In progress",
-      "resolved": "Resolved",
-      "closed": "Closed",
-      "spam": "Spam"
-    },
     "column": {
       "name": "Name",
       "email": "Email",
@@ -735,5 +803,126 @@
     "emptyDescription": "Content flows through the editorial workflow from the content workspaces.",
     "errorTitle": "Couldn't load the editorial workspace",
     "errorDescription": "Something went wrong while fetching editorial data."
+  },
+  "users": {
+    "page": {
+      "title": "User Management",
+      "description": "Create and manage staff accounts, roles and access."
+    },
+    "search": {
+      "placeholder": "Search by username, name or email…"
+    },
+    "filters": {
+      "role": "Filter by role",
+      "allRoles": "All roles",
+      "status": "Filter by status",
+      "allStatuses": "All statuses",
+      "staff": "Filter by staff",
+      "allStaff": "All staff states"
+    },
+    "table": {
+      "caption": "User accounts",
+      "username": "Username",
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "staff": "Staff",
+      "status": "Status",
+      "lastLogin": "Last login",
+      "actions": "Actions",
+      "sort": "change sorting",
+      "pagination": "User list pagination",
+      "previous": "Previous",
+      "next": "Next",
+      "pageOf": "Page {{current}} of {{total}}"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "staffYes": "Staff",
+      "staffNo": "Non-staff",
+      "superuser": "Superuser",
+      "yes": "Yes",
+      "no": "No",
+      "never": "Never"
+    },
+    "fields": {
+      "username": "Username",
+      "name": "Name",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "newPassword": "New password",
+      "role": "Role",
+      "rolePlaceholder": "Select a role",
+      "active": "Active account",
+      "activeHint": "Inactive accounts cannot sign in.",
+      "staff": "Staff status",
+      "staffHint": "Staff accounts can enter the workspace.",
+      "lastLogin": "Last login",
+      "dateJoined": "Joined"
+    },
+    "actions": {
+      "create": "New user",
+      "edit": "Edit",
+      "detail": "Details",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "setPassword": "Set password",
+      "savePassword": "Save password",
+      "viewRoles": "Roles & permissions"
+    },
+    "dialog": {
+      "createTitle": "Create user",
+      "editTitle": "Edit user",
+      "saveChanges": "Save changes",
+      "createUser": "Create user"
+    },
+    "rolesDialog": {
+      "title": "Roles & permissions"
+    },
+    "permissions": {
+      "title": "Effective permissions",
+      "empty": "No permissions granted.",
+      "readOnlyNote": "Permissions are read-only here; the backend remains authoritative.",
+      "modules": {
+        "accounts": "Accounts",
+        "analytics": "Analytics",
+        "articles": "Articles",
+        "company": "Company",
+        "editorial": "Editorial",
+        "integration": "Integration",
+        "media_library": "Media",
+        "projects": "Projects",
+        "services": "Services"
+      }
+    },
+    "messages": {
+      "saveFailed": "The change could not be saved.",
+      "passwordChanged": "Password updated. The account's active sessions were ended.",
+      "selfEditNote": "For safety you cannot deactivate yourself or remove your own staff status.",
+      "selfDetailNote": "You are viewing your own account; self-deactivation is blocked by the backend."
+    },
+    "empty": {
+      "title": "No users found",
+      "description": "Adjust the search or filters, or create a new user."
+    },
+    "errors": {
+      "loadTitle": "Could not load users",
+      "loadDescription": "The user list is unavailable right now. Try again later."
+    },
+    "validation": {
+      "usernameRequired": "Username is required",
+      "usernameFormat": "Use 3-150 letters, numbers, or . _ - characters",
+      "emailRequired": "Enter a valid email address",
+      "phoneInvalid": "Enter a valid mobile number",
+      "passwordRequired": "Password is required",
+      "passwordMin": "Password must be at least 8 characters",
+      "passwordMismatch": "Passwords do not match",
+      "roleRequired": "Select a role"
+    }
   }
 }

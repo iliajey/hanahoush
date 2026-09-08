@@ -51,18 +51,18 @@ export function ArticleDetailPage() {
 
   if (query.isLoading) {
     return (
-      <main className="p-8">
+      <div className="p-8">
         <div className="mx-auto max-w-4xl animate-pulse space-y-4">
           <div className="h-8 w-1/3 rounded-full bg-muted" />
           <div className="h-14 w-2/3 rounded-2xl bg-muted" />
           <div className="h-4 w-1/2 rounded-full bg-muted" />
         </div>
-      </main>
+      </div>
     )
   }
   if (query.isError || !article) {
     return (
-      <main className="p-8">
+      <div className="p-8">
         <ErrorState
           title={t("articles.notFoundTitle")}
           description={t("articles.notFoundDescription")}
@@ -76,14 +76,14 @@ export function ArticleDetailPage() {
             <Link to="/">{t("nav.home")}</Link>
           </Button>
         </div>
-      </main>
+      </div>
     )
   }
 
   const page = buildArticlePage(article.slug, article.title_en)
   return (
-    <main className="flex-1">
+    <div className="flex-1">
       <PageRenderer page={page} />
-    </main>
+    </div>
   )
 }

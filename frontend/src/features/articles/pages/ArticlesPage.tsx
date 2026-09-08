@@ -32,15 +32,15 @@ export function ArticlesPage() {
   useSeoMeta(seoInput(page.data?.seo), language, { title: "Hanahoush — Articles" })
 
   if (page.isLoading) {
-    return <main className="p-8"><Skeleton className="mx-auto h-12 w-2/3" /><Skeleton className="mx-auto h-24 w-full max-w-4xl" /></main>
+    return <div className="p-8"><Skeleton className="mx-auto h-12 w-2/3" /><Skeleton className="mx-auto h-24 w-full max-w-4xl" /></div>
   }
   if (page.isError || !page.data) {
-    return <main className="p-8"><ErrorState title="Couldn't load the knowledge hub" description={t("errors.unexpected")} onRetry={() => page.refetch()} /></main>
+    return <div className="p-8"><ErrorState title="Couldn't load the knowledge hub" description={t("errors.unexpected")} onRetry={() => page.refetch()} /></div>
   }
   return (
-    <main>
+    <div>
       <SiteBackground grid particles />
       <PageRenderer page={page.data} />
-    </main>
+    </div>
   )
 }

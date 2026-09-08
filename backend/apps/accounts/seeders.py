@@ -2,9 +2,17 @@
 
 Idempotent: every function uses get-or-create semantics and can be run
 repeatedly without side effects.
+
+Passwords are NEVER stored in source code. Demo/local accounts take their
+password from the ``DEMO_USERS_PASSWORD`` environment variable (falling back
+to ``BOOTSTRAP_ADMIN_PASSWORD``). When neither is set, newly created demo
+users get an unusable password and a warning is logged — set the variable
+before running ``bootstrap`` on a fresh database.
 """
 import logging
+import os
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 
 from apps.accounts.models import Permission, Role
@@ -119,46 +127,41 @@ ROLE_DEFINITIONS: dict[str, dict] = {
 }
 
 # ---------------------------------------------------------------------------
-# Demo users  (username → {password, email, first_name, last_name, role})
+# Demo users  (username → {email, first_name, last_name, role})
+# Passwords come from the environment (see module docstring) — never from here.
 # ---------------------------------------------------------------------------
 DEMO_USERS: dict[str, dict] = {
     "superadmin": {
-        "password": "SuperAdmin@123456",
         "email": "superadmin@hanahoush.local",
         "first_name": "Super",
         "last_name": "Admin",
         "role": "SUPER_ADMIN",
     },
     "companyadmin": {
-        "password": "CompanyAdmin@123456",
         "email": "companyadmin@hanahoush.local",
         "first_name": "Company",
         "last_name": "Admin",
         "role": "COMPANY_ADMIN",
     },
     "contentmanager": {
-        "password": "ContentManager@123456",
         "email": "contentmanager@hanahoush.local",
         "first_name": "Content",
         "last_name": "Manager",
         "role": "CONTENT_MANAGER",
     },
     "projectmanager": {
-        "password": "ProjectManager@123456",
         "email": "projectmanager@hanahoush.local",
         "first_name": "Project",
         "last_name": "Manager",
         "role": "PROJECT_MANAGER",
     },
     "editor": {
-        "password": "Editor@123456",
         "email": "editor@hanahoush.local",
         "first_name": "Editor",
         "last_name": "User",
         "role": "EDITOR",
     },
     "viewer": {
-        "password": "Viewer@123456",
         "email": "viewer@hanahoush.local",
         "first_name": "Viewer",
         "last_name": "User",
@@ -168,6 +171,14 @@ DEMO_USERS: dict[str, dict] = {
 
 # Users that may access the Django admin (management roles).
 STAFF_USERS = {"superadmin", "companyadmin", "contentmanager", "projectmanager"}
+
+
+def demo_user_password() -> str:
+    """Password for newly created demo accounts (env-driven, never hardcoded)."""
+    password = os.environ.get("DEMO_USERS_PASSWORD", "")
+    if not password:
+        password = getattr(settings, "BOOTSTRAP_ADMIN_PASSWORD", "") or ""
+    return password
 
 
 def seed_permissions() -> list[Permission]:
@@ -204,8 +215,15 @@ def seed_roles() -> list[Role]:
 
 
 def seed_demo_users() -> list[User]:
-    """Create the demo users (idempotent); superadmin is a superuser."""
+    """Create the demo users (idempotent); superadmin is a superuser.
+
+    Passwords for newly created users come from the environment
+    (``DEMO_USERS_PASSWORD`` → ``BOOTSTRAP_ADMIN_PASSWORD``). Existing users
+    are never re-passworded here. With no configured password a new demo user
+    gets an unusable password (login impossible until it is set deliberately).
+    """
     roles_by_codename = {r.codename: r for r in seed_roles()}
+    password = demo_user_password()
     users = []
     for username, definition in DEMO_USERS.items():
         user, was_created = User.objects.get_or_create(
@@ -218,7 +236,15 @@ def seed_demo_users() -> list[User]:
             },
         )
         if was_created:
-            user.set_password(definition["password"])
+            if password:
+                user.set_password(password)
+            else:
+                user.set_unusable_password()
+                logger.warning(
+                    "Demo user %r created without a password: set DEMO_USERS_PASSWORD "
+                    "(or BOOTSTRAP_ADMIN_PASSWORD) and reset it deliberately.",
+                    username,
+                )
         if username == "superadmin":
             user.is_superuser = True
             user.is_staff = True
@@ -233,10 +259,17 @@ def seed_superuser() -> User | None:
     """Ensure at least one superuser exists (created via demo users)."""
     if not User.objects.filter(is_superuser=True).exists():
         # seed_demo_users creates superadmin; fall back to a safe default.
+        password = demo_user_password()
+        if not password:
+            logger.warning(
+                "No superuser exists and no password configured "
+                "(DEMO_USERS_PASSWORD/BOOTSTRAP_ADMIN_PASSWORD); superuser not created."
+            )
+            return None
         user = User.objects.create_superuser(
             username="superadmin",
             email="superadmin@hanahoush.local",
-            password="SuperAdmin@123456",
+            password=password,
         )
         super_admin_role = Role.objects.filter(codename="SUPER_ADMIN").first()
         if super_admin_role:

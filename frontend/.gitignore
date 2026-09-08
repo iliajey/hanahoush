@@ -13,3 +13,11 @@ storybook-static/
 # IDE
 .vscode/
 .idea/
+
+# Playwright (Phase 10 browser harness outputs)
+test-results/
+e2e-artifacts/
+playwright-report/
+dbg_*.mjs
+dbg_*.json
+phase10-*.log

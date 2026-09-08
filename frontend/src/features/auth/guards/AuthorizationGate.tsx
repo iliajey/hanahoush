@@ -2,7 +2,7 @@ import type { ReactNode } from "react"
 import { Navigate, useLocation } from "react-router-dom"
 
 import { Loading } from "@/components/ui/loading"
-import { hasAnyRole } from "../permissions"
+import { hasAnyRole, isSuperAdminUser } from "../permissions"
 import type { PermissionCode } from "../permissions"
 import { useUser } from "../hooks/useUser"
 
@@ -18,6 +18,9 @@ export interface AuthorizationGateProps {
   /** Backend keeps writable CMS/media/admin surfaces staff-only; mirror that
    * gate so non-staff roles are not invited into read-only dead ends. */
   staffOnly?: boolean
+  /** Backend account-management gate (IsSuperAdmin): Django superuser OR the
+   * SUPER_ADMIN primary role. */
+  superAdminOnly?: boolean
 }
 
 /**
@@ -38,6 +41,7 @@ export function AuthorizationGate({
   anyOfPermissions,
   requiredRoles,
   staffOnly,
+  superAdminOnly,
 }: AuthorizationGateProps) {
   const { status, user } = useUser()
   const location = useLocation()
@@ -56,7 +60,8 @@ export function AuthorizationGate({
     (!requiredPermissions || requiredPermissions.every((permission) => user.permissions.includes(permission))) &&
     (!anyOfPermissions || anyOfPermissions.some((permission) => user.permissions.includes(permission))) &&
     (!requiredRoles || hasAnyRole(user, requiredRoles)) &&
-    (!staffOnly || Boolean(user.is_staff))
+    (!staffOnly || Boolean(user.is_staff)) &&
+    (!superAdminOnly || isSuperAdminUser(user))
 
   if (!allowed) {
     return <Navigate to="/unauthorized" replace state={{ from: location.pathname }} />

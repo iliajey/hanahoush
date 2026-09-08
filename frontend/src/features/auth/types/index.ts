@@ -16,6 +16,7 @@ export interface UserProfile {
   preferred_language: "fa" | "en" | "ar"
   is_active: boolean
   is_staff: boolean
+  is_superuser: boolean
   role: RoleBrief | null
   permissions: string[]
   date_joined: string
@@ -54,6 +55,26 @@ export interface ProfilePayload {
 
 export interface PasswordResetRequestPayload {
   email: string
+}
+
+export interface RegisterPayload {
+  username: string
+  first_name?: string
+  last_name?: string
+  email: string
+  phone?: string
+  password: string
+  confirm_password: string
+}
+
+export interface RegisterResponse {
+  id: number
+  username: string
+  email: string
+  first_name: string
+  last_name: string
+  preferred_language: string
+  role: string | null
 }
 
 export interface PasswordResetConfirmPayload {

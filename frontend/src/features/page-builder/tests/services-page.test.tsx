@@ -61,8 +61,6 @@ describe("ServicesPage (page-builder composition)", () => {
     const { wrapper } = createTestProviders()
     render(<ServicesPage />, { wrapper })
 
-    expect(screen.getByRole("main")).toBeInTheDocument()
-
     await waitFor(() => expect(screen.getByText("Software Development")).toBeInTheDocument(), { timeout: 6000 })
     expect(screen.getByText("Problem")).toBeInTheDocument()
     expect(screen.getByText("Modular")).toBeInTheDocument()

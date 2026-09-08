@@ -304,7 +304,7 @@ export function DashboardPage() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,300px)_1fr]">
-        <div className="space-y-6 lg:sticky lg:top-20 lg:self-start">
+        <div className="min-w-0 space-y-6 lg:sticky lg:top-20 lg:self-start">
           <ProfileCard />
           {quickNav.length > 0 ? (
             <Card>
@@ -332,7 +332,7 @@ export function DashboardPage() {
           ) : null}
         </div>
 
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           {isStaff ? (
             <OperationalDashboardSection />
           ) : (

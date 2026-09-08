@@ -4,6 +4,130 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ---
 
+## [Phase 11] — 2026-08-26 — Auth, User Management, Role UX & Database Portability
+
+- Frontend registration page with username, first/last name, email, phone, password, confirm password. Localized validation (FA/EN/AR). Backend assigns VIEWER role. No privilege escalation possible.
+- Login page enhanced with registration link, forgot-password link (already existed), password visibility toggle, loading state, duplicate-submit protection.
+- Profile page (`/dashboard/profile`) with three tabs: Profile (editable fields), Change Password, Permissions (grouped by module with check/X indicators). Username, role, and staff status are read-only.
+- RTL search fix: removed `rtl:translate-x-1/2` from Dialog centering that broke search dialog positioning in Persian and Arabic. Uses logical CSS properties.
+- Complete i18n coverage for FA/EN/AR: registration, profile, permissions, password change, workspace nav.
+- SQLite database verified: 0 FK violations, all 6 users, 6 roles, 27 permissions, 92 role-permission mappings, 29 articles, 5 projects, 4 services, 19 media files, 2558 analytics events, and all other application data intact.
+- Six-user authentication verified against SQLite: all authenticate successfully with correct roles.
+- Backend: 294 tests pass, Django check clean, no pending migrations.
+- Frontend: 216 tests pass, TypeScript clean, ESLint clean, production build, Storybook build all pass.
+- ERP remains completely dormant (`ERP_ENABLED=false`, `ERP_PROVIDER=null`).
+
+---
+
+## [Phase 10] — 2026-08-20 — Browser Verification & Delivery Hardening
+
+- Real browser verification harness (Playwright + axe-core over system Microsoft Edge, no
+  browser downloads) with 143 scenarios covering public/auth/staff routes, all six roles,
+  every workspace, six viewports, RTL/LTR (en/fa/ar), light/dark/system themes, the living
+  cursor, the grid/scroll visual states, accessibility (0 critical/serious axe violations
+  after fixes), error/edge cases, SEO head inspection, performance, and security scans of the
+  production bundle.
+- Fixed critical production bug: axios request paths doubled the `/api/v1` base prefix, so
+  login and every staff/admin call 404'd in a real browser; all request paths are now
+  relative to the API base.
+- Fixed editorial workflow list filter (content-type label) and detail envelope so the
+  workspace workflow flows work end-to-end in a browser; added backend regression tests.
+- Fixed responsive overflow (navbar at 1024px and search below 1280px, dashboard rail on
+  small screens), the white-on-white outline button, the partner/tech marquee text contrast,
+  the "Title" media heading (duplicate i18n key), the case-study related-article link names,
+  and the duplicate Home nav key warning.
+- Production build re-verified: typecheck/lint/test (216)/build/storybook green; backend
+  check/migrations/bootstrap/pytest (281) green; no database reset; ERP remains parked
+  (`ERP_ENABLED=false`, `ERP_PROVIDER=null`, zero ERP network calls).
+
+---
+
+## [Phase 9G] — 2026-08-19 — Frontend RBAC + Staff Workspace + Role-Based Dashboard
+
+### Frontend RBAC foundation (Parts C/D)
+- Centralized authorization layer under `src/features/auth`: `permissions/` (typed
+  `PERMISSIONS` mirroring the 27-code backend catalog + `hasPermission`/`hasAnyPermission`/
+  `hasAllPermissions`/`hasRole`/`hasAnyRole`/`isStaffUser`), `role-config/` (`ROLE_CODES`,
+  `ROLE_CATALOG` with i18n-linked role definitions, and `CAPABILITIES` +
+  `canUseCapability`/`grantedCapabilities` derived from the **actual** backend catalog +
+  `is_staff` gates), `guards/` (`AuthorizationGate` + `RequirePermission`/
+  `RequireAnyPermission`/`RequireRole`/`RequireStaff`), and the `useAuthorization()` hook
+  exposing `hasRole` / `hasAnyRole` / `hasPermission` / `hasAnyPermission` / `can` /
+  `capabilities`.
+- Single permission-aware route metadata table (`app/workspace/workspaceConfig.ts`)
+  shared by the sidebar (`workspaceNavForUser`) and the route guards — no duplicated
+  permission logic. Backend roles remain the source of truth; the JWT is never parsed for
+  authorization data (role/permissions come from `/auth/me/` and the login payload).
+
+### Role-aware dashboard (Part E + O)
+- `DashboardPage` upgraded to a role-aware landing: role-specific workspace titles
+  (Operations centre / Company & content / Content / Project / Editorial workspace /
+  Overview), capability-gated operational widgets for staff using the existing
+  `GET /api/v1/admin/dashboard/` hook, and a read-only overview for Editor/Viewer.
+- `ProfileCard` (Part O): display name, `@username`/email, role badge, session status,
+  permission-module summary, logout — no secrets or JWTs rendered.
+- `StatTile` widget; `features/dashboard` reorganized (api/hooks/components/pages/tests).
+
+### Staff workspace (Parts F/H/R)
+- New `StaffLayout` + role-aware `StaffSidebar` (desktop fixed rail + mobile drawer),
+  separate from the public marketing Navbar/Footer.
+- Staff routes under `/dashboard`: articles (+new/edit), projects (+new/edit), media,
+  contact, newsletter, editorial (+workflow detail). Every route guarded by workspace
+  capability constants; guests → `/login` (return path preserved), unauthorized →
+  `/unauthorized`. Routes with no real backend management surface (services/pages/
+  analytics/company/settings) were deliberately NOT added (no fake UI).
+
+### Workspaces (Parts I–M)
+- **Articles**: list/search/status tabs, create draft + edit (trilingual), per-row
+  workflow (start review / submit), public preview — reusing the article CMS API and the
+  Phase 8C editorial hooks. Publishing runs through the editorial workflow.
+- **Projects**: list/search/status tabs, client/year, case-study links, create/edit
+  form — reusing the project CMS API.
+- **Media**: grid library with search/filter, upload, metadata edit, reference counts,
+  soft-delete — reusing the existing media API (no duplicated `MediaFile`).
+- **Contact**: list/search/status filter, inspect dialog, status updates + mark-handled.
+- **Newsletter**: search/active filter, activate/deactivate, CSV export; `unsubscribe_token`
+  never referenced by the feature (source-level privacy test).
+- **Editorial**: hub (review queue, all workflows, schedule, locks, audit trail) and
+  workflow detail (approvals, comments, publish/schedule, revisions + diff, audit) —
+  reusing the Phase 8C hooks/components; backend state machine stays authoritative.
+
+### Localization & accessibility (Parts N/R)
+- EN/FA/AR keys for `roles.*`, `navWorkspace.*`, `dashboard.*` and every workspace page
+  bundle, enforced by the locale-parity test; RTL via logical properties.
+- Workspace shell and pages: semantic nav landmarks, labelled controls, Radix dialogs,
+  `sr-only` icon labels, text+colour status, reduced-motion preserved.
+
+### Security (Part Q)
+- Frontend authorization is UX-only; every protected operation remains backend-enforced
+  (live-verified). Role/permission state refreshed from `/auth/me/`; no role trusted from
+  `localStorage`; no credentials or alternate API keys in the frontend.
+
+### Tests & verification (Parts P/T/W)
+- New tests: authorization helpers, guards, auth routes, per-workspace permissions +
+  newsletter privacy, per-role sidebar navigation (incl. FA/AR RTL), role-aware dashboard.
+- Frontend: `typecheck` ✅ 0 · `lint` ✅ 0 · `test` **216 passed (36 files)** · `build` ✅ ·
+  `build-storybook` ✅.
+- Backend: `check` ✅ · `makemigrations --check` ✅ no changes · `migrate` ✅ · `bootstrap` ✅
+  idempotent · `pytest` **278 passed** (`USE_SQLITE=true`).
+- **Live six-role verification** (`backend/scripts/verify_six_roles.py`) against the live
+  server: **69/69 checks passed** — superadmin/companyadmin/contentmanager/projectmanager/
+  editor/viewer login, role resolution, `/auth/me` permissions, dashboard/media/contact/
+  newsletter gating, forbidden editorial action, upload gate, logout + anonymous checks.
+  Credentials read from the seeder, never printed.
+
+### ERP & scope safety
+- No ERP/Odoo/hanRP work; `ERP_ENABLED=false`, `ERP_PROVIDER=null`, no ERP network calls/
+  credentials/migrations/models; Phase 9A/9B foundation untouched. No second auth/RBAC/
+  dashboard/CMS/media/analytics/editorial/page-builder system created.
+
+### Docs
+- Created: `docs/architecture/frontend-rbac.md`, `docs/architecture/staff-workspace.md`,
+  `docs/reports/phase-09G-report.md`; updated `NEXT_PHASE.md`,
+  `docs/reports/next-phase.md`.
+
+---
+
 ## [Phase 9F] — 2026-08-18 — Immersive Brand Identity & Living Visual System
 
 ### Real organizational logo (source: `E:\Ilia Jamali\Hana\IMG_2854 (1).PNG`)

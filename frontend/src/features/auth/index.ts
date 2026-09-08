@@ -6,8 +6,9 @@ export { useUser } from "./hooks/useUser"
 export { useAuthorization } from "./hooks/useAuthorization"
 export { useChangePassword } from "./hooks/useChangePassword"
 export { useRoles, usePermissions } from "./hooks/useRolesPermissions"
-export { loginSchema, forgotPasswordSchema, resetPasswordSchema, changePasswordSchema, profileSchema } from "./schemas"
+export { registerSchema, loginSchema, forgotPasswordSchema, resetPasswordSchema, changePasswordSchema, profileSchema } from "./schemas"
 export type {
+  RegisterFormValues,
   LoginFormValues,
   ForgotPasswordFormValues,
   ResetPasswordFormValues,
@@ -21,6 +22,7 @@ export type {
   RoleBrief,
   LoginPayload,
   LoginResponse,
+  RegisterPayload,
   AuthStatus,
 } from "./types"
 export { ProtectedRoute } from "./components/ProtectedRoute"

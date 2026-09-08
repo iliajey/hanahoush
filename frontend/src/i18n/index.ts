@@ -7,7 +7,9 @@ import fa from "./locales/fa/translation.json"
 import ar from "./locales/ar/translation.json"
 
 void i18n.use(initReactI18next).init({
-  debug: import.meta.env.VITE_ENV !== "production",
+  // Debug logging only in the dev-server/no-build mode — never in production
+  // bundles, regardless of the VITE_ENV value inlined at build time.
+  debug: import.meta.env.DEV,
   lng: getInitialLocale(),
   fallbackLng: "en",
   supportedLngs: SUPPORTED_LOCALES,

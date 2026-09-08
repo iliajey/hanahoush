@@ -81,6 +81,13 @@ export function LoginForm() {
           t("auth.login")
         )}
       </Button>
+
+      <p className="text-center text-sm text-muted-foreground">
+        {t("auth.noAccount")}{" "}
+        <Link to="/register" className="text-primary hover:underline">
+          {t("auth.register")}
+        </Link>
+      </p>
     </form>
   )
 }

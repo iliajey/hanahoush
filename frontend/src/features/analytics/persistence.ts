@@ -24,7 +24,7 @@ export interface AnalyticsWireEvent {
   metadata: Record<string, unknown>
 }
 
-const INGEST_URL = "/api/v1/analytics/events/"
+const INGEST_URL = `${import.meta.env.VITE_API_BASE_URL}/analytics/events/`
 const FLUSH_INTERVAL_MS = 5000
 const MAX_PENDING = 100
 const MAX_BATCH = 25

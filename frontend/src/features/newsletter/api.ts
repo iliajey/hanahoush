@@ -19,19 +19,19 @@ export async function listNewsletterSubscribers(params: NewsletterListParams = {
   if (params.is_active != null) query.is_active = String(params.is_active)
   if (params.ordering) query.ordering = params.ordering
 
-  const { data } = await apiClient.get<PaginatedResponse<NewsletterSubscriber>>("/api/v1/admin/newsletter/", {
+  const { data } = await apiClient.get<PaginatedResponse<NewsletterSubscriber>>("/admin/newsletter/", {
     params: query,
   })
   return { items: data.data ?? [], pagination: data.pagination }
 }
 
 export async function activateSubscriber(id: number): Promise<NewsletterStateResult> {
-  const { data } = await apiClient.post<ApiEnvelope<NewsletterStateResult>>(`/api/v1/admin/newsletter/${id}/activate/`)
+  const { data } = await apiClient.post<ApiEnvelope<NewsletterStateResult>>(`/admin/newsletter/${id}/activate/`)
   return data.data
 }
 
 export async function deactivateSubscriber(id: number): Promise<NewsletterStateResult> {
-  const { data } = await apiClient.post<ApiEnvelope<NewsletterStateResult>>(`/api/v1/admin/newsletter/${id}/deactivate/`)
+  const { data } = await apiClient.post<ApiEnvelope<NewsletterStateResult>>(`/admin/newsletter/${id}/deactivate/`)
   return data.data
 }
 
@@ -44,7 +44,7 @@ export async function exportNewsletterSubscribers(params: NewsletterListParams =
   if (params.locale) query.locale = params.locale
   if (params.is_active != null) query.is_active = String(params.is_active)
 
-  const response = await apiClient.get<Blob>("/api/v1/admin/newsletter/export/", {
+  const response = await apiClient.get<Blob>("/admin/newsletter/export/", {
     params: query,
     responseType: "blob",
   })

@@ -12,6 +12,7 @@ from .views import (
     PermissionViewSet,
     ProfileView,
     RefreshView,
+    RegisterView,
     RoleViewSet,
 )
 
@@ -20,6 +21,7 @@ router.register(r"roles", RoleViewSet, basename="role")
 router.register(r"permissions", PermissionViewSet, basename="permission")
 
 urlpatterns = [
+    path("register/", RegisterView.as_view(), name="register"),
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("refresh/", RefreshView.as_view(), name="refresh"),

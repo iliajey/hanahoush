@@ -9,42 +9,48 @@ import type {
   PasswordResetConfirmPayload,
   PasswordResetRequestPayload,
   ProfilePayload,
+  RegisterPayload,
+  RegisterResponse,
   TokenRefreshResponse,
   UserProfile,
 } from "../types"
 
+export function register(payload: RegisterPayload): Promise<ApiEnvelope<RegisterResponse>> {
+  return apiRequest<RegisterResponse>({ method: "POST", url: "/auth/register/", data: payload })
+}
+
 export function login(payload: LoginPayload): Promise<ApiEnvelope<LoginResponse>> {
-  return apiRequest<LoginResponse>({ method: "POST", url: "/api/v1/auth/login/", data: payload })
+  return apiRequest<LoginResponse>({ method: "POST", url: "/auth/login/", data: payload })
 }
 
 export function logout(refreshToken: string): Promise<ApiEnvelope<null>> {
-  return apiRequest<null>({ method: "POST", url: "/api/v1/auth/logout/", data: { refresh: refreshToken } })
+  return apiRequest<null>({ method: "POST", url: "/auth/logout/", data: { refresh: refreshToken } })
 }
 
 export function refreshToken(refresh: string): Promise<ApiEnvelope<TokenRefreshResponse>> {
-  return apiRequest<TokenRefreshResponse>({ method: "POST", url: "/api/v1/auth/refresh/", data: { refresh } })
+  return apiRequest<TokenRefreshResponse>({ method: "POST", url: "/auth/refresh/", data: { refresh } })
 }
 
 export function fetchMe(): Promise<ApiEnvelope<UserProfile>> {
-  return apiRequest<UserProfile>({ method: "GET", url: "/api/v1/auth/me/" })
+  return apiRequest<UserProfile>({ method: "GET", url: "/auth/me/" })
 }
 
 export function updateProfile(payload: ProfilePayload): Promise<ApiEnvelope<UserProfile>> {
-  return apiRequest<UserProfile>({ method: "PATCH", url: "/api/v1/auth/profile/", data: payload })
+  return apiRequest<UserProfile>({ method: "PATCH", url: "/auth/profile/", data: payload })
 }
 
 export function changePassword(payload: ChangePasswordPayload): Promise<ApiEnvelope<null>> {
-  return apiRequest<null>({ method: "POST", url: "/api/v1/auth/change-password/", data: payload })
+  return apiRequest<null>({ method: "POST", url: "/auth/change-password/", data: payload })
 }
 
 export function requestPasswordReset(payload: PasswordResetRequestPayload): Promise<ApiEnvelope<null>> {
-  return apiRequest<null>({ method: "POST", url: "/api/v1/auth/password-reset/", data: payload })
+  return apiRequest<null>({ method: "POST", url: "/auth/password-reset/", data: payload })
 }
 
 export function confirmPasswordReset(payload: PasswordResetConfirmPayload): Promise<ApiEnvelope<null>> {
   return apiRequest<null>({
     method: "POST",
-    url: "/api/v1/auth/password-reset/confirm/",
+    url: "/auth/password-reset/confirm/",
     data: payload,
   })
 }

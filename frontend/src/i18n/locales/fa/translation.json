@@ -65,7 +65,16 @@
     "username": "نام کاربری",
     "password": "رمز عبور",
     "email": "ایمیل",
+    "phone": "تلفن",
+    "firstName": "نام",
+    "lastName": "نام خانوادگی",
     "rememberMe": "مرا به خاطر بسپار",
+    "register": "ثبت‌نام",
+    "registerDescription": "ایجاد حساب کاربری جدید",
+    "registerSuccess": "حساب کاربری با موفقیت ایجاد شد",
+    "registerFailed": "ثبت‌نام ناموفق بود",
+    "hasAccount": "قبلاً حساب دارید؟",
+    "noAccount": "حساب ندارید؟",
     "forgotPassword": "رمز عبور را فراموش کرده‌اید؟",
     "forgotPasswordDescription": "ایمیل خود را وارد کنید تا لینک بازیابی برای شما ارسال شود.",
     "sendResetLink": "ارسال لینک بازیابی",
@@ -81,18 +90,36 @@
     "passwordResetSuccess": "رمز عبور با موفقیت تغییر کرد",
     "goToLogin": "رفتن به ورود",
     "resetFailed": "بازیابی رمز عبور ناموفق بود",
+    "changePassword": "تغییر رمز عبور",
+    "changePasswordDescription": "رمز عبور حساب خود را به‌روزرسانی کنید.",
+    "currentPassword": "رمز عبور فعلی",
     "welcomeBack": "خوش آمدید",
     "sessionExpiredTitle": "نشست منقضی شد",
     "sessionExpiredDescription": "نشست شما منقضی شده است. لطفاً دوباره وارد شوید.",
     "unauthorizedTitle": "دسترسی غیرمجاز",
     "unauthorizedDescription": "شما اجازه دسترسی به این صفحه را ندارید.",
+    "profile": "پروفایل",
+    "profileDescription": "تنظیمات حساب خود را مدیریت کنید و مجوزهای خود را مشاهده کنید.",
+    "profileUpdated": "پروفایل با موفقیت به‌روزرسانی شد",
+    "passwordChanged": "رمز عبور با موفقیت تغییر کرد",
+    "staffStatus": "وضعیت کارمند",
+    "active": "فعال",
+    "inactive": "غیرفعال",
+    "staff": "کارمند",
+    "memberSince": "عضو از",
+    "permissions": "مجوزها",
+    "noPermissions": "مجوزی اختصاص داده نشده است",
     "validation": {
       "usernameRequired": "نام کاربری الزامی است",
+      "usernameFormat": "از ۳ تا ۱۵۰ حرف، عدد یا کاراکتر . _ - استفاده کنید",
       "emailRequired": "یک آدرس ایمیل معتبر وارد کنید",
       "emailInvalid": "یک آدرس ایمیل معتبر وارد کنید",
       "passwordMin": "رمز عبور باید حداقل ۸ کاراکتر باشد",
       "passwordMismatch": "رمزهای عبور یکسان نیستند",
-      "currentPasswordRequired": "رمز عبور فعلی الزامی است"
+      "currentPasswordRequired": "رمز عبور فعلی الزامی است",
+      "firstNameRequired": "نام الزامی است",
+      "lastNameRequired": "نام خانوادگی الزامی است",
+      "phoneInvalid": "شماره موبایل معتبر وارد کنید"
     }
   },
   "home": {
@@ -111,15 +138,53 @@
       "team": "اعضای تیم",
       "partners": "همکاران"
     },
-    "services": { "eyebrow": "چه کاری انجام می‌دهیم", "title": "خدمات ما.", "description": "تحویل کامل — از معماری تا استقرار." },
-    "projects": { "eyebrow": "کارهای ما", "title": "پروژه‌های شاخص.", "description": "هر پروژه یک همکاری است؛ از معماری تا تحویل." },
-    "articles": { "eyebrow": "یادداشت‌ها", "title": "آخرین مقالات.", "description": "مقاله‌ها و راهنماهایی درباره مهندسی روزمره ما." },
-    "about": { "eyebrow": "درباره هانه‌هوش", "title": "ماموریت و چشم‌انداز ما.", "description": "چرا می‌سازیم و به کجا می‌رویم.", "mission": "ماموریت", "vision": "چشم‌انداز" },
-    "team": { "eyebrow": "تیم", "title": "افراد پشت پلتفرم.", "description": "مهندسان، طراحان و اپراتورهایی که با هم تحویل می‌دهند." },
-    "timeline": { "eyebrow": "داستان ما", "title": "نقاط عطف.", "description": "تاریخچه‌ای کوتاه از هانه‌هوش." },
-    "testimonials": { "eyebrow": "صدای مشتریان", "title": "نظرات مشتریان.", "description": "همکاری‌های بلندمدت با سازمان‌هایی که کیفیت می‌خواهند." },
-    "partners": { "eyebrow": "اکوسیستم", "title": "همکاران و پلتفرم‌ها.", "description": "سازمان‌هایی که با آن‌ها کار می‌کنیم و بر پایه آن‌ها می‌سازیم." },
-    "faq": { "eyebrow": "سوالات متداول", "title": "سوالاتی که ممکن است داشته باشید.", "description": "همه‌چیز درباره فرآیند، زمان‌بندی و پشتیبانی ما." },
+    "services": {
+      "eyebrow": "چه کاری انجام می‌دهیم",
+      "title": "خدمات ما.",
+      "description": "تحویل کامل — از معماری تا استقرار."
+    },
+    "projects": {
+      "eyebrow": "کارهای ما",
+      "title": "پروژه‌های شاخص.",
+      "description": "هر پروژه یک همکاری است؛ از معماری تا تحویل."
+    },
+    "articles": {
+      "eyebrow": "یادداشت‌ها",
+      "title": "آخرین مقالات.",
+      "description": "مقاله‌ها و راهنماهایی درباره مهندسی روزمره ما."
+    },
+    "about": {
+      "eyebrow": "درباره هانه‌هوش",
+      "title": "ماموریت و چشم‌انداز ما.",
+      "description": "چرا می‌سازیم و به کجا می‌رویم.",
+      "mission": "ماموریت",
+      "vision": "چشم‌انداز"
+    },
+    "team": {
+      "eyebrow": "تیم",
+      "title": "افراد پشت پلتفرم.",
+      "description": "مهندسان، طراحان و اپراتورهایی که با هم تحویل می‌دهند."
+    },
+    "timeline": {
+      "eyebrow": "داستان ما",
+      "title": "نقاط عطف.",
+      "description": "تاریخچه‌ای کوتاه از هانه‌هوش."
+    },
+    "testimonials": {
+      "eyebrow": "صدای مشتریان",
+      "title": "نظرات مشتریان.",
+      "description": "همکاری‌های بلندمدت با سازمان‌هایی که کیفیت می‌خواهند."
+    },
+    "partners": {
+      "eyebrow": "اکوسیستم",
+      "title": "همکاران و پلتفرم‌ها.",
+      "description": "سازمان‌هایی که با آن‌ها کار می‌کنیم و بر پایه آن‌ها می‌سازیم."
+    },
+    "faq": {
+      "eyebrow": "سوالات متداول",
+      "title": "سوالاتی که ممکن است داشته باشید.",
+      "description": "همه‌چیز درباره فرآیند، زمان‌بندی و پشتیبانی ما."
+    },
     "cta": {
       "title": "آماده‌اید چیزی فوق‌العاده بسازید؟",
       "description": "تیم مهندسی ما آماده گفتگو درباره پروژه شماست. بدون تعهد — فقط یک گفتگو درباره امکانات.",
@@ -495,7 +560,11 @@
     "contact": "درخواست‌های تماس",
     "contactDescription": "درخواست‌ها و پیگیری‌ها",
     "newsletter": "خبرنامه",
-    "newsletterDescription": "مشترکین و خروجی‌ها"
+    "newsletterDescription": "مشترکان و صادرات",
+    "profile": "پروفایل",
+    "profileDescription": "تنظیمات حساب و مجوزها",
+    "users": "کاربران",
+    "usersDescription": "مدیریت حساب‌ها (مدیر ارشد)"
   },
   "workflowStage": {
     "draft": "پیش‌نویس",
@@ -618,7 +687,6 @@
     "uploadDialogDescription": "یک فایل و فراداده اختیاری انتخاب کنید.",
     "referenceCount_one": "{{count}} ارجاع",
     "referenceCount_other": "{{count}} ارجاع",
-    "title": "عنوان",
     "empty": "رسانه‌ای یافت نشد",
     "emptyDescription": "فیلترها را تغییر دهید یا فایل جدیدی بارگذاری کنید.",
     "uploadSuccess": "رسانه بارگذاری شد",
@@ -626,6 +694,7 @@
     "metadataSaved": "فراداده ذخیره شد",
     "deleted": "رسانه حذف شد",
     "form": {
+      "title": "عنوان",
       "titleFa": "عنوان (فارسی)",
       "alt": "متن جایگزین (انگلیسی)",
       "isPublic": "عمومی"
@@ -641,7 +710,13 @@
     "statusResolved": "حل‌شده",
     "statusClosed": "بسته‌شده",
     "statusSpam": "هرزنامه",
-    "status": "وضعیت",
+    "status": {
+      "new": "جدید",
+      "in_progress": "در حال انجام",
+      "resolved": "حل‌شده",
+      "closed": "بسته‌شده",
+      "spam": "هرزنامه"
+    },
     "phone": "تلفن",
     "company": "شرکت",
     "source": "منبع",
@@ -655,13 +730,6 @@
     "emptyDescription": "فیلترها را تغییر دهید.",
     "errorTitle": "درخواست‌ها بارگذاری نشد",
     "errorDescription": "در دریافت درخواست‌های تماس خطایی رخ داد.",
-    "status": {
-      "new": "جدید",
-      "in_progress": "در حال انجام",
-      "resolved": "حل‌شده",
-      "closed": "بسته‌شده",
-      "spam": "هرزنامه"
-    },
     "column": {
       "name": "نام",
       "email": "ایمیل",
@@ -735,5 +803,126 @@
     "emptyDescription": "محتوا از فضاهای کاری محتوا وارد جریان کار ویراستاری می‌شود.",
     "errorTitle": "فضای ویراستاری بارگذاری نشد",
     "errorDescription": "در دریافت داده‌های ویراستاری خطایی رخ داد."
+  },
+  "users": {
+    "page": {
+      "title": "مدیریت کاربران",
+      "description": "ایجاد و مدیریت حساب‌های همکاران، نقش‌ها و دسترسی‌ها."
+    },
+    "search": {
+      "placeholder": "جست‌وجو بر اساس نام کاربری، نام یا ایمیل…"
+    },
+    "filters": {
+      "role": "فیلتر بر اساس نقش",
+      "allRoles": "همه نقش‌ها",
+      "status": "فیلتر بر اساس وضعیت",
+      "allStatuses": "همه وضعیت‌ها",
+      "staff": "فیلتر بر اساس کارمند بودن",
+      "allStaff": "همه وضعیت‌های کارمندی"
+    },
+    "table": {
+      "caption": "حساب‌های کاربری",
+      "username": "نام کاربری",
+      "name": "نام",
+      "email": "ایمیل",
+      "role": "نقش",
+      "staff": "کارمند",
+      "status": "وضعیت",
+      "lastLogin": "آخرین ورود",
+      "actions": "عملیات",
+      "sort": "تغییر ترتیب",
+      "pagination": "صفحه‌بندی فهرست کاربران",
+      "previous": "قبلی",
+      "next": "بعدی",
+      "pageOf": "صفحهٔ {{current}} از {{total}}"
+    },
+    "status": {
+      "active": "فعال",
+      "inactive": "غیرفعال",
+      "staffYes": "کارمند",
+      "staffNo": "غیرکارمند",
+      "superuser": "ابَرکاربر",
+      "yes": "بله",
+      "no": "خیر",
+      "never": "هرگز"
+    },
+    "fields": {
+      "username": "نام کاربری",
+      "name": "نام",
+      "firstName": "نام",
+      "lastName": "نام خانوادگی",
+      "email": "ایمیل",
+      "phone": "تلفن",
+      "password": "گذرواژه",
+      "confirmPassword": "تکرار گذرواژه",
+      "newPassword": "گذرواژه جدید",
+      "role": "نقش",
+      "rolePlaceholder": "یک نقش انتخاب کنید",
+      "active": "حساب فعال",
+      "activeHint": "حساب‌های غیرفعال نمی‌توانند وارد شوند.",
+      "staff": "وضعیت کارمندی",
+      "staffHint": "حساب‌های کارمندی می‌توانند وارد فضای کاری شوند.",
+      "lastLogin": "آخرین ورود",
+      "dateJoined": "تاریخ عضویت"
+    },
+    "actions": {
+      "create": "کاربر جدید",
+      "edit": "ویرایش",
+      "detail": "جزئیات",
+      "activate": "فعال‌سازی",
+      "deactivate": "غیرفعال‌سازی",
+      "setPassword": "تعیین گذرواژه",
+      "savePassword": "ذخیرهٔ گذرواژه",
+      "viewRoles": "نقش‌ها و مجوزها"
+    },
+    "dialog": {
+      "createTitle": "ایجاد کاربر",
+      "editTitle": "ویرایش کاربر",
+      "saveChanges": "ذخیرهٔ تغییرات",
+      "createUser": "ایجاد کاربر"
+    },
+    "rolesDialog": {
+      "title": "نقش‌ها و مجوزها"
+    },
+    "permissions": {
+      "title": "مجوزهای مؤثر",
+      "empty": "هیچ مجوزی اعطا نشده است.",
+      "readOnlyNote": "مجوزها در اینجا فقط خواندنی هستند؛ مرجع نهایی سرور است.",
+      "modules": {
+        "accounts": "حساب‌ها",
+        "analytics": "تحلیل‌ها",
+        "articles": "مقاله‌ها",
+        "company": "شرکت",
+        "editorial": "سردبیری",
+        "integration": "یکپارچه‌سازی",
+        "media_library": "رسانه",
+        "projects": "پروژه‌ها",
+        "services": "خدمات"
+      }
+    },
+    "messages": {
+      "saveFailed": "ذخیرهٔ تغییرات ممکن نشد.",
+      "passwordChanged": "گذرواژه به‌روزرسانی شد. نشست‌های فعال این حساب پایان یافت.",
+      "selfEditNote": "برای ایمنی نمی‌توانید حساب خود را غیرفعال کنید یا وضعیت کارمندی خود را حذف کنید.",
+      "selfDetailNote": "حساب خودتان را می‌بینید؛ غیرفعال‌سازی خود در سرور مسدود است."
+    },
+    "empty": {
+      "title": "کاربری یافت نشد",
+      "description": "جست‌وجو یا فیلترها را تغییر دهید، یا کاربر جدیدی بسازید."
+    },
+    "errors": {
+      "loadTitle": "بارگذاری کاربران ممکن نشد",
+      "loadDescription": "فهرست کاربران اکنون در دسترس نیست. بعداً دوباره تلاش کنید."
+    },
+    "validation": {
+      "usernameRequired": "نام کاربری الزامی است",
+      "usernameFormat": "از ۳ تا ۱۵۰ حرف، عدد یا نویسه‌های . _ - استفاده کنید",
+      "emailRequired": "یک ایمیل معتبر وارد کنید",
+      "phoneInvalid": "یک شمارهٔ موبایل معتبر وارد کنید",
+      "passwordRequired": "گذرواژه الزامی است",
+      "passwordMin": "گذرواژه باید حداقل ۸ نویسه باشد",
+      "passwordMismatch": "گذرواژه‌ها یکسان نیستند",
+      "roleRequired": "یک نقش انتخاب کنید"
+    }
   }
 }

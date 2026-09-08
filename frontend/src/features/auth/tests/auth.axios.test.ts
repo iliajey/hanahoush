@@ -46,7 +46,7 @@ describe("axios refresh interceptor", () => {
     const refreshCalls: number[] = []
 
     const adapter: AxiosAdapter = async (config) => {
-      if (config.url === "/api/v1/auth/refresh/") {
+      if (config.url === "/auth/refresh/") {
         refreshCalls.push(1)
         return httpResponse(
           200,
@@ -85,7 +85,7 @@ describe("axios refresh interceptor", () => {
     let protectedCalls = 0
     let refreshCalls = 0
     const adapter: AxiosAdapter = async (config) => {
-      if (config.url === "/api/v1/auth/refresh/") {
+      if (config.url === "/auth/refresh/") {
         refreshCalls += 1
         throw httpError(401, config) // refresh also fails
       }
@@ -107,7 +107,7 @@ describe("axios refresh interceptor", () => {
     const refreshSpy = vi.fn()
 
     const adapter: AxiosAdapter = async (config) => {
-      if (config.url === "/api/v1/auth/login/") {
+      if (config.url === "/auth/login/") {
         throw httpError(401, config)
       }
       refreshSpy()
@@ -116,7 +116,7 @@ describe("axios refresh interceptor", () => {
     apiClient.defaults.adapter = adapter
 
     await expect(
-      apiClient.post("/api/v1/auth/login/", { username: "x", password: "y" }),
+      apiClient.post("/auth/login/", { username: "x", password: "y" }),
     ).rejects.toBeTruthy()
     expect(refreshSpy).not.toHaveBeenCalled()
   })

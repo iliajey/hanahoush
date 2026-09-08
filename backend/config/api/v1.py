@@ -17,6 +17,8 @@ app_name = "v1"
 
 urlpatterns = [
     path("auth/", include(("apps.accounts.api.urls", "auth"))),
+    # Super Admin user management (Phase 11.5) — IsSuperAdmin enforced.
+    path("admin/users/", include(("apps.accounts.api.admin_urls", "accounts_admin"))),
     path("", include(("apps.core.api.urls", "core"))),
     path("", include(("apps.articles.api.urls", "articles"))),
     path("", include(("apps.projects.api.urls", "projects"))),

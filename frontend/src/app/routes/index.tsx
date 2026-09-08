@@ -9,6 +9,7 @@ import {
   RequireAnyPermission,
   RequirePermission,
   RequireStaff,
+  RequireSuperAdmin,
 } from "../../features/auth/guards"
 import { PERMISSIONS } from "../../features/auth/permissions"
 import { RouteErrorFallback } from "./RouteErrorFallback"
@@ -60,6 +61,9 @@ const ResetPasswordPage = lazyPage(() =>
 const SessionExpiredPage = lazyPage(() =>
   import("../../features/auth/pages/SessionExpiredPage").then((m) => ({ default: m.SessionExpiredPage })),
 )
+const RegisterPage = lazyPage(() =>
+  import("../../features/auth/pages/RegisterPage").then((m) => ({ default: m.RegisterPage })),
+)
 const UnauthorizedPage = lazyPage(() =>
   import("../../features/auth/pages/UnauthorizedPage").then((m) => ({ default: m.UnauthorizedPage })),
 )
@@ -67,6 +71,10 @@ const UnauthorizedPage = lazyPage(() =>
 // Phase 9G staff workspace (role-aware).
 const DashboardPage = lazyPage(() =>
   import("@/features/dashboard/pages/DashboardPage").then((m) => ({ default: m.DashboardPage })),
+)
+
+const UsersWorkspacePage = lazyPage(() =>
+  import("@/features/users/pages/UsersWorkspacePage").then((m) => ({ default: m.UsersWorkspacePage })),
 )
 const EditorialWorkspaceHub = lazyPage(() =>
   import("@/features/editorial/pages/EditorialWorkspaceHub").then((m) => ({ default: m.EditorialWorkspaceHub })),
@@ -94,6 +102,9 @@ const ContactWorkspacePage = lazyPage(() =>
 )
 const NewsletterWorkspacePage = lazyPage(() =>
   import("@/features/newsletter/workspace/NewsletterWorkspacePage").then((m) => ({ default: m.NewsletterWorkspacePage })),
+)
+const ProfilePage = lazyPage(() =>
+  import("../../features/auth/pages/ProfilePage").then((m) => ({ default: m.ProfilePage })),
 )
 
 /**
@@ -153,6 +164,14 @@ const routes: RouteObject[] = [
         element: (
           <GuestRoute>
             <LoginPage />
+          </GuestRoute>
+        ),
+      },
+      {
+        path: "register",
+        element: (
+          <GuestRoute>
+            <RegisterPage />
           </GuestRoute>
         ),
       },
@@ -271,6 +290,18 @@ const routes: RouteObject[] = [
               <RequireStaff>
                 <NewsletterWorkspacePage />
               </RequireStaff>
+            ),
+          },
+          {
+            path: "profile",
+            element: <ProfilePage />,
+          },
+          {
+            path: "users",
+            element: (
+              <RequireSuperAdmin>
+                <UsersWorkspacePage />
+              </RequireSuperAdmin>
             ),
           },
         ],

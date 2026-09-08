@@ -21,10 +21,10 @@ interface RefreshableConfig extends InternalAxiosRequestConfig {
 /** Auth requests whose 401 is a credentials/validation failure, not an
  * expired access token — they must never trigger the refresh flow. */
 const NO_REFRESH_URLS = new Set([
-  "/api/v1/auth/login/",
-  "/api/v1/auth/refresh/",
-  "/api/v1/auth/password-reset/",
-  "/api/v1/auth/password-reset/confirm/",
+  "/auth/login/",
+  "/auth/refresh/",
+  "/auth/password-reset/",
+  "/auth/password-reset/confirm/",
 ])
 
 export const apiClient = axios.create({
@@ -133,7 +133,7 @@ apiClient.interceptors.response.use(
       isRefreshing = true
       try {
         const { data } = await apiClient.post<ApiEnvelope<TokenRefreshEnvelope>>(
-          "/api/v1/auth/refresh/",
+          "/auth/refresh/",
           { refresh: getRefreshToken() },
           { _retry: true } as RefreshableConfig,
         )

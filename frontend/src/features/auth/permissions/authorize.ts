@@ -43,6 +43,15 @@ export function hasAnyRole(user: UserProfile | null | undefined, codenames: read
   return codenames.some((codename) => hasRole(user, codename))
 }
 
+/** Is the user a Super Admin by the backend's account-management rule
+ * (apps/accounts/api/permissions.py -> IsSuperAdmin): a Django superuser OR
+ * the SUPER_ADMIN primary role? No other permission/role - not even
+ * ``users.manage`` on COMPANY_ADMIN - unlocks account management. */
+export function isSuperAdminUser(user: UserProfile | null | undefined): boolean {
+  if (!user) return false
+  return Boolean(user.is_superuser || hasRole(user, "SUPER_ADMIN"))
+}
+
 /** Group the user's granted permission codenames by module. */
 export function groupPermissionsByModule(user: UserProfile | null | undefined): Record<string, string[]> {
   if (!user) return {}

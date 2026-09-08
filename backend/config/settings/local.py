@@ -18,13 +18,10 @@ MIDDLEWARE = [  # noqa: F405
 ]
 
 # ---------------------------------------------------------------------------
-# Local database defaults (PostgreSQL run directly on the machine)
+# Local database defaults (PostgreSQL by default; USE_SQLITE=true switches to
+# db.sqlite3 for fully portable local development)
 # ---------------------------------------------------------------------------
-DATABASES = {
-    "default": env.db_url(
-        "DATABASE_URL", default="postgres://hanahoush:hanahoush@localhost:5432/hanahoush"
-    )
-}
+DATABASES = build_database_config()
 
 # ---------------------------------------------------------------------------
 # Debug Toolbar only allows localhost
@@ -37,8 +34,13 @@ INTERNAL_IPS = [
 # ---------------------------------------------------------------------------
 CORS_ALLOW_ALL_ORIGINS = True
 
-# Speed up password hashing during development.
+# Strong hashing by default (PBKDF2). MD5 stays in the list ONLY so legacy
+# hashes migrated from older dev databases can still be verified and upgraded
+# on the next successful login/password change.
 PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+    "django.contrib.auth.hashers.ScryptPasswordHasher",
     "django.contrib.auth.hashers.MD5PasswordHasher",
 ]
 

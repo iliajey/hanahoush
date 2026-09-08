@@ -17,6 +17,8 @@ import {
   Mail,
   MessagesSquare,
   NotebookPen,
+  User,
+  Users,
 } from "lucide-react"
 
 import { CAPABILITIES, type CapabilityKey } from "@/features/auth/role-config"
@@ -121,6 +123,26 @@ export const WORKSPACE_ROUTES: readonly WorkspaceRouteMeta[] = [
     icon: Mail,
     section: "communication",
     capability: CAPABILITIES.NEWSLETTER_MANAGE,
+    inNav: true,
+  },
+  {
+    path: "profile",
+    labelKey: "navWorkspace.profile",
+    descriptionKey: "navWorkspace.profileDescription",
+    icon: User,
+    section: "dashboard",
+    capability: CAPABILITIES.DASHBOARD,
+    inNav: true,
+  },
+  {
+    // Super Admin account management (Phase 11.5). The capability mirrors the
+    // backend IsSuperAdmin rule; the API refuses everyone else regardless.
+    path: "users",
+    labelKey: "navWorkspace.users",
+    descriptionKey: "navWorkspace.usersDescription",
+    icon: Users,
+    section: "dashboard",
+    capability: CAPABILITIES.USER_MANAGE,
     inNav: true,
   },
 ]

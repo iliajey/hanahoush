@@ -26,6 +26,23 @@ def user_has_permission_codename(user, codename: str) -> bool:
     return role.permissions.filter(codename=codename).exists()
 
 
+class IsSuperAdmin(permissions.BasePermission):
+    """Allow only the highest-authority administrators.
+
+    Granted when the account is a Django superuser OR holds the
+    ``SUPER_ADMIN`` role. Used by the Phase 11.5 user-management API so no
+    other role — even ones holding ``users.manage`` — can manage accounts.
+    """
+
+    message = "Super Admin privileges are required."
+
+    def has_permission(self, request, view):
+        user = request.user
+        if not (user and user.is_authenticated):
+            return False
+        return bool(user.is_superuser or get_role_codename(user) == "SUPER_ADMIN")
+
+
 class IsAdminUser(permissions.BasePermission):
     """Allow only platform administrators (superuser or role=admin)."""
 

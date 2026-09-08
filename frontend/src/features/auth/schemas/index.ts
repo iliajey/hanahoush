@@ -6,16 +6,46 @@ export type SchemaTranslator = (key: string, options?: Record<string, unknown>) 
 
 const DEFAULT_MESSAGES: Record<string, string> = {
   "auth.validation.usernameRequired": "Username is required",
+  "auth.validation.usernameFormat": "Use 3-150 letters, numbers, or . _ - characters",
   "auth.validation.emailRequired": "Enter a valid email address",
   "auth.validation.emailInvalid": "Enter a valid email address",
   "auth.validation.passwordMin": "Password must be at least 8 characters",
   "auth.validation.passwordMismatch": "Passwords do not match",
   "auth.validation.currentPasswordRequired": "Current password is required",
+  "auth.validation.firstNameRequired": "First name is required",
+  "auth.validation.lastNameRequired": "Last name is required",
+  "auth.validation.phoneInvalid": "Enter a valid mobile number",
 }
 
 /** Fallback translator used when a schema is created without i18n context. */
 function defaultT(key: string): string {
   return DEFAULT_MESSAGES[key] ?? key
+}
+
+export function createRegisterSchema(t: SchemaTranslator = defaultT) {
+  return z
+    .object({
+      username: z
+        .string()
+        .trim()
+        .min(3, t("auth.validation.usernameRequired"))
+        .regex(/^[A-Za-z0-9._-]{3,150}$/, t("auth.validation.usernameFormat")),
+      first_name: z.string().trim().max(150).optional(),
+      last_name: z.string().trim().max(150).optional(),
+      email: z.string().trim().email(t("auth.validation.emailInvalid")),
+      phone: z
+        .string()
+        .trim()
+        .max(20)
+        .optional()
+        .or(z.literal("")),
+      password: z.string().min(8, t("auth.validation.passwordMin")),
+      confirm_password: z.string().min(8, t("auth.validation.passwordMin")),
+    })
+    .refine((data) => data.password === data.confirm_password, {
+      message: t("auth.validation.passwordMismatch"),
+      path: ["confirm_password"],
+    })
 }
 
 export function createLoginSchema(t: SchemaTranslator = defaultT) {
@@ -68,12 +98,14 @@ export function createProfileSchema(t: SchemaTranslator = defaultT) {
 }
 
 /** Backward-compatible default instances (English) for tests and exports. */
+export const registerSchema = createRegisterSchema()
 export const loginSchema = createLoginSchema()
 export const forgotPasswordSchema = createForgotPasswordSchema()
 export const resetPasswordSchema = createResetPasswordSchema()
 export const changePasswordSchema = createChangePasswordSchema()
 export const profileSchema = createProfileSchema()
 
+export type RegisterFormValues = z.infer<typeof registerSchema>
 export type LoginFormValues = z.infer<typeof loginSchema>
 export type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>
 export type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>

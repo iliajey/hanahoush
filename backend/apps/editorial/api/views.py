@@ -99,7 +99,10 @@ class WorkflowViewSet(
     queryset = ContentWorkflow.objects.filter(is_deleted=False).select_related(
         "stage", "content_type"
     )
-    filterset_fields = ["stage", "content_type", "object_id"]
+    # `content_type` is handled as a label ("articles.article") in get_queryset,
+    # so it must NOT be declared here as an FK filterset field (DjangoFilter
+    # would reject the label as an invalid primary key with a 400).
+    filterset_fields = ["stage", "object_id"]
     ordering_fields = ["created_at", "updated_at", "version"]
     ordering = ["-updated_at"]
 
@@ -118,6 +121,12 @@ class WorkflowViewSet(
         ctx = super().get_serializer_context()
         ctx["request"] = self.request
         return ctx
+
+    def retrieve(self, request, *args, **kwargs):
+        """Workflow detail uses the standard envelope (like every other
+        endpoint) so the frontend client can unwrap `data.data`."""
+        workflow = self.get_object()
+        return _detail(workflow, request)
 
     # -- workflow creation ----------------------------------------------
     @action(detail=False, methods=["post"], url_path="ensure")

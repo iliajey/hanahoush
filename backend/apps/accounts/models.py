@@ -114,6 +114,7 @@ class LoginAudit(BaseModel):
     EVENT_LOGIN_FAILED = "login_failed"
     EVENT_LOGOUT = "logout"
     EVENT_REFRESH = "refresh"
+    EVENT_REGISTER = "register"
     EVENT_PASSWORD_CHANGE = "password_change"
     EVENT_PASSWORD_RESET = "password_reset"
     EVENT_CHOICES = [
@@ -121,6 +122,7 @@ class LoginAudit(BaseModel):
         (EVENT_LOGIN_FAILED, "Login failed"),
         (EVENT_LOGOUT, "Logout"),
         (EVENT_REFRESH, "Token refresh"),
+        (EVENT_REGISTER, "Account registered"),
         (EVENT_PASSWORD_CHANGE, "Password change"),
         (EVENT_PASSWORD_RESET, "Password reset"),
     ]

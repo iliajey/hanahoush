@@ -1,4 +1,7 @@
 """Serializers for the authentication & authorization API."""
+import re
+
+from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model, password_validation
 from django.utils.http import urlsafe_base64_decode
 
@@ -39,6 +42,7 @@ class UserSerializer(serializers.ModelSerializer):
             "preferred_language",
             "is_active",
             "is_staff",
+            "is_superuser",
             "role",
             "permissions",
             "date_joined",
@@ -70,6 +74,78 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError({"detail": "Invalid credentials."})
         attrs["user"] = user
         return attrs
+
+
+class RegisterSerializer(serializers.Serializer):
+    """Creates a new public account with the safest default role.
+
+    The backend — never the client — decides the initial role (normally
+    VIEWER, see ``REGISTRATION_DEFAULT_ROLE``). New registrations are never
+    granted staff/superuser status or any privileged role.
+    """
+
+    USERNAME_RE = re.compile(r"^[A-Za-z0-9._-]{3,150}$")
+
+    username = serializers.CharField(max_length=150, write_only=True)
+    first_name = serializers.CharField(max_length=150, allow_blank=True, required=False, write_only=True)
+    last_name = serializers.CharField(max_length=150, allow_blank=True, required=False, write_only=True)
+    email = serializers.EmailField(write_only=True)
+    phone = serializers.CharField(max_length=20, allow_blank=True, required=False, write_only=True)
+    password = serializers.CharField(write_only=True, trim_whitespace=False)
+    confirm_password = serializers.CharField(write_only=True, trim_whitespace=False)
+
+    default_error_messages = {"detail": "Registration failed."}
+
+    def validate_username(self, value):
+        username = value.strip()
+        if not self.USERNAME_RE.fullmatch(username):
+            raise serializers.ValidationError(
+                "Use 3-150 letters, numbers, or . _ - characters."
+            )
+        if User.objects.filter(username__iexact=username).exists():
+            raise serializers.ValidationError("This username is already taken.")
+        return username
+
+    def validate_email(self, value):
+        email = value.strip().lower()
+        if User.objects.filter(email__iexact=email).exists():
+            raise serializers.ValidationError("This email is already registered.")
+        return email
+
+    def validate_phone(self, value):
+        if value and not re.fullmatch(r"\+?[0-9]{10,15}", value):
+            raise serializers.ValidationError(
+                "Enter a valid mobile number (digits only, 10-15, optional leading +)."
+            )
+        return value
+
+    def validate_password(self, value):
+        password_validation.validate_password(value)
+        return value
+
+    def validate(self, attrs):
+        if attrs.get("password") != attrs.get("confirm_password"):
+            raise serializers.ValidationError({"confirm_password": "Passwords do not match."})
+        return attrs
+
+    def create(self, validated_data):
+        role_codename = getattr(settings, "REGISTRATION_DEFAULT_ROLE", "VIEWER")
+        role = Role.objects.filter(codename=role_codename).first()
+
+        user = User.objects.create_user(
+            username=validated_data["username"],
+            email=validated_data["email"],
+            password=validated_data["password"],
+            first_name=validated_data.get("first_name", ""),
+            last_name=validated_data.get("last_name", ""),
+            phone=validated_data.get("phone", ""),
+            # Never auto-grant staff or superuser to public registrations.
+            is_staff=False,
+        )
+        if role is not None:
+            user.role = role
+            user.save(update_fields=["role"])
+        return user
 
 
 class LogoutSerializer(serializers.Serializer):

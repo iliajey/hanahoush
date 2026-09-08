@@ -5,7 +5,7 @@ import type { OperationalDashboard } from "../types"
 
 /** Fetch the operational dashboard (staff-only endpoint). */
 export async function fetchOperationalDashboard(signal?: AbortSignal): Promise<OperationalDashboard> {
-  const { data } = await apiClient.get<ApiEnvelope<OperationalDashboard>>("/api/v1/admin/dashboard/", {
+  const { data } = await apiClient.get<ApiEnvelope<OperationalDashboard>>("/admin/dashboard/", {
     signal,
   })
   return data.data

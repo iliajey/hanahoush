@@ -196,7 +196,7 @@ export function MediaWorkspacePage() {
               <input type="file" className="sr-only" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
             </label>
             <div className="grid gap-2">
-              <Label>{t("mediaWorkspace.title")}</Label>
+              <Label>{t("mediaWorkspace.form.title")}</Label>
               <Input value={titleEn} onChange={(e) => setTitleEn(e.target.value)} />
             </div>
             <label className="flex items-center gap-2 text-sm">
@@ -224,7 +224,7 @@ export function MediaWorkspacePage() {
           </DialogHeader>
           <div className="grid gap-3">
             <div className="grid gap-2">
-              <Label>{t("mediaWorkspace.title")}</Label>
+              <Label>{t("mediaWorkspace.form.title")}</Label>
               <Input value={editTitleEn} onChange={(e) => setEditTitleEn(e.target.value)} />
             </div>
             <div className="grid gap-2">

@@ -7,9 +7,16 @@ interface PartnerLogoItemProps {
 function PartnerLogoItem({ logo }: PartnerLogoItemProps) {
   if (logo.src) {
     return (
-      <img src={logo.src} alt={logo.name} loading="lazy" className="max-h-full max-w-full object-contain" />
+      <img
+        src={logo.src}
+        alt={logo.name}
+        loading="lazy"
+        className="max-h-full max-w-full object-contain opacity-40 grayscale transition hover:opacity-80 hover:grayscale-0"
+      />
     )
   }
+  // Text fallbacks stay at full contrast so partner names remain readable
+  // even inside the muted, grayscale brand band.
   return <span className="text-sm font-semibold text-muted-foreground">{logo.name}</span>
 }
 
@@ -28,7 +35,7 @@ export function LogoCloud({
         <div
           key={l.name}
           onClick={onLogoClick ? () => onLogoClick(l.name) : undefined}
-          className="flex h-12 w-24 items-center justify-center opacity-40 transition-opacity grayscale hover:opacity-80 hover:grayscale-0"
+          className="flex h-12 w-24 items-center justify-center"
         >
           <PartnerLogoItem logo={l} />
         </div>
@@ -53,7 +60,7 @@ export function InfiniteLogoSlider({
           <div
             key={`${l.name}-${i}`}
             onClick={onLogoClick ? () => onLogoClick(l.name) : undefined}
-            className="flex h-10 w-28 shrink-0 items-center justify-center opacity-40 grayscale hover:opacity-80 hover:grayscale-0"
+            className="flex h-10 w-28 shrink-0 items-center justify-center"
           >
             <PartnerLogoItem logo={l} />
           </div>

@@ -37,30 +37,30 @@ export function ContactPage() {
 
   if (page.isLoading) {
     return (
-      <main className="space-y-12">
+      <div className="space-y-12">
         <Skeleton className="mx-auto h-12 w-2/3" />
         <Skeleton className="mx-auto h-24 w-full max-w-4xl" />
         <Skeleton className="mx-auto h-80 w-full max-w-2xl rounded-3xl" />
-      </main>
+      </div>
     )
   }
 
   if (page.isError || !page.data) {
     return (
-      <main className="p-8">
+      <div className="p-8">
         <ErrorState
           title={t("errors.loadingPageTitle")}
           description={t("errors.unexpected")}
           onRetry={() => page.refetch()}
         />
-      </main>
+      </div>
     )
   }
 
   return (
-    <main>
+    <div>
       <SiteBackground grid particles />
       <PageRenderer page={page.data} />
-    </main>
+    </div>
   )
 }

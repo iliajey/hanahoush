@@ -10,11 +10,7 @@ SECRET_KEY = env("DJANGO_SECRET_KEY", default="ci-test-secret-key")
 # Tests use the 'testserver' host by default.
 ALLOWED_HOSTS = ["*"]
 
-DATABASES = {
-    "default": env.db_url(
-        "DATABASE_URL", default="postgres://postgres:postgres@localhost:5432/hanahoush_test"
-    )
-}
+DATABASES = build_database_config()
 
 # SQLite fallback makes unit tests runnable without PostgreSQL.
 import sys
@@ -37,6 +33,7 @@ EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
 REST_FRAMEWORK["DEFAULT_THROTTLE_RATES"] = {  # noqa: F405
     "login": "10000/min",
     "refresh": "10000/min",
+    "register": "10000/hour",
     "password_reset": "10000/hour",
     "user": "10000/min",
     "contact": "10000/min",

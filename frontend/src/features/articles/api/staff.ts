@@ -85,21 +85,21 @@ export async function listStaffArticles(params: StaffArticleListParams = {}): Pr
   if (params.ordering) query.ordering = params.ordering
   if (params.is_featured != null) query.is_featured = String(params.is_featured)
 
-  const { data } = await apiClient.get<PaginatedResponse<StaffArticle>>("/api/v1/articles/", { params: query })
+  const { data } = await apiClient.get<PaginatedResponse<StaffArticle>>("/articles/", { params: query })
   return { items: data.data ?? [], pagination: data.pagination }
 }
 
 export async function fetchStaffArticle(id: number): Promise<StaffArticleDetail> {
-  const { data } = await apiClient.get<ApiEnvelope<StaffArticleDetail>>(`/api/v1/articles/${id}/`)
+  const { data } = await apiClient.get<ApiEnvelope<StaffArticleDetail>>(`/articles/${id}/`)
   return data.data
 }
 
 export async function createStaffArticle(payload: StaffArticlePayload): Promise<StaffArticle> {
-  const { data } = await apiClient.post<ApiEnvelope<StaffArticle>>("/api/v1/articles/", payload)
+  const { data } = await apiClient.post<ApiEnvelope<StaffArticle>>("/articles/", payload)
   return data.data
 }
 
 export async function updateStaffArticle(id: number, payload: StaffArticlePayload): Promise<StaffArticle> {
-  const { data } = await apiClient.patch<ApiEnvelope<StaffArticle>>(`/api/v1/articles/${id}/`, payload)
+  const { data } = await apiClient.patch<ApiEnvelope<StaffArticle>>(`/articles/${id}/`, payload)
   return data.data
 }

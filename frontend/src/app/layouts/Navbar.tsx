@@ -40,7 +40,11 @@ export function Navbar() {
   const settings = useSiteSettings()
 
   const cmsItems =
-    navigation.data?.items.map((item) => ({ to: item.href, label: item.label, end: false })) ?? []
+    navigation.data?.items
+      // The backend already resolves "Home" to "/" alongside the app-level
+      // Home entry below; skip it so keys stay unique for both navs.
+      .filter((item) => item.href.replace(/\/+$/, "") !== "")
+      .map((item) => ({ to: item.href, label: item.label, end: false })) ?? []
 
   const navItems = [
     { to: "/", label: t("nav.home"), end: true },
@@ -89,7 +93,7 @@ export function Navbar() {
           <span className="text-lg">{brandName}</span>
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label={t("nav.main")}>
+        <nav className="hidden items-center gap-1 xl:flex" aria-label={t("nav.main")}>
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -124,7 +128,7 @@ export function Navbar() {
           <button
             ref={toggleRef}
             type="button"
-            className="rounded-md p-2 hover:bg-accent md:hidden"
+            className="rounded-md p-2 hover:bg-accent xl:hidden"
             aria-label={t("nav.toggleMenu")}
             aria-expanded={open}
             aria-controls="mobile-nav"
@@ -136,7 +140,7 @@ export function Navbar() {
       </Container>
 
       {open ? (
-        <nav id="mobile-nav" className="border-t bg-background md:hidden" aria-label={t("nav.toggleMenu")}>
+        <nav id="mobile-nav" className="border-t bg-background xl:hidden" aria-label={t("nav.toggleMenu")}>
           <Container className="flex flex-col gap-1 py-3">
             {navItems.map((item) => (
               <NavLink

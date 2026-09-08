@@ -76,7 +76,16 @@ export interface ProjectCaseStudy {
   status?: string
   case_study: CaseStudyData
   related_projects: ProjectSummary[]
-  related_articles: Array<{ id: number; slug: string; title: string; description?: string }>
+  related_articles: Array<{
+    id: number
+    slug: string
+    title_en?: string
+    title_fa?: string
+    title_ar?: string
+    short_description_en?: string
+    short_description_fa?: string
+    short_description_ar?: string
+  }>
 }
 
 export interface ProjectSummary {

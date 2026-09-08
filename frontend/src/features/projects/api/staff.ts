@@ -85,21 +85,21 @@ export async function listStaffProjects(params: StaffProjectListParams = {}): Pr
   if (params.status) query.status = params.status
   if (params.ordering) query.ordering = params.ordering
 
-  const { data } = await apiClient.get<PaginatedResponse<StaffProject>>("/api/v1/projects/", { params: query })
+  const { data } = await apiClient.get<PaginatedResponse<StaffProject>>("/projects/", { params: query })
   return { items: data.data ?? [], pagination: data.pagination }
 }
 
 export async function fetchStaffProject(id: number): Promise<StaffProjectDetail> {
-  const { data } = await apiClient.get<ApiEnvelope<StaffProjectDetail>>(`/api/v1/projects/${id}/`)
+  const { data } = await apiClient.get<ApiEnvelope<StaffProjectDetail>>(`/projects/${id}/`)
   return data.data
 }
 
 export async function createStaffProject(payload: StaffProjectPayload): Promise<StaffProject> {
-  const { data } = await apiClient.post<ApiEnvelope<StaffProject>>("/api/v1/projects/", payload)
+  const { data } = await apiClient.post<ApiEnvelope<StaffProject>>("/projects/", payload)
   return data.data
 }
 
 export async function updateStaffProject(id: number, payload: StaffProjectPayload): Promise<StaffProject> {
-  const { data } = await apiClient.patch<ApiEnvelope<StaffProject>>(`/api/v1/projects/${id}/`, payload)
+  const { data } = await apiClient.patch<ApiEnvelope<StaffProject>>(`/projects/${id}/`, payload)
   return data.data
 }

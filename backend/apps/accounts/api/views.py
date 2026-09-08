@@ -29,6 +29,7 @@ from .serializers import (
     PermissionSerializer,
     ProfileSerializer,
     RefreshInSerializer,
+    RegisterSerializer,
     RoleSerializer,
     UserSerializer,
 )
@@ -45,6 +46,7 @@ from .throttles import (
     LoginRateThrottle,
     PasswordResetRateThrottle,
     RefreshRateThrottle,
+    RegisterRateThrottle,
     UserRateThrottle,
 )
 
@@ -164,6 +166,53 @@ class RefreshView(TokenRefreshView):
             audit("refresh", request, user.username, user=user, success=True)
 
         return build_response(data=response.data, message="Token refreshed", request=request)
+
+
+@extend_schema(
+    request=RegisterSerializer,
+    responses={
+        201: OpenApiResponse(description="Account created"),
+        400: OpenApiResponse(description="Validation failed"),
+        429: OpenApiResponse(description="Too many registrations"),
+    },
+)
+class RegisterView(AuthAPIView):
+    """POST /auth/register — create a new public account.
+
+    The user is created with the safest default role (normally VIEWER) and
+    never with staff/superuser privileges. No tokens are issued; the user
+    then logs in normally.
+    """
+
+    permission_classes = [AllowAny]
+    throttle_classes = [RegisterRateThrottle]
+
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if not serializer.is_valid():
+            return build_error(
+                "Registration failed.",
+                status_code=status.HTTP_400_BAD_REQUEST,
+                errors=serializer.errors,
+                request=request,
+            )
+
+        user = serializer.save()
+        audit("register", request, user.username, user=user, success=True)
+        return build_response(
+            data={
+                "id": user.pk,
+                "username": user.username,
+                "email": user.email,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "preferred_language": user.preferred_language,
+                "role": user.role.codename if user.role else None,
+            },
+            message="Account created successfully",
+            status_code=status.HTTP_201_CREATED,
+            request=request,
+        )
 
 
 @extend_schema(

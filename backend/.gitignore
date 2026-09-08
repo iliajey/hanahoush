@@ -27,6 +27,10 @@ local_settings.py
 /staticfiles
 /media
 
+# Phase 10 server run logs
+phase10-*.log
+runserver*.log
+
 # Testing / coverage
 .coverage
 .coverage.*
@@ -35,3 +39,8 @@ htmlcov/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+
+# Real-data backups + local SQLite databases (never commit real data dumps)
+/backups/
+*.sqlite3
+db.sqlite3

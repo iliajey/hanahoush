@@ -24,7 +24,7 @@ export function ProjectCaseStudyPage() {
   if (query.isLoading) return <ProjectPageSkeleton />
   if (query.isError || !project) {
     return (
-      <main className="p-8">
+      <div className="p-8">
         <ErrorState
           title={t("projects.notFoundTitle")}
           description={t("projects.notFoundDescription")}
@@ -38,7 +38,7 @@ export function ProjectCaseStudyPage() {
             <Link to="/">{t("nav.home")}</Link>
           </Button>
         </div>
-      </main>
+      </div>
     )
   }
 
@@ -50,20 +50,20 @@ export function ProjectCaseStudyPage() {
   })
 
   return (
-    <main className="flex-1">
+    <div className="flex-1">
       <PageRenderer page={page} />
-    </main>
+    </div>
   )
 }
 
 export function ProjectPageSkeleton() {
   return (
-    <main className="space-y-8 p-8">
+    <div className="space-y-8 p-8">
       <div className="mx-auto max-w-4xl animate-pulse space-y-4">
         <div className="h-8 w-1/3 rounded-full bg-muted" />
         <div className="h-14 w-2/3 rounded-2xl bg-muted" />
         <div className="h-4 w-1/2 rounded-full bg-muted" />
       </div>
-    </main>
+    </div>
   )
 }

@@ -132,11 +132,28 @@ WSGI_APPLICATION = "config.wsgi.application"
 # ---------------------------------------------------------------------------
 # Database
 # ---------------------------------------------------------------------------
-DATABASES = {
-    "default": env.db_url(
-        "DATABASE_URL", default=f"postgres://postgres:postgres@localhost:5432/hanahoush"
-    )
-}
+def build_database_config():
+    """Environment-driven database selection.
+
+    ``USE_SQLITE=true`` → local ``db.sqlite3`` (fast local development and
+    portability). Otherwise the PostgreSQL ``DATABASE_URL`` is used. CI keeps
+    its own fallback (settings.ci) but honours the same flag.
+    """
+    if env.bool("USE_SQLITE", default=False):
+        return {
+            "default": {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": ROOT_DIR / "db.sqlite3",
+            }
+        }
+    return {
+        "default": env.db_url(
+            "DATABASE_URL", default="postgres://postgres:postgres@localhost:5432/hanahoush"
+        )
+    }
+
+
+DATABASES = build_database_config()
 
 # ---------------------------------------------------------------------------
 # Authentication
@@ -238,6 +255,7 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {
         "login": env("THROTTLE_LOGIN", default="10/min"),
         "refresh": env("THROTTLE_REFRESH", default="30/min"),
+    "register": env("THROTTLE_REGISTER", default="5/hour"),
     "password_reset": env("THROTTLE_PASSWORD_RESET", default="5/hour"),
     "user": env("THROTTLE_USER", default="120/min"),
     "contact": env("THROTTLE_CONTACT", default="10/min"),
@@ -255,6 +273,9 @@ AUTH_LOCKOUT_MINUTES = env.int("AUTH_LOCKOUT_MINUTES", default=15)
 
 # Refresh token lifetime when "remember me" is unchecked (short session).
 AUTH_SHORT_SESSION_DAYS = env.int("AUTH_SHORT_SESSION_DAYS", default=1)
+
+# Default role assigned to new public registrations (safest policy: VIEWER).
+REGISTRATION_DEFAULT_ROLE = env("REGISTRATION_DEFAULT_ROLE", default="VIEWER")
 
 # Frontend base URL used to build password-reset links.
 FRONTEND_URL = env("FRONTEND_URL", default="http://localhost:5173")
@@ -402,7 +423,9 @@ CKEDITOR_5_CONFIGS = {
 BOOTSTRAP_ADMIN_ENABLED = env.bool("BOOTSTRAP_ADMIN_ENABLED", default=True)
 BOOTSTRAP_ADMIN_USERNAME = env("BOOTSTRAP_ADMIN_USERNAME", default="admin")
 BOOTSTRAP_ADMIN_EMAIL = env("BOOTSTRAP_ADMIN_EMAIL", default="admin@hanahoush.local")
-BOOTSTRAP_ADMIN_PASSWORD = env("BOOTSTRAP_ADMIN_PASSWORD", default="Admin@123456")
+# Never hardcode passwords in source: the bootstrap password must come from
+# the environment (.env locally). Empty default disables bootstrap creation.
+BOOTSTRAP_ADMIN_PASSWORD = env("BOOTSTRAP_ADMIN_PASSWORD", default="")
 
 # ---------------------------------------------------------------------------
 # Logging

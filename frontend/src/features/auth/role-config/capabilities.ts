@@ -7,7 +7,7 @@
  * drives navigation, route protection and button visibility.
  */
 import type { UserProfile } from "../types"
-import { hasAnyPermission, hasAllPermissions, isStaffUser, type PermissionCode } from "../permissions"
+import { hasAnyPermission, hasAllPermissions, isStaffUser, isSuperAdminUser, type PermissionCode } from "../permissions"
 import { PERMISSIONS } from "../permissions"
 
 export const CAPABILITIES = {
@@ -36,6 +36,9 @@ export const CAPABILITIES = {
   ANALYTICS: "analytics.view",
   /** Operational system surface — staff roles only. */
   SYSTEM: "system.operations",
+  /** Super Admin account management (Phase 11.5). Mirrors the backend
+   * IsSuperAdmin rule: Django superuser OR the SUPER_ADMIN primary role. */
+  USER_MANAGE: "accounts.users",
 } as const
 
 export type CapabilityKey = (typeof CAPABILITIES)[keyof typeof CAPABILITIES]
@@ -47,6 +50,8 @@ export interface CapabilityDefinition {
   requiresAny?: readonly PermissionCode[]
   /** Backend gate: DRF IsStaffOrReadOnly / IsAdminUser surfaces. */
   staffOnly?: boolean
+  /** Backend gate: DRF IsSuperAdmin surfaces (superuser OR SUPER_ADMIN role). */
+  superAdminOnly?: boolean
 }
 
 export const CAPABILITY_DEFINITIONS: Record<CapabilityKey, CapabilityDefinition> = {
@@ -100,6 +105,7 @@ export const CAPABILITY_DEFINITIONS: Record<CapabilityKey, CapabilityDefinition>
     requiresAll: [PERMISSIONS.ANALYTICS_VIEW],
   },
   [CAPABILITIES.SYSTEM]: { staffOnly: true },
+  [CAPABILITIES.USER_MANAGE]: { superAdminOnly: true },
 }
 
 /** True when the user has the capability (permissions AND staff gate). */
@@ -108,6 +114,7 @@ export function canUseCapability(user: UserProfile | null | undefined, capabilit
   const definition = CAPABILITY_DEFINITIONS[capability]
   if (!definition) return false
   if (definition.staffOnly && !isStaffUser(user)) return false
+  if (definition.superAdminOnly && !isSuperAdminUser(user)) return false
   if (definition.requiresAll && !hasAllPermissions(user, definition.requiresAll)) return false
   if (definition.requiresAny && !hasAnyPermission(user, definition.requiresAny)) return false
   return true

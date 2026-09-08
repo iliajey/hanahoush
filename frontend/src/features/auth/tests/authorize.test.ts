@@ -192,18 +192,18 @@ describe("navigation authorization (workspaceNavForUser)", () => {
   }
 
   it("SUPER_ADMIN sees every nav link", () => {
-    expect(linkPaths("SUPER_ADMIN")).toEqual(["", "articles", "contact", "editorial", "media", "newsletter", "projects"])
+    expect(linkPaths("SUPER_ADMIN")).toEqual(["", "articles", "contact", "editorial", "media", "newsletter", "profile", "projects"])
   })
 
   it("VIEWER sees only dashboard + editorial", () => {
-    expect(linkPaths("VIEWER")).toEqual(["", "editorial"])
+    expect(linkPaths("VIEWER")).toEqual(["", "editorial", "profile"])
   })
 
   it("EDITOR sees only dashboard + editorial", () => {
-    expect(linkPaths("EDITOR")).toEqual(["", "editorial"])
+    expect(linkPaths("EDITOR")).toEqual(["", "editorial", "profile"])
   })
 
   it("PROJECT_MANAGER sees dashboard, articles, projects, editorial, media, communication", () => {
-    expect(linkPaths("PROJECT_MANAGER")).toEqual(["", "articles", "contact", "editorial", "media", "newsletter", "projects"])
+    expect(linkPaths("PROJECT_MANAGER")).toEqual(["", "articles", "contact", "editorial", "media", "newsletter", "profile", "projects"])
   })
 })

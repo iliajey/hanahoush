@@ -14,7 +14,7 @@ import type {
   WorkflowListParams,
 } from "../types"
 
-const BASE = "/api/v1/editorial"
+const BASE = "/editorial"
 
 async function getEnvelope<T>(path: string, params?: Record<string, unknown>, signal?: AbortSignal): Promise<T> {
   const { data } = await apiClient.get<ApiEnvelope<T>>(path, { params, signal })
