@@ -21,8 +21,12 @@ export function useMediaList(params: MediaListParams) {
 export function useUploadMedia() {
   const queryClient = useQueryClient()
   const { toast } = useToast()
-  return useMutation<UploadResult, Error, { file: File; metadata: MediaMetadata }>({
-    mutationFn: ({ file, metadata }) => uploadMedia(file, metadata),
+  return useMutation<
+    UploadResult,
+    Error,
+    { file: File; metadata: MediaMetadata; onProgress?: (percent: number) => void }
+  >({
+    mutationFn: ({ file, metadata, onProgress }) => uploadMedia(file, metadata, onProgress),
     onSuccess: (result) => {
       queryClient.invalidateQueries({ queryKey: mediaKeys.all })
       if (result.ok) {

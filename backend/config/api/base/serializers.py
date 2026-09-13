@@ -5,7 +5,12 @@ validation patterns across all API serializers.
 """
 from rest_framework import serializers
 
+from apps.core.media import absolute_media_url
 from apps.core.models import Status
+
+
+def _abs(request, url):
+    return absolute_media_url(request, url)
 
 
 class HanahoushModelSerializer(serializers.ModelSerializer):
@@ -70,12 +75,18 @@ class PublishableSerializerMixin(TranslatableFieldsMixin):
         data = super().to_representation(instance)
         # Add SEO fields grouped
         if any(getattr(instance, f, None) for f in ("meta_title", "meta_description", "meta_keywords", "canonical_url")):
+            og = None
+            if instance.og_image:
+                try:
+                    og = _abs(self.context.get("request"), instance.og_image.file.url)
+                except Exception:  # noqa: BLE001
+                    og = None
             data["seo"] = {
                 "meta_title": instance.meta_title or None,
                 "meta_description": instance.meta_description or None,
                 "meta_keywords": instance.meta_keywords or None,
                 "canonical_url": instance.canonical_url or None,
-                "og_image": instance.og_image.file.url if instance.og_image else None,
+                "og_image": og,
             }
         return data
 
@@ -91,7 +102,10 @@ class NestedMediaFileSerializer(HanahoushModelSerializer):
 
     def get_preview_url(self, obj):
         if obj.mime_type and obj.mime_type.startswith("image/"):
-            return obj.file.url
+            try:
+                return _abs(self.context.get("request"), obj.file.url)
+            except Exception:  # noqa: BLE001
+                return None
         return None
 
 

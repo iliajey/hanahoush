@@ -75,6 +75,7 @@ class AdminUserSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "phone",
+            "preferred_language",
             "role",
             "permissions",
             "is_active",
@@ -116,6 +117,7 @@ class AdminUserWriteSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "phone",
+            "preferred_language",
             "role",
             "is_active",
             "is_staff",
@@ -124,6 +126,7 @@ class AdminUserWriteSerializer(serializers.ModelSerializer):
             "first_name": {"required": False, "allow_blank": True},
             "last_name": {"required": False, "allow_blank": True},
             "phone": {"required": False, "allow_blank": True},
+            "preferred_language": {"required": False},
         }
 
     def validate_username(self, value):
@@ -201,6 +204,22 @@ def _is_last_active_superuser(user: User) -> bool:
     return bool(
         user.is_superuser
         and User.objects.filter(is_superuser=True, is_active=True).count() <= 1
+    )
+
+
+def _is_last_super_admin_holder(user: User) -> bool:
+    """True if ``user`` is the only active holder of the SUPER_ADMIN role.
+
+    Strict on purpose (Phase 12): demoting or deactivating the last role
+    holder is refused even when a Django-superuser flag exists elsewhere, so
+    the role-based administration path can never silently disappear.
+    """
+    role = getattr(user, "role", None)
+    if not user.is_active or not role or role.codename != "SUPER_ADMIN":
+        return False
+    return (
+        User.objects.filter(is_active=True, role__codename="SUPER_ADMIN").count()
+        <= 1
     )
 
 
@@ -309,7 +328,30 @@ class AdminUserViewSet(viewsets.ModelViewSet):
                 errors=guard_errors,
                 request=request,
             )
+        last_admin_error = self._last_admin_errors(instance, serializer.validated_data)
+        if last_admin_error:
+            return build_error(
+                last_admin_error,
+                status_code=status.HTTP_400_BAD_REQUEST,
+                request=request,
+            )
+        old_role = instance.role.codename if instance.role else None
+        old_active = instance.is_active
         user = serializer.save()
+        new_role = user.role.codename if user.role else None
+        detail = "admin_updated"
+        if old_role != new_role:
+            detail = f"role_changed:{old_role or 'none'}->{new_role or 'none'}"
+        elif old_active != user.is_active:
+            detail = "activated" if user.is_active else "deactivated"
+        audit(
+            "password_change",
+            request,
+            user.username,
+            user=user,
+            success=True,
+            detail=f"admin_user_updated:{detail}",
+        )
         return build_response(
             data=AdminUserSerializer(user).data,
             message="User updated successfully",
@@ -335,6 +377,39 @@ class AdminUserViewSet(viewsets.ModelViewSet):
             if new_role is None or new_role.codename != "SUPER_ADMIN":
                 errors["role"] = ["You cannot demote your own SUPER_ADMIN role."]
         return errors
+
+    def _last_admin_errors(self, target: User, validated_data: dict) -> str | None:
+        """Block removing the last administrative coverage (non-self targets).
+
+        Self-modification is already refused by ``_self_protection_errors``;
+        this covers demoting/deactivating/destaffing the last remaining admin
+        account held by someone else.
+        """
+        actor = self.request.user
+        if target.pk == actor.pk:
+            return None
+        new_role = validated_data.get("role", target.role)
+        new_role_codename = new_role.codename if new_role else None
+        new_active = validated_data.get("is_active", target.is_active)
+        # Demoting the last SUPER_ADMIN-role holder away (or clearing the role).
+        if (
+            target.role
+            and target.role.codename == "SUPER_ADMIN"
+            and new_role_codename != "SUPER_ADMIN"
+            and _is_last_super_admin_holder(target)
+        ):
+            return "Cannot remove the last SUPER_ADMIN role holder."
+        # Deactivating the last active superuser.
+        if target.is_active and new_active is False and _is_last_active_superuser(target):
+            return "Cannot deactivate the last active superuser."
+        # Deactivating the last SUPER_ADMIN-role holder.
+        if (
+            target.is_active
+            and new_active is False
+            and _is_last_super_admin_holder(target)
+        ):
+            return "Cannot deactivate the last SUPER_ADMIN role holder."
+        return None
 
     # -- extra actions ---------------------------------------------------------
     @extend_schema(request=AdminSetPasswordSerializer)
@@ -369,6 +444,14 @@ class AdminUserViewSet(viewsets.ModelViewSet):
         target = self.get_object()
         target.is_active = True
         target.save(update_fields=["is_active"])
+        audit(
+            "password_change",
+            request,
+            target.username,
+            user=target,
+            success=True,
+            detail="admin_user_updated:activated",
+        )
         return build_response(
             data=AdminUserSerializer(target).data, message="User activated", request=request
         )
@@ -388,10 +471,24 @@ class AdminUserViewSet(viewsets.ModelViewSet):
                 status_code=status.HTTP_400_BAD_REQUEST,
                 request=request,
             )
+        if _is_last_super_admin_holder(target):
+            return build_error(
+                "Cannot deactivate the last SUPER_ADMIN role holder.",
+                status_code=status.HTTP_400_BAD_REQUEST,
+                request=request,
+            )
         target.is_active = False
         target.save(update_fields=["is_active"])
         # End the deactivated user's sessions immediately.
         target.sessions.filter(revoked_at__isnull=True).update(revoked_at=timezone.now())
+        audit(
+            "password_change",
+            request,
+            target.username,
+            user=target,
+            success=True,
+            detail="admin_user_updated:deactivated",
+        )
         return build_response(
             data=AdminUserSerializer(target).data, message="User deactivated", request=request
         )

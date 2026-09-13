@@ -68,3 +68,14 @@ if (typeof window !== "undefined" && typeof window.ResizeObserver === "undefined
   }
   window.ResizeObserver = MockResizeObserver as unknown as typeof ResizeObserver
 }
+
+// jsdom has no layout engine — Radix focus/scroll helpers no-op here.
+if (typeof window !== "undefined" && typeof Element !== "undefined") {
+  const proto = Element.prototype as unknown as Record<string, unknown>
+  if (typeof proto.scrollIntoView !== "function") {
+    proto.scrollIntoView = () => {}
+  }
+  if (typeof (proto as { hasPointerCapture?: unknown }).hasPointerCapture !== "function") {
+    ;(proto as { hasPointerCapture: unknown }).hasPointerCapture = () => false
+  }
+}

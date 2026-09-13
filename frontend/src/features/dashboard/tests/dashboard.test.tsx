@@ -29,8 +29,13 @@ const payload: OperationalDashboard = {
     articles_drafts: 2,
     articles_awaiting_review: 1,
     articles_scheduled: 1,
+    articles_missing_fa: 1,
+    articles_missing_ar: 2,
     projects_published: 9,
     projects_drafts: 3,
+    projects_awaiting_review: 2,
+    projects_missing_fa: 0,
+    projects_missing_ar: 1,
     services: 6,
   },
   editorial: {
@@ -54,6 +59,8 @@ const payload: OperationalDashboard = {
     recent_editorial_activity: [{ id: 1, action: "workflow.transition", details: "", created_at: "" }],
     recent_media_uploads: [{ id: 1, original_name: "hero.png", mime_type: "image/png", size: 10, created_at: "" }],
     recent_admin_actions: [],
+    recent_articles: [{ id: 3, title_en: "Fresh article", slug: "fresh-article", status: "draft", updated_at: "" }],
+    recent_projects: [{ id: 7, title_en: "Fresh project", slug: "fresh-project", status: "draft", updated_at: "" }],
   },
   system: {
     database: { status: "healthy" },
@@ -79,7 +86,7 @@ describe("DashboardPage — role-aware rendering", () => {
     expect(screen.getByText("Content workspace")).toBeInTheDocument()
     expect(screen.getByText("Published articles")).toBeInTheDocument()
     expect(screen.queryByText("Published projects")).toBeNull()
-    expect(screen.getByText("Pending approvals")).toBeInTheDocument()
+    expect(screen.getAllByText("Pending approvals").length).toBeGreaterThan(0)
     expect(screen.queryByText("Read-only overview")).toBeNull()
   })
 
@@ -120,6 +127,36 @@ describe("DashboardPage — role-aware rendering", () => {
     // PROJECT_MANAGER is staff with articles.view → article tiles render.
     expect(screen.getByText("Published articles")).toBeInTheDocument()
     // No editorial management numbers for this role (editorial section is view-only).
-    expect(screen.getByText("Pending approvals")).toBeInTheDocument()
+    expect(screen.getAllByText("Pending approvals").length).toBeGreaterThan(0)
+  })
+
+  it("SUPER_ADMIN sees the attention queue, quick actions and view-all links", () => {
+    mockUseUser.mockReturnValue({ status: "authenticated", user: roleUsers.SUPER_ADMIN, isAuthenticated: true, refreshUser: vi.fn() })
+    renderWithProviders(<DashboardPage />)
+    expect(screen.getByText("Needs attention")).toBeInTheDocument()
+    expect(screen.getAllByText("Article drafts").length).toBeGreaterThan(0)
+    expect(screen.getByText("Quick actions")).toBeInTheDocument()
+    expect(screen.getByText("New article")).toBeInTheDocument()
+    expect(screen.getByText("Manage users")).toBeInTheDocument()
+    expect(screen.getAllByText("View all").length).toBeGreaterThan(0)
+  })
+
+  it("CONTENT_MANAGER attention queue respects their capabilities", () => {
+    mockUseUser.mockReturnValue({ status: "authenticated", user: roleUsers.CONTENT_MANAGER, isAuthenticated: true, refreshUser: vi.fn() })
+    renderWithProviders(<DashboardPage />)
+    expect(screen.getByText("Needs attention")).toBeInTheDocument()
+    // CONTACT_MANAGE is staff-only and CONTENT_MANAGER is staff → visible.
+    expect(screen.getByText("Open inquiries")).toBeInTheDocument()
+    expect(screen.getByText("New article")).toBeInTheDocument()
+    expect(screen.queryByText("Manage users")).toBeNull()
+    expect(screen.queryByText("Upload media") ?? null)
+  })
+
+  it("VIEWER sees no attention queue or quick actions", () => {
+    mockUseUser.mockReturnValue({ status: "authenticated", user: roleUsers.VIEWER, isAuthenticated: true, refreshUser: vi.fn() })
+    renderWithProviders(<DashboardPage />)
+    expect(screen.queryByText("Needs attention")).toBeNull()
+    expect(screen.queryByText("Quick actions")).toBeNull()
+    expect(screen.queryByText("Manage users")).toBeNull()
   })
 })

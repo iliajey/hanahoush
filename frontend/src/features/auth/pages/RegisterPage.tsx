@@ -9,12 +9,6 @@ export function RegisterPage() {
   return (
     <AuthShell title={t("auth.register")} description={t("auth.registerDescription")}>
       <RegisterForm />
-      <p className="mt-4 text-center text-sm text-muted-foreground">
-        {t("auth.hasAccount")}{" "}
-        <a href="/login" className="text-primary hover:underline">
-          {t("auth.login")}
-        </a>
-      </p>
     </AuthShell>
   )
 }

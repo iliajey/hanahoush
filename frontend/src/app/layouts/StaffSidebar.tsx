@@ -1,13 +1,16 @@
-import { Link, NavLink } from "react-router-dom"
+import { Link, NavLink, useLocation } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import { ExternalLink, LogOut, type LucideIcon } from "lucide-react"
 
 import { useUser } from "@/features/auth/hooks/useUser"
+import { useAuthorization } from "@/features/auth/hooks/useAuthorization"
 import { useLogout } from "@/features/auth/hooks/useLogout"
 import { UserAvatar } from "@/features/auth/components/UserAvatar"
 import { getDisplayName } from "@/features/auth/utils"
 import { getRoleDefinition } from "@/features/auth/role-config"
 import { BrandLogo } from "@/components/brand/BrandLogo"
+import { LanguageDropdown } from "@/components/ui/language-dropdown"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { cn } from "@/shared/lib/cn"
 import {
   workspaceNavForUser,
@@ -25,11 +28,18 @@ function NavSection({ section }: { section: WorkspaceSectionMeta }) {
   )
 }
 
+function isRouteActive(itemPath: string, pathname: string): boolean {
+  if (!itemPath) return pathname === "/dashboard" || pathname === "/dashboard/"
+  return pathname === `/dashboard/${itemPath}` || pathname.startsWith(`/dashboard/${itemPath}/`)
+}
+
 function NavItem({
   item,
+  active,
   onNavigate,
 }: {
   item: WorkspaceRouteMeta
+  active: boolean
   onNavigate?: () => void
 }) {
   const { t } = useTranslation()
@@ -40,13 +50,12 @@ function NavItem({
       to={href}
       end={href === "/dashboard"}
       onClick={onNavigate}
-      className={({ isActive }) =>
-        cn(
-          "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-          "hover:bg-accent hover:text-accent-foreground",
-          isActive && "bg-accent text-accent-foreground",
-        )
-      }
+      aria-current={active ? "page" : undefined}
+      className={cn(
+        "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+        "hover:bg-accent hover:text-accent-foreground",
+        active && "bg-accent text-accent-foreground",
+      )}
     >
       <Icon className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
       <span className="truncate">{t(item.labelKey)}</span>
@@ -63,6 +72,7 @@ interface StaffSidebarProps {
 export function StaffSidebar({ onNavigate }: StaffSidebarProps) {
   const { t } = useTranslation()
   const { user } = useUser()
+  const { pathname } = useLocation()
   const groups = workspaceNavForUser(user)
   const role = user?.role ? getRoleDefinition(user.role.codename) : null
 
@@ -88,17 +98,27 @@ export function StaffSidebar({ onNavigate }: StaffSidebarProps) {
             <div key={group.section.key}>
               <NavSection section={group.section} />
               {group.items.map((item) => (
-                <NavItem key={item.path} item={item} onNavigate={onNavigate} />
+                <NavItem
+                  key={item.path}
+                  item={item}
+                  active={isRouteActive(item.path, pathname)}
+                  onNavigate={onNavigate}
+                />
               ))}
             </div>
           ))}
         </nav>
       </div>
 
+      <div className="flex items-center justify-between border-t px-3 py-2">
+        <LanguageDropdown />
+        <ThemeToggle />
+      </div>
+
       {user ? (
         <div className="border-t p-3">
           <Link
-            to="/dashboard"
+            to="/dashboard/profile"
             onClick={onNavigate}
             className="flex items-center gap-3 rounded-md px-2 py-2 hover:bg-accent"
           >
@@ -118,6 +138,7 @@ export function StaffLayoutTopbar({ onOpenMenu }: { onOpenMenu: () => void }) {
   const { t } = useTranslation()
   const { user } = useUser()
   const { mutate: logout } = useLogout()
+  const { isSuperAdmin } = useAuthorization()
   const role = user?.role ? getRoleDefinition(user.role.codename) : null
 
   return (
@@ -125,16 +146,25 @@ export function StaffLayoutTopbar({ onOpenMenu }: { onOpenMenu: () => void }) {
       <button
         type="button"
         onClick={onOpenMenu}
-        className="rounded-md p-2 hover:bg-accent lg:hidden"
+        className="rounded-md p-2 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
         aria-label={t("navWorkspace.openMenu")}
       >
         <MenuIcon />
       </button>
       <div className="min-w-0">
         <p className="truncate text-sm font-semibold">{role ? t(role.workspaceTitleKey) : t("navWorkspace.dashboard")}</p>
-        <p className="hidden truncate text-xs text-muted-foreground sm:block">{user?.email}</p>
+        <p className="hidden truncate text-xs text-muted-foreground sm:block" dir="auto">
+          {role ? t(role.workspaceDescriptionKey) : t("navWorkspace.dashboardDescription")}
+          {isSuperAdmin ? ` · ${t("roles.SUPER_ADMIN.name")}` : ""}
+        </p>
       </div>
       <div className="ms-auto flex items-center gap-2">
+        <span className="hidden md:inline-flex">
+          <LanguageDropdown />
+        </span>
+        <span className="hidden md:inline-flex">
+          <ThemeToggle />
+        </span>
         <Link
           to="/"
           className="inline-flex items-center gap-1 rounded-md px-2 py-1.5 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground"

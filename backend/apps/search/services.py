@@ -17,6 +17,7 @@ aware (any language field can match), and safe (parameterized queries).
 from django.db.models import Q
 
 from apps.articles.models import Article
+from apps.core.media import media_file_url
 from apps.core.models import Status
 from apps.page_builder.models import Page
 from apps.projects.models import Project
@@ -153,7 +154,7 @@ def score_result(full_q, terms, title_values, slug_value, excerpt_values, body_v
     return score
 
 
-def search_content(q, type_filter=None, category=None, locale="en"):
+def search_content(q, type_filter=None, category=None, locale="en", request=None):
     """Return relevance-ranked search hits across the requested types.
 
     Each hit is a fully-resolved dict ready for serialization: localized title
@@ -183,7 +184,7 @@ def search_content(q, type_filter=None, category=None, locale="en"):
             relevance = score_result(full_q, terms, title_values, slug_value, excerpt_values, body_values)
 
             cover = getattr(obj, "cover_image", None)
-            image = cover.file.url if cover else None
+            image = media_file_url(request, cover.file) if cover else None
 
             category_title = None
             category_slug = None

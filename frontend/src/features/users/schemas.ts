@@ -43,6 +43,7 @@ export function createUserFormSchema(t: SchemaTranslator = defaultT) {
       password: z.string().min(8, t("users.validation.passwordMin")),
       confirm_password: z.string().min(8, t("users.validation.passwordMin")),
       role: z.string().min(1, t("users.validation.roleRequired")),
+      preferred_language: z.enum(["fa", "en", "ar"]),
       is_active: z.boolean(),
       is_staff: z.boolean(),
     })
@@ -71,6 +72,7 @@ export function editUserFormSchema(t: SchemaTranslator = defaultT) {
       .optional()
       .or(z.literal("")),
     role: z.string().min(1, t("users.validation.roleRequired")),
+    preferred_language: z.enum(["fa", "en", "ar"]),
     is_active: z.boolean(),
     is_staff: z.boolean(),
   })

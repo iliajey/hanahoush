@@ -56,13 +56,24 @@ def _content_section() -> dict:
 
     review_states = [Status.DRAFT, Status.REVIEW]
     now = timezone.now()
+    published_articles = Article.objects.filter(
+        status=Status.PUBLISHED, is_public=True, is_deleted=False
+    )
+    published_projects = Project.objects.filter(
+        status=Status.PUBLISHED, is_public=True, is_deleted=False
+    )
     return {
-        "articles_published": Article.objects.filter(status=Status.PUBLISHED, is_public=True, is_deleted=False).count(),
+        "articles_published": published_articles.count(),
         "articles_drafts": Article.objects.filter(status__in=review_states, is_deleted=False).count(),
         "articles_awaiting_review": Article.objects.filter(status=Status.REVIEW, is_deleted=False).count(),
         "articles_scheduled": PublicationSchedule.objects.filter(status="scheduled", scheduled_for__gte=now).count(),
-        "projects_published": Project.objects.filter(status=Status.PUBLISHED, is_public=True, is_deleted=False).count(),
+        "articles_missing_fa": published_articles.filter(title_fa="").count(),
+        "articles_missing_ar": published_articles.filter(title_ar="").count(),
+        "projects_published": published_projects.count(),
         "projects_drafts": Project.objects.filter(status__in=review_states, is_deleted=False).count(),
+        "projects_awaiting_review": Project.objects.filter(status=Status.REVIEW, is_deleted=False).count(),
+        "projects_missing_fa": published_projects.filter(title_fa="").count(),
+        "projects_missing_ar": published_projects.filter(title_ar="").count(),
         "services": Service.objects.filter(status=Status.PUBLISHED, is_public=True, is_deleted=False).count(),
     }
 
@@ -103,8 +114,10 @@ def _operations_section() -> dict:
     from django.contrib.admin.models import LogEntry
 
     from apps.analytics.models import ContactRequest
+    from apps.articles.models import Article
     from apps.editorial.models import AuditEvent
     from apps.media_library.models import MediaFile
+    from apps.projects.models import Project
 
     return {
         "recent_contact_requests": list(
@@ -121,6 +134,16 @@ def _operations_section() -> dict:
             MediaFile.objects.filter(is_deleted=False)
             .order_by("-created_at")[:5]
             .values("id", "original_name", "mime_type", "size", "created_at")
+        ),
+        "recent_articles": list(
+            Article.objects.filter(is_deleted=False)
+            .order_by("-updated_at")[:5]
+            .values("id", "title_en", "slug", "status", "updated_at")
+        ),
+        "recent_projects": list(
+            Project.objects.filter(is_deleted=False)
+            .order_by("-updated_at")[:5]
+            .values("id", "title_en", "slug", "status", "updated_at")
         ),
         "recent_admin_actions": list(
             LogEntry.objects.select_related("user", "content_type")

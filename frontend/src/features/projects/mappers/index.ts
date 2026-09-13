@@ -1,4 +1,5 @@
 import type { MediaRef, Project, Technology } from "@/features/cms/types"
+import { resolveMediaUrl } from "@/shared/lib"
 
 import type { CaseStudyData, ProjectCaseStudy, ProjectImageRef, ProjectSummary } from "../types"
 
@@ -32,7 +33,7 @@ export function mapProjectSummary(project: Project | ProjectSummary): FeaturedPr
     slug: project.slug,
     title,
     description,
-    image: project.cover_image?.file,
+    image: resolveMediaUrl(project.cover_image?.file) ?? undefined,
     client: project.client,
     year,
     technologies: (project.technologies ?? []).map((tech) => tech.title_en || tech.slug),
@@ -47,7 +48,7 @@ export function mapTechnologyChips(technologies: Technology[]): string[] {
 
 export function mapGallery(images: ProjectImageRef[]): Array<{ src: string; alt: string; caption?: string }> {
   return images.map((image) => ({
-    src: image.image_url,
+    src: resolveMediaUrl(image.image_url) ?? image.image_url,
     alt: image.alt_text_en || image.alt_text_fa || image.alt_text_ar || "Project image",
     caption: image.alt_text_en || image.alt_text_fa || image.alt_text_ar,
   }))

@@ -6,6 +6,13 @@ from rest_framework import serializers
 
 from apps.articles.models import Article, Category, Tag
 from apps.articles.reading import reading_minutes
+from apps.core.media import media_file_url
+
+
+def _cover_ref(request, media):
+    if not media:
+        return None
+    return {"id": media.id, "file": media_file_url(request, media.file), "alt_text_en": media.alt_text_en}
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -84,9 +91,7 @@ class ArticleListSerializer(serializers.ModelSerializer):
         return None
 
     def get_cover_image(self, obj) -> dict | None:
-        if obj.cover_image:
-            return {"id": obj.cover_image.id, "file": obj.cover_image.file.url, "alt_text_en": obj.cover_image.alt_text_en}
-        return None
+        return _cover_ref(self.context.get("request"), obj.cover_image)
 
     def get_is_published(self, obj) -> bool:
 
@@ -132,14 +137,10 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
         return None
 
     def get_cover_image(self, obj) -> dict | None:
-        if obj.cover_image:
-            return {"id": obj.cover_image.id, "file": obj.cover_image.file.url, "alt_text_en": obj.cover_image.alt_text_en}
-        return None
+        return _cover_ref(self.context.get("request"), obj.cover_image)
 
     def get_og_image(self, obj) -> dict | None:
-        if obj.og_image:
-            return {"id": obj.og_image.id, "file": obj.og_image.file.url, "alt_text_en": obj.og_image.alt_text_en}
-        return None
+        return _cover_ref(self.context.get("request"), obj.og_image)
 
     def get_is_published(self, obj) -> bool:
 
@@ -212,9 +213,12 @@ class ArticleCreateUpdateSerializer(serializers.ModelSerializer):
     Excludes computed fields and read-only audit fields.
     """
 
+    id = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = Article
         fields = (
+            "id",
             "title_fa",
             "title_en",
             "title_ar",

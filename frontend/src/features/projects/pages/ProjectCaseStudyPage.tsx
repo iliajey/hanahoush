@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 import { Button } from "@/components/ui/button"
 import { ErrorState } from "@/components/ui/error-state"
 import { PageRenderer } from "@/features/page-builder"
+import { resolveMediaUrl } from "@/shared/lib"
 
 import { useProjectBySlug } from "../hooks"
 import { useProjectSeo } from "../services/seo"
@@ -46,7 +47,7 @@ export function ProjectCaseStudyPage() {
     title: project.title || project.title_en,
     description: project.short_description || project.description || "",
     canonical: typeof window !== "undefined" ? `${window.location.origin}/projects/${project.slug}` : undefined,
-    ogImage: project.cover_image?.file,
+    ogImage: resolveMediaUrl(project.cover_image?.file) ?? undefined,
   })
 
   return (

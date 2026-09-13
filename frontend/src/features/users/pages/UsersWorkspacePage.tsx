@@ -7,6 +7,7 @@
 import { useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { ArrowDown, ArrowUp, ChevronLeft, ChevronRight, Search, ShieldCheck, UserPlus } from "lucide-react"
+import { Link } from "react-router-dom"
 
 import { PageWrapper } from "@/app/layouts/PageWrapper"
 import { Badge } from "@/components/ui/badge"
@@ -16,12 +17,12 @@ import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EmptyState } from "@/components/ui/empty-state"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { toApiError } from "@/shared/api/axiosClient"
 
-import { useUser } from "@/features/auth/hooks/useUser"
 import { useActivateUser, useDeactivateUser, useRoleCatalog, useUsers } from "../hooks"
 import type { ManagedUser } from "../types"
-import { UserFormDialog } from "../components/UserFormDialog"
-import { RolePermissionsDialog, UserDetailDialog } from "../components/UserDetailDialog"
+import { RolePermissionsDialog } from "../components/UserDetailDialog"
+import { ConfirmActionDialog, type ConfirmActionKind } from "../components/ConfirmActionDialog"
 
 type ActiveFilter = "all" | "active" | "inactive"
 type StaffFilter = "all" | "staff" | "nonstaff"
@@ -30,7 +31,6 @@ type SortDir = "asc" | "desc"
 
 export function UsersWorkspacePage() {
   const { t } = useTranslation()
-  const { user: currentUser } = useUser()
 
   const [search, setSearch] = useState("")
   const [roleFilter, setRoleFilter] = useState<string>("all")
@@ -40,10 +40,8 @@ export function UsersWorkspacePage() {
   const [sortDir, setSortDir] = useState<SortDir>("asc")
   const [page, setPage] = useState(1)
 
-  const [formOpen, setFormOpen] = useState(false)
-  const [editing, setEditing] = useState<ManagedUser | null>(null)
-  const [detail, setDetail] = useState<ManagedUser | null>(null)
   const [rolesOpen, setRolesOpen] = useState(false)
+  const [confirm, setConfirm] = useState<{ kind: ConfirmActionKind; user: ManagedUser } | null>(null)
 
   const roles = useRoleCatalog()
   const activate = useActivateUser()
@@ -64,8 +62,20 @@ export function UsersWorkspacePage() {
 
   const { data, isLoading, isError } = useUsers(params)
 
-  const lifecycleError =
-    activate.isError || deactivate.isError ? t("users.messages.saveFailed") : null
+  const lifecycleError = (() => {
+    if (activate.isError) return toApiError(activate.error).message
+    if (deactivate.isError) return toApiError(deactivate.error).message
+    return null
+  })()
+
+  const runConfirmed = () => {
+    if (!confirm) return
+    if (confirm.kind === "activate") {
+      activate.mutate(confirm.user.id, { onSuccess: () => setConfirm(null) })
+    } else {
+      deactivate.mutate(confirm.user.id, { onSuccess: () => setConfirm(null) })
+    }
+  }
 
   const toggleSort = (field: SortField) => {
     if (sortField === field) {
@@ -125,7 +135,7 @@ export function UsersWorkspacePage() {
             setRoleFilter(value)
           }}
         >
-          <SelectTrigger className="w-44" aria-label={t("users.filters.role")}>
+          <SelectTrigger className="w-full sm:w-44" aria-label={t("users.filters.role")}>
             <SelectValue placeholder={t("users.filters.role")} />
           </SelectTrigger>
           <SelectContent>
@@ -145,7 +155,7 @@ export function UsersWorkspacePage() {
             setActiveFilter(value as ActiveFilter)
           }}
         >
-          <SelectTrigger className="w-40" aria-label={t("users.filters.status")}>
+          <SelectTrigger className="w-full sm:w-40" aria-label={t("users.filters.status")}>
             <SelectValue placeholder={t("users.filters.status")} />
           </SelectTrigger>
           <SelectContent>
@@ -162,7 +172,7 @@ export function UsersWorkspacePage() {
             setStaffFilter(value as StaffFilter)
           }}
         >
-          <SelectTrigger className="w-40" aria-label={t("users.filters.staff")}>
+          <SelectTrigger className="w-full sm:w-40" aria-label={t("users.filters.staff")}>
             <SelectValue placeholder={t("users.filters.staff")} />
           </SelectTrigger>
           <SelectContent>
@@ -177,14 +187,11 @@ export function UsersWorkspacePage() {
             <ShieldCheck className="h-4 w-4" aria-hidden="true" />
             {t("users.actions.viewRoles")}
           </Button>
-          <Button
-            onClick={() => {
-              setEditing(null)
-              setFormOpen(true)
-            }}
-          >
-            <UserPlus className="h-4 w-4" aria-hidden="true" />
-            {t("users.actions.create")}
+          <Button asChild>
+            <Link to="/dashboard/users/new">
+              <UserPlus className="h-4 w-4" aria-hidden="true" />
+              {t("users.actions.create")}
+            </Link>
           </Button>
         </div>
       </div>
@@ -265,7 +272,7 @@ export function UsersWorkspacePage() {
                               size="sm"
                               variant="ghost"
                               className="text-destructive hover:text-destructive"
-                              onClick={() => deactivate.mutate(user.id)}
+                              onClick={() => setConfirm({ kind: "deactivate", user })}
                               disabled={deactivate.isPending}
                             >
                               {t("users.actions.deactivate")}
@@ -274,28 +281,21 @@ export function UsersWorkspacePage() {
                             <Button
                               size="sm"
                               variant="ghost"
-                              onClick={() => activate.mutate(user.id)}
+                              onClick={() => setConfirm({ kind: "activate", user })}
                               disabled={activate.isPending}
                             >
                               {t("users.actions.activate")}
                             </Button>
                           ) : null}
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            onClick={() => {
-                              setEditing(user)
-                              setFormOpen(true)
-                            }}
-                          >
-                            {t("users.actions.edit")}
+                          <Button size="sm" variant="ghost" asChild>
+                            <Link to={`/dashboard/users/${user.id}/edit`}>
+                              {t("users.actions.edit")}
+                            </Link>
                           </Button>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            onClick={() => setDetail(user)}
-                          >
-                            {t("users.actions.detail")}
+                          <Button size="sm" variant="ghost" asChild>
+                            <Link to={`/dashboard/users/${user.id}`}>
+                              {t("users.actions.detail")}
+                            </Link>
                           </Button>
                         </div>
                       </td>
@@ -337,25 +337,22 @@ export function UsersWorkspacePage() {
         </nav>
       ) : null}
 
-      <UserFormDialog
-        open={formOpen}
-        onOpenChange={setFormOpen}
-        user={editing}
-        currentUserId={currentUser?.id}
-      />
-      <UserDetailDialog
-        open={detail != null}
-        onOpenChange={(open) => {
-          if (!open) setDetail(null)
-        }}
-        user={detail}
-        currentUserId={currentUser?.id}
-      />
       <RolePermissionsDialog
         open={rolesOpen}
         onOpenChange={setRolesOpen}
         roles={roles.data ?? []}
         isLoading={roles.isLoading}
+      />
+      <ConfirmActionDialog
+        open={confirm !== null}
+        onOpenChange={(open) => {
+          if (!open) setConfirm(null)
+        }}
+        kind={confirm?.kind ?? "activate"}
+        username={confirm?.user.username ?? ""}
+        pending={activate.isPending || deactivate.isPending}
+        error={confirm ? lifecycleError : null}
+        onConfirm={runConfirmed}
       />
     </PageWrapper>
   )

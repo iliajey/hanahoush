@@ -2,6 +2,7 @@
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
+from apps.core.media import absolute_media_url
 from apps.media_library.models import MediaFile
 
 
@@ -44,8 +45,14 @@ class MediaFileSerializer(serializers.ModelSerializer):
     @extend_schema_field({"type": "string", "nullable": True, "format": "uri"})
     def get_preview_url(self, obj):
         if obj.mime_type and obj.mime_type.startswith("image/"):
-            return obj.file.url
+            return absolute_media_url(self.context.get("request"), self._file_url(obj))
         return None
+
+    def _file_url(self, obj):
+        try:
+            return obj.file.url
+        except Exception:  # noqa: BLE001
+            return None
 
     @extend_schema_field({"type": "integer"})
     def get_reference_count(self, obj):

@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next"
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useUser } from "@/features/auth/hooks/useUser"
 import { UserAvatar } from "@/features/auth/components/UserAvatar"
@@ -13,7 +14,16 @@ import { PermissionViewer } from "../components/PermissionViewer"
 
 export function ProfilePage() {
   const { t } = useTranslation()
-  const { user } = useUser()
+  const { user, status } = useUser()
+
+  if (status === "loading") {
+    return (
+      <div className="flex flex-col gap-6" role="status" aria-live="polite">
+        <Skeleton className="h-16 w-64" />
+        <Skeleton className="h-64" />
+      </div>
+    )
+  }
 
   if (!user) return null
 

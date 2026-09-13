@@ -5,6 +5,8 @@
  */
 import type { RoleBrief } from "@/features/auth/types"
 
+export type PreferredLanguage = "fa" | "en" | "ar"
+
 export interface ManagedUser {
   id: number
   username: string
@@ -12,6 +14,7 @@ export interface ManagedUser {
   last_name: string
   email: string
   phone: string
+  preferred_language: PreferredLanguage
   role: RoleBrief | null
   permissions: string[]
   is_active: boolean
@@ -47,6 +50,7 @@ export interface CreateUserPayload {
   last_name?: string
   email: string
   phone?: string
+  preferred_language?: PreferredLanguage
   password: string
   confirm_password: string
   role?: string | null
@@ -62,6 +66,7 @@ export interface UpdateUserPayload {
   last_name?: string
   email?: string
   phone?: string
+  preferred_language?: PreferredLanguage
   role?: string | null
   is_active?: boolean
   is_staff?: boolean

@@ -6,6 +6,7 @@ import {
   hasPermission,
   hasRole,
   isStaffUser,
+  isSuperAdminUser,
 } from "../permissions"
 import { canUseCapability, grantedCapabilities, CAPABILITIES } from "../role-config"
 import type { CapabilityKey } from "../role-config"
@@ -31,6 +32,7 @@ export function useAuthorization() {
       hasAnyPermission: (permissions: readonly Parameters<typeof hasAnyPermission>[1][number][]) =>
         hasAnyPermission(user, permissions),
       isStaff: isStaffUser(user),
+      isSuperAdmin: isSuperAdminUser(user),
       /** Capability-based check (see role-config/capabilities). */
       can: (capability: CapabilityKey) => canUseCapability(user, capability),
       capabilities: grantedCapabilities(user),

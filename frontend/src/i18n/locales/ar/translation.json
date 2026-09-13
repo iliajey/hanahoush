@@ -4,6 +4,7 @@
     "tagline": "منصة مؤسسية",
     "toggleTheme": "تبديل المظهر",
     "toggleLanguage": "تبديل اللغة",
+    "languageLabel": "اللغة",
     "announcement": "إعلان",
     "readMore": "اقرأ المزيد",
     "dismissAnnouncement": "إغلاق الإعلان",
@@ -411,6 +412,28 @@
     "role": "الدور",
     "session": "الجلسة",
     "sessionActive": "نشطة",
+    "viewAll": "عرض الكل",
+    "manageUsers": "إدارة المستخدمين",
+    "attention": {
+      "title": "يحتاج إلى انتباه",
+      "description": "مسودات ومراجعات وطلبات بانتظار إنسان.",
+      "drafts": "مسودات المقالات",
+      "awaitingReview": "بانتظار المراجعة",
+      "pendingApprovals": "موافقات معلقة",
+      "activeLocks": "أقفال المحتوى النشطة",
+      "openInquiries": "استفسارات مفتوحة",
+      "projectsAwaitingReview": "المشاريع بانتظار المراجعة"
+    },
+    "actions": {
+      "title": "إجراءات سريعة",
+      "description": "ابدأ مهام مساحة العمل الأكثر شيوعًا.",
+      "newArticle": "مقالة جديدة",
+      "newProject": "مشروع جديد",
+      "uploadMedia": "رفع وسائط",
+      "reviewQueue": "قائمة المراجعة",
+      "inquiries": "الاستفسارات",
+      "subscribers": "المشتركون"
+    },
     "quickLinksTitle": "اختصارات مساحة العمل",
     "quickLinksDescription": "انتقل إلى أي قسم متاح في مساحة العمل.",
     "errorTitle": "لوحة المعلومات غير متاحة",
@@ -469,10 +492,17 @@
       },
       "operations": {
         "title": "العمليات",
+        "emptyDescription": "لا توجد تحميلات أو استفسارات أو أحداث تحريرية أخيرة بعد.",
         "description": "النشاط الأخير عبر المنصة.",
         "media": "آخر عمليات الرفع",
         "contact": "آخر الاستفسارات",
         "editorial": "آخر النشاط التحريري"
+      },
+      "recent": {
+        "title": "حُدّث مؤخراً",
+        "description": "عُد إلى المحتوى الذي لمسته أخيراً.",
+        "articles": "المقالات",
+        "projects": "المشاريع"
       },
       "system": {
         "title": "النظام",
@@ -516,32 +546,42 @@
         "title": "مساحة التحرير",
         "description": "مراجعة المحتوى والموافقة عليه ونشره."
       }
+    },
+    "translationGaps": {
+      "title": "فجوات الترجمة",
+      "description": "محتوى منشور يفتقد لغة."
     }
   },
   "roles": {
     "SUPER_ADMIN": {
       "name": "مدير عام",
-      "description": "وصول كامل للمنصة بما في ذلك إدارة المستخدمين والأدوار."
+      "description": "وصول كامل للمنصة بما في ذلك إدارة المستخدمين والأدوار.",
+      "responsibilities": "يملك الحسابات والأدوار وكل المحتوى والمشاريع والوسائط والاعتمادات التحريرية وعمليات النظام."
     },
     "COMPANY_ADMIN": {
       "name": "مدير الشركة",
-      "description": "يدير كل محتوى الشركة والوسائط والمستخدمين."
+      "description": "يدير كل محتوى الشركة والوسائط والمستخدمين.",
+      "responsibilities": "يدير العمليات اليومية: المقالات والمشاريع والخدمات وصفحات الشركة والمكتبة وحسابات المستخدمين."
     },
     "CONTENT_MANAGER": {
       "name": "مدير المحتوى",
-      "description": "ينشئ ويدير المقالات والخدمات ومحتوى الشركة."
+      "description": "ينشئ ويدير المقالات والخدمات ومحتوى الشركة.",
+      "responsibilities": "يؤلف المقالات والخدمات ومحتوى الشركة ويرفع الوسائط ويقود مسار العمل التحريري."
     },
     "PROJECT_MANAGER": {
       "name": "مدير المشاريع",
-      "description": "يدير مشاريع المحفظة."
+      "description": "يدير مشاريع المحفظة.",
+      "responsibilities": "يملك محفظة المشاريع: البيانات ودراسات الحالة والغلاف والمعرض ومسار النشر."
     },
     "EDITOR": {
       "name": "محرر",
-      "description": "يكتب ويحرر المقالات."
+      "description": "يكتب ويحرر المقالات.",
+      "responsibilities": "يكتب المحتوى ويصقله ويرفع الوسائط الداعمة ويشارك في المراجعات التحريرية."
     },
     "VIEWER": {
       "name": "مشاهد",
-      "description": "وصول للقراءة فقط إلى المحتوى العام."
+      "description": "وصول للقراءة فقط إلى المحتوى العام.",
+      "responsibilities": "يقرأ المحتوى المنشور ويتابع التقدم التحريري. لا يمكنه الإنشاء أو التحرير أو النشر."
     },
     "custom": {
       "name": "دور مخصص",
@@ -614,6 +654,38 @@
     },
     "edit": "تعديل المقالة",
     "view": "فتح المقالة العامة",
+    "previewLink": "معاينة",
+    "retry": "حاول مجددًا",
+    "clearFilters": "مسح عوامل التصفية",
+    "activeFilters": "عوامل التصفية النشطة",
+    "filters": {
+      "author": "الكاتب",
+      "category": "الفئة",
+      "language": "اللغة",
+      "featured": "مميز",
+      "languageAll": "كل اللغات",
+      "languageFa": "فارسي",
+      "languageEn": "إنجليزي",
+      "languageAr": "عربي",
+      "featuredAll": "الكل",
+      "featuredOnly": "المميز فقط",
+      "featuredExclude": "غير المميز",
+      "categoryAll": "كل الفئات",
+      "authorPlaceholder": "اسم المستخدم أو معرّف الكاتب…"
+    },
+    "sort": {
+      "label": "ترتيب",
+      "updatedDesc": "الأحدث تحديثًا",
+      "createdDesc": "الأحدث إنشاءً",
+      "publishedDesc": "الأحدث نشرًا",
+      "titleAsc": "العنوان أ–ي"
+    },
+    "paginationLabel": "ترقيم قائمة المقالات",
+    "previous": "السابق",
+    "next": "التالي",
+    "pageOf": "الصفحة {{current}} من {{total}}",
+    "totalCount_one": "{{count}} مقالة",
+    "totalCount_other": "{{count}} مقالة",
     "form": {
       "createTitle": "مقالة جديدة",
       "editTitle": "تعديل المقالة",
@@ -633,11 +705,87 @@
       "isPublic": "عام"
     }
   },
+  "articleEditor": {
+    "category": "الفئة",
+    "categoryPlaceholder": "اختر فئة",
+    "noCategory": "بلا فئة",
+    "coverTitle": "صورة الغلاف",
+    "chooseCover": "اختيار الغلاف",
+    "noCover": "لم تُختر صورة غلاف. اختر واحدة من مكتبة الوسائط.",
+    "removeCover": "إزالة الغلاف",
+    "insertImage": "إدراج صورة",
+    "mediaTitle": "إدراج من مكتبة الوسائط",
+    "excerptEn": "مقتطف (إنجليزي)",
+    "excerptFa": "مقتطف (فارسي)",
+    "excerptAr": "مقتطف (عربي)",
+    "metaTitle": "عنوان ميتا (SEO)",
+    "metaDescription": "وصف ميتا (SEO)",
+    "statusHint": "النشر يتم عبر مسار العمل التحريري؛ تغيير الحالة يحفظ البيانات فقط.",
+    "saveFailed": "تعذّر حفظ المقالة.",
+    "loadFailed": "تعذّر تحميل المقالة.",
+    "savedAt": "حُفظ {{time}}",
+    "unsavedChanges": "تغييرات غير محفوظة",
+    "preview": "معاينة",
+    "previewHint": "معاينة المسودة تعكس تخطيط المقالة العامة.",
+    "linkPrompt": "رابط URL ‏(https://…)",
+    "undo": "تراجع",
+    "redo": "إعادة",
+    "h1": "عنوان 1",
+    "h2": "عنوان 2",
+    "h3": "عنوان 3",
+    "paragraph": "فقرة",
+    "bold": "عريض",
+    "italic": "مائل",
+    "underline": "تحته خط",
+    "strikethrough": "يتوسطه خط",
+    "inlineCode": "رمز مضمّن",
+    "bulletList": "قائمة نقطية",
+    "orderedList": "قائمة مرقمة",
+    "indent": "زيادة المسافة",
+    "outdent": "تقليل المسافة",
+    "quote": "اقتباس",
+    "link": "إدراج رابط",
+    "removeLink": "إزالة الرابط",
+    "alignLeft": "محاذاة لليسار",
+    "alignCenter": "توسيط",
+    "alignRight": "محاذاة لليمين",
+    "image": "إدراج صورة من المكتبة",
+    "table": "إدراج جدول",
+    "codeBlock": "إدراج كتلة رمز",
+    "horizontalRule": "إدراج فاصل",
+    "wordCount": "{{count}} كلمة",
+    "charCount": "{{count}} حرف",
+    "readingTime": "{{count}} دقيقة قراءة",
+    "autosafeHint": "حفظ تلقائي كل 30 ثانية",
+    "healthTitle": "صحة المحتوى",
+    "totalWords": "إجمالي الكلمات",
+    "headings": "العناوين",
+    "bodyImages": "صور المتن",
+    "healthNoCover": "لم تُختر صورة غلاف بعد.",
+    "healthNoHeadings": "لا توجد عناوين — أضف بنية H2/H3.",
+    "healthThin": "محتوى ضعيف في: {{locales}} (أقل من 50 كلمة).",
+    "healthGood": "المحتوى يبدو سليماً في كل اللغات."
+  },
+  "articlePreview": {
+    "title": "معاينة المقالة",
+    "subtitle": "هكذا تُقرأ المسودة المحفوظة على الموقع العام. معاينة فقط — لا شيء يُنشر.",
+    "localeLabel": "لغة المعاينة",
+    "draftBadge": "معاينة مسودة",
+    "featured": "مميز",
+    "emptyBody": "لا يوجد نص محفوظ لهذه اللغة بعد.",
+    "notFound": "المقالة غير موجودة",
+    "notFoundDescription": "المقالة المطلوبة غير موجودة.",
+    "errorTitle": "تعذّر تحميل المعاينة",
+    "errorDescription": "حدث خطأ أثناء جلب المقالة.",
+    "backToList": "عودة إلى المقالات"
+  },
   "projectWorkspace": {
     "title": "المشاريع",
     "subtitle": "إدارة مشاريع المحفظة ودراسات الحالة.",
     "searchPlaceholder": "ابحث في المشاريع…",
     "newProject": "مشروع جديد",
+    "totalCount_one": "{{count}} مشروع",
+    "totalCount_other": "{{count}} مشروع",
     "statusAll": "الكل",
     "statusDraft": "مسودة",
     "statusReview": "قيد المراجعة",
@@ -656,12 +804,49 @@
     },
     "edit": "تعديل المشروع",
     "openCaseStudy": "فتح دراسة الحالة",
+    "saveFailed": "تعذّر حفظ المشروع.",
+    "loadFailed": "تعذّر تحميل المشروع.",
+    "savedAt": "حُفظ {{time}}",
+    "unsavedChanges": "تغييرات غير محفوظة",
+    "preview": "معاينة",
+    "submitForReview": "إرسال للمراجعة",
+    "submitComment": "أُرسل المشروع للمراجعة من استوديو المشاريع.",
+    "wordCount": "{{count}} كلمة",
+    "lastUpdated": "حُدّث {{time}}",
+    "insertImage": "إدراج صورة",
+    "excerptEn": "الملخص (إنجليزي)",
+    "excerptFa": "الملخص (فارسي)",
+    "excerptAr": "الملخص (عربي)",
+    "coverTitle": "صورة الغلاف",
+    "chooseCover": "اختيار الغلاف",
+    "noCover": "لم تُختر صورة غلاف بعد.",
+    "removeCover": "إزالة الغلاف",
+    "mediaTitle": "اختيار من مكتبة الوسائط",
+    "metaTitle": "عنوان ميتا (SEO)",
+    "metaDescription": "وصف ميتا (SEO)",
+    "statusHint": "النشر يتم عبر مسار العمل التحريري.",
+    "categoryPlaceholder": "اختر فئة",
+    "noCategory": "بلا فئة",
+    "noTechnologies": "لا توجد تقنيات بعد.",
+    "createDraft": "إنشاء مسودة",
+    "gallery": {
+      "title": "المعرض",
+      "add": "إضافة صورة",
+      "empty": "لا توجد صور بعد.",
+      "saveFirst": "احفظ المشروع أولاً ثم أضف الصور.",
+      "coverBadge": "غلاف",
+      "moveLeft": "نقل للأمام",
+      "moveRight": "نقل للخلف",
+      "toggleCover": "تبديل الغلاف",
+      "remove": "إزالة الصورة"
+    },
     "form": {
       "createTitle": "مشروع جديد",
       "editTitle": "تعديل المشروع",
       "subtitle": "احفظ بيانات المشروع هنا؛ النشر يتم عبر مسار العمل التحريري.",
       "identity": "الهوية",
       "content": "المحتوى",
+      "details": "التفاصيل",
       "publishing": "النشر",
       "titleEn": "العنوان (إنجليزي)",
       "titleFa": "العنوان (فارسي)",
@@ -676,9 +861,28 @@
       "descriptionFa": "الوصف (فارسي)",
       "descriptionAr": "الوصف (عربي)",
       "status": "الحالة",
+      "category": "الفئة",
+      "technologies": "التقنيات",
       "isFeatured": "مميز",
       "isPublic": "عام"
     }
+  },
+  "projectPreview": {
+    "title": "معاينة المشروع",
+    "subtitle": "هكذا يظهر المشروع المحفوظ على الموقع العام. معاينة فقط — لا شيء يُنشر.",
+    "localeLabel": "لغة المعاينة",
+    "draftBadge": "معاينة مسودة",
+    "featured": "مميز",
+    "emptyBody": "لا يوجد وصف محفوظ لهذه اللغة بعد.",
+    "notFound": "المشروع غير موجود",
+    "notFoundDescription": "المشروع المطلوب غير موجود.",
+    "errorTitle": "تعذّر تحميل المعاينة",
+    "errorDescription": "حدث خطأ أثناء جلب المشروع.",
+    "backToList": "عودة إلى المشاريع",
+    "client": "العميل",
+    "location": "الموقع",
+    "liveUrl": "الموقع المباشر",
+    "gallery": "المعرض"
   },
   "mediaWorkspace": {
     "title": "مكتبة الوسائط",
@@ -709,11 +913,48 @@
     "uploadFailed": "فشل الرفع",
     "metadataSaved": "تم حفظ البيانات الوصفية",
     "deleted": "تم حذف الوسائط",
+    "copyUrl": "نسخ رابط الملف",
+    "missingAlt": "بلا نص بديل",
+    "fileTooLarge": "الملفات الأكبر من 25 م.ب. غير مقبولة.",
+    "referencedWarning": "مُستخدم في {{count}} موضع — تبقى الروابط صالحة بعد الحذف الناعم.",
+    "errorTitle": "تعذّر تحميل الوسائط",
+    "errorDescription": "حدث خطأ أثناء جلب مكتبة الوسائط.",
+    "sortLabel": "ترتيب الوسائط",
+    "sortNewest": "الأحدث أولًا",
+    "sortOldest": "الأقدم أولًا",
+    "sortLargest": "الأكبر أولًا",
+    "sortName": "الاسم أ–ي",
+    "viewGrid": "عرض شبكي",
+    "viewList": "عرض قائمة",
+    "previewTitle": "معاينة الوسائط",
+    "imageLoadFailed": "المعاينة غير متاحة.",
+    "retry": "إعادة المحاولة",
+    "totalCount_one": "{{count}} ملف",
+    "totalCount_other": "{{count}} ملف",
     "form": {
       "title": "العنوان",
       "titleFa": "العنوان (فارسي)",
       "alt": "النص البديل (إنجليزي)",
+      "altFa": "النص البديل (فارسي)",
+      "caption": "التسمية (إنجليزي)",
+      "captionFa": "التسمية (فارسي)",
       "isPublic": "عام"
+    },
+    "pickerDescription": "تصفح الوسائط وحمّلها واخترها للمحتوى.",
+    "pickerDropHint": "أفلت صورة هنا أو انقر للتصفح",
+    "pickerEmptyQuery": "لا توجد وسائط لـ «{{query}}».",
+    "pickerPrev": "السابق",
+    "pickerNext": "التالي",
+    "pickerUse": "استخدام هذه الصورة",
+    "pickerMeta": {
+      "titleEn": "العنوان (الإنجليزية)",
+      "titleFa": "العنوان (الفارسية)",
+      "titleAr": "العنوان (العربية)",
+      "altEn": "النص البديل (الإنجليزية)",
+      "altFa": "النص البديل (الفارسية)",
+      "altAr": "النص البديل (العربية)",
+      "captionEn": "التسمية التوضيحية (الإنجليزية)",
+      "captionAr": "التسمية التوضيحية (العربية)"
     }
   },
   "contactWorkspace": {
@@ -878,6 +1119,7 @@
       "activeHint": "الحسابات غير النشطة لا يمكنها تسجيل الدخول.",
       "staff": "حالة الطاقم",
       "staffHint": "حسابات الطاقم يمكنها دخول مساحة العمل.",
+      "language": "اللغة المفضلة",
       "lastLogin": "آخر دخول",
       "dateJoined": "تاريخ الانضمام"
     },
@@ -889,7 +1131,31 @@
       "deactivate": "تعطيل",
       "setPassword": "تعيين كلمة المرور",
       "savePassword": "حفظ كلمة المرور",
-      "viewRoles": "الأدوار والصلاحيات"
+      "viewRoles": "الأدوار والصلاحيات",
+      "backToUsers": "العودة إلى المستخدمين"
+    },
+    "confirm": {
+      "activateTitle": "تنشيط هذا الحساب؟",
+      "activateBody": "سيتمكن {{username}} من تسجيل الدخول مجددًا.",
+      "deactivateTitle": "تعطيل هذا الحساب؟",
+      "deactivateBody": "سيتم تسجيل خروج {{username}} في كل مكان ولن يتمكن من الدخول.",
+      "setPasswordTitle": "تعيين كلمة مرور جديدة؟",
+      "setPasswordBody": "لا تُعرض كلمة المرور الحالية أبدًا. سيتم تسجيل خروج {{username}} في كل مكان."
+    },
+    "detail": {
+      "title": "تفاصيل المستخدم",
+      "notFoundTitle": "المستخدم غير موجود",
+      "notFoundDescription": "ربما تمت إزالة هذا الحساب أو الرابط غير صحيح."
+    },
+    "roleSelect": {
+      "permissionCount_one": "{{count}} صلاحية",
+      "permissionCount_other": "{{count}} صلاحيات"
+    },
+    "roleSummary": {
+      "selectRole": "اختر دورًا لترى بالضبط ما يمنحه.",
+      "superAdminWarning": "يمنح SUPER_ADMIN كل الصلاحيات بما فيها إدارة المستخدمين. أَسنده بحذر — الواجهة الخلفية تمنع إزالة آخر حامل.",
+      "roleAuthoritative": "الأدوار هي المرجع: يحصل الحساب على صلاحيات هذا الدور بالضبط من الواجهة الخلفية.",
+      "restrictions": "غير مشمول لهذا الدور"
     },
     "dialog": {
       "createTitle": "إنشاء مستخدم",
@@ -939,6 +1205,67 @@
       "passwordMin": "يجب أن تكون كلمة المرور ٨ أحرف على الأقل",
       "passwordMismatch": "كلمتا المرور غير متطابقتين",
       "roleRequired": "اختر دورًا"
+    }
+  },
+  "studio": {
+    "common": {
+      "editingLanguage": "لغة التحرير"
+    },
+    "health": {
+      "title": "صحة المحتوى",
+      "critical": "{{count}} حرجة",
+      "warning": "{{count}} تحذيرات",
+      "good": "سليم",
+      "allGood": "يبدو المحتوى سليمًا بجميع اللغات.",
+      "missingTitle": "عنوان {{locale}} مفقود",
+      "missingSlug": "المعرف مفقود",
+      "missingSummary": "ملخص {{locale}} مفقود",
+      "missingCover": "لم تختر صورة الغلاف بعد.",
+      "thinBody": "نص {{locale}} قصير (أقل من 50 كلمة)",
+      "missingProjectMeta": "العميل والموقع فارغان",
+      "emptyCaseStudy": "دراسة الحالة فارغة",
+      "emptyCaseSection": "قسم {{section}} فارغ",
+      "hiddenSection": "قسم مخفي: {{section}}",
+      "emptyGallery": "لا توجد صور في المعرض بعد",
+      "galleryMissingAlt": "بعض صور المعرض تفتقد النص البديل",
+      "stages": "المراحل",
+      "nodes": "عقد البنية"
+    },
+    "caseStudy": {
+      "title": "دراسة الحالة",
+      "challenge": "التحدي",
+      "challengeBody": "التحدي",
+      "objectives": "الأهداف",
+      "objectivesBody": "الأهداف",
+      "solution": "الحل",
+      "solutionBody": "منهج الحل",
+      "results": "النتائج",
+      "resultsBody": "النتائج والأثر",
+      "stages": "مراحل التنفيذ",
+      "stagesEmpty": "لا توجد مراحل بعد.",
+      "addStage": "إضافة مرحلة",
+      "stageN": "المرحلة {{count}}",
+      "stageTitle": "عنوان المرحلة",
+      "stageDetail": "تفاصيل المرحلة",
+      "architecture": "البنية",
+      "archDescription": "وصف البنية",
+      "nodesEmpty": "لا توجد عقد بنية بعد.",
+      "addNode": "إضافة عقدة",
+      "nodeN": "العقدة {{count}}",
+      "nodeLayer": "اسم الطبقة",
+      "nodeLabels": "التسميات (واحدة في كل سطر)",
+      "nodeLabelsHint": "Django\nPostgreSQL\nRedis",
+      "toggleVisibility": "تبديل ظهور القسم",
+      "moveUp": "نقل لأعلى",
+      "moveDown": "نقل لأسفل",
+      "duplicate": "تكرار",
+      "remove": "إزالة"
+    },
+    "article": {
+      "tags": "الوسوم",
+      "tagsPlaceholder": "إضافة وسم...",
+      "noTags": "لم تختر وسوم.",
+      "removeTag": "إزالة الوسم"
     }
   }
 }

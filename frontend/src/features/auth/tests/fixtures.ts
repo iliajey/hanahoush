@@ -21,6 +21,7 @@ function user(
   codename: string,
   permissions: string[],
   is_staff: boolean,
+  is_superuser = false,
 ): UserProfile {
   return {
     id: roleId * 10,
@@ -32,6 +33,7 @@ function user(
     preferred_language: "en",
     is_active: true,
     is_staff,
+    is_superuser,
     role: role(roleId, roleName, codename),
     permissions,
     date_joined: new Date().toISOString(),
@@ -48,7 +50,7 @@ export const ROLES = {
 } as const
 
 export const roleUsers: Record<(typeof ROLES)[keyof typeof ROLES], UserProfile> = {
-  SUPER_ADMIN: user("superadmin", 1, "Super Admin", ROLES.SUPER_ADMIN, [...ALL_PERMISSIONS], true),
+  SUPER_ADMIN: user("superadmin", 1, "Super Admin", ROLES.SUPER_ADMIN, [...ALL_PERMISSIONS], true, true),
   COMPANY_ADMIN: user("companyadmin", 2, "Company Admin", ROLES.COMPANY_ADMIN, [
     PERMISSIONS.ARTICLES_VIEW,
     PERMISSIONS.ARTICLES_CREATE,
@@ -137,6 +139,7 @@ export const superuserAdmin: UserProfile = {
   preferred_language: "en",
   is_active: true,
   is_staff: true,
+  is_superuser: true,
   role: null,
   permissions: [...ALL_PERMISSIONS],
   date_joined: new Date().toISOString(),

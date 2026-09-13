@@ -222,6 +222,133 @@ class AdminUserUpdateTests(AdminUserTestCase):
         self.assertEqual(login.status_code, status.HTTP_200_OK)
 
 
+class PreferredLanguageTests(AdminUserTestCase):
+    def test_read_includes_preferred_language(self):
+        response = self.client.get(
+            f"{LIST_URL}{self.viewer.pk}/", **self.auth("superadmin")
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("preferred_language", response.json()["data"])
+
+    def test_update_preferred_language(self):
+        response = self.client.patch(
+            f"{LIST_URL}{self.viewer.pk}/",
+            data={"preferred_language": "ar"},
+            format="json",
+            **self.auth("superadmin"),
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json()["data"]["preferred_language"], "ar")
+
+    def test_update_rejects_invalid_language(self):
+        response = self.client.patch(
+            f"{LIST_URL}{self.viewer.pk}/",
+            data={"preferred_language": "xx"},
+            format="json",
+            **self.auth("superadmin"),
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class AdminActionAuditTests(AdminUserTestCase):
+    def test_update_writes_login_audit_row(self):
+        from apps.accounts.models import LoginAudit
+
+        response = self.client.patch(
+            f"{LIST_URL}{self.viewer.pk}/",
+            data={"first_name": "Audited"},
+            format="json",
+            **self.auth("superadmin"),
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(
+            LoginAudit.objects.filter(
+                username="viewer", detail__startswith="admin_user_updated:"
+            ).exists()
+        )
+
+    def test_role_change_audit_detail_names_roles(self):
+        from apps.accounts.models import LoginAudit
+
+        response = self.client.patch(
+            f"{LIST_URL}{self.viewer.pk}/",
+            data={"role": "EDITOR"},
+            format="json",
+            **self.auth("superadmin"),
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        row = LoginAudit.objects.filter(
+            username="viewer", detail__contains="role_changed:"
+        ).first()
+        self.assertIsNotNone(row)
+        self.assertIn("VIEWER", row.detail)
+        self.assertIn("EDITOR", row.detail)
+
+    def test_activate_and_deactivate_write_audit_rows(self):
+        from apps.accounts.models import LoginAudit
+
+        self.client.post(
+            f"{LIST_URL}{self.viewer.pk}/deactivate/",
+            format="json",
+            **self.auth("superadmin"),
+        )
+        self.assertTrue(
+            LoginAudit.objects.filter(
+                username="viewer", detail="admin_user_updated:deactivated"
+            ).exists()
+        )
+        self.client.post(
+            f"{LIST_URL}{self.viewer.pk}/activate/",
+            format="json",
+            **self.auth("superadmin"),
+        )
+        self.assertTrue(
+            LoginAudit.objects.filter(
+                username="viewer", detail="admin_user_updated:activated"
+            ).exists()
+        )
+
+    def test_audit_rows_never_contain_secrets(self):
+        from apps.accounts.models import LoginAudit
+
+        self.client.patch(
+            f"{LIST_URL}{self.viewer.pk}/",
+            data={"first_name": "Audited"},
+            format="json",
+            **self.auth("superadmin"),
+        )
+        for row in LoginAudit.objects.filter(username="viewer"):
+            self.assertNotIn("password", row.detail.lower())
+            self.assertNotIn("token", row.detail.lower())
+
+
+class LastAdminProtectionTests(AdminUserTestCase):
+    def test_cannot_demote_last_super_admin_holder(self):
+        # ``super_admin`` is the only SUPER_ADMIN-role holder in fixtures;
+        # ``root`` (superuser without the role) acts as the second admin.
+        headers = self.auth("root")
+        response = self.client.patch(
+            f"{LIST_URL}{self.super_admin.pk}/",
+            data={"role": "VIEWER"},
+            format="json",
+            **headers,
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.super_admin.refresh_from_db()
+        self.assertEqual(self.super_admin.role.codename, "SUPER_ADMIN")
+
+    def test_cannot_deactivate_last_super_admin_holder(self):
+        headers = self.auth("root")
+        response = self.client.post(
+            f"{LIST_URL}{self.super_admin.pk}/deactivate/",
+            format="json",
+            **headers,
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.super_admin.refresh_from_db()
+        self.assertTrue(self.super_admin.is_active)
+
+
 class AdminUserActivationTests(AdminUserTestCase):
     def test_deactivate_blocks_login_then_reactivate(self):
         response = self.client.post(

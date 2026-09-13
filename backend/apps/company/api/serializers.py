@@ -9,6 +9,7 @@ the request language via ``Accept-Language``.
 """
 from rest_framework import serializers
 
+from apps.core.media import media_file_url
 from apps.company.models import (
     FAQ,
     AboutPage,
@@ -47,18 +48,22 @@ class LocalizedSerializerMixin:
         return data
 
 
-def media_ref(obj, field_name="cover_image"):
+def media_ref(obj, field_name="cover_image", request=None):
     """Serialize a MediaFile FK into a compact dict (or None)."""
     media = getattr(obj, field_name, None)
     if media is None:
         return None
     return {
         "id": media.id,
-        "file": media.file.url,
+        "file": media_file_url(request, media.file),
         "alt_text_fa": media.alt_text_fa,
         "alt_text_en": media.alt_text_en,
         "alt_text_ar": media.alt_text_ar,
     }
+
+
+def _req(serializer):
+    return serializer.context.get("request") if hasattr(serializer, "context") else None
 
 
 # ---------------------------------------------------------------------------
@@ -106,7 +111,7 @@ class AboutPageSerializer(PublishableSerializerMixin, serializers.ModelSerialize
         )
 
     def get_hero_image(self, obj):
-        return media_ref(obj, "hero_image")
+        return media_ref(obj, "hero_image", _req(self))
 
     def get_is_published(self, obj) -> bool:
         return obj.status == "published" and obj.is_public
@@ -139,7 +144,7 @@ class TeamMemberSerializer(LocalizedSerializerMixin, serializers.ModelSerializer
         )
 
     def get_avatar(self, obj):
-        return media_ref(obj, "avatar")
+        return media_ref(obj, "avatar", _req(self))
 
 
 # ---------------------------------------------------------------------------
@@ -168,7 +173,7 @@ class PartnerSerializer(LocalizedSerializerMixin, serializers.ModelSerializer):
         )
 
     def get_logo(self, obj):
-        return media_ref(obj, "logo")
+        return media_ref(obj, "logo", _req(self))
 
 
 class TestimonialSerializer(LocalizedSerializerMixin, serializers.ModelSerializer):
@@ -197,7 +202,7 @@ class TestimonialSerializer(LocalizedSerializerMixin, serializers.ModelSerialize
         )
 
     def get_avatar(self, obj):
-        return media_ref(obj, "avatar")
+        return media_ref(obj, "avatar", _req(self))
 
 
 class FAQSerializer(LocalizedSerializerMixin, serializers.ModelSerializer):
@@ -320,8 +325,8 @@ class SiteSettingsSerializer(LocalizedSerializerMixin, serializers.ModelSerializ
         read_only_fields = fields
 
     def get_logo(self, obj):
-        return media_ref(obj, "logo")
+        return media_ref(obj, "logo", _req(self))
 
     def get_favicon(self, obj):
-        return media_ref(obj, "favicon")
+        return media_ref(obj, "favicon", _req(self))
 

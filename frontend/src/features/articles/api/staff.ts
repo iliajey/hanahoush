@@ -37,6 +37,7 @@ export interface StaffArticleDetail extends StaffArticle {
   meta_title: string
   meta_description: string
   meta_keywords: string
+  cover_image: { id: number; file: string; alt_text_en: string } | null
 }
 
 export interface StaffArticleListParams {
@@ -44,6 +45,8 @@ export interface StaffArticleListParams {
   pageSize?: number
   q?: string
   status?: ArticleStatus
+  /** Category id filter (maps to the backend `category` NumberFilter). */
+  category?: number
   ordering?: string
   is_featured?: boolean
 }
@@ -60,6 +63,7 @@ export interface StaffArticlePayload {
   description_en?: string
   description_ar?: string
   category?: number | null
+  tags?: number[]
   cover_image?: number | null
   status?: ArticleStatus
   is_featured?: boolean
@@ -82,6 +86,7 @@ export async function listStaffArticles(params: StaffArticleListParams = {}): Pr
   if (params.page != null) query.page = params.page
   if (params.q) query.q = params.q
   if (params.status) query.status = params.status
+  if (params.category != null) query.category = params.category
   if (params.ordering) query.ordering = params.ordering
   if (params.is_featured != null) query.is_featured = String(params.is_featured)
 

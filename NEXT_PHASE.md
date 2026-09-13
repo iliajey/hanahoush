@@ -61,8 +61,21 @@ against both the dev server and the production build.
 | 9G | Frontend RBAC + staff workspace + role-based dashboard | ✅ |
 | 10 | Browser verification & delivery hardening (this phase) | ✅ |
 | 11 | Auth, user management, role UX & database portability | ✅ |
+| 11.5 | Authentication hardening & Super Admin user management | ✅ |
+| 12 | Admin user management + account management + final auth hardening (this phase) | ✅ |
+| 13 | Ultimate admin dashboard, editorial studio & full-site QA (this phase) | ✅ |
+| 14 | Ultimate dashboard experience, Project Studio, media system & role UX | ✅ |
 
 ## Recommended next phase
+
+**Phase 15 (NOT started): SEO & Search Visibility** — audit-first extension of
+the existing SEO system (`apps/seo`, `useSeoMeta`, `JsonLd`, sitemap/robots,
+hreflang): technical SEO, metadata architecture, OG/Twitter cards, Article/
+Organization/Breadcrumb JSON-LD, multilingual SEO + slug strategy, image SEO,
+heading structure, internal linking, article SEO editor panel (on the Phase 13
+meta fields), redirects, 404 strategy, Core Web Vitals, Search Console
+readiness. See `docs/reports/phase-14-report.md` §24.
+Phase 14 completed the dashboard/Project-Studio/media/RBAC track; no SEO code added.
 
 The ERP track stays **parked until the real Odoo 19 ERP is deployed** — the Phase 9A/9B
 connector foundation is untouched and `ERP_ENABLED=false` (do not start Phase 10 ERP

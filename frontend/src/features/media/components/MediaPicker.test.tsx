@@ -81,7 +81,7 @@ describe("MediaPicker", () => {
   it("searches via the query input", async () => {
     const user = userEvent.setup()
     setup()
-    const search = screen.getByLabelText("Search media")
+    const search = screen.getByLabelText(/search media/i)
     await user.type(search, "hero")
     await waitFor(() => {
       expect(mockedList).toHaveBeenCalledWith(expect.objectContaining({ q: "hero", page: 1 }))
@@ -91,7 +91,7 @@ describe("MediaPicker", () => {
   it("uploads a dropped file and reports media_upload", async () => {
     mockedUpload.mockResolvedValue({ ok: true, media: media({ id: 2, original_name: "dropped.png" }) })
     setup()
-    const dropzone = screen.getByRole("button", { name: /drop a file/i })
+    const dropzone = screen.getByRole("button", { name: /drop an image|drop a file/i })
     fireEvent.drop(dropzone, { dataTransfer: { files: [new File(["x"], "dropped.png", { type: "image/png" })] } })
     await waitFor(() => {
       expect(mockedUpload).toHaveBeenCalledTimes(1)
@@ -115,7 +115,7 @@ describe("MediaPicker", () => {
       expect(screen.getByLabelText("Hero image")).toBeInTheDocument()
     })
     await user.click(screen.getByLabelText("Hero image"))
-    expect(screen.getByLabelText("Alt text (EN)")).toHaveValue("Hero image")
+    expect(screen.getByLabelText(/alt text \(english\)/i)).toHaveValue("Hero image")
     await user.click(screen.getByRole("button", { name: "Use this image" }))
     expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: 1 }))
     const names = getAnalyticsEvents().map((e) => e.name)
@@ -125,7 +125,7 @@ describe("MediaPicker", () => {
   it("surfaces upload errors", async () => {
     mockedUpload.mockResolvedValue({ ok: false, message: "File too large." })
     setup()
-    const dropzone = screen.getByRole("button", { name: /drop a file/i })
+    const dropzone = screen.getByRole("button", { name: /drop an image|drop a file/i })
     fireEvent.drop(dropzone, { dataTransfer: { files: [new File(["x"], "big.png", { type: "image/png" })] } })
     await waitFor(() => {
       expect(screen.getByText(/file too large/i)).toBeInTheDocument()

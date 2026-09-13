@@ -2,6 +2,7 @@ import { useEffect } from "react"
 
 import { useLanguage } from "@/app/language/useLanguage"
 import { useSeoMeta } from "@/features/cms/seo"
+import { resolveMediaUrl } from "@/shared/lib"
 import type { ProjectCaseStudy } from "../types"
 
 /** Inject a BreadcrumbList + CreativeWork JSON-LD script block. */
@@ -41,7 +42,7 @@ export function useProjectSeo({ project, slug }: { project?: ProjectCaseStudy | 
       title,
       description: description || undefined,
       canonicalUrl: typeof window !== "undefined" ? `${window.location.origin}/projects/${project?.slug ?? slug}` : undefined,
-      ogImage: project?.cover_image?.file,
+      ogImage: resolveMediaUrl(project?.cover_image?.file) ?? undefined,
       ogType: "article",
     },
     language,

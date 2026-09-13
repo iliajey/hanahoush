@@ -7,6 +7,7 @@ via the shared ``TranslatableFieldsMixin``.
 """
 from rest_framework import serializers
 
+from apps.core.media import media_file_url
 from apps.services.models import Service, ServiceSection
 from config.api.base.serializers import PublishableSerializerMixin
 
@@ -88,7 +89,7 @@ class ServiceListSerializer(PublishableSerializerMixin, serializers.ModelSeriali
         if obj.cover_image:
             return {
                 "id": obj.cover_image.id,
-                "file": obj.cover_image.file.url,
+                "file": media_file_url(self.context.get("request"), obj.cover_image.file),
                 "alt_text_fa": obj.cover_image.alt_text_fa,
                 "alt_text_en": obj.cover_image.alt_text_en,
                 "alt_text_ar": obj.cover_image.alt_text_ar,

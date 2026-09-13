@@ -29,7 +29,9 @@ import { toApiError } from "@/shared/api/axiosClient"
 
 import { useCreateUser, useRoleCatalog, useUpdateUser } from "../hooks"
 import { createUserFormSchema, editUserFormSchema } from "../schemas"
-import type { ManagedUser } from "../types"
+import type { ManagedUser, PreferredLanguage } from "../types"
+import { RoleSelect } from "./RoleSelect"
+import { RolePermissionSummary } from "./RolePermissionSummary"
 
 interface UserFormDialogProps {
   open: boolean
@@ -67,6 +69,7 @@ export function UserFormDialog({ open, onOpenChange, user, currentUserId }: User
       last_name: "",
       email: "",
       phone: "",
+      preferred_language: "fa" as PreferredLanguage,
       password: "",
       confirm_password: "",
       role: "VIEWER",
@@ -76,6 +79,7 @@ export function UserFormDialog({ open, onOpenChange, user, currentUserId }: User
   })
 
   const roleValue = watch("role")
+  const languageValue = watch("preferred_language")
   const isActive = watch("is_active")
   const isStaff = watch("is_staff")
 
@@ -87,6 +91,7 @@ export function UserFormDialog({ open, onOpenChange, user, currentUserId }: User
       last_name: user?.last_name ?? "",
       email: user?.email ?? "",
       phone: user?.phone ?? "",
+      preferred_language: user?.preferred_language ?? "fa",
       password: "",
       confirm_password: "",
       role: user?.role?.codename ?? "VIEWER",
@@ -109,6 +114,7 @@ export function UserFormDialog({ open, onOpenChange, user, currentUserId }: User
             last_name: values.last_name ?? "",
             email: values.email,
             phone: values.phone ?? "",
+            preferred_language: values.preferred_language,
             role: values.role,
             is_active: values.is_active,
             is_staff: values.is_staff,
@@ -121,6 +127,7 @@ export function UserFormDialog({ open, onOpenChange, user, currentUserId }: User
           last_name: values.last_name ?? "",
           email: values.email,
           phone: values.phone ?? "",
+          preferred_language: values.preferred_language,
           password: values.password,
           confirm_password: values.confirm_password,
           role: values.role,
@@ -241,23 +248,37 @@ export function UserFormDialog({ open, onOpenChange, user, currentUserId }: User
               ) : null}
             </div>
 
+            <div className="sm:col-span-2">
+              <RoleSelect
+                value={roleValue}
+                onChange={(value) => setValue("role", value, { shouldValidate: true })}
+                roles={roles.data ?? []}
+                invalid={Boolean(errors.role)}
+                error={errors.role?.message}
+              />
+            </div>
+
+            <div className="sm:col-span-2">
+              <RolePermissionSummary roleCodename={roleValue} roles={roles.data ?? []} />
+            </div>
+
             <div className="flex flex-col gap-1.5 sm:col-span-2">
-              <Label htmlFor="user-role">{t("users.fields.role")} *</Label>
-              <Select value={roleValue} onValueChange={(value) => setValue("role", value, { shouldValidate: true })}>
-                <SelectTrigger id="user-role" className="w-full" aria-invalid={Boolean(errors.role)}>
-                  <SelectValue placeholder={t("users.fields.rolePlaceholder")} />
+              <Label htmlFor="user-language">{t("users.fields.language")}</Label>
+              <Select
+                value={languageValue}
+                onValueChange={(value) =>
+                  setValue("preferred_language", value as PreferredLanguage, { shouldValidate: true })
+                }
+              >
+                <SelectTrigger id="user-language" className="w-full">
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {(roles.data ?? []).map((role) => (
-                    <SelectItem key={role.id} value={role.codename}>
-                      {t(role.codename === "SUPER_ADMIN" ? "roles.SUPER_ADMIN.name" : `roles.${role.codename}.name`, { defaultValue: role.name })}
-                    </SelectItem>
-                  ))}
+                  <SelectItem value="fa">فارسی</SelectItem>
+                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="ar">العربية</SelectItem>
                 </SelectContent>
               </Select>
-              {errors.role ? (
-                <p className="text-xs text-destructive">{errors.role.message}</p>
-              ) : null}
             </div>
 
             {!isEdit ? (

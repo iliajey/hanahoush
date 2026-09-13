@@ -1,3 +1,5 @@
+import { resolveMediaUrl } from "@/shared/lib"
+
 import type { Locale, Project } from "../types"
 
 /** View model consumed by marketing ProjectCard components. */
@@ -20,7 +22,7 @@ export function mapProject(project: Project, _locale: Locale): ProjectView {
     id: project.id,
     title: project.title || project.title_en,
     description,
-    image: project.cover_image?.file,
+    image: resolveMediaUrl(project.cover_image?.file) ?? undefined,
     tags: project.technologies.map((tech) => tech.title_en || tech.title_fa || tech.slug),
     client: project.client,
     featured: project.is_featured,

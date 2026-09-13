@@ -1,6 +1,6 @@
 # Hanahoush — Next Phase Preparation (docs/reports/next-phase.md)
 
-> **Note:** Phase 11 has been completed. See `docs/reports/phase-11-report.md` for details.
+> **Note:** Phase 14 has been completed. See `docs/reports/phase-14-report.md` for details (prior: `docs/reports/phase-13-report.md`). Phase 15 (SEO) has NOT started.
 
 ---
 
@@ -51,8 +51,19 @@ build. See `docs/reports/phase-10-report.md`.
 | 9F | Immersive brand identity & living visual system | ✅ |
 | 9G | Frontend RBAC + staff workspace + role-based dashboard | ✅ |
 | 10 | Browser verification & delivery hardening (this phase) | ✅ |
+| 11 | Auth, user management, role UX & database portability | ✅ |
+| 11.5 | Authentication hardening & Super Admin user management | ✅ |
 
 ## Recommended next phase
+
+**Phase 15 (NOT started): SEO & Search Visibility** — audit-first extension of
+the existing SEO system (`apps/seo`, `useSeoMeta`, `JsonLd`, sitemap/robots,
+hreflang): technical SEO, metadata architecture, OG/Twitter cards, Article/
+Organization/Breadcrumb JSON-LD, multilingual SEO + slug strategy, image SEO,
+heading structure, internal linking, article SEO editor panel (on the Phase 13
+meta title/description fields), redirects, 404 strategy, Core Web Vitals,
+Search Console readiness. Full proposal: `docs/reports/phase-14-report.md` §24.
+Phase 14 completed the dashboard/Project-Studio/media/RBAC track; no SEO code added.
 
 The ERP track stays **parked until the real Odoo 19 ERP is deployed** — the Phase 9A/9B
 connector foundation is untouched and `ERP_ENABLED=false`.

@@ -29,6 +29,7 @@ const EXPECTED: Record<string, Record<string, boolean>> = {
     [CAPABILITIES.NEWSLETTER_MANAGE]: true,
     [CAPABILITIES.ANALYTICS]: true,
     [CAPABILITIES.SYSTEM]: true,
+    [CAPABILITIES.USER_MANAGE]: false,
   },
   CONTENT_MANAGER: {
     [CAPABILITIES.DASHBOARD]: true,
@@ -48,6 +49,7 @@ const EXPECTED: Record<string, Record<string, boolean>> = {
     [CAPABILITIES.NEWSLETTER_MANAGE]: true,
     [CAPABILITIES.ANALYTICS]: true,
     [CAPABILITIES.SYSTEM]: true,
+    [CAPABILITIES.USER_MANAGE]: false,
   },
   PROJECT_MANAGER: {
     [CAPABILITIES.DASHBOARD]: true,
@@ -67,6 +69,7 @@ const EXPECTED: Record<string, Record<string, boolean>> = {
     [CAPABILITIES.NEWSLETTER_MANAGE]: true,
     [CAPABILITIES.ANALYTICS]: false,
     [CAPABILITIES.SYSTEM]: true,
+    [CAPABILITIES.USER_MANAGE]: false,
   },
   EDITOR: {
     [CAPABILITIES.DASHBOARD]: true,
@@ -86,6 +89,7 @@ const EXPECTED: Record<string, Record<string, boolean>> = {
     [CAPABILITIES.NEWSLETTER_MANAGE]: false,
     [CAPABILITIES.ANALYTICS]: false,
     [CAPABILITIES.SYSTEM]: false,
+    [CAPABILITIES.USER_MANAGE]: false,
   },
   VIEWER: {
     [CAPABILITIES.DASHBOARD]: true,
@@ -105,6 +109,7 @@ const EXPECTED: Record<string, Record<string, boolean>> = {
     [CAPABILITIES.NEWSLETTER_MANAGE]: false,
     [CAPABILITIES.ANALYTICS]: true,
     [CAPABILITIES.SYSTEM]: false,
+    [CAPABILITIES.USER_MANAGE]: false,
   },
 }
 
@@ -192,7 +197,7 @@ describe("navigation authorization (workspaceNavForUser)", () => {
   }
 
   it("SUPER_ADMIN sees every nav link", () => {
-    expect(linkPaths("SUPER_ADMIN")).toEqual(["", "articles", "contact", "editorial", "media", "newsletter", "profile", "projects"])
+    expect(linkPaths("SUPER_ADMIN")).toEqual(["", "articles", "contact", "editorial", "media", "newsletter", "profile", "projects", "users"])
   })
 
   it("VIEWER sees only dashboard + editorial", () => {

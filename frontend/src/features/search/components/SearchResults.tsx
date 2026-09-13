@@ -7,6 +7,7 @@ import { EmptyState } from "@/components/ui/empty-state"
 import { ErrorState } from "@/components/ui/error-state"
 import { Skeleton } from "@/components/ui/skeleton"
 import { cn } from "@/shared/lib/cn"
+import { resolveMediaUrl } from "@/shared/lib"
 
 import { searchAnalytics } from "../services/analytics"
 import type { SearchResult, SearchResultType } from "../types"
@@ -113,7 +114,7 @@ export function SearchResults({
                 >
                   {result.image ? (
                     <img
-                      src={result.image}
+                      src={resolveMediaUrl(result.image) ?? result.image}
                       alt=""
                       loading="lazy"
                       decoding="async"

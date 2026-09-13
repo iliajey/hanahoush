@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Download, Power, Search } from "lucide-react"
 
@@ -9,7 +9,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EmptyState } from "@/components/ui/empty-state"
+import { ErrorState } from "@/components/ui/error-state"
+import { Pagination } from "@/components/ui/pagination"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useDebounce } from "@/shared/hooks"
 
 import { useNewsletterExport, useNewsletterSubscribers, useToggleSubscriber } from "../hooks"
 
@@ -19,31 +22,54 @@ export function NewsletterWorkspacePage() {
   const { t } = useTranslation()
   const [q, setQ] = useState("")
   const [active, setActive] = useState<ActiveFilter>("all")
+  const [page, setPage] = useState(1)
 
-  const params = {
-    q: q || undefined,
-    is_active: active === "active" ? true : active === "inactive" ? false : undefined,
-    pageSize: 100,
-  }
-  const { data, isLoading, isError } = useNewsletterSubscribers(params)
+  const debouncedQ = useDebounce(q.trim(), 350)
+  const params = useMemo(
+    () => ({
+      q: debouncedQ || undefined,
+      is_active: active === "active" ? true : active === "inactive" ? false : undefined,
+      page,
+      pageSize: 20,
+    }),
+    [debouncedQ, active, page],
+  )
+  const { data, isLoading, isError, refetch } = useNewsletterSubscribers(params)
   const { activate, deactivate } = useToggleSubscriber()
   const exportCsv = useNewsletterExport(params)
+  const totalPages = data?.pagination?.num_pages ?? 0
 
   return (
-    <PageWrapper title={t("newsletterWorkspace.title")} description={t("newsletterWorkspace.subtitle")}>
+    <PageWrapper
+      title={t("newsletterWorkspace.title")}
+      description={t("newsletterWorkspace.subtitle")}
+      breadcrumb={[
+        { label: t("navWorkspace.dashboard"), href: "/dashboard" },
+        { label: t("newsletterWorkspace.title") },
+      ]}
+    >
       <div className="mb-4 flex flex-wrap items-center gap-3">
         <div className="relative min-w-0 flex-1 sm:max-w-sm">
           <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
           <Input
             value={q}
-            onChange={(event) => setQ(event.target.value)}
+            onChange={(event) => {
+              setQ(event.target.value)
+              setPage(1)
+            }}
             placeholder={t("newsletterWorkspace.searchPlaceholder")}
             className="ps-9"
             aria-label={t("newsletterWorkspace.searchPlaceholder")}
           />
         </div>
-        <Select value={active} onValueChange={(value) => setActive(value as ActiveFilter)}>
-          <SelectTrigger className="w-44">
+        <Select
+          value={active}
+          onValueChange={(value) => {
+            setActive(value as ActiveFilter)
+            setPage(1)
+          }}
+        >
+          <SelectTrigger className="w-full sm:w-44">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -63,12 +89,18 @@ export function NewsletterWorkspacePage() {
       <Card>
         <CardContent className="p-0">
           {isLoading ? (
-            <div className="space-y-2 p-4">
+            <div className="space-y-2 p-4" role="status" aria-live="polite">
               <Skeleton className="h-10" />
               <Skeleton className="h-10" />
             </div>
           ) : isError ? (
-            <EmptyState title={t("newsletterWorkspace.errorTitle")} description={t("newsletterWorkspace.errorDescription")} />
+            <div className="p-4">
+              <ErrorState
+                title={t("newsletterWorkspace.errorTitle")}
+                description={t("newsletterWorkspace.errorDescription")}
+                onRetry={() => void refetch()}
+              />
+            </div>
           ) : !data?.items.length ? (
             <EmptyState title={t("newsletterWorkspace.empty")} description={t("newsletterWorkspace.emptyDescription")} />
           ) : (
@@ -135,6 +167,15 @@ export function NewsletterWorkspacePage() {
           )}
         </CardContent>
       </Card>
+
+      {totalPages > 1 ? (
+        <Pagination
+          className="mt-4"
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={(next) => setPage(Math.min(Math.max(1, next), totalPages))}
+        />
+      ) : null}
     </PageWrapper>
   )
 }

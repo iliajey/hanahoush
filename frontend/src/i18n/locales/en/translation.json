@@ -4,6 +4,7 @@
     "tagline": "Enterprise Platform",
     "toggleTheme": "Toggle theme",
     "toggleLanguage": "Toggle language",
+    "languageLabel": "Language",
     "announcement": "Announcement",
     "readMore": "Read more",
     "dismissAnnouncement": "Dismiss announcement",
@@ -399,6 +400,28 @@
     "role": "Role",
     "session": "Session",
     "sessionActive": "Active",
+    "viewAll": "View all",
+    "manageUsers": "Manage users",
+    "attention": {
+      "title": "Needs attention",
+      "description": "Drafts, reviews and requests waiting for a human.",
+      "drafts": "Article drafts",
+      "awaitingReview": "Awaiting review",
+      "pendingApprovals": "Pending approvals",
+      "activeLocks": "Active content locks",
+      "openInquiries": "Open inquiries",
+      "projectsAwaitingReview": "Projects awaiting review"
+    },
+    "actions": {
+      "title": "Quick actions",
+      "description": "Start the most common workspace tasks.",
+      "newArticle": "New article",
+      "newProject": "New project",
+      "uploadMedia": "Upload media",
+      "reviewQueue": "Review queue",
+      "inquiries": "Inquiries",
+      "subscribers": "Subscribers"
+    },
     "quickLinksTitle": "Workspace shortcuts",
     "quickLinksDescription": "Jump to any available workspace section.",
     "errorTitle": "Dashboard unavailable",
@@ -457,10 +480,17 @@
       },
       "operations": {
         "title": "Operations",
+        "emptyDescription": "No recent uploads, inquiries or editorial events yet.",
         "description": "Recent activity across the platform.",
         "media": "Recent uploads",
         "contact": "Recent inquiries",
         "editorial": "Recent editorial activity"
+      },
+      "recent": {
+        "title": "Recently updated",
+        "description": "Jump back into the content you touched last.",
+        "articles": "Articles",
+        "projects": "Projects"
       },
       "system": {
         "title": "System",
@@ -504,32 +534,42 @@
         "title": "Editorial workspace",
         "description": "Review, approve and publish content."
       }
+    },
+    "translationGaps": {
+      "title": "Translation gaps",
+      "description": "Published content missing a locale."
     }
   },
   "roles": {
     "SUPER_ADMIN": {
       "name": "Super Admin",
-      "description": "Full platform access including user and role management."
+      "description": "Full platform access including user and role management.",
+      "responsibilities": "Owns user accounts, role assignment, all content and projects, media, editorial approvals and system operations."
     },
     "COMPANY_ADMIN": {
       "name": "Company Admin",
-      "description": "Manages all company content, media and users."
+      "description": "Manages all company content, media and users.",
+      "responsibilities": "Runs day-to-day company operations: articles, projects, services, company pages, media library and user accounts (except Super Admin assignment)."
     },
     "CONTENT_MANAGER": {
       "name": "Content Manager",
-      "description": "Creates and manages articles, services and company content."
+      "description": "Creates and manages articles, services and company content.",
+      "responsibilities": "Authors and curates articles, services and company content; uploads media; drives the editorial pipeline (reviews and schedules)."
     },
     "PROJECT_MANAGER": {
       "name": "Project Manager",
-      "description": "Manages portfolio projects."
+      "description": "Manages portfolio projects.",
+      "responsibilities": "Owns the project portfolio: project metadata, case studies, cover and gallery media, and the project publishing workflow."
     },
     "EDITOR": {
       "name": "Editor",
-      "description": "Writes and edits articles."
+      "description": "Writes and edits articles.",
+      "responsibilities": "Writes and refines article content, uploads supporting media and participates in editorial reviews."
     },
     "VIEWER": {
       "name": "Viewer",
-      "description": "Read-only access to public content."
+      "description": "Read-only access to public content.",
+      "responsibilities": "Reads published content and follows editorial progress. Cannot create, edit or publish anything."
     },
     "custom": {
       "name": "Custom role",
@@ -602,6 +642,38 @@
     },
     "edit": "Edit article",
     "view": "Open public article",
+    "previewLink": "Preview",
+    "retry": "Try again",
+    "clearFilters": "Clear filters",
+    "activeFilters": "Active filters",
+    "filters": {
+      "author": "Author",
+      "category": "Category",
+      "language": "Language",
+      "featured": "Featured",
+      "languageAll": "All languages",
+      "languageFa": "Persian",
+      "languageEn": "English",
+      "languageAr": "Arabic",
+      "featuredAll": "All",
+      "featuredOnly": "Featured only",
+      "featuredExclude": "Not featured",
+      "categoryAll": "All categories",
+      "authorPlaceholder": "Author username or id…"
+    },
+    "sort": {
+      "label": "Sort",
+      "updatedDesc": "Recently updated",
+      "createdDesc": "Recently created",
+      "publishedDesc": "Recently published",
+      "titleAsc": "Title A–Z"
+    },
+    "paginationLabel": "Article list pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "pageOf": "Page {{current}} of {{total}}",
+    "totalCount_one": "{{count}} article",
+    "totalCount_other": "{{count}} articles",
     "form": {
       "createTitle": "New article",
       "editTitle": "Edit article",
@@ -621,11 +693,87 @@
       "isPublic": "Public"
     }
   },
+  "articleEditor": {
+    "category": "Category",
+    "categoryPlaceholder": "Select a category",
+    "noCategory": "No category",
+    "coverTitle": "Cover image",
+    "chooseCover": "Choose cover",
+    "noCover": "No cover image selected. Pick one from the media library.",
+    "removeCover": "Remove cover",
+    "insertImage": "Insert image",
+    "mediaTitle": "Insert from media library",
+    "excerptEn": "Excerpt (English)",
+    "excerptFa": "Excerpt (Persian)",
+    "excerptAr": "Excerpt (Arabic)",
+    "metaTitle": "Meta title (SEO)",
+    "metaDescription": "Meta description (SEO)",
+    "statusHint": "Publishing runs through the editorial workflow; changing status here only stores metadata.",
+    "saveFailed": "The article could not be saved.",
+    "loadFailed": "The article could not be loaded.",
+    "savedAt": "Saved {{time}}",
+    "unsavedChanges": "Unsaved changes",
+    "preview": "Preview",
+    "previewHint": "Draft preview mirrors the public article layout.",
+    "linkPrompt": "Link URL (https://…)",
+    "undo": "Undo",
+    "redo": "Redo",
+    "h1": "Heading 1",
+    "h2": "Heading 2",
+    "h3": "Heading 3",
+    "paragraph": "Paragraph",
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "strikethrough": "Strikethrough",
+    "inlineCode": "Inline code",
+    "bulletList": "Bullet list",
+    "orderedList": "Numbered list",
+    "indent": "Increase indent",
+    "outdent": "Decrease indent",
+    "quote": "Quote",
+    "link": "Insert link",
+    "removeLink": "Remove link",
+    "alignLeft": "Align left",
+    "alignCenter": "Align center",
+    "alignRight": "Align right",
+    "image": "Insert image from library",
+    "table": "Insert table",
+    "codeBlock": "Insert code block",
+    "horizontalRule": "Insert separator",
+    "wordCount": "{{count}} words",
+    "charCount": "{{count}} characters",
+    "readingTime": "{{count}} min read",
+    "autosafeHint": "Autosaves every 30s",
+    "healthTitle": "Content health",
+    "totalWords": "Total words",
+    "headings": "Headings",
+    "bodyImages": "Body images",
+    "healthNoCover": "No cover image selected yet.",
+    "healthNoHeadings": "No headings found — add H2/H3 structure for readability.",
+    "healthThin": "Thin content in: {{locales}} (under 50 words).",
+    "healthGood": "Content looks healthy across languages."
+  },
+  "articlePreview": {
+    "title": "Article preview",
+    "subtitle": "How the saved draft reads on the public site. Preview only — nothing here publishes.",
+    "localeLabel": "Preview language",
+    "draftBadge": "Draft preview",
+    "featured": "Featured",
+    "emptyBody": "No body content saved for this language yet.",
+    "notFound": "Article not found",
+    "notFoundDescription": "The requested article does not exist.",
+    "errorTitle": "Couldn't load the preview",
+    "errorDescription": "Something went wrong while fetching the article.",
+    "backToList": "Back to articles"
+  },
   "projectWorkspace": {
     "title": "Projects",
     "subtitle": "Manage portfolio projects and their case studies.",
     "searchPlaceholder": "Search projects…",
     "newProject": "New project",
+    "totalCount_one": "{{count}} project",
+    "totalCount_other": "{{count}} projects",
     "statusAll": "All",
     "statusDraft": "Draft",
     "statusReview": "In review",
@@ -644,12 +792,49 @@
     },
     "edit": "Edit project",
     "openCaseStudy": "Open case study",
+    "saveFailed": "The project could not be saved.",
+    "loadFailed": "The project could not be loaded.",
+    "savedAt": "Saved {{time}}",
+    "unsavedChanges": "Unsaved changes",
+    "preview": "Preview",
+    "submitForReview": "Submit for review",
+    "submitComment": "Project submitted for review from Project Studio.",
+    "wordCount": "{{count}} words",
+    "lastUpdated": "Updated {{time}}",
+    "insertImage": "Insert image",
+    "excerptEn": "Summary (English)",
+    "excerptFa": "Summary (Persian)",
+    "excerptAr": "Summary (Arabic)",
+    "coverTitle": "Cover image",
+    "chooseCover": "Choose cover",
+    "noCover": "No cover image selected. Pick one from the media library.",
+    "removeCover": "Remove cover",
+    "mediaTitle": "Insert from media library",
+    "metaTitle": "Meta title (SEO)",
+    "metaDescription": "Meta description (SEO)",
+    "statusHint": "Publishing runs through the editorial workflow; changing status here only stores metadata.",
+    "categoryPlaceholder": "Select a category",
+    "noCategory": "No category",
+    "noTechnologies": "No technologies defined yet — add them from Django admin.",
+    "createDraft": "Create draft",
+    "gallery": {
+      "title": "Gallery",
+      "add": "Add image",
+      "empty": "No gallery images yet. Add images to showcase this project.",
+      "saveFirst": "Save the project first, then add gallery images.",
+      "coverBadge": "Cover",
+      "moveLeft": "Move earlier",
+      "moveRight": "Move later",
+      "toggleCover": "Toggle cover flag",
+      "remove": "Remove image"
+    },
     "form": {
       "createTitle": "New project",
       "editTitle": "Edit project",
       "subtitle": "Save project metadata here; publishing runs through the editorial workflow.",
       "identity": "Identity",
       "content": "Content",
+      "details": "Details",
       "publishing": "Publishing",
       "titleEn": "Title (English)",
       "titleFa": "Title (Persian)",
@@ -664,9 +849,28 @@
       "descriptionFa": "Description (Persian)",
       "descriptionAr": "Description (Arabic)",
       "status": "Status",
+      "category": "Category",
+      "technologies": "Technologies",
       "isFeatured": "Featured",
       "isPublic": "Public"
     }
+  },
+  "projectPreview": {
+    "title": "Project preview",
+    "subtitle": "How the saved project reads on the public site. Preview only — nothing here publishes.",
+    "localeLabel": "Preview language",
+    "draftBadge": "Draft preview",
+    "featured": "Featured",
+    "emptyBody": "No description saved for this language yet.",
+    "notFound": "Project not found",
+    "notFoundDescription": "The requested project does not exist.",
+    "errorTitle": "Couldn't load the preview",
+    "errorDescription": "Something went wrong while fetching the project.",
+    "backToList": "Back to projects",
+    "client": "Client",
+    "location": "Location",
+    "liveUrl": "Live site",
+    "gallery": "Gallery"
   },
   "mediaWorkspace": {
     "title": "Media library",
@@ -693,11 +897,48 @@
     "uploadFailed": "Upload failed",
     "metadataSaved": "Metadata saved",
     "deleted": "Media deleted",
+    "copyUrl": "Copy file URL",
+    "missingAlt": "Missing alt text",
+    "fileTooLarge": "Files larger than 25 MB are not accepted.",
+    "referencedWarning": "Used in {{count}} place(s) — links keep resolving after soft-delete.",
+    "errorTitle": "Couldn't load media",
+    "errorDescription": "Something went wrong while fetching the media library.",
+    "sortLabel": "Sort media",
+    "sortNewest": "Newest first",
+    "sortOldest": "Oldest first",
+    "sortLargest": "Largest first",
+    "sortName": "Name A–Z",
+    "viewGrid": "Grid view",
+    "viewList": "List view",
+    "previewTitle": "Media preview",
+    "imageLoadFailed": "Preview unavailable — the file may have been moved or deleted.",
+    "retry": "Retry",
+    "totalCount_one": "{{count}} file",
+    "totalCount_other": "{{count}} files",
     "form": {
       "title": "Title",
       "titleFa": "Title (Persian)",
       "alt": "Alt text (English)",
+      "altFa": "Alt text (Persian)",
+      "caption": "Caption (English)",
+      "captionFa": "Caption (Persian)",
       "isPublic": "Public"
+    },
+    "pickerDescription": "Browse, upload and select media for your content.",
+    "pickerDropHint": "Drop an image here, or click to browse",
+    "pickerEmptyQuery": "No media found for “{{query}}”.",
+    "pickerPrev": "Previous",
+    "pickerNext": "Next",
+    "pickerUse": "Use this image",
+    "pickerMeta": {
+      "titleEn": "Title (English)",
+      "titleFa": "Title (Persian)",
+      "titleAr": "Title (Arabic)",
+      "altEn": "Alt text (English)",
+      "altFa": "Alt text (Persian)",
+      "altAr": "Alt text (Arabic)",
+      "captionEn": "Caption (English)",
+      "captionAr": "Caption (Arabic)"
     }
   },
   "contactWorkspace": {
@@ -862,6 +1103,7 @@
       "activeHint": "Inactive accounts cannot sign in.",
       "staff": "Staff status",
       "staffHint": "Staff accounts can enter the workspace.",
+      "language": "Preferred language",
       "lastLogin": "Last login",
       "dateJoined": "Joined"
     },
@@ -873,7 +1115,31 @@
       "deactivate": "Deactivate",
       "setPassword": "Set password",
       "savePassword": "Save password",
-      "viewRoles": "Roles & permissions"
+      "viewRoles": "Roles & permissions",
+      "backToUsers": "Back to users"
+    },
+    "confirm": {
+      "activateTitle": "Activate this account?",
+      "activateBody": "{{username}} will be able to sign in again.",
+      "deactivateTitle": "Deactivate this account?",
+      "deactivateBody": "{{username}} will be signed out everywhere and unable to sign in.",
+      "setPasswordTitle": "Set a new password?",
+      "setPasswordBody": "The existing password is never shown. {{username}} will be signed out everywhere."
+    },
+    "detail": {
+      "title": "User detail",
+      "notFoundTitle": "User not found",
+      "notFoundDescription": "This account may have been removed or the link is incorrect."
+    },
+    "roleSelect": {
+      "permissionCount_one": "{{count}} permission",
+      "permissionCount_other": "{{count}} permissions"
+    },
+    "roleSummary": {
+      "selectRole": "Select a role to see exactly what it grants.",
+      "superAdminWarning": "SUPER_ADMIN grants every permission including user management. Assign sparingly — the backend blocks removing the last holder.",
+      "roleAuthoritative": "Roles are authoritative: the account receives exactly this role's permissions from the backend.",
+      "restrictions": "Not included for this role"
     },
     "dialog": {
       "createTitle": "Create user",
@@ -923,6 +1189,67 @@
       "passwordMin": "Password must be at least 8 characters",
       "passwordMismatch": "Passwords do not match",
       "roleRequired": "Select a role"
+    }
+  },
+  "studio": {
+    "common": {
+      "editingLanguage": "Editing language"
+    },
+    "health": {
+      "title": "Content health",
+      "critical": "{{count}} critical",
+      "warning": "{{count}} warnings",
+      "good": "Healthy",
+      "allGood": "Content looks healthy across languages.",
+      "missingTitle": "{{locale}} title is missing",
+      "missingSlug": "Slug is missing",
+      "missingSummary": "{{locale}} summary is missing",
+      "missingCover": "No cover image selected yet.",
+      "thinBody": "{{locale}} body is thin (under 50 words)",
+      "missingProjectMeta": "Client and location are both empty",
+      "emptyCaseStudy": "Case study is empty - challenge, stages and results are not set",
+      "emptyCaseSection": "{{section}} section is empty",
+      "hiddenSection": "Section hidden: {{section}}",
+      "emptyGallery": "No gallery images yet",
+      "galleryMissingAlt": "Some gallery images miss alt text",
+      "stages": "Stages",
+      "nodes": "Architecture nodes"
+    },
+    "caseStudy": {
+      "title": "Case study",
+      "challenge": "Challenge",
+      "challengeBody": "Challenge",
+      "objectives": "Objectives",
+      "objectivesBody": "Objectives",
+      "solution": "Solution",
+      "solutionBody": "Solution approach",
+      "results": "Results",
+      "resultsBody": "Results and impact",
+      "stages": "Implementation stages",
+      "stagesEmpty": "No stages yet. Add the project journey step by step.",
+      "addStage": "Add stage",
+      "stageN": "Stage {{count}}",
+      "stageTitle": "Stage title",
+      "stageDetail": "Stage detail",
+      "architecture": "Architecture",
+      "archDescription": "Architecture description",
+      "nodesEmpty": "No architecture nodes yet.",
+      "addNode": "Add node",
+      "nodeN": "Node {{count}}",
+      "nodeLayer": "Layer name",
+      "nodeLabels": "Labels (one per line)",
+      "nodeLabelsHint": "Django\nPostgreSQL\nRedis",
+      "toggleVisibility": "Toggle section visibility",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "duplicate": "Duplicate",
+      "remove": "Remove"
+    },
+    "article": {
+      "tags": "Tags",
+      "tagsPlaceholder": "Add a tag...",
+      "noTags": "No tags selected.",
+      "removeTag": "Remove tag"
     }
   }
 }

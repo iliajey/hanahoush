@@ -36,15 +36,20 @@ test.describe("workspace flows (Part D)", () => {
     await page.getByRole("button", { name: "Save" }).click()
     await expect(page).toHaveURL(/\/dashboard\/articles$/)
 
-    // Create a new draft through the real form.
+    // Create a new draft through the real form (Phase 15: single-locale
+    // editing — the active locale renders `#article-title` / `#article-body`).
     await page.getByRole("button", { name: "New draft" }).click()
     await expect(page.locator("h1").first()).toContainText("New article")
-    await page.locator('label:has-text("Title (English)")').locator("..").locator("input").first().fill(DRAFT_TITLE)
-    await page.locator('label:has-text("Slug")').locator("..").locator("input").first().fill(DRAFT_SLUG)
-    await page.locator('label:has-text("Body (English)")').locator("..").locator("textarea").first().fill(
+    await expect(page.getByRole("combobox", { name: "Editing language" })).toBeVisible()
+    await page.locator("#article-title").fill(DRAFT_TITLE)
+    await page.locator("#article-slug").fill(DRAFT_SLUG)
+    await page.locator("#article-body").click()
+    await page.locator("#article-body").pressSequentially(
       "Phase 10 browser verification draft body.",
     )
-    await page.getByRole("button", { name: "New draft" }).click()
+    // The form submit button ("New draft") lives in the bottom action bar —
+    // scope to main so the workspace "New draft" nav button is excluded.
+    await page.locator("main").getByRole("button", { name: "New draft" }).click()
     await expect(page).toHaveURL(/\/dashboard\/articles\/?$/)
     await expect(page.locator("tbody").getByText(DRAFT_TITLE).first()).toBeVisible()
 
@@ -110,6 +115,114 @@ test.describe("workspace flows (Part D)", () => {
     await expect(page.locator("h1").first()).toContainText("Edit project")
     await page.getByRole("button", { name: "Save" }).click()
     await expect(page).toHaveURL(/\/dashboard\/projects$/)
+  })
+
+  test("project studio 2.0: locale selector, case-study editor, health, preview (companyadmin)", async ({ page, context }) => {
+    await forceLocale(context, "en")
+    const creds = loadCredentials()
+    await uiLogin(page, "companyadmin", creds.companyadmin.password)
+
+    await page.goto("/dashboard/projects")
+    await page.getByRole("button", { name: "Edit project" }).first().click()
+    await expect(page.locator("h1").first()).toContainText("Edit project")
+
+    // Locale dropdown shows one language at a time with completeness dots.
+    const localeSelect = page.getByRole("combobox", { name: "Editing language" })
+    await expect(localeSelect).toBeVisible()
+
+    // Case-study editor renders the public sections.
+    await expect(page.getByText("Challenge", { exact: true }).first()).toBeVisible()
+    await expect(page.getByText("Implementation stages", { exact: true }).first()).toBeVisible()
+
+    // Content health panel is actionable.
+    await expect(page.getByText("Content health").first()).toBeVisible()
+
+    // Switch locale: English -> Persian keeps the form mounted.
+    await localeSelect.click()
+    await page.getByRole("option", { name: /فارسی/ }).click()
+    await expect(page.locator("#project-title")).toBeVisible()
+
+    // Preview renders the structured sections.
+    await page.getByRole("link", { name: "Preview" }).click()
+    await expect(page).toHaveURL(/\/dashboard\/projects\/\d+\/preview/)
+    await expect(page.getByText("Draft preview").first()).toBeVisible()
+  })
+
+  test("public page regression: online shop platform renders all case-study sections", async ({ page, context }) => {
+    await forceLocale(context, "en")
+    await page.goto("/projects/demo-shop-platform")
+    await expect(page.locator("h1").first()).toContainText("Online Shop Platform")
+    // Every structured case-study section renders from CMS data.
+    await expect(page.getByText("The problem we were asked to solve").first()).toBeVisible()
+    await expect(page.getByText("What success looked like").first()).toBeVisible()
+    await expect(page.getByText("The Hanahoush approach").first()).toBeVisible()
+    await expect(page.getByText("Implementation stages").first()).toBeVisible()
+    await expect(page.getByText("How the system is built").first()).toBeVisible()
+    await expect(page.getByText("Results & impact").first()).toBeVisible()
+  })
+
+  test("studio round-trip: edit shop challenge, save, public reflects, restore (companyadmin)", async ({ page, context }) => {
+    await forceLocale(context, "en")
+    const creds = loadCredentials()
+    await uiLogin(page, "companyadmin", creds.companyadmin.password)
+
+    const marker = `E2E parity probe ${Date.now().toString(36)}`
+
+    // Read the current English challenge via the staff API.
+    const token = await page.evaluate(() => window.localStorage.getItem("hanahoush_access_token") ?? "")
+    const auth = { Authorization: `Bearer ${token}` }
+    const list = await page.request.get("http://127.0.0.1:8000/api/v1/projects/?page_size=50", { headers: auth })
+    expect(list.status()).toBe(200)
+    const body = await list.json()
+    const rows = body.data ?? body.results ?? []
+    const row = rows.find((p: { slug: string }) => p.slug === "demo-shop-platform")
+    expect(row?.id).toBeDefined()
+    const detail = await page.request.get(`http://127.0.0.1:8000/api/v1/projects/${row.id}/`, { headers: auth })
+    const original = ((await detail.json()).data.case_study_raw?.challenge as { en?: string } | string | undefined)
+    const originalText = typeof original === "string" ? original : (original?.en ?? "")
+
+    // Edit through the real Studio form.
+    await page.goto(`/dashboard/projects/${row.id}/edit`)
+    await expect(page.locator("h1").first()).toContainText("Edit project")
+    const localeSelect = page.getByRole("combobox", { name: "Editing language" })
+    await localeSelect.click()
+    await page.getByRole("option", { name: /^English$/ }).click()
+    await page.locator("#cs-challenge").fill(`${originalText} ${marker}`)
+    await page.locator("main").getByRole("button", { name: "Save" }).click()
+    await expect(page).toHaveURL(/\/dashboard\/projects$/)
+
+    // Public page reflects the edit.
+    await page.goto("/projects/demo-shop-platform")
+    await expect(page.getByText(marker).first()).toBeVisible({ timeout: 20_000 })
+
+    // Restore the original text so the seed data stays intact.
+    await page.goto(`/dashboard/projects/${row.id}/edit`)
+    await page.getByRole("combobox", { name: "Editing language" }).click()
+    await page.getByRole("option", { name: /^English$/ }).click()
+    await page.locator("#cs-challenge").fill(originalText)
+    await page.locator("main").getByRole("button", { name: "Save" }).click()
+    await expect(page).toHaveURL(/\/dashboard\/projects$/)
+    await page.goto("/projects/demo-shop-platform")
+    await expect(page.getByText(marker)).toHaveCount(0)
+  })
+
+  test("article studio 2.0: locale selector, tags, health, preview (contentmanager)", async ({ page, context }) => {
+    await forceLocale(context, "en")
+    const creds = loadCredentials()
+    await uiLogin(page, "contentmanager", creds.contentmanager.password)
+
+    await page.goto("/dashboard/articles")
+    await page.getByRole("button", { name: "Edit article" }).first().click()
+    await expect(page.locator("h1").first()).toContainText("Edit article")
+
+    // Locale dropdown + tags editor + health panel.
+    await expect(page.getByRole("combobox", { name: "Editing language" })).toBeVisible()
+    await expect(page.getByText("Content health").first()).toBeVisible()
+
+    // Preview renders the saved draft.
+    await page.getByRole("link", { name: "Preview" }).click()
+    await expect(page).toHaveURL(/\/dashboard\/articles\/\d+\/preview/)
+    await expect(page.getByText("Draft preview").first()).toBeVisible()
   })
 
   test("media: list, upload, metadata, reference count, soft delete (companyadmin)", async ({ page, context }) => {

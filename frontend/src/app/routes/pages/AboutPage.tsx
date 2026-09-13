@@ -9,6 +9,7 @@ import { usePage, PageRenderer } from "@/features/page-builder"
 import { useSeoMeta, JsonLd, type SeoInput } from "@/features/cms/seo"
 import { useScrollDepth } from "@/features/analytics"
 import { useAbout, useFAQs, useSiteSettings } from "@/features/cms"
+import { resolveMediaUrl } from "@/shared/lib"
 import { companyAnalytics } from "@/features/analytics/domains"
 import type { PageSEO } from "@/features/page-builder/types"
 
@@ -49,7 +50,7 @@ export function AboutPage() {
 
   const organization = useMemo(() => {
     const site = settings.data
-    const logo = site?.logo?.file
+    const logo = resolveMediaUrl(site?.logo?.file) ?? site?.logo?.file
     const data: Record<string, unknown> = {
       "@context": "https://schema.org",
       "@type": "Organization",

@@ -4,6 +4,7 @@
     "tagline": "پلتفرم سازمانی",
     "toggleTheme": "تغییر حالت نمایش",
     "toggleLanguage": "تغییر زبان",
+    "languageLabel": "زبان",
     "announcement": "اعلامیه",
     "readMore": "بیشتر بخوانید",
     "dismissAnnouncement": "بستن اعلامیه",
@@ -399,6 +400,28 @@
     "role": "نقش",
     "session": "نشست",
     "sessionActive": "فعال",
+    "viewAll": "مشاهده همه",
+    "manageUsers": "مدیریت کاربران",
+    "attention": {
+      "title": "نیازمند توجه",
+      "description": "پیش‌نویس‌ها، بررسی‌ها و درخواست‌های در انتظار انسان.",
+      "drafts": "پیش‌نویس مقالات",
+      "awaitingReview": "در انتظار بررسی",
+      "pendingApprovals": "تأییدهای در انتظار",
+      "activeLocks": "قفل‌های فعال محتوا",
+      "openInquiries": "استعلام‌های باز",
+      "projectsAwaitingReview": "پروژه‌های در انتظار بررسی"
+    },
+    "actions": {
+      "title": "اقدامات سریع",
+      "description": "رایج‌ترین کارهای فضای کاری را شروع کنید.",
+      "newArticle": "مقاله جدید",
+      "newProject": "پروژه جدید",
+      "uploadMedia": "آپلود رسانه",
+      "reviewQueue": "صف بررسی",
+      "inquiries": "استعلام‌ها",
+      "subscribers": "مشترکان"
+    },
     "quickLinksTitle": "میان‌برهای فضا‌ی کاری",
     "quickLinksDescription": "به هر بخش در دسترس فضای کاری بروید.",
     "errorTitle": "داشبورد در دسترس نیست",
@@ -457,10 +480,17 @@
       },
       "operations": {
         "title": "عملیات",
+        "emptyDescription": "هنوز آپلود، استعلام یا رویداد ویراستاری اخیری وجود ندارد.",
         "description": "فعالیت‌های اخیر در سراسر سکو.",
         "media": "بارگذاری‌های اخیر",
         "contact": "درخواست‌های اخیر",
         "editorial": "فعالیت ویراستاری اخیر"
+      },
+      "recent": {
+        "title": "به‌روزشده‌های اخیر",
+        "description": "به محتوایی که اخیراً لمس کرده‌اید برگردید.",
+        "articles": "مقالات",
+        "projects": "پروژه‌ها"
       },
       "system": {
         "title": "سیستم",
@@ -504,32 +534,42 @@
         "title": "فضای ویراستاری",
         "description": "بازبینی، تأیید و انتشار محتوا."
       }
+    },
+    "translationGaps": {
+      "title": "شکاف‌های ترجمه",
+      "description": "محتوای منتشرشده بدون ترجمه."
     }
   },
   "roles": {
     "SUPER_ADMIN": {
       "name": "مدیر ارشد",
-      "description": "دسترسی کامل به سکو از جمله مدیریت کاربران و نقش‌ها."
+      "description": "دسترسی کامل به سکو از جمله مدیریت کاربران و نقش‌ها.",
+      "responsibilities": "مالک حساب‌ها، نقش‌ها، همه محتوا و پروژه‌ها، رسانه، تأییدهای ویراستاری و عملیات سامانه."
     },
     "COMPANY_ADMIN": {
       "name": "مدیر شرکت",
-      "description": "مدیریت همه محتوای شرکت، رسانه و کاربران."
+      "description": "مدیریت همه محتوای شرکت، رسانه و کاربران.",
+      "responsibilities": "اجرای عملیات روزانه شرکت: مقالات، پروژه‌ها، خدمات، صفحات شرکت، کتابخانه رسانه و حساب‌های کاربری."
     },
     "CONTENT_MANAGER": {
       "name": "مدیر محتوا",
-      "description": "ایجاد و مدیریت مقالات، خدمات و محتوای شرکت."
+      "description": "ایجاد و مدیریت مقالات، خدمات و محتوای شرکت.",
+      "responsibilities": "تولید و تنظیم مقالات، خدمات و محتوای شرکت؛ بارگذاری رسانه؛ پیشبرد جریان ویراستاری."
     },
     "PROJECT_MANAGER": {
       "name": "مدیر پروژه",
-      "description": "مدیریت پروژه‌های پرتفوی."
+      "description": "مدیریت پروژه‌های پرتفوی.",
+      "responsibilities": "مالک پرتفوی پروژه‌ها: فراداده، مطالعات موردی، تصویر شاخص و گالری، و جریان انتشار پروژه."
     },
     "EDITOR": {
       "name": "ویراستار",
-      "description": "نوشتن و ویرایش مقالات."
+      "description": "نوشتن و ویرایش مقالات.",
+      "responsibilities": "نوشتن و پالایش محتوای مقالات، بارگذاری رسانه پشتیبان و مشارکت در بررسی‌های ویراستاری."
     },
     "VIEWER": {
       "name": "بیننده",
-      "description": "دسترسی فقط‌خواندنی به محتوای عمومی."
+      "description": "دسترسی فقط‌خواندنی به محتوای عمومی.",
+      "responsibilities": "خواندن محتوای منتشرشده و پیگیری پیشرفت ویراستاری. امکان ایجاد، ویرایش یا انتشار ندارد."
     },
     "custom": {
       "name": "نقش سفارشی",
@@ -602,6 +642,38 @@
     },
     "edit": "ویرایش مقاله",
     "view": "مشاهده مقاله عمومی",
+    "previewLink": "پیش‌نمایش",
+    "retry": "تلاش مجدد",
+    "clearFilters": "پاک کردن فیلترها",
+    "activeFilters": "فیلترهای فعال",
+    "filters": {
+      "author": "نویسنده",
+      "category": "دسته‌بندی",
+      "language": "زبان",
+      "featured": "ویژه",
+      "languageAll": "همه زبان‌ها",
+      "languageFa": "فارسی",
+      "languageEn": "انگلیسی",
+      "languageAr": "عربی",
+      "featuredAll": "همه",
+      "featuredOnly": "فقط ویژه",
+      "featuredExclude": "غیر ویژه",
+      "categoryAll": "همه دسته‌ها",
+      "authorPlaceholder": "نام کاربری یا شناسه نویسنده…"
+    },
+    "sort": {
+      "label": "مرتب‌سازی",
+      "updatedDesc": "تازه‌ترین به‌روزرسانی",
+      "createdDesc": "تازه‌ترین ایجاد",
+      "publishedDesc": "تازه‌ترین انتشار",
+      "titleAsc": "عنوان الف تا ی"
+    },
+    "paginationLabel": "صفحه‌بندی فهرست مقالات",
+    "previous": "قبلی",
+    "next": "بعدی",
+    "pageOf": "صفحه {{current}} از {{total}}",
+    "totalCount_one": "{{count}} مقاله",
+    "totalCount_other": "{{count}} مقاله",
     "form": {
       "createTitle": "مقاله جدید",
       "editTitle": "ویرایش مقاله",
@@ -621,11 +693,87 @@
       "isPublic": "عمومی"
     }
   },
+  "articleEditor": {
+    "category": "دسته‌بندی",
+    "categoryPlaceholder": "یک دسته انتخاب کنید",
+    "noCategory": "بدون دسته",
+    "coverTitle": "تصویر شاخص",
+    "chooseCover": "انتخاب تصویر",
+    "noCover": "تصویر شاخصی انتخاب نشده. از کتابخانه رسانه انتخاب کنید.",
+    "removeCover": "حذف تصویر",
+    "insertImage": "درج تصویر",
+    "mediaTitle": "درج از کتابخانه رسانه",
+    "excerptEn": "خلاصه (انگلیسی)",
+    "excerptFa": "خلاصه (فارسی)",
+    "excerptAr": "خلاصه (عربی)",
+    "metaTitle": "عنوان متا (سئو)",
+    "metaDescription": "توضیح متا (سئو)",
+    "statusHint": "انتشار از طریق جریان کار ویراستاری انجام می‌شود؛ تغییر وضعیت فقط فراداده را ذخیره می‌کند.",
+    "saveFailed": "مقاله ذخیره نشد.",
+    "loadFailed": "مقاله بارگذاری نشد.",
+    "savedAt": "ذخیره شد {{time}}",
+    "unsavedChanges": "تغییرات ذخیره‌نشده",
+    "preview": "پیش‌نمایش",
+    "previewHint": "پیش‌نمایش پیش‌نویس، چیدمان عمومی مقاله را نشان می‌دهد.",
+    "linkPrompt": "نشانی پیوند (https://…)",
+    "undo": "واگرد",
+    "redo": "از نو",
+    "h1": "تیتر ۱",
+    "h2": "تیتر ۲",
+    "h3": "تیتر ۳",
+    "paragraph": "پاراگراف",
+    "bold": "درشت",
+    "italic": "کج",
+    "underline": "زیرخط",
+    "strikethrough": "خط‌خورده",
+    "inlineCode": "کد درون‌خطی",
+    "bulletList": "فهرست نقطه‌ای",
+    "orderedList": "فهرست شماره‌دار",
+    "indent": "افزایش تورفتگی",
+    "outdent": "کاهش تورفتگی",
+    "quote": "نقل‌قول",
+    "link": "درج پیوند",
+    "removeLink": "حذف پیوند",
+    "alignLeft": "چپ‌چین",
+    "alignCenter": "وسط‌چین",
+    "alignRight": "راست‌چین",
+    "image": "درج تصویر از کتابخانه",
+    "table": "درج جدول",
+    "codeBlock": "درج بلوک کد",
+    "horizontalRule": "درج جداکننده",
+    "wordCount": "{{count}} واژه",
+    "charCount": "{{count}} نویسه",
+    "readingTime": "{{count}} دقیقه خواندن",
+    "autosafeHint": "هر ۳۰ ثانیه ذخیره خودکار",
+    "healthTitle": "سلامت محتوا",
+    "totalWords": "مجموع کلمات",
+    "headings": "سرفصل‌ها",
+    "bodyImages": "تصاویر متن",
+    "healthNoCover": "هنوز تصویر شاخص انتخاب نشده است.",
+    "healthNoHeadings": "سرفصلی یافت نشد — برای خوانایی H2/H3 اضافه کنید.",
+    "healthThin": "محتوای کم در: {{locales}} (کمتر از ۵۰ کلمه).",
+    "healthGood": "محتوا در همه زبان‌ها سالم به نظر می‌رسد."
+  },
+  "articlePreview": {
+    "title": "پیش‌نمایش مقاله",
+    "subtitle": "پیش‌نویس ذخیره‌شده در سایت عمومی چگونه خوانده می‌شود. فقط پیش‌نمایش — چیزی منتشر نمی‌شود.",
+    "localeLabel": "زبان پیش‌نمایش",
+    "draftBadge": "پیش‌نمایش پیش‌نویس",
+    "featured": "ویژه",
+    "emptyBody": "برای این زبان هنوز متنی ذخیره نشده است.",
+    "notFound": "مقاله یافت نشد",
+    "notFoundDescription": "مقاله درخواستی وجود ندارد.",
+    "errorTitle": "پیش‌نمایش بارگذاری نشد",
+    "errorDescription": "در دریافت مقاله خطایی رخ داد.",
+    "backToList": "بازگشت به مقالات"
+  },
   "projectWorkspace": {
     "title": "پروژه‌ها",
     "subtitle": "مدیریت پروژه‌های پرتفوی و مطالعات موردی.",
     "searchPlaceholder": "جستجوی پروژه‌ها…",
     "newProject": "پروژه جدید",
+    "totalCount_one": "{{count}} پروژه",
+    "totalCount_other": "{{count}} پروژه",
     "statusAll": "همه",
     "statusDraft": "پیش‌نویس",
     "statusReview": "در حال بررسی",
@@ -644,12 +792,49 @@
     },
     "edit": "ویرایش پروژه",
     "openCaseStudy": "مشاهده مطالعه موردی",
+    "saveFailed": "پروژه ذخیره نشد.",
+    "loadFailed": "پروژه بارگذاری نشد.",
+    "savedAt": "ذخیره شد {{time}}",
+    "unsavedChanges": "تغییرات ذخیره‌نشده",
+    "preview": "پیش‌نمایش",
+    "submitForReview": "ارسال برای بررسی",
+    "submitComment": "پروژه از استودیو پروژه برای بررسی ارسال شد.",
+    "wordCount": "{{count}} کلمه",
+    "lastUpdated": "به‌روزرسانی {{time}}",
+    "insertImage": "درج تصویر",
+    "excerptEn": "خلاصه (انگلیسی)",
+    "excerptFa": "خلاصه (فارسی)",
+    "excerptAr": "خلاصه (عربی)",
+    "coverTitle": "تصویر شاخص",
+    "chooseCover": "انتخاب تصویر شاخص",
+    "noCover": "تصویر شاخصی انتخاب نشده است.",
+    "removeCover": "حذف تصویر شاخص",
+    "mediaTitle": "انتخاب از کتابخانه رسانه",
+    "metaTitle": "عنوان متا (سئو)",
+    "metaDescription": "توضیحات متا (سئو)",
+    "statusHint": "انتشار از طریق جریان کار ویراستاری انجام می‌شود.",
+    "categoryPlaceholder": "انتخاب دسته",
+    "noCategory": "بدون دسته",
+    "noTechnologies": "هنوز فناوری‌ای تعریف نشده است.",
+    "createDraft": "ایجاد پیش‌نویس",
+    "gallery": {
+      "title": "گالری",
+      "add": "افزودن تصویر",
+      "empty": "هنوز تصویری در گالری نیست.",
+      "saveFirst": "ابتدا پروژه را ذخیره کنید، سپس تصویر اضافه کنید.",
+      "coverBadge": "شاخص",
+      "moveLeft": "انتقال به قبل",
+      "moveRight": "انتقال به بعد",
+      "toggleCover": "تغییر نشان شاخص",
+      "remove": "حذف تصویر"
+    },
     "form": {
       "createTitle": "پروژه جدید",
       "editTitle": "ویرایش پروژه",
       "subtitle": "فراداده پروژه را اینجا ذخیره کنید؛ انتشار از طریق جریان کار ویراستاری انجام می‌شود.",
       "identity": "شناسنامه",
       "content": "محتوا",
+      "details": "جزئیات",
       "publishing": "انتشار",
       "titleEn": "عنوان (انگلیسی)",
       "titleFa": "عنوان (فارسی)",
@@ -664,9 +849,28 @@
       "descriptionFa": "توضیحات (فارسی)",
       "descriptionAr": "توضیحات (عربی)",
       "status": "وضعیت",
+      "category": "دسته",
+      "technologies": "فناوری‌ها",
       "isFeatured": "ویژه",
       "isPublic": "عمومی"
     }
+  },
+  "projectPreview": {
+    "title": "پیش‌نمایش پروژه",
+    "subtitle": "نمای ذخیره‌شده پروژه در سایت عمومی. فقط پیش‌نمایش — چیزی منتشر نمی‌شود.",
+    "localeLabel": "زبان پیش‌نمایش",
+    "draftBadge": "پیش‌نمایش پیش‌نویس",
+    "featured": "ویژه",
+    "emptyBody": "هنوز توضیحی برای این زبان ذخیره نشده است.",
+    "notFound": "پروژه یافت نشد",
+    "notFoundDescription": "پروژه درخواستی وجود ندارد.",
+    "errorTitle": "پیش‌نمایش بارگذاری نشد",
+    "errorDescription": "در دریافت پروژه خطایی رخ داد.",
+    "backToList": "بازگشت به پروژه‌ها",
+    "client": "کارفرما",
+    "location": "موقعیت",
+    "liveUrl": "سایت زنده",
+    "gallery": "گالری"
   },
   "mediaWorkspace": {
     "title": "کتابخانه رسانه",
@@ -693,11 +897,48 @@
     "uploadFailed": "بارگذاری ناموفق بود",
     "metadataSaved": "فراداده ذخیره شد",
     "deleted": "رسانه حذف شد",
+    "copyUrl": "کپی نشانی فایل",
+    "missingAlt": "بدون متن جایگزین",
+    "fileTooLarge": "فایل‌های بزرگ‌تر از ۲۵ مگابایت پذیرفته نمی‌شوند.",
+    "referencedWarning": "در {{count}} جا استفاده شده — پیوندها پس از حذف نرم همچنان کار می‌کنند.",
+    "errorTitle": "رسانه بارگذاری نشد",
+    "errorDescription": "در دریافت کتابخانه رسانه خطایی رخ داد.",
+    "sortLabel": "مرتب‌سازی رسانه",
+    "sortNewest": "تازه‌ترین اول",
+    "sortOldest": "قدیمی‌ترین اول",
+    "sortLargest": "بزرگ‌ترین اول",
+    "sortName": "نام الف تا ی",
+    "viewGrid": "نمای شبکه‌ای",
+    "viewList": "نمای فهرستی",
+    "previewTitle": "پیش‌نمایش رسانه",
+    "imageLoadFailed": "پیش‌نمایش در دسترس نیست.",
+    "retry": "تلاش مجدد",
+    "totalCount_one": "{{count}} فایل",
+    "totalCount_other": "{{count}} فایل",
     "form": {
       "title": "عنوان",
       "titleFa": "عنوان (فارسی)",
       "alt": "متن جایگزین (انگلیسی)",
+      "altFa": "متن جایگزین (فارسی)",
+      "caption": "زیرنویس (انگلیسی)",
+      "captionFa": "زیرنویس (فارسی)",
       "isPublic": "عمومی"
+    },
+    "pickerDescription": "رسانه مورد نیاز محتوای خود را مرور، بارگذاری و انتخاب کنید.",
+    "pickerDropHint": "تصویری را اینجا رها کنید یا برای مرور کلیک کنید",
+    "pickerEmptyQuery": "رسانه‌ای برای «{{query}}» یافت نشد.",
+    "pickerPrev": "قبلی",
+    "pickerNext": "بعدی",
+    "pickerUse": "استفاده از این تصویر",
+    "pickerMeta": {
+      "titleEn": "عنوان (انگلیسی)",
+      "titleFa": "عنوان (فارسی)",
+      "titleAr": "عنوان (عربی)",
+      "altEn": "متن جایگزین (انگلیسی)",
+      "altFa": "متن جایگزین (فارسی)",
+      "altAr": "متن جایگزین (عربی)",
+      "captionEn": "زیرنویس (انگلیسی)",
+      "captionAr": "زیرنویس (عربی)"
     }
   },
   "contactWorkspace": {
@@ -862,6 +1103,7 @@
       "activeHint": "حساب‌های غیرفعال نمی‌توانند وارد شوند.",
       "staff": "وضعیت کارمندی",
       "staffHint": "حساب‌های کارمندی می‌توانند وارد فضای کاری شوند.",
+      "language": "زبان ترجیحی",
       "lastLogin": "آخرین ورود",
       "dateJoined": "تاریخ عضویت"
     },
@@ -873,7 +1115,31 @@
       "deactivate": "غیرفعال‌سازی",
       "setPassword": "تعیین گذرواژه",
       "savePassword": "ذخیرهٔ گذرواژه",
-      "viewRoles": "نقش‌ها و مجوزها"
+      "viewRoles": "نقش‌ها و مجوزها",
+      "backToUsers": "بازگشت به کاربران"
+    },
+    "confirm": {
+      "activateTitle": "این حساب فعال شود؟",
+      "activateBody": "{{username}} دوباره می‌تواند وارد شود.",
+      "deactivateTitle": "این حساب غیرفعال شود؟",
+      "deactivateBody": "{{username}} همه‌جا خارج می‌شود و دیگر نمی‌تواند وارد شود.",
+      "setPasswordTitle": "گذرواژهٔ جدید تعیین شود؟",
+      "setPasswordBody": "گذرواژهٔ فعلی هرگز نمایش داده نمی‌شود. {{username}} همه‌جا خارج می‌شود."
+    },
+    "detail": {
+      "title": "جزئیات کاربر",
+      "notFoundTitle": "کاربر یافت نشد",
+      "notFoundDescription": "این حساب ممکن است حذف شده باشد یا پیوند نادرست است."
+    },
+    "roleSelect": {
+      "permissionCount_one": "{{count}} دسترسی",
+      "permissionCount_other": "{{count}} دسترسی"
+    },
+    "roleSummary": {
+      "selectRole": "یک نقش انتخاب کنید تا دقیقاً ببینید چه چیزی می‌دهد.",
+      "superAdminWarning": "SUPER_ADMIN همه دسترسی‌ها از جمله مدیریت کاربران را می‌دهد. با احتیاط اختصاص دهید — بک‌اند حذف آخرین دارنده را مسدود می‌کند.",
+      "roleAuthoritative": "نقش‌ها معتبرند: حساب دقیقاً دسترسی‌های همین نقش را از بک‌اند می‌گیرد.",
+      "restrictions": "برای این نقش شامل نیست"
     },
     "dialog": {
       "createTitle": "ایجاد کاربر",
@@ -923,6 +1189,67 @@
       "passwordMin": "گذرواژه باید حداقل ۸ نویسه باشد",
       "passwordMismatch": "گذرواژه‌ها یکسان نیستند",
       "roleRequired": "یک نقش انتخاب کنید"
+    }
+  },
+  "studio": {
+    "common": {
+      "editingLanguage": "زبان ویرایش"
+    },
+    "health": {
+      "title": "سلامت محتوا",
+      "critical": "{{count}} بحرانی",
+      "warning": "{{count}} هشدار",
+      "good": "سالم",
+      "allGood": "محتوا در همه زبان‌ها سالم به نظر می‌رسد.",
+      "missingTitle": "عنوان {{locale}} خالی است",
+      "missingSlug": "نامک خالی است",
+      "missingSummary": "خلاصه {{locale}} خالی است",
+      "missingCover": "هنوز تصویر شاخص انتخاب نشده است.",
+      "thinBody": "متن {{locale}} کوتاه است (کمتر از ۵۰ کلمه)",
+      "missingProjectMeta": "مشتری و موقعیت هر دو خالی هستند",
+      "emptyCaseStudy": "مطالعه موردی خالی است",
+      "emptyCaseSection": "بخش {{section}} خالی است",
+      "hiddenSection": "بخش پنهان: {{section}}",
+      "emptyGallery": "هنوز تصویری در گالری نیست",
+      "galleryMissingAlt": "برخی تصاویر گالری متن جایگزین ندارند",
+      "stages": "مراحل",
+      "nodes": "گره‌های معماری"
+    },
+    "caseStudy": {
+      "title": "مطالعه موردی",
+      "challenge": "چالش",
+      "challengeBody": "چالش",
+      "objectives": "اهداف",
+      "objectivesBody": "اهداف",
+      "solution": "راه‌حل",
+      "solutionBody": "رویکرد راه‌حل",
+      "results": "نتایج",
+      "resultsBody": "نتایج و اثر",
+      "stages": "مراحل پیاده‌سازی",
+      "stagesEmpty": "هنوز مرحله‌ای نیست.",
+      "addStage": "افزودن مرحله",
+      "stageN": "مرحله {{count}}",
+      "stageTitle": "عنوان مرحله",
+      "stageDetail": "جزئیات مرحله",
+      "architecture": "معماری",
+      "archDescription": "توضیح معماری",
+      "nodesEmpty": "هنوز گره معماری نیست.",
+      "addNode": "افزودن گره",
+      "nodeN": "گره {{count}}",
+      "nodeLayer": "نام لایه",
+      "nodeLabels": "برچسب‌ها (هر خط یکی)",
+      "nodeLabelsHint": "Django\nPostgreSQL\nRedis",
+      "toggleVisibility": "تغییر نمایش بخش",
+      "moveUp": "انتقال به بالا",
+      "moveDown": "انتقال به پایین",
+      "duplicate": "تکثیر",
+      "remove": "حذف"
+    },
+    "article": {
+      "tags": "برچسب‌ها",
+      "tagsPlaceholder": "افزودن برچسب...",
+      "noTags": "برچسبی انتخاب نشده است.",
+      "removeTag": "حذف برچسب"
     }
   }
 }

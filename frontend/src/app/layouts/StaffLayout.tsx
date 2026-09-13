@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react"
+import { Suspense, useEffect, useRef, useState } from "react"
 import { Outlet } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 
@@ -16,6 +16,39 @@ import { StaffSidebar, StaffLayoutTopbar } from "./StaffSidebar"
 export function StaffLayout() {
   const { t } = useTranslation()
   const [menuOpen, setMenuOpen] = useState(false)
+  const menuButtonRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false)
+      if (event.key === "Tab") {
+        const root = menuButtonRef.current
+        if (!root) return
+        const focusable = root.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        )
+        if (!focusable.length) return
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault()
+          last.focus()
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault()
+          first.focus()
+        }
+      }
+    }
+    document.addEventListener("keydown", onKey)
+    const timer = window.setTimeout(() => {
+      menuButtonRef.current?.querySelector<HTMLElement>("a[href], button")?.focus()
+    }, 0)
+    return () => {
+      document.removeEventListener("keydown", onKey)
+      window.clearTimeout(timer)
+    }
+  }, [menuOpen])
 
   return (
     <div className="min-h-screen">
@@ -31,7 +64,7 @@ export function StaffLayout() {
             className="absolute inset-0 bg-background/60 backdrop-blur-sm"
             onClick={() => setMenuOpen(false)}
           />
-          <div className="absolute inset-y-0 start-0 w-72 max-w-[85%] shadow-lg">
+          <div ref={menuButtonRef} className="absolute inset-y-0 start-0 w-72 max-w-[85%] shadow-lg">
             <StaffSidebar onNavigate={() => setMenuOpen(false)} />
           </div>
         </div>

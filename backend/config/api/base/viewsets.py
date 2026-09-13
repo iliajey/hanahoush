@@ -115,7 +115,11 @@ class BaseViewSet(viewsets.ModelViewSet):
     def destroy(self, request: Request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
-        return self.build_response(message="Deleted successfully", status_code=status.HTTP_204_NO_CONTENT)
+        # RFC 9110: a 204 response MUST NOT carry a message body. DRF drops
+        # the payload for 204s, so build a bare response instead of the
+        # standard envelope (whose message would be silently stripped and
+        # confuse API clients waiting for JSON).
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     # Soft-delete support
     @action(detail=True, methods=["post"], url_path="soft-delete")

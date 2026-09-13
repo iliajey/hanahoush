@@ -110,7 +110,7 @@ export function RegisterForm() {
 
       <p className="text-center text-sm text-muted-foreground">
         {t("auth.hasAccount")}{" "}
-        <Link to="/login" className="text-primary hover:underline">
+        <Link to="/login" className="font-medium text-primary underline underline-offset-4 hover:no-underline">
           {t("auth.login")}
         </Link>
       </p>

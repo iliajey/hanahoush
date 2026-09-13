@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { Check, Image as ImageIcon, Loader2, Search, UploadCloud, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -9,6 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Spinner } from "@/components/ui/spinner"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/shared/lib/cn"
+import { resolveMediaFile } from "@/shared/lib"
 
 import { listMedia, uploadMedia, updateMedia } from "../api"
 import { formatMediaSize, type MediaFile, type MediaMetadata } from "../types"
@@ -49,6 +51,7 @@ export function MediaPicker({
   const [dragOver, setDragOver] = useState(false)
   const [saving, setSaving] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  const { t } = useTranslation()
 
   const load = useCallback(async (q: string, p: number) => {
     setLoading(true)
@@ -58,11 +61,11 @@ export function MediaPicker({
       setItems(result.items)
       setCount(result.pagination?.count ?? 0)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not load the media library.")
+      setError(err instanceof Error ? err.message : t("mediaWorkspace.errorDescription"))
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [t])
 
   useEffect(() => {
     if (!open) return
@@ -89,7 +92,7 @@ export function MediaPicker({
       setItems((prev) => [result.media as MediaFile, ...prev])
       setCount((c) => c + 1)
     } else {
-      setUploadError(result.message || "Upload failed — please try again.")
+      setUploadError(result.message || t("mediaWorkspace.uploadFailed"))
     }
   }
 
@@ -125,7 +128,7 @@ export function MediaPicker({
       <DialogContent className="max-w-3xl">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>Browse, upload and select media for your content.</DialogDescription>
+          <DialogDescription>{t("mediaWorkspace.pickerDescription")}</DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-col gap-4">
@@ -135,9 +138,9 @@ export function MediaPicker({
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search media…"
+                placeholder={t("mediaWorkspace.searchPlaceholder")}
                 className="ps-9"
-                aria-label="Search media"
+                aria-label={t("mediaWorkspace.searchPlaceholder")}
               />
             </div>
             <Button
@@ -148,16 +151,16 @@ export function MediaPicker({
               disabled={uploading}
             >
               {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <UploadCloud className="h-4 w-4" />}
-              Upload
+              {t("mediaWorkspace.upload")}
             </Button>
-            <input ref={inputRef} type="file" className="sr-only" onChange={onPickFile} aria-label="Upload file" />
+            <input ref={inputRef} type="file" className="sr-only" onChange={onPickFile} aria-label={t("mediaWorkspace.selectFile")} />
           </div>
 
           {/* Drag & drop zone */}
           <div
             role="button"
             tabIndex={0}
-            aria-label="Drop a file to upload"
+            aria-label={t("mediaWorkspace.pickerDropHint")}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") inputRef.current?.click()
             }}
@@ -177,7 +180,7 @@ export function MediaPicker({
               <div className="w-full max-w-sm">
                 <div className="flex items-center gap-2 text-sm">
                   <Spinner size="sm" />
-                  Uploading… {uploadPercent}%
+                  {t("mediaWorkspace.uploading")} {uploadPercent}%
                 </div>
                 <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-muted">
                   <div
@@ -189,7 +192,7 @@ export function MediaPicker({
             ) : (
               <>
                 <UploadCloud className="h-5 w-5" aria-hidden="true" />
-                Drop an image here, or click to browse
+                {t("mediaWorkspace.pickerDropHint")}
               </>
             )}
           </div>
@@ -215,7 +218,9 @@ export function MediaPicker({
             </div>
           ) : items.length === 0 ? (
             <p className="py-10 text-center text-sm text-muted-foreground">
-              No media found{query ? ` for “${query}”` : ""}. Upload something above.
+              {query
+                ? t("mediaWorkspace.pickerEmptyQuery", { query })
+                : t("mediaWorkspace.empty")}
             </p>
           ) : (
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -236,9 +241,9 @@ export function MediaPicker({
                     aria-pressed={isSelected}
                     aria-label={media.alt_text_en || media.original_name}
                   >
-                    {media.preview_url ? (
+                    {media.preview_url || media.file ? (
                       <img
-                        src={media.preview_url}
+                        src={resolveMediaFile(media) ?? ""}
                         alt={media.alt_text_en || media.original_name}
                         loading="lazy"
                         className="h-full w-full object-cover"
@@ -262,7 +267,7 @@ export function MediaPicker({
           {count > 0 ? (
             <div className="flex items-center justify-between text-sm text-muted-foreground">
               <span>
-                {count} item{count === 1 ? "" : "s"}
+                {t("mediaWorkspace.totalCount", { count })}
               </span>
               <div className="flex items-center gap-2">
                 <Button
@@ -276,9 +281,9 @@ export function MediaPicker({
                     void load(query, next)
                   }}
                 >
-                  Previous
+                  {t("mediaWorkspace.pickerPrev")}
                 </Button>
-                <span>
+                <span dir="ltr">
                   {page} / {totalPages}
                 </span>
                 <Button
@@ -292,7 +297,7 @@ export function MediaPicker({
                     void load(query, next)
                   }}
                 >
-                  Next
+                  {t("mediaWorkspace.pickerNext")}
                 </Button>
               </div>
             </div>
@@ -302,73 +307,106 @@ export function MediaPicker({
           {selected ? (
             <div className="rounded-2xl border bg-card p-4">
               <div className="mb-3 flex items-center justify-between gap-2">
-                <h4 className="text-sm font-semibold">{selected.original_name}</h4>
+                <h4 className="text-sm font-semibold" dir="auto">{selected.original_name}</h4>
                 <button
                   type="button"
                   className="rounded-full p-1 text-muted-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2"
                   onClick={() => setSelected(null)}
-                  aria-label="Close metadata editor"
+                  aria-label={t("common.close")}
                 >
                   <X className="h-4 w-4" />
                 </button>
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="flex flex-col gap-1">
-                  <Label htmlFor="media-alt-en">Alt text (EN)</Label>
-                  <Input
-                    id="media-alt-en"
-                    value={selected.alt_text_en}
-                    onChange={(e) => setSelected({ ...selected, alt_text_en: e.target.value })}
-                  />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <Label htmlFor="media-title-en">Title (EN)</Label>
+                  <Label htmlFor="media-title-en">{t("mediaWorkspace.pickerMeta.titleEn")}</Label>
                   <Input
                     id="media-title-en"
                     value={selected.title_en}
                     onChange={(e) => setSelected({ ...selected, title_en: e.target.value })}
+                    dir="auto"
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <Label htmlFor="media-alt-fa">متن جایگزین (FA)</Label>
+                  <Label htmlFor="media-title-fa">{t("mediaWorkspace.pickerMeta.titleFa")}</Label>
+                  <Input
+                    id="media-title-fa"
+                    value={selected.title_fa}
+                    onChange={(e) => setSelected({ ...selected, title_fa: e.target.value })}
+                    dir="auto"
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <Label htmlFor="media-title-ar">{t("mediaWorkspace.pickerMeta.titleAr")}</Label>
+                  <Input
+                    id="media-title-ar"
+                    value={selected.title_ar}
+                    onChange={(e) => setSelected({ ...selected, title_ar: e.target.value })}
+                    dir="auto"
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <Label htmlFor="media-alt-en">{t("mediaWorkspace.pickerMeta.altEn")}</Label>
+                  <Input
+                    id="media-alt-en"
+                    value={selected.alt_text_en}
+                    onChange={(e) => setSelected({ ...selected, alt_text_en: e.target.value })}
+                    dir="auto"
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <Label htmlFor="media-alt-fa">{t("mediaWorkspace.pickerMeta.altFa")}</Label>
                   <Input
                     id="media-alt-fa"
                     value={selected.alt_text_fa}
                     onChange={(e) => setSelected({ ...selected, alt_text_fa: e.target.value })}
+                    dir="auto"
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <Label htmlFor="media-alt-ar">النص البديل (AR)</Label>
+                  <Label htmlFor="media-alt-ar">{t("mediaWorkspace.pickerMeta.altAr")}</Label>
                   <Input
                     id="media-alt-ar"
                     value={selected.alt_text_ar}
                     onChange={(e) => setSelected({ ...selected, alt_text_ar: e.target.value })}
+                    dir="auto"
                   />
                 </div>
                 <div className="flex flex-col gap-1 sm:col-span-2">
-                  <Label htmlFor="media-caption-en">Caption (EN)</Label>
+                  <Label htmlFor="media-caption-en">{t("mediaWorkspace.pickerMeta.captionEn")}</Label>
                   <Textarea
                     id="media-caption-en"
                     rows={2}
                     value={selected.caption_en}
                     onChange={(e) => setSelected({ ...selected, caption_en: e.target.value })}
+                    dir="auto"
+                  />
+                </div>
+                <div className="flex flex-col gap-1 sm:col-span-2">
+                  <Label htmlFor="media-caption-ar">{t("mediaWorkspace.pickerMeta.captionAr")}</Label>
+                  <Textarea
+                    id="media-caption-ar"
+                    rows={2}
+                    value={selected.caption_ar}
+                    onChange={(e) => setSelected({ ...selected, caption_ar: e.target.value })}
+                    dir="auto"
                   />
                 </div>
               </div>
-              <div className="mt-3 flex items-center justify-between gap-2">
-                <span className="text-xs text-muted-foreground">
-                  {selected.mime_type} · {formatMediaSize(selected.size)} · used {selected.reference_count}×
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+                <span className="text-xs text-muted-foreground" dir="ltr">
+                  {selected.mime_type} · {formatMediaSize(selected.size)} · {t("mediaWorkspace.referenceCount", { count: selected.reference_count })}
                 </span>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <Button type="button" size="sm" variant="outline" onClick={() => setSelected(null)}>
-                    Cancel
+                    {t("common.cancel")}
                   </Button>
                   <Button type="button" size="sm" onClick={() => void saveMetadata()} disabled={saving}>
                     {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                    Save metadata
+                    {t("common.save")}
                   </Button>
                   <Button type="button" size="sm" onClick={() => onSelect?.(selected)}>
-                    Use this image
+                    {t("mediaWorkspace.pickerUse")}
                   </Button>
                 </div>
               </div>

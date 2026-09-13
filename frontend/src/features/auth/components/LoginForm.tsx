@@ -66,7 +66,7 @@ export function LoginForm() {
 
       <div className="flex items-center justify-between">
         <RememberMe control={control} name="remember_me" />
-        <Link to="/forgot-password" className="text-sm text-primary hover:underline">
+        <Link to="/forgot-password" className="text-sm font-medium text-primary underline underline-offset-4 hover:no-underline">
           {t("auth.forgotPassword")}
         </Link>
       </div>
@@ -84,7 +84,7 @@ export function LoginForm() {
 
       <p className="text-center text-sm text-muted-foreground">
         {t("auth.noAccount")}{" "}
-        <Link to="/register" className="text-primary hover:underline">
+        <Link to="/register" className="font-medium text-primary underline underline-offset-4 hover:no-underline">
           {t("auth.register")}
         </Link>
       </p>

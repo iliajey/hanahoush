@@ -76,6 +76,15 @@ const DashboardPage = lazyPage(() =>
 const UsersWorkspacePage = lazyPage(() =>
   import("@/features/users/pages/UsersWorkspacePage").then((m) => ({ default: m.UsersWorkspacePage })),
 )
+const UserCreatePage = lazyPage(() =>
+  import("@/features/users/pages/UserCreatePage").then((m) => ({ default: m.UserCreatePage })),
+)
+const UserDetailPage = lazyPage(() =>
+  import("@/features/users/pages/UserDetailPage").then((m) => ({ default: m.UserDetailPage })),
+)
+const UserEditPage = lazyPage(() =>
+  import("@/features/users/pages/UserEditPage").then((m) => ({ default: m.UserEditPage })),
+)
 const EditorialWorkspaceHub = lazyPage(() =>
   import("@/features/editorial/pages/EditorialWorkspaceHub").then((m) => ({ default: m.EditorialWorkspaceHub })),
 )
@@ -88,11 +97,17 @@ const ArticlesWorkspacePage = lazyPage(() =>
 const ArticleEditPage = lazyPage(() =>
   import("@/features/articles/workspace/ArticleEditPage").then((m) => ({ default: m.ArticleEditPage })),
 )
+const ArticlePreviewPage = lazyPage(() =>
+  import("@/features/articles/workspace/ArticlePreviewPage").then((m) => ({ default: m.ArticlePreviewPage })),
+)
 const ProjectsWorkspacePage = lazyPage(() =>
   import("@/features/projects/workspace/ProjectsWorkspacePage").then((m) => ({ default: m.ProjectsWorkspacePage })),
 )
 const ProjectEditPage = lazyPage(() =>
   import("@/features/projects/workspace/ProjectEditPage").then((m) => ({ default: m.ProjectEditPage })),
+)
+const ProjectPreviewPage = lazyPage(() =>
+  import("@/features/projects/workspace/ProjectPreviewPage").then((m) => ({ default: m.ProjectPreviewPage })),
 )
 const MediaWorkspacePage = lazyPage(() =>
   import("@/features/media/workspace/MediaWorkspacePage").then((m) => ({ default: m.MediaWorkspacePage })),
@@ -245,6 +260,14 @@ const routes: RouteObject[] = [
             ),
           },
           {
+            path: "articles/:id/preview",
+            element: (
+              <RequireAnyPermission permissions={[PERMISSIONS.ARTICLES_VIEW]} staffOnly>
+                <ArticlePreviewPage />
+              </RequireAnyPermission>
+            ),
+          },
+          {
             path: "projects",
             element: (
               <RequireAnyPermission permissions={[PERMISSIONS.PROJECTS_VIEW]} staffOnly>
@@ -266,6 +289,14 @@ const routes: RouteObject[] = [
               <RequirePermission permissions={[PERMISSIONS.PROJECTS_UPDATE]} staffOnly>
                 <ProjectEditPage />
               </RequirePermission>
+            ),
+          },
+          {
+            path: "projects/:id/preview",
+            element: (
+              <RequireAnyPermission permissions={[PERMISSIONS.PROJECTS_VIEW]} staffOnly>
+                <ProjectPreviewPage />
+              </RequireAnyPermission>
             ),
           },
           {
@@ -301,6 +332,30 @@ const routes: RouteObject[] = [
             element: (
               <RequireSuperAdmin>
                 <UsersWorkspacePage />
+              </RequireSuperAdmin>
+            ),
+          },
+          {
+            path: "users/new",
+            element: (
+              <RequireSuperAdmin>
+                <UserCreatePage />
+              </RequireSuperAdmin>
+            ),
+          },
+          {
+            path: "users/:id",
+            element: (
+              <RequireSuperAdmin>
+                <UserDetailPage />
+              </RequireSuperAdmin>
+            ),
+          },
+          {
+            path: "users/:id/edit",
+            element: (
+              <RequireSuperAdmin>
+                <UserEditPage />
               </RequireSuperAdmin>
             ),
           },

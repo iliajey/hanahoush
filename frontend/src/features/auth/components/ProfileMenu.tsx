@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 import { Link, useNavigate } from "react-router-dom"
-import { ChevronDown, LogOut, LayoutDashboard } from "lucide-react"
+import { ChevronDown, LogOut, LayoutDashboard, User } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -54,6 +54,12 @@ export function ProfileMenu() {
           <Link to="/dashboard">
             <LayoutDashboard className="me-2 h-4 w-4" />
             {t("nav.dashboard")}
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link to="/dashboard/profile">
+            <User className="me-2 h-4 w-4" />
+            {t("auth.profile")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />

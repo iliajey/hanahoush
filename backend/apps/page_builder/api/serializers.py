@@ -6,6 +6,7 @@ for computed localized fields and section ``config`` values.
 from rest_framework import serializers
 
 from apps.company.models import SiteSettings
+from apps.core.media import media_file_url
 
 from ..localization import normalize_lang, resolve_localized, resolve_section_config
 from ..models import (
@@ -76,7 +77,7 @@ class SEOSerializer(serializers.ModelSerializer):
 
     def get_og_image(self, obj):
         if obj.og_image:
-            return obj.og_image.file.url
+            return media_file_url(self.context.get("request"), obj.og_image.file)
         return None
 
 

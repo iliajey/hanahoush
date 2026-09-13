@@ -31,21 +31,29 @@ test.describe("RTL / localization QA (Part F)", () => {
       }
     })
 
-    test(`${locale.code}: language toggle + staff workspace direction`, async ({ page, context }) => {
+    test(`${locale.code}: language dropdown + staff workspace direction`, async ({ page, context }) => {
       await forceLocale(context, locale.code)
       await page.goto("/")
       await expect(page.locator("body")).toBeVisible()
 
-      // The in-app toggle is localized (aria-label varies per locale), so we
-      // target the stable Languages icon; cycling must visit all three locales.
-      const toggle = page.locator("header button:has(svg.lucide-languages)").first()
+      // The language dropdown opens an explicit FA/EN/AR menu (Phase 14):
+      // open it, verify all three options, then select each in turn.
+      const toggle = page.locator('header button[aria-haspopup="listbox"]').first()
       await expect(toggle).toBeVisible()
+      await toggle.click()
+      const menu = page.getByRole("listbox").first()
+      await expect(menu).toBeVisible()
+      for (const name of ["English", "فارسی", "العربية"]) {
+        await expect(menu.getByRole("option", { name: new RegExp(name) }).first()).toBeVisible()
+      }
       const seen: string[] = []
-      for (let i = 0; i < 3; i += 1) {
-        await toggle.click()
+      for (const name of ["English", "فارسی", "العربية"]) {
+        await menu.getByRole("option", { name: new RegExp(name) }).first().click()
         await page.waitForTimeout(250)
         const lang = await page.evaluate(() => document.documentElement.getAttribute("lang"))
         seen.push(lang ?? "")
+        await toggle.click().catch(() => {})
+        await page.waitForTimeout(150)
       }
       expect(new Set(seen).size).toBe(3) // fa, en, ar each appear
 

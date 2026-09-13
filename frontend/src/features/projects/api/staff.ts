@@ -34,12 +34,48 @@ export interface StaffProject {
   updated_at: string
 }
 
+/** Localized leaf: plain string or a per-locale {fa,en,ar} object. */
+export type LocalizedText = string | { fa?: string; en?: string; ar?: string }
+
+export interface CaseStudyStage {
+  stage: LocalizedText
+  detail: LocalizedText
+}
+
+export interface CaseStudyArchitecture {
+  description?: LocalizedText
+  nodes?: Array<{ layer: string; labels: string[] | Record<string, string[]> }>
+}
+
+export interface CaseStudyRaw {
+  challenge?: LocalizedText
+  objectives?: LocalizedText
+  solution_approach?: LocalizedText
+  implementation_stages?: CaseStudyStage[]
+  architecture?: CaseStudyArchitecture
+  results?: LocalizedText
+}
+
 export interface StaffProjectDetail extends StaffProject {
   description_fa: string
   description_en: string
   description_ar: string
   meta_title: string
   meta_description: string
+  images?: ProjectGalleryRow[]
+  og_image?: { id: number; file: string; alt_text_en: string } | null
+  case_study_raw?: CaseStudyRaw | null
+}
+
+export interface ProjectGalleryRow {
+  id: number
+  image: number
+  image_url: string
+  alt_text_fa: string
+  alt_text_en: string
+  alt_text_ar: string
+  sort_order: number
+  is_cover: boolean
 }
 
 export interface StaffProjectListParams {
@@ -61,6 +97,8 @@ export interface StaffProjectPayload {
   description_fa?: string
   description_en?: string
   description_ar?: string
+  category?: number | null
+  technologies?: number[]
   client?: string
   location?: string
   start_date?: string | null
@@ -70,7 +108,14 @@ export interface StaffProjectPayload {
   is_featured?: boolean
   is_public?: boolean
   cover_image?: number | null
+  og_image?: number | null
+  case_study?: CaseStudyRaw | null
   published_at?: string | null
+  sort_order?: number
+  meta_title?: string
+  meta_description?: string
+  meta_keywords?: string
+  canonical_url?: string
 }
 
 export interface StaffProjectListResult {
@@ -102,4 +147,47 @@ export async function createStaffProject(payload: StaffProjectPayload): Promise<
 export async function updateStaffProject(id: number, payload: StaffProjectPayload): Promise<StaffProject> {
   const { data } = await apiClient.patch<ApiEnvelope<StaffProject>>(`/projects/${id}/`, payload)
   return data.data
+}
+
+export interface ProjectGalleryPayload {
+  image: number
+  alt_text_fa?: string
+  alt_text_en?: string
+  alt_text_ar?: string
+  sort_order?: number
+  is_cover?: boolean
+}
+
+export async function listProjectGallery(id: number): Promise<ProjectGalleryRow[]> {
+  const { data } = await apiClient.get<ApiEnvelope<ProjectGalleryRow[]>>(`/projects/${id}/gallery/`)
+  return data.data ?? []
+}
+
+export async function addProjectGalleryImage(id: number, payload: ProjectGalleryPayload): Promise<ProjectGalleryRow> {
+  const { data } = await apiClient.post<ApiEnvelope<ProjectGalleryRow>>(`/projects/${id}/gallery/`, payload)
+  return data.data
+}
+
+export async function updateProjectGalleryImage(
+  projectId: number,
+  rowId: number,
+  payload: Partial<ProjectGalleryPayload>,
+): Promise<ProjectGalleryRow> {
+  const { data } = await apiClient.patch<ApiEnvelope<ProjectGalleryRow>>(
+    `/projects/${projectId}/gallery/${rowId}/`,
+    payload,
+  )
+  return data.data
+}
+
+export async function removeProjectGalleryImage(projectId: number, rowId: number): Promise<void> {
+  await apiClient.delete(`/projects/${projectId}/gallery/${rowId}/`)
+}
+
+export async function reorderProjectGallery(projectId: number, order: number[]): Promise<ProjectGalleryRow[]> {
+  const { data } = await apiClient.post<ApiEnvelope<ProjectGalleryRow[]>>(
+    `/projects/${projectId}/gallery/reorder/`,
+    { order },
+  )
+  return data.data ?? []
 }

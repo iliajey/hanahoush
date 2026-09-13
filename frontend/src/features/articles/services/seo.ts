@@ -2,6 +2,7 @@ import { useEffect } from "react"
 
 import { useLanguage } from "@/app/language/useLanguage"
 import { useSeoMeta } from "@/features/cms/seo"
+import { resolveMediaUrl } from "@/shared/lib"
 import { isValidJsonLd } from "./content"
 import type { ArticleDetail } from "../types"
 
@@ -50,7 +51,7 @@ export function useArticleSeo({ article, slug }: { article?: ArticleDetail | nul
       title,
       description: description || undefined,
       canonicalUrl: url,
-      ogImage: article?.cover_image?.file,
+      ogImage: resolveMediaUrl(article?.cover_image?.file) ?? undefined,
       ogType: "article",
     },
     language,
@@ -62,7 +63,7 @@ export function useArticleSeo({ article, slug }: { article?: ArticleDetail | nul
     setMeta("twitter:card", "summary_large_image")
     setMeta("twitter:title", title.slice(0, 70))
     if (description) setMeta("twitter:description", description.slice(0, 200))
-    if (article?.cover_image?.file) setMeta("twitter:image", article.cover_image.file)
+    if (article?.cover_image?.file) setMeta("twitter:image", resolveMediaUrl(article.cover_image.file) ?? article.cover_image.file)
   }, [title, description, article?.cover_image?.file])
 
   const category = article?.category?.title_en
@@ -74,7 +75,7 @@ export function useArticleSeo({ article, slug }: { article?: ArticleDetail | nul
     "@type": "BlogPosting",
     headline: title,
     description: description || undefined,
-    image: article?.cover_image?.file || undefined,
+    image: resolveMediaUrl(article?.cover_image?.file) ?? undefined,
     url,
     datePublished: published || undefined,
     dateModified: modified || undefined,

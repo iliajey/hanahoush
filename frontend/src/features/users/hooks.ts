@@ -10,11 +10,13 @@ import {
   listUsers,
   setUserPassword,
   updateUser,
-  type CreateUserPayload,
-  type ManagedUserListParams,
-  type SetPasswordPayload,
-  type UpdateUserPayload,
 } from "./api"
+import type {
+  CreateUserPayload,
+  ManagedUserListParams,
+  SetPasswordPayload,
+  UpdateUserPayload,
+} from "./types"
 
 export const userKeys = {
   all: ["admin", "users"] as const,

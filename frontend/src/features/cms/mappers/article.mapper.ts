@@ -1,3 +1,5 @@
+import { resolveMediaUrl } from "@/shared/lib"
+
 import type { Locale } from "../types"
 import type { Article } from "../types"
 
@@ -30,7 +32,7 @@ export function mapArticle(article: Article, locale: Locale): ArticleView {
     id: article.id,
     title: article.title || article.title_en,
     description,
-    image: article.cover_image?.file,
+    image: resolveMediaUrl(article.cover_image?.file) ?? undefined,
     category: article.category?.title_en || undefined,
     date: article.published_at ? formatDate(article.published_at, locale) : undefined,
     readTime: estimateReadTime(article.description_en || description, locale),

@@ -1,3 +1,5 @@
+import { resolveMediaUrl } from "@/shared/lib"
+
 import type { FAQEntry, Locale, Partner, TeamMember, Testimonial, TimelineEntry } from "../types"
 
 /** View model consumed by marketing components. */
@@ -39,7 +41,7 @@ export function mapTestimonial(item: Testimonial): TestimonialView {
     name: item.author_name,
     role: item.author_role,
     company: item.company,
-    avatar: item.avatar?.file,
+    avatar: resolveMediaUrl(item.avatar?.file) ?? undefined,
     rating: item.rating || 5,
   }
 }
@@ -68,7 +70,7 @@ export function mapFAQs(items: FAQEntry[]): FAQView[] {
 }
 
 export function mapPartner(item: Partner): PartnerView {
-  return { name: item.name, src: item.logo?.file ?? "" }
+  return { name: item.name, src: resolveMediaUrl(item.logo?.file) ?? "" }
 }
 
 export function mapPartners(items: Partner[]): PartnerView[] {
@@ -80,7 +82,7 @@ export function mapTeamMember(item: TeamMember): TeamMemberView {
     name: item.name,
     position: item.position,
     bio: item.bio,
-    avatar: item.avatar?.file,
+    avatar: resolveMediaUrl(item.avatar?.file) ?? undefined,
   }
 }
 

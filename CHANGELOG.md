@@ -4,6 +4,57 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ---
 
+## [Phase 14] — 2026-09-13 — Ultimate Dashboard Experience, Project Studio, Media System & Role UX
+
+- P0 image root-cause fix: backend serializers now emit absolute media URLs (`apps/core/media.py` + 8 serializers/services); frontend `resolveMediaUrl`/`resolveMediaFile` resolver + `ResponsiveImage` render-time resolution across ~20 consumers (mappers, SEO, search, studios, media library).
+- Project Studio: two-column workspace (rich-text trilingual bodies, category/technology pickers, SEO fields, autosave, dirty guard, MediaPicker cover + gallery, submit-for-review via `projects.project`) on the existing project API; full write surface restored (category/technologies/cover/meta were dropped before).
+- New staff gallery API (`gallery/`, `gallery/<id>/`, `gallery/reorder/`) on the existing `ProjectImage` model + staff-only trilingual `ProjectPreviewPage` (`/dashboard/projects/:id/preview`). No migrations.
+- Language dropdown (FA/EN/AR menu, keyboard + RTL-aware) replacing the cycle button in sidebar/topbar/navbar; role summaries with responsibilities + restrictions; dashboard "Recently updated" recents; media grid/list views + preview dialog; Article Studio content-health panel; mobile drawer focus-trap; mobile overflow + auth-link a11y fixes.
+- Verification: backend **242 passed** (incl. 6 new), frontend **255 passed / 46 files** (incl. 6 new), typecheck/lint/build/storybook clean, no migrations. Playwright **146/146** (roles 9/9, workspace/user-admin, responsive/RTL/a11y green).
+- Database intact (38 articles, 5 projects, 28 media, 9 users); ERP parked (`ERP_ENABLED=false`, `ERP_PROVIDER=null`). SEO NOT started. See `docs/reports/phase-14-report.md`.
+
+## [Phase 13] — 2026-09-13 — Ultimate Admin Dashboard, Editorial Studio & Full-Site QA
+
+- Article progression root-cause fix: the edit form re-hydrated state from every React Query refetch, wiping in-progress typing. Hydrate-once guard + snapshot dirty-tracking + 30s silent autosave + `beforeunload` guard. Backend exonerated (unbounded `TextField`s; 200k-char round-trip passes).
+- New `RichTextEditor` (contentEditable + execCommand, DOMPurify-sanitized): sticky toolbar (H1–H3, bold/italic/underline/strikethrough, lists, quote, links, alignment, images with captions, tables, code blocks, HR, undo/redo), clean paste, per-locale RTL/LTR, word/char/reading-time stats.
+- Rebuilt `ArticleEditPage`: trilingual bodies, cover/media pickers, excerpts, SEO fields (meta title ≤70 / description ≤160), status workflow, save-draft + submit-for-review, field-level errors preserving input; staff-only draft preview through public components (`ArticlePreviewPage`).
+- Role-aware dashboard: attention queue, capability-gated quick actions, content/editorial/engagement/operations/system sections from live API data only; read-only overview for Editor/Viewer.
+- SUPER_ADMIN permission UX: `RolePermissionSummary` (module-grouped live codenames, SUPER_ADMIN warning, authoritative-role note) in create/edit/modal flows; `USER_MANAGE:false` pinned for non-super-admin roles.
+- Every staff workspace: debounced search, server pagination (20–24/page), filter-resets-page, breadcrumbs, retryable errors, table a11y, RTL-safe slugs/names. Media adds upload progress, 25 MB validation, copy-URL, FA alt/caption, reference warning.
+- Backend (no migrations): article `status` ChoiceFilter (typos → 400), explicit `id` on article/project serializers, RFC 9110 bodyless 204, pagination docstring truth. New 10-test long-content regression suite (short→200k+, FA/AR/mixed RTL, tables/code).
+- Fixed committed-HEAD `guards/index.ts` fused-export syntax error (HEAD production build was broken); fixed edit-save list-navigation regression; updated `workspace.spec.ts` for the rich-text canvas.
+- ~500 new FA/EN/AR keys, parity green; sidebar prefix-active highlighting, staff-shell locale/theme toggles, profile footer link.
+- Verification: backend pytest **335 passed**, typecheck/lint clean, vitest **247 passed (43 files)**, `build` + `build-storybook` pass. Playwright (Chromium, production build) **135/137**: smoke 16/16, roles 9/9, user-admin 2/2, workspace 8/8, responsive/RTL/errors/theme/SEO/performance green; 2 pre-existing failures in untouched areas (public `/login` axe `link-in-text-block`, home grid visual-state constant).
+- Database intact (9 users, 6 roles, 27 permissions, 33 articles; no migrations); ERP parked (`ERP_ENABLED=false`, `ERP_PROVIDER=null`). See `docs/reports/phase-13-report.md`.
+
+---
+
+## [Phase 12] — 2026-09-12 — Admin User Management + Account Management + Final Auth Hardening
+
+- Routed user-management workspace: `/dashboard/users/new`, `/dashboard/users/:id`, `/dashboard/users/:id/edit` (all `RequireSuperAdmin`), reusing the existing `/api/v1/admin/users/` API, hooks and schemas — no second RBAC/user/role system.
+- `ConfirmActionDialog` for activate/deactivate (list + detail); set-password flow keeps its inline confirmation with consequence text. Backend refusals surface verbatim.
+- `RoleSelect` with localized name + description + permission count from the backend role catalog; `preferred_language` readable/writable in the admin API and all admin forms.
+- Backend hardening without migrations: audit rows on update/activate/deactivate (`LoginAudit`, `admin_user_updated:` detail prefix), strict last-`SUPER_ADMIN`-holder guard on demote + deactivate.
+- New read-only `verify_auth_accounts` management command (never prints passwords).
+- Auth/nav fixes: `RegisterPage` router `Link`, `ProfileMenu` Profile entry, sidebar footer → profile, `ProfilePage` loading skeleton.
+- FA/EN/AR keys added with parity test green; RTL via existing logical props.
+- Verification: backend pytest **325 passed**, typecheck/lint clean, vitest **229 passed**, `build` + `build-storybook` pass, live 7-account **28/28** (`login`/`me`/users-gate/bad-password), Playwright (system Edge) **2/2** on `e2e/user-admin.spec.ts`.
+- Database intact (8 users incl. pre-existing smoke row, 6 roles, 27 permissions; no migrations); ERP parked (`ERP_ENABLED=false`, `ERP_PROVIDER=null`). See `docs/reports/phase-12-report.md`.
+
+---
+
+## [Phase 11.5] — 2026-09-12 — Authentication Hardening & Super Admin User Management
+
+- Root cause of the reported frontend login failure established with evidence: all seven local accounts are healthy in `backend/db.sqlite3` (active, correct roles, valid hashes); ORM `authenticate()` and the real HTTP `POST /api/v1/auth/login/` + `GET /api/v1/auth/me/` succeed for every account. The failure mode is operational — no backend listening on `http://localhost:8000` produces `ECONNREFUSED`, which the generic `LoginForm` error masks as "login failed" for all accounts. No users recreated, no passwords rotated, no data touched.
+- Authentication verified over the real API: 7/7 logins `200` with valid JWT access+refresh, 7/7 `/auth/me/` correct, wrong password `401`, logout `200` with refresh blacklisted (`401` on reuse).
+- RBAC matrix measured (not assumed): anonymous `401`, SUPER_ADMIN (`superadmin`, `admin`) `200`, COMPANY_ADMIN/CONTENT_MANAGER/PROJECT_MANAGER/EDITOR/VIEWER `403` on `/api/v1/admin/users/`; `/dashboard/users` hidden + guard-blocked for non-authorized roles.
+- User Management surface verified (backend `IsSuperAdmin` on every operation, no DELETE, write-only password pair via `set_password`, `is_superuser` unwritable, self-lockout guards, read-only role/permission viewer; frontend search/filters/sorting/pagination/detail/edit/activate-deactivate with FA/EN/AR + RTL).
+- Fixes: `auth/guards/index.ts` fused-export syntax error, missing `is_superuser` in auth fixtures, `users/hooks.ts` type imports from `./types`, `authorize.test.ts` matrix + SUPER_ADMIN nav expectations for the `users` route.
+- Backend: `check` clean, `makemigrations --check` clean, pytest **316 passed**. Frontend: typecheck 0 errors, lint 0 errors, vitest **216 passed**, `build` + `build-storybook` pass.
+- Playwright browser verification explicitly unavailable here (no browser binary; download failed on restricted network); HTTP-API + unit + build evidence substituted. Database intact (only login-audit/session rows grew); ERP parked (`ERP_ENABLED=false`, `ERP_PROVIDER=null`). Phase 12 NOT started. See `docs/reports/phase-11.5-report.md`.
+
+---
+
 ## [Phase 11] — 2026-08-26 — Auth, User Management, Role UX & Database Portability
 
 - Frontend registration page with username, first/last name, email, phone, password, confirm password. Localized validation (FA/EN/AR). Backend assigns VIEWER role. No privilege escalation possible.

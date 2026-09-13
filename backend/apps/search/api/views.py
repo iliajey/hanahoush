@@ -76,7 +76,7 @@ def search_view(request: Request):
 
     category = (request.query_params.get("category") or "").strip() or None
 
-    results = search_content(q, type_filter=type_filter, category=category, locale=locale)
+    results = search_content(q, type_filter=type_filter, category=category, locale=locale, request=request)
 
     def _ts(result):
         stamp = result["published_at"]

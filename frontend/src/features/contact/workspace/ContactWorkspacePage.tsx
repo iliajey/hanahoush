@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Eye, Search } from "lucide-react"
 
@@ -9,7 +9,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EmptyState } from "@/components/ui/empty-state"
+import { ErrorState } from "@/components/ui/error-state"
+import { Pagination } from "@/components/ui/pagination"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useDebounce } from "@/shared/hooks"
 import {
   Dialog,
   DialogContent,
@@ -42,10 +45,21 @@ export function ContactWorkspacePage() {
   const { t } = useTranslation()
   const [q, setQ] = useState("")
   const [status, setStatus] = useState<ContactStatus | "all">("all")
+  const [page, setPage] = useState(1)
 
-  const params = { q: q || undefined, status: status === "all" ? undefined : status, pageSize: 50 }
-  const { data, isLoading, isError } = useAdminContacts(params)
+  const debouncedQ = useDebounce(q.trim(), 350)
+  const params = useMemo(
+    () => ({
+      q: debouncedQ || undefined,
+      status: status === "all" ? undefined : status,
+      page,
+      pageSize: 20,
+    }),
+    [debouncedQ, status, page],
+  )
+  const { data, isLoading, isError, refetch } = useAdminContacts(params)
   const { change, handled } = useUpdateContactStatus()
+  const totalPages = data?.pagination?.num_pages ?? 0
   const [detail, setDetail] = useState<AdminContact | null>(null)
   const [detailStatus, setDetailStatus] = useState<ContactStatus>("new")
 
@@ -67,20 +81,36 @@ export function ContactWorkspacePage() {
   }
 
   return (
-    <PageWrapper title={t("contactWorkspace.title")} description={t("contactWorkspace.subtitle")}>
+    <PageWrapper
+      title={t("contactWorkspace.title")}
+      description={t("contactWorkspace.subtitle")}
+      breadcrumb={[
+        { label: t("navWorkspace.dashboard"), href: "/dashboard" },
+        { label: t("contactWorkspace.title") },
+      ]}
+    >
       <div className="mb-4 flex flex-wrap items-center gap-3">
         <div className="relative min-w-0 flex-1 sm:max-w-sm">
           <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
           <Input
             value={q}
-            onChange={(event) => setQ(event.target.value)}
+            onChange={(event) => {
+              setQ(event.target.value)
+              setPage(1)
+            }}
             placeholder={t("contactWorkspace.searchPlaceholder")}
             className="ps-9"
             aria-label={t("contactWorkspace.searchPlaceholder")}
           />
         </div>
-        <Select value={status} onValueChange={(value) => setStatus(value as ContactStatus | "all")}>
-          <SelectTrigger className="w-44">
+        <Select
+          value={status}
+          onValueChange={(value) => {
+            setStatus(value as ContactStatus | "all")
+            setPage(1)
+          }}
+        >
+          <SelectTrigger className="w-full sm:w-44">
             <SelectValue placeholder={t("contactWorkspace.allStatuses")} />
           </SelectTrigger>
           <SelectContent>
@@ -97,12 +127,18 @@ export function ContactWorkspacePage() {
       <Card>
         <CardContent className="p-0">
           {isLoading ? (
-            <div className="space-y-2 p-4">
+            <div className="space-y-2 p-4" role="status" aria-live="polite">
               <Skeleton className="h-10" />
               <Skeleton className="h-10" />
             </div>
           ) : isError ? (
-            <EmptyState title={t("contactWorkspace.errorTitle")} description={t("contactWorkspace.errorDescription")} />
+            <div className="p-4">
+              <ErrorState
+                title={t("contactWorkspace.errorTitle")}
+                description={t("contactWorkspace.errorDescription")}
+                onRetry={() => void refetch()}
+              />
+            </div>
           ) : !data?.items.length ? (
             <EmptyState title={t("contactWorkspace.empty")} description={t("contactWorkspace.emptyDescription")} />
           ) : (
@@ -146,6 +182,15 @@ export function ContactWorkspacePage() {
           )}
         </CardContent>
       </Card>
+
+      {totalPages > 1 ? (
+        <Pagination
+          className="mt-4"
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={(next) => setPage(Math.min(Math.max(1, next), totalPages))}
+        />
+      ) : null}
 
       {/* Detail dialog */}
       <Dialog open={detail != null} onOpenChange={(open) => { if (!open) setDetail(null) }}>

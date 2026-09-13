@@ -40,7 +40,7 @@ describe("article mapper", () => {
   it("maps localized title and image", () => {
     const view = mapArticle(article, "en")
     expect(view.title).toBe("English Title")
-    expect(view.image).toBe("/media/cover.jpg")
+    expect(view.image).toContain("/media/cover.jpg")
     expect(view.category).toBe("Technology")
     expect(view.featured).toBe(true)
   })

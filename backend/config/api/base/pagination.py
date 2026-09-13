@@ -36,9 +36,11 @@ class DefaultPagination(PageNumberPagination):
 
 
 class CursorPagination(PageNumberPagination):
-    """Cursor-based pagination for large datasets.
+    """Page-number pagination with a larger default for export-style reads.
 
-    More efficient for deep pagination on ordered datasets.
+    NOTE: despite the historical name this is NOT cursor pagination — it is
+    page-number based (no viewset uses it with a cursor param). Renaming it
+    would break imports, so the docstring states the truth instead.
     """
 
     page_size = 50

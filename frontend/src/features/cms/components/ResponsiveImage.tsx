@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { ImgHTMLAttributes } from "react"
 
-import { cn } from "@/shared/lib/cn"
+import { cn, resolveMediaUrl } from "@/shared/lib"
 
 const FALLBACK_IMAGE =
   "data:image/svg+xml," +
@@ -25,7 +25,8 @@ export interface ResponsiveImageProps
  */
 export function ResponsiveImage({ src, alt, className, widthClass = "w-full", ...rest }: ResponsiveImageProps) {
   const [failed, setFailed] = useState(false)
-  const resolved = src && !failed ? src : FALLBACK_IMAGE
+  const display = resolveMediaUrl(src)
+  const resolved = display && !failed ? display : FALLBACK_IMAGE
   return (
     <img
       src={resolved}

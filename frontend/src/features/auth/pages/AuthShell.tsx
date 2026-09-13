@@ -31,7 +31,7 @@ export function AuthShell({ title, description, children, footer }: AuthShellPro
         </Card>
         {footer ? (
           <p className="mt-4 text-center text-sm text-muted-foreground">
-            <Link to="/" className="text-primary hover:underline">
+            <Link to="/" className="font-medium text-primary underline underline-offset-4 hover:no-underline">
               {footer}
             </Link>
           </p>

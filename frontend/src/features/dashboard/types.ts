@@ -46,8 +46,13 @@ export interface DashboardContentSection {
   articles_drafts: number
   articles_awaiting_review: number
   articles_scheduled: number
+  articles_missing_fa: number
+  articles_missing_ar: number
   projects_published: number
   projects_drafts: number
+  projects_awaiting_review: number
+  projects_missing_fa: number
+  projects_missing_ar: number
   services: number
 }
 
@@ -69,11 +74,23 @@ export interface DashboardEngagementSection {
   search_activity: number
 }
 
+export interface RecentContentBrief {
+  id: number
+  title_en: string
+  slug: string
+  status: string
+  updated_at: string
+}
+
 export interface DashboardOperationsSection {
   recent_contact_requests: ContactRequestBrief[]
   recent_editorial_activity: EditorialActivityBrief[]
   recent_media_uploads: MediaUploadBrief[]
   recent_admin_actions: AdminActionBrief[]
+  /** Present on backends with the Phase 14 dashboard extension; older
+   * payloads omit them and the UI degrades to hiding the section. */
+  recent_articles?: RecentContentBrief[]
+  recent_projects?: RecentContentBrief[]
 }
 
 export interface DashboardSystemSection {

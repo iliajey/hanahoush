@@ -2,6 +2,7 @@
 import django_filters
 
 from apps.articles.models import Article
+from apps.core.models import Status
 
 
 class ArticleFilterSet(django_filters.FilterSet):
@@ -17,7 +18,10 @@ class ArticleFilterSet(django_filters.FilterSet):
     category_slug = django_filters.CharFilter(field_name="category__slug", lookup_expr="iexact")
     author = django_filters.NumberFilter(field_name="author_id")
     tags = django_filters.CharFilter(method="filter_tags", label="Tag ids (comma separated) or slug")
-    status = django_filters.CharFilter()
+    # Validated against the canonical Status choices so typos return a 400
+    # instead of silently returning an empty list (matches
+    # PublishableFilterSet used by projects/services).
+    status = django_filters.ChoiceFilter(choices=Status.choices)
     is_featured = django_filters.BooleanFilter()
     is_public = django_filters.BooleanFilter()
     is_pinned = django_filters.BooleanFilter()

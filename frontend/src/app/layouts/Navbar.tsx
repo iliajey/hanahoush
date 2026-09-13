@@ -5,8 +5,9 @@ import { LogOut, Menu, Search, X } from "lucide-react"
 import { useState } from "react"
 
 import { useLanguage } from "@/shared/hooks"
-import { LanguageToggle } from "@/components/ui/language-toggle"
+import { LanguageDropdown } from "@/components/ui/language-dropdown"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
+import { resolveMediaUrl } from "@/shared/lib"
 import { Container } from "@/components/layout"
 import { cn } from "@/shared/lib/cn"
 import { ProfileMenu } from "@/features/auth/components/ProfileMenu"
@@ -83,7 +84,7 @@ export function Navbar() {
         <Link to="/" className="flex items-center gap-2 font-bold tracking-tight" onClick={() => setOpen(false)}>
           {settings.data?.logo?.file ? (
             <img
-              src={settings.data.logo.file}
+              src={resolveMediaUrl(settings.data.logo.file) ?? settings.data.logo.file}
               alt={brandName}
               className="h-8 w-auto rounded-lg object-contain"
             />
@@ -114,7 +115,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <SearchCommand className="hidden sm:inline-flex" />
           <ThemeToggle className="hidden sm:inline-flex" />
-          <LanguageToggle />
+          <LanguageDropdown />
           {isAuthenticated ? (
             <ProfileMenu />
           ) : (
