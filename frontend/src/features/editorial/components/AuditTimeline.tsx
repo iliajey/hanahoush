@@ -15,8 +15,8 @@ function formatDate(value: string): string {
 /** A single audit event row in a vertical timeline. */
 export function AuditEventRow({ event, className }: { event: AuditEvent; className?: string }) {
   return (
-    <li className={cn("relative flex gap-3 pl-4 before:absolute before:left-0 before:top-2 before:h-full before:w-px before:bg-border", className)}>
-      <span className="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full bg-brand-500" />
+    <li className={cn("relative flex gap-3 ps-4 before:absolute before:start-0 before:top-2 before:h-full before:w-px before:bg-border", className)}>
+      <span className="absolute -start-[5px] top-1.5 h-2.5 w-2.5 rounded-full bg-brand-500" />
       <div className="pb-4">
         <div className="flex flex-wrap items-center gap-2 text-sm">
           <Badge variant="outline" className="font-mono text-xs">

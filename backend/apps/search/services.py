@@ -50,9 +50,11 @@ TYPE_SPECS = {
         "category_title_fields": ("category__title_fa", "category__title_en", "category__title_ar"),
         "select_related": ("cover_image", "category"),
     },
+    # Services are section-based (Phase 17 decision A, confirmed Phase 18):
+    # no /services/:slug route exists, so hits point at the /services hub.
     "service": {
         "model": Service,
-        "url": "/services/{slug}/",
+        "url": "/services",
         "title_fields": ("title_fa", "title_en", "title_ar"),
         "excerpt_fields": ("short_description_fa", "short_description_en", "short_description_ar"),
         "body_fields": ("description_fa", "description_en", "description_ar"),

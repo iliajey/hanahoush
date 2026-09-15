@@ -62,6 +62,9 @@ def _content_section() -> dict:
     published_projects = Project.objects.filter(
         status=Status.PUBLISHED, is_public=True, is_deleted=False
     )
+    published_services = Service.objects.filter(
+        status=Status.PUBLISHED, is_public=True, is_deleted=False
+    )
     return {
         "articles_published": published_articles.count(),
         "articles_drafts": Article.objects.filter(status__in=review_states, is_deleted=False).count(),
@@ -74,20 +77,102 @@ def _content_section() -> dict:
         "projects_awaiting_review": Project.objects.filter(status=Status.REVIEW, is_deleted=False).count(),
         "projects_missing_fa": published_projects.filter(title_fa="").count(),
         "projects_missing_ar": published_projects.filter(title_ar="").count(),
-        "services": Service.objects.filter(status=Status.PUBLISHED, is_public=True, is_deleted=False).count(),
+        "services": published_services.count(),
+        "services_drafts": Service.objects.filter(status__in=review_states, is_deleted=False).count(),
+        "services_awaiting_review": Service.objects.filter(status=Status.REVIEW, is_deleted=False).count(),
+        "services_missing_fa": published_services.filter(title_fa="").count(),
+        "services_missing_ar": published_services.filter(title_ar="").count(),
     }
 
 
+def _schedule_brief(qs):
+    rows = list(
+        qs.select_related("workflow", "workflow__stage", "workflow__content_type", "scheduled_by")
+        .order_by("scheduled_for")[:8]
+        .values(
+            "id",
+            "workflow_id",
+            "workflow__object_id",
+            "workflow__stage__code",
+            "workflow__stage__name",
+            "workflow__content_type__app_label",
+            "workflow__content_type__model",
+            "scheduled_for",
+            "status",
+            "scheduled_by__username",
+        )
+    )
+    out = []
+    for row in rows:
+        out.append(
+            {
+                "id": row["id"],
+                "workflow": row["workflow_id"],
+                "object_id": row["workflow__object_id"],
+                "content_type": f"{row['workflow__content_type__app_label']}.{row['workflow__content_type__model']}",
+                "stage": {"code": row["workflow__stage__code"], "name": row["workflow__stage__name"]},
+                "scheduled_for": row["scheduled_for"].isoformat() if row["scheduled_for"] else None,
+                "status": row["status"],
+                "scheduled_by": row["scheduled_by__username"],
+            }
+        )
+    return out
+
+
 def _editorial_section() -> dict:
-    from apps.editorial.models import Approval, ContentLock, ContentRevision, PublicationSchedule
+    from apps.editorial.models import (
+        Approval,
+        AuditEvent,
+        ContentLock,
+        ContentRevision,
+        PublicationSchedule,
+    )
 
     now = timezone.now()
+    upcoming = PublicationSchedule.objects.filter(status="scheduled", scheduled_for__gte=now, is_deleted=False)
+    overdue = PublicationSchedule.objects.filter(status="scheduled", scheduled_for__lt=now, is_deleted=False)
+    start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    end = start + timedelta(days=1)
+    today = PublicationSchedule.objects.filter(
+        status="scheduled", scheduled_for__gte=start, scheduled_for__lt=end, is_deleted=False
+    )
+    # Failed publications: latest publish.failed per workflow, resolved by a
+    # later workflow.publish. Two grouped queries — no per-row cost.
+    from django.db.models import Max
+
+    failed_at = dict(
+        AuditEvent.objects.filter(action="publish.failed", is_deleted=False)
+        .values("workflow_id")
+        .annotate(at=Max("created_at"))
+        .values_list("workflow_id", "at")
+    )
+    published_at = dict(
+        AuditEvent.objects.filter(action="workflow.publish", is_deleted=False)
+        .values("workflow_id")
+        .annotate(at=Max("created_at"))
+        .values_list("workflow_id", "at")
+    )
+    unresolved_wf = [
+        wid for wid, at in failed_at.items()
+        if wid is not None and (wid not in published_at or at > published_at[wid])
+    ]
+    failed = PublicationSchedule.objects.filter(
+        status="scheduled", workflow_id__in=unresolved_wf, is_deleted=False
+    )
     return {
         "pending_approvals": Approval.objects.filter(status="pending").count(),
         "rejected_approvals": Approval.objects.filter(status="rejected").count(),
-        "scheduled_publications": PublicationSchedule.objects.filter(status="scheduled", scheduled_for__gte=now).count(),
+        "scheduled_publications": upcoming.count(),
         "active_locks": ContentLock.objects.filter(expires_at__gt=now).count(),
         "recent_revisions": ContentRevision.objects.filter(created_at__gte=now - timedelta(days=30)).count(),
+        "upcoming_count": upcoming.count(),
+        "overdue_count": overdue.count(),
+        "today_count": today.count(),
+        "failed_count": failed.count(),
+        "upcoming": _schedule_brief(upcoming),
+        "overdue": _schedule_brief(overdue),
+        "today": _schedule_brief(today),
+        "failed": _schedule_brief(failed),
     }
 
 
@@ -118,6 +203,7 @@ def _operations_section() -> dict:
     from apps.editorial.models import AuditEvent
     from apps.media_library.models import MediaFile
     from apps.projects.models import Project
+    from apps.services.models import Service
 
     return {
         "recent_contact_requests": list(
@@ -142,6 +228,11 @@ def _operations_section() -> dict:
         ),
         "recent_projects": list(
             Project.objects.filter(is_deleted=False)
+            .order_by("-updated_at")[:5]
+            .values("id", "title_en", "slug", "status", "updated_at")
+        ),
+        "recent_services": list(
+            Service.objects.filter(is_deleted=False)
             .order_by("-updated_at")[:5]
             .values("id", "title_en", "slug", "status", "updated_at")
         ),

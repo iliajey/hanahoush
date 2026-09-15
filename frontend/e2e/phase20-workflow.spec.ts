@@ -1,0 +1,77 @@
+import { test, expect } from "@playwright/test"
+import { attachConsoleWatch, uiLogin, forceLocale, forceTheme, loadCredentials, horizontalOverflowPx } from "./helpers"
+
+test.describe("phase 20 — media picker scrollable footer (P0)", () => {
+  test("picker footer stays reachable at 375px with tall content", async ({ page, context }) => {
+    await forceLocale(context, "en")
+    await page.setViewportSize({ width: 375, height: 812 })
+    const creds = loadCredentials()
+    await uiLogin(page, "contentmanager", creds.contentmanager.password)
+    await page.goto("/dashboard/articles")
+    await page.getByRole("button", { name: "Edit article" }).first().click()
+    await expect(page.locator("h1").first()).toContainText("Edit article")
+    await page.getByRole("button", { name: "Choose cover" }).click()
+    const dialog = page.getByRole("dialog")
+    await expect(dialog).toBeVisible()
+    const scroll = dialog.locator('[data-testid="media-picker-scroll"]')
+    await expect(scroll).toBeVisible()
+    const overflow = await scroll.evaluate((el) => (el as HTMLElement).style.overflowY || getComputedStyle(el).overflowY)
+    expect(["auto", "scroll"]).toContain(overflow)
+    const useBtn = dialog.getByRole("button", { name: "Use this image" }).last()
+    await useBtn.scrollIntoViewIfNeeded()
+    await expect(useBtn).toBeVisible()
+    expect(await horizontalOverflowPx(page)).toBe(0)
+    await page.keyboard.press("Escape")
+  })
+
+  test("picker footer reachable RTL dark 390px", async ({ page, context }) => {
+    await forceLocale(context, "fa")
+    await forceTheme(context, "dark")
+    await page.setViewportSize({ width: 390, height: 844 })
+    const creds = loadCredentials()
+    await uiLogin(page, "contentmanager", creds.contentmanager.password)
+    await page.goto("/dashboard/articles")
+    await page.getByRole("button", { name: "ویرایش مقاله" }).first().click()
+    await page.getByRole("button", { name: "انتخاب تصویر" }).first().click()
+    const dialog = page.getByRole("dialog")
+    await expect(dialog).toBeVisible()
+    const cancel = dialog.getByRole("button", { name: "لغو" }).first()
+    await cancel.scrollIntoViewIfNeeded()
+    await expect(cancel).toBeVisible()
+    expect(await horizontalOverflowPx(page)).toBe(0)
+  })
+})
+
+test.describe("phase 20 — publishing journey navigation", () => {
+  test("projects list exposes preview + edit (P1)", async ({ page, context }) => {
+    await forceLocale(context, "en")
+    const creds = loadCredentials()
+    await uiLogin(page, "companyadmin", creds.companyadmin.password)
+    await page.goto("/dashboard/projects")
+    await expect(page.locator("h1").first()).toContainText("Projects")
+    await expect(page.getByRole("button", { name: "Preview" }).first()).toBeVisible()
+    await expect(page.getByRole("button", { name: "Edit project" }).first()).toBeVisible()
+    const watch = attachConsoleWatch(page)
+    expect(watch.pageErrors).toHaveLength(0)
+  })
+
+  test("article preview links back to edit (P1)", async ({ page, context }) => {
+    await forceLocale(context, "en")
+    const creds = loadCredentials()
+    await uiLogin(page, "contentmanager", creds.contentmanager.password)
+    await page.goto("/dashboard/articles")
+    await page.getByRole("button", { name: "Preview" }).first().click()
+    await expect(page).toHaveURL(/\/dashboard\/articles\/\d+\/preview/)
+    await expect(page.getByRole("link", { name: /Edit article/ }).first()).toBeVisible()
+  })
+
+  test("service preview explains hub verification (services stay hub-only)", async ({ page, context }) => {
+    await forceLocale(context, "en")
+    const creds = loadCredentials()
+    await uiLogin(page, "companyadmin", creds.companyadmin.password)
+    await page.goto("/dashboard/services")
+    await page.getByRole("button", { name: "Preview" }).first().click()
+    await expect(page).toHaveURL(/\/dashboard\/services\/\d+\/preview/)
+    await expect(page.getByRole("link", { name: /services/i }).first()).toBeVisible()
+  })
+})

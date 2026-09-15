@@ -36,10 +36,10 @@ export function ArticleFilterBar({
     <div className="rounded-2xl border bg-card p-4">
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[220px] sm:max-w-xs">
-          <Search className="pointer-events-none absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="pointer-events-none absolute start-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder={t("filters.searchArticles")}
-            className="h-9 pl-8"
+            className="h-9 ps-8"
             value={filters.q ?? ""}
             onChange={(e) => set({ q: e.target.value || undefined })}
             aria-label={t("filters.searchArticles")}
@@ -94,7 +94,7 @@ export function ArticleFilterBar({
 
         {active ? (
           <Button size="sm" variant="ghost" onClick={() => onChange({ pageSize: filters.pageSize })}>
-            <FilterX className="mr-1 h-4 w-4" /> {t("filters.clear")}
+            <FilterX className="me-1 h-4 w-4" /> {t("filters.clear")}
           </Button>
         ) : null}
       </div>

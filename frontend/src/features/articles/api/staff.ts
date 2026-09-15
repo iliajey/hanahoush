@@ -38,6 +38,7 @@ export interface StaffArticleDetail extends StaffArticle {
   meta_description: string
   meta_keywords: string
   cover_image: { id: number; file: string; alt_text_en: string } | null
+  og_image?: { id: number; file: string } | null
 }
 
 export interface StaffArticleListParams {
@@ -74,6 +75,8 @@ export interface StaffArticlePayload {
   meta_title?: string
   meta_description?: string
   meta_keywords?: string
+  canonical_url?: string
+  og_image?: number | null
 }
 
 export interface StaffArticleListResult {

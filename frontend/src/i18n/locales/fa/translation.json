@@ -40,7 +40,8 @@
     "back": "بازگشت",
     "submit": "ارسال",
     "close": "بستن",
-    "breadcrumb": "مسیر صفحه"
+    "breadcrumb": "مسیر صفحه",
+    "clear": "پاک کردن"
   },
   "errors": {
     "unexpected": "خطای غیرمنتظره‌ای رخ داده است",
@@ -195,7 +196,8 @@
   },
   "services": {
     "notFoundTitle": "خدمات در دسترس نیست",
-    "notFoundDescription": "کاتالوگ خدمات ما موقتاً در دسترس نیست. لطفاً دوباره تلاش کنید."
+    "notFoundDescription": "کاتالوگ خدمات ما موقتاً در دسترس نیست. لطفاً دوباره تلاش کنید.",
+    "learnMore": "بیشتر بدانید"
   },
   "projects": {
     "notFoundTitle": "پروژه پیدا نشد",
@@ -410,7 +412,12 @@
       "pendingApprovals": "تأییدهای در انتظار",
       "activeLocks": "قفل‌های فعال محتوا",
       "openInquiries": "استعلام‌های باز",
-      "projectsAwaitingReview": "پروژه‌های در انتظار بررسی"
+      "projectsAwaitingReview": "پروژه‌های در انتظار بررسی",
+      "servicesAwaitingReview": "خدمات در انتظار بررسی",
+      "attention": {
+        "failedPublications": "انتشارهای ناموفق"
+      },
+      "failedPublications": "انتشارهای ناموفق"
     },
     "actions": {
       "title": "اقدامات سریع",
@@ -420,7 +427,8 @@
       "uploadMedia": "آپلود رسانه",
       "reviewQueue": "صف بررسی",
       "inquiries": "استعلام‌ها",
-      "subscribers": "مشترکان"
+      "subscribers": "مشترکان",
+      "newService": "خدمت جدید"
     },
     "quickLinksTitle": "میان‌برهای فضا‌ی کاری",
     "quickLinksDescription": "به هر بخش در دسترس فضای کاری بروید.",
@@ -490,7 +498,8 @@
         "title": "به‌روزشده‌های اخیر",
         "description": "به محتوایی که اخیراً لمس کرده‌اید برگردید.",
         "articles": "مقالات",
-        "projects": "پروژه‌ها"
+        "projects": "پروژه‌ها",
+        "services": "خدمات"
       },
       "system": {
         "title": "سیستم",
@@ -522,7 +531,9 @@
         "migrations": "مهاجرت‌ها",
         "environment": "محیط",
         "version": "نسخه",
-        "debug": "حالت اشکال‌زدایی"
+        "debug": "حالت اشکال‌زدایی",
+        "servicesDrafts": "پیش‌نویس‌های خدمات",
+        "servicesAwaitingReview": "خدمات در انتظار بررسی"
       }
     },
     "overview": {
@@ -537,7 +548,9 @@
     },
     "translationGaps": {
       "title": "شکاف‌های ترجمه",
-      "description": "محتوای منتشرشده بدون ترجمه."
+      "description": "محتوای منتشرشده بدون ترجمه.",
+      "servicesFA": "فارسی · خدمات",
+      "servicesAR": "عربی · خدمات"
     }
   },
   "roles": {
@@ -595,7 +608,7 @@
     "workflowDetail": "جریان کار",
     "workflowDetailDescription": "جزئیات جریان کار",
     "media": "رسانه",
-    "mediaDescription": "کتابخانه رسانه",
+    "mediaDescription": "یک‌بار بارگذاری کنید، همه‌جا استفاده کنید",
     "communication": "ارتباطات",
     "contact": "درخواست‌های تماس",
     "contactDescription": "درخواست‌ها و پیگیری‌ها",
@@ -604,7 +617,11 @@
     "profile": "پروفایل",
     "profileDescription": "تنظیمات حساب و مجوزها",
     "users": "کاربران",
-    "usersDescription": "مدیریت حساب‌ها (مدیر ارشد)"
+    "usersDescription": "مدیریت حساب‌ها (مدیر ارشد)",
+    "services": "خدمات",
+    "servicesDescription": "مدیریت خدمات",
+    "timeline": "خط زمانی",
+    "timelineDescription": "ببینید چه چیزی در راه است، چه چیزی عقب افتاده و چه چیزی نیاز به توجه دارد"
   },
   "workflowStage": {
     "draft": "پیش‌نویس",
@@ -617,7 +634,7 @@
   },
   "articleWorkspace": {
     "title": "مقالات",
-    "subtitle": "ایجاد، ویرایش و هدایت مقالات در جریان کار ویراستاری.",
+    "subtitle": "لحن تحریریه هانه‌هوش را شکل دهید و منتشر کنید.",
     "searchPlaceholder": "جستجوی مقالات…",
     "createDraft": "پیش‌نویس جدید",
     "statusAll": "همه",
@@ -629,8 +646,8 @@
     "startReview": "شروع بررسی",
     "submitForReview": "ارسال",
     "submitComment": "آماده بررسی",
-    "empty": "مقاله‌ای یافت نشد",
-    "emptyDescription": "فیلترها را تغییر دهید یا پیش‌نویس جدیدی بسازید.",
+    "empty": "هنوز مقاله‌ای نیست.",
+    "emptyDescription": "اولین مقاله را بسازید تا کتابخانه تحریریه شکل بگیرد.",
     "errorTitle": "مقالات بارگذاری نشد",
     "errorDescription": "در دریافت فهرست مقالات خطایی رخ داد.",
     "column": {
@@ -765,11 +782,12 @@
     "notFoundDescription": "مقاله درخواستی وجود ندارد.",
     "errorTitle": "پیش‌نمایش بارگذاری نشد",
     "errorDescription": "در دریافت مقاله خطایی رخ داد.",
-    "backToList": "بازگشت به مقالات"
+    "backToList": "بازگشت به مقالات",
+    "tagsLabel": "برچسب‌ها"
   },
   "projectWorkspace": {
     "title": "پروژه‌ها",
-    "subtitle": "مدیریت پروژه‌های پرتفوی و مطالعات موردی.",
+    "subtitle": "کارهای انجام‌شده را به مطالعات موردی جذاب تبدیل کنید.",
     "searchPlaceholder": "جستجوی پروژه‌ها…",
     "newProject": "پروژه جدید",
     "totalCount_one": "{{count}} پروژه",
@@ -779,8 +797,8 @@
     "statusReview": "در حال بررسی",
     "statusPublished": "منتشرشده",
     "statusArchived": "بایگانی‌شده",
-    "empty": "پروژه‌ای یافت نشد",
-    "emptyDescription": "فیلترها را تغییر دهید یا پروژه جدیدی بسازید.",
+    "empty": "هنوز پروژه‌ای نیست.",
+    "emptyDescription": "اولین پروژه را بسازید تا نمونه‌کارها شکل بگیرد.",
     "errorTitle": "پروژه‌ها بارگذاری نشد",
     "errorDescription": "در دریافت فهرست پروژه‌ها خطایی رخ داد.",
     "column": {
@@ -792,6 +810,7 @@
     },
     "edit": "ویرایش پروژه",
     "openCaseStudy": "مشاهده مطالعه موردی",
+    "previewLink": "پیش‌نمایش",
     "saveFailed": "پروژه ذخیره نشد.",
     "loadFailed": "پروژه بارگذاری نشد.",
     "savedAt": "ذخیره شد {{time}}",
@@ -874,7 +893,7 @@
   },
   "mediaWorkspace": {
     "title": "کتابخانه رسانه",
-    "subtitle": "بارگذاری، برچسب‌گذاری و مدیریت رسانه‌های مورد استفاده سایت.",
+    "subtitle": "یک‌بار بارگذاری کنید و در همه محتواها استفاده کنید.",
     "searchPlaceholder": "جستجوی رسانه…",
     "upload": "بارگذاری",
     "uploading": "در حال بارگذاری…",
@@ -891,8 +910,8 @@
     "uploadDialogDescription": "یک فایل و فراداده اختیاری انتخاب کنید.",
     "referenceCount_one": "{{count}} ارجاع",
     "referenceCount_other": "{{count}} ارجاع",
-    "empty": "رسانه‌ای یافت نشد",
-    "emptyDescription": "فیلترها را تغییر دهید یا فایل جدیدی بارگذاری کنید.",
+    "empty": "هنوز رسانه‌ای بارگذاری نشده است.",
+    "emptyDescription": "تصویر بارگذاری کنید تا در همه محتواها استفاده کنید.",
     "uploadSuccess": "رسانه بارگذاری شد",
     "uploadFailed": "بارگذاری ناموفق بود",
     "metadataSaved": "فراداده ذخیره شد",
@@ -1251,5 +1270,252 @@
       "noTags": "برچسبی انتخاب نشده است.",
       "removeTag": "حذف برچسب"
     }
+  },
+  "serviceWorkspace": {
+    "title": "خدمات",
+    "subtitle": "کاتالوگ خدمات را شفاف و به‌روز نگه دارید.",
+    "searchPlaceholder": "جست‌وجوی خدمات.",
+    "newService": "خدمت جدید",
+    "totalCount_one": "{{count}} خدمت",
+    "totalCount_other": "{{count}} خدمت",
+    "statusAll": "همه",
+    "statusDraft": "پیش‌نویس",
+    "statusReview": "در حال بررسی",
+    "statusPublished": "منتشرشده",
+    "statusArchived": "بایگانی‌شده",
+    "empty": "هنوز خدمتی نیست.",
+    "emptyDescription": "اولین خدمت را بسازید تا کاتالوگ شکل بگیرد.",
+    "errorTitle": "بارگذاری خدمات ناموفق بود",
+    "errorDescription": "هنگام دریافت فهرست خدمات خطایی رخ داد.",
+    "column": {
+      "service": "خدمت",
+      "status": "وضعیت",
+      "section": "بخش",
+      "order": "ترتیب",
+      "actions": "اقدامات"
+    },
+    "edit": "ویرایش خدمت",
+    "view": "مشاهده خدمات عمومی",
+    "previewLink": "پیش‌نمایش",
+    "saveFailed": "ذخیره خدمت ناموفق بود.",
+    "loadFailed": "بارگذاری خدمت ناموفق بود.",
+    "savedAt": "ذخیره‌شده در {{time}}",
+    "unsavedChanges": "تغییرات ذخیره‌نشده",
+    "preview": "پیش‌نمایش",
+    "wordCount": "{{count}} کلمه",
+    "totalWords": "کل کلمات",
+    "readingTime": "{{count}} دقیقه مطالعه",
+    "sortOrder": "ترتیب",
+    "insertImage": "درج تصویر",
+    "excerptEN": "خلاصه (انگلیسی)",
+    "excerptFA": "خلاصه (فارسی)",
+    "excerptAR": "خلاصه (عربی)",
+    "coverTitle": "تصویر شاخص",
+    "chooseCover": "انتخاب تصویر",
+    "noCover": "تصویری انتخاب نشده است. از کتابخانه رسانه انتخاب کنید.",
+    "removeCover": "حذف تصویر",
+    "mediaTitle": "درج از کتابخانه رسانه",
+    "metaTitle": "عنوان متا (سئو)",
+    "metaDescription": "توضیح متا (سئو)",
+    "statusHint": "انتشار از طریق گردش کار تحریریه انجام می‌شود؛ تغییر وضعیت در اینجا فقط فراداده را ذخیره می‌کند.",
+    "createDraft": "ایجاد پیش‌نویس",
+    "healthNoSection": "بخشی اختصاص داده نشده است",
+    "filters": {
+      "section": "بخش",
+      "sectionAll": "همه بخش‌ها"
+    },
+    "form": {
+      "createTitle": "خدمت جدید",
+      "editTitle": "ویرایش خدمت",
+      "subtitle": "محتوای خدمت را اینجا ذخیره کنید؛ انتشار از طریق گردش کار تحریریه انجام می‌شود.",
+      "identity": "هویت",
+      "content": "محتوا",
+      "publishing": "انتشار",
+      "titleEN": "عنوان (انگلیسی)",
+      "titleFA": "عنوان (فارسی)",
+      "titleAR": "عنوان (عربی)",
+      "slug": "نامک",
+      "section": "بخش",
+      "sectionPlaceholder": "یک بخش انتخاب کنید",
+      "noSection": "بدون بخش",
+      "icon": "آیکون",
+      "iconHint": "کلید آیکون Lucide، مثل code، cloud، cpu.",
+      "sortOrder": "ترتیب",
+      "descriptionEN": "توضیح (انگلیسی)",
+      "descriptionFA": "توضیح (فارسی)",
+      "descriptionAR": "توضیح (عربی)",
+      "status": "وضعیت",
+      "isFeatured": "ویژه",
+      "isPublic": "عمومی",
+      "noIcon": "بدون آیکون"
+    }
+  },
+  "servicePreview": {
+    "title": "پیش‌نمایش خدمت",
+    "subtitle": "نحوه نمایش خدمت ذخیره‌شده در سایت عمومی. فقط پیش‌نمایش — چیزی منتشر نمی‌شود.",
+    "localeLabel": "زبان پیش‌نمایش",
+    "draftBadge": "پیش‌نمایش پیش‌نویس",
+    "featured": "ویژه",
+    "emptyBody": "هنوز توضیحی برای این زبان ذخیره نشده است.",
+    "notFound": "خدمت یافت نشد",
+    "notFoundDescription": "خدمت درخواستی وجود ندارد.",
+    "errorTitle": "بارگذاری پیش‌نمایش ناموفق بود",
+    "errorDescription": "هنگام دریافت خدمت خطایی رخ داد.",
+    "backToList": "بازگشت به خدمات"
+  },
+  "timeline": {
+    "title": "خط زمانی انتشار",
+    "subtitle": "ببینید چه چیزی در راه است، چه چیزی عقب افتاده و چه چیزی نیاز به توجه دارد.",
+    "search": "جستجوی محتوای زمان‌بندی‌شده…",
+    "empty": "چیزی زمان‌بندی نشده است.",
+    "emptyDescription": "تقویم انتشار شما خالی است.",
+    "loadFailed": "بارگذاری خط زمانی ناموفق بود.",
+    "rescheduled": "زمان‌بندی به‌روز شد",
+    "cancelled": "لغو شد",
+    "actionFailed": "عملیات ناموفق بود"
+  },
+  "seo": {
+    "health": {
+      "missingSlug": "نامک خالی است — پیوندها/پیش‌نمایش خراب می‌شوند.",
+      "missingTitle": "عنوان سئو خالی است.",
+      "titleLong": "عنوان سئو طولانی است ({{count}}/60).",
+      "titleWeak": "عنوان سئو ضعیف است (کمتر از ۱۰ نویسه).",
+      "missingDescription": "توضیح سئو خالی است.",
+      "descriptionLong": "توضیح سئو طولانی است ({{count}}/160).",
+      "missingCanonical": "نشانی متعارف خالی است.",
+      "missingOgImage": "تصویر اجتماعی خالی است.",
+      "missingLocale": "عنوان سئوی {{locale}} خالی است.",
+      "canonicalMismatch": "نشانی متعارف شامل نامک نیست."
+    },
+    "ogImage": "تصویر اشتراک‌گذاری (OG)",
+    "chooseOgImage": "انتخاب تصویر اشتراک‌گذاری",
+    "replaceOgImage": "جایگزینی تصویر اشتراک‌گذاری",
+    "noOgImage": "تصویر اشتراک‌گذاری انتخاب نشده. از تصویر کاور استفاده می‌شود.",
+    "removeOgImage": "حذف تصویر اشتراک‌گذاری"
+  },
+  "publication": {
+    "title": "عملیات انتشار",
+    "description": "زمان‌بندی‌های آینده، امروز و عقب‌افتاده.",
+    "openTimeline": "باز کردن خط زمانی",
+    "upcoming": "آینده",
+    "today": "امروز",
+    "overdue": "عقب‌افتاده",
+    "empty": "تقویم انتشار شما خالی است.",
+    "failed": "ناموفق",
+    "failedTitle": "انتشارهای ناموفق — اصلاح و تلاش مجدد",
+    "publishedOk": "با موفقیت منتشر شد.",
+    "scheduledOk": "با موفقیت زمان‌بندی شد.",
+    "countdown": {
+      "minutes": "انتشار تا {{count}} دقیقه دیگر",
+      "hours": "انتشار تا {{h}} ساعت و {{m}} دقیقه دیگر",
+      "tomorrow": "فردا · {{time}}",
+      "weekday": "{{weekday}} · {{time}}",
+      "date": "{{date}}",
+      "overdue": "عقب‌افتاده به‌اندازه {{ago}}",
+      "now": "در حال انتشار"
+    }
+  },
+  "commandCenter": {
+    "title": "مرکز فرمان",
+    "placeholder": "دستوری بنویسید یا جستجو کنید…",
+    "hint": "↑↓ پیمایش · Enter باز کردن · Esc بستن",
+    "recent": "اخیر",
+    "searchSection": "جستجو",
+    "emptyTitle": "نتیجه‌ای یافت نشد",
+    "emptyDescription": "مقالات، پروژه‌ها، خدمات، رسانه یا دستورها را جستجو کنید.",
+    "resultHint": "Enter نتیجه برجسته را باز می‌کند",
+    "categories": {
+      "navigation": "پیمایش",
+      "create": "ایجاد",
+      "content": "محتوا",
+      "publishing": "انتشار",
+      "admin": "مدیریت",
+      "system": "سیستم"
+    },
+    "nav": {
+      "dashboard": "رفتن به داشبورد",
+      "articles": "رفتن به مقالات",
+      "projects": "رفتن به پروژه‌ها",
+      "services": "رفتن به خدمات",
+      "media": "رفتن به رسانه",
+      "timeline": "رفتن به خط زمانی",
+      "editorial": "رفتن به ویراستاری",
+      "users": "رفتن به کاربران",
+      "profile": "باز کردن پروفایل"
+    },
+    "create": {
+      "article": "ایجاد مقاله",
+      "project": "ایجاد پروژه",
+      "service": "ایجاد خدمت",
+      "media": "آپلود رسانه"
+    },
+    "pub": {
+      "attention": "بازبینی صف توجه",
+      "timeline": "باز کردن خط زمانی"
+    },
+    "system": {
+      "theme": "تغییر تم",
+      "language": "تغییر زبان",
+      "shortcuts": "میان‌برهای صفحه‌کلید"
+    },
+    "admin": {
+      "settings": "باز کردن تنظیمات"
+    }
+  },
+  "shortcuts": {
+    "title": "میان‌برهای صفحه‌کلید",
+    "description": "با صفحه‌کلید سریع‌تر کار کنید.",
+    "keys": {
+      "command": "Ctrl K / ⌘K",
+      "close": "Esc",
+      "navigate": "↑ ↓",
+      "open": "Enter"
+    },
+    "desc": {
+      "command": "مرکز فرمان",
+      "close": "بستن پنجره",
+      "navigate": "پیمایش",
+      "open": "باز کردن"
+    }
+  },
+  "credits": {
+    "eyebrow": "خب… پیداش کردی.",
+    "title": "طراحی و ساخته‌شده توسط",
+    "nameFa": "ایلیا جمالی",
+    "nameEn": "Ilia Jamali",
+    "tagline": "این محصول با وسواس در جزئیات، عملکرد و کمی عشق طراحی، مهندسی و زنده شد.",
+    "back": "بازگشت به خانه",
+    "coming": "ادامه دارد — اعتبارهای بیشتر اینجا اضافه می‌شود.",
+    "sections": {
+      "creator": "خالق",
+      "product": "محصول",
+      "design": "طراحی",
+      "engineering": "مهندسی",
+      "thanks": "تشکر ویژه",
+      "tech": "فناوری‌ها",
+      "story": "داستان"
+    }
+  },
+  "today": {
+    "title": "امروز",
+    "description": "آنچه همین حالا بیشتر به شما نیاز دارد.",
+    "attention": "{{count}} مورد نیازمند توجه",
+    "scheduled": "{{count}} انتشار زمان‌بندی‌شده برای امروز",
+    "failed": "{{count}} انتشار ناموفق",
+    "review": "{{count}} مقاله در انتظار بررسی",
+    "openQueue": "باز کردن صف توجه",
+    "allClearTitle": "امروز همه‌چیز مرتب است.",
+    "allClearDescription": "در حال حاضر چیزی نیاز به اقدام ندارد."
+  },
+  "health": {
+    "healthy": "سالم",
+    "attention": "نیازمند توجه",
+    "blocking": "مسدودکننده"
+  },
+  "systemPulse": {
+    "title": "سیستم",
+    "operational": "پایدار",
+    "degraded": "ناپایدار",
+    "unknown": "نامشخص"
   }
 }

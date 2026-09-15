@@ -222,7 +222,6 @@ class PublicationSchedule(BaseModel):
 
     STATUS_CHOICES = [
         ("scheduled", "Scheduled"),
-        ("publishing", "Publishing"),
         ("published", "Published"),
         ("cancelled", "Cancelled"),
     ]

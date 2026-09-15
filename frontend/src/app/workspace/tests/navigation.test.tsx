@@ -50,7 +50,7 @@ describe("StaffSidebar — role-aware navigation", () => {
 
   it("VIEWER only sees dashboard + editorial", () => {
     const container = renderSidebar(roleUsers.VIEWER)
-    expect(hrefs(container)).toEqual(["/", "/dashboard", "/dashboard/editorial", "/dashboard/profile"])
+    expect(hrefs(container)).toEqual(["/", "/dashboard", "/dashboard/editorial", "/dashboard/profile", "/dashboard/timeline"])
     expect(container.querySelector('a[href="/dashboard/articles"]')).toBeNull()
     expect(container.querySelector('a[href="/dashboard/media"]')).toBeNull()
     expect(container.querySelector('a[href="/dashboard/contact"]')).toBeNull()
@@ -58,7 +58,7 @@ describe("StaffSidebar — role-aware navigation", () => {
 
   it("EDITOR only sees dashboard + editorial (content workspace is staff-only)", () => {
     const container = renderSidebar(roleUsers.EDITOR)
-    expect(hrefs(container)).toEqual(["/", "/dashboard", "/dashboard/editorial", "/dashboard/profile"])
+    expect(hrefs(container)).toEqual(["/", "/dashboard", "/dashboard/editorial", "/dashboard/profile", "/dashboard/timeline"])
     expect(container.querySelector('a[href="/dashboard/articles"]')).toBeNull()
   })
 

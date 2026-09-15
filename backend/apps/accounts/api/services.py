@@ -85,6 +85,26 @@ def revoke_session(refresh_token) -> int:
     )
 
 
+def blacklist_user_tokens(user) -> None:
+    """Blacklist every outstanding refresh token for ``user``.
+
+    Used after password change/reset so a stolen refresh token cannot keep
+    working. Session rows are revoked separately by the callers.
+    """
+    try:
+        from rest_framework_simplejwt.token_blacklist.models import (
+            BlacklistedToken,
+            OutstandingToken,
+        )
+    except Exception:  # noqa: BLE001 — blacklist app unavailable
+        return
+    for outstanding in OutstandingToken.objects.filter(user=user):
+        try:
+            BlacklistedToken.objects.get_or_create(token=outstanding)
+        except Exception:  # noqa: BLE001 — already blacklisted
+            continue
+
+
 def touch_session(refresh_token, user) -> None:
     """Update last_seen for an active session on token refresh."""
     UserSession.objects.filter(user=user, refresh_jti=_jti(refresh_token), revoked_at__isnull=True).update(

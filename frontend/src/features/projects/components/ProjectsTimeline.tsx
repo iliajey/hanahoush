@@ -19,7 +19,7 @@ export function ProjectsTimeline({ projects }: { projects: ProjectSummary[] }) {
   }
 
   return (
-    <ol className="relative space-y-8 border-l border-border pl-6">
+    <ol className="relative space-y-8 border-s border-border ps-6">
       {years.map((year, i) => (
         <motion.li
           key={year}
@@ -29,7 +29,7 @@ export function ProjectsTimeline({ projects }: { projects: ProjectSummary[] }) {
           transition={{ duration: 0.4, delay: i * 0.05 }}
           className="relative"
         >
-          <span className="absolute -left-[31px] top-0 rounded-full border-2 border-brand-500 bg-card px-2 py-0.5 text-xs font-bold">
+          <span className="absolute -start-[31px] top-0 rounded-full border-2 border-brand-500 bg-card px-2 py-0.5 text-xs font-bold">
             {year}
           </span>
           <div className="flex flex-col gap-2">

@@ -21,7 +21,7 @@ interface ToastContextValue {
   dismissAll: () => void
 }
 
-const ToastContext = createContext<ToastContextValue | null>(null)
+export const ToastContext = createContext<ToastContextValue | null>(null)
 
 export function useToast() {
   const context = useContext(ToastContext)

@@ -19,7 +19,7 @@ const Breadcrumb = forwardRef<HTMLElement, ComponentPropsWithoutRef<"nav"> & { i
       <nav
         ref={ref}
         aria-label={t("common.breadcrumb")}
-        className={cn("flex items-center gap-1 text-sm text-muted-foreground", className)}
+        className={cn("flex max-w-full items-center gap-1 overflow-x-auto whitespace-nowrap text-sm text-muted-foreground", className)}
         {...props}
       >
         {items.map((item, index) => {

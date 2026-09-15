@@ -104,7 +104,7 @@ describe("MediaPicker", () => {
     mockedList.mockResolvedValue({ items: [], pagination: { count: 0, num_pages: 0, current_page: 1, page_size: 24, next: null, previous: null } })
     setup()
     await waitFor(() => {
-      expect(screen.getByText(/no media found/i)).toBeInTheDocument()
+      expect(screen.getByText(/no media uploaded yet/i)).toBeInTheDocument()
     })
   })
 
@@ -116,7 +116,7 @@ describe("MediaPicker", () => {
     })
     await user.click(screen.getByLabelText("Hero image"))
     expect(screen.getByLabelText(/alt text \(english\)/i)).toHaveValue("Hero image")
-    await user.click(screen.getByRole("button", { name: "Use this image" }))
+    await user.click(screen.getAllByRole("button", { name: "Use this image" })[0])
     expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: 1 }))
     const names = getAnalyticsEvents().map((e) => e.name)
     expect(names).toContain("media_select")
@@ -130,5 +130,20 @@ describe("MediaPicker", () => {
     await waitFor(() => {
       expect(screen.getByText(/file too large/i)).toBeInTheDocument()
     })
+  })
+
+  it("keeps footer actions reachable inside a scrollable dialog (phase 20)", async () => {
+    const user = userEvent.setup()
+    setup()
+    await waitFor(() => {
+      expect(screen.getByLabelText("Hero image")).toBeInTheDocument()
+    })
+    const scroll = screen.getByTestId("media-picker-scroll")
+    expect(scroll.className).toMatch(/overflow-y-auto/)
+    expect(scroll.className).toMatch(/min-h-0/)
+    await user.click(screen.getByLabelText("Hero image"))
+    const buttons = screen.getAllByRole("button", { name: "Use this image" })
+    expect(buttons.length).toBeGreaterThanOrEqual(2)
+    for (const btn of buttons) expect(btn).toBeVisible()
   })
 })

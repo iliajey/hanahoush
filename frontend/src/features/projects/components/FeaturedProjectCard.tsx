@@ -1,4 +1,5 @@
 import { motion } from "framer-motion"
+import { useTranslation } from "react-i18next"
 import { ArrowRight } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -16,6 +17,7 @@ export function FeaturedProjectCard({
   index?: number
   onView?: (slug: string) => void
 }) {
+  const { t } = useTranslation()
   const reversed = index % 2 === 1
   return (
     <motion.article
@@ -31,7 +33,7 @@ export function FeaturedProjectCard({
         </div>
       </div>
       <div className={`lg:col-span-5 ${reversed ? "lg:col-start-1 lg:row-start-1" : ""}`}>
-        {project.featured ? <Badge variant="secondary" className="mb-3">Featured</Badge> : null}
+        {project.featured ? <Badge variant="secondary" className="mb-3">{t("projectPreview.featured")}</Badge> : null}
         {project.category ? <span className="text-xs font-semibold uppercase tracking-widest text-brand-600 dark:text-brand-400">{project.category}</span> : null}
         <h3 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{project.title}</h3>
         {project.year ? <p className="mt-1 text-sm text-muted-foreground">{project.year}</p> : null}
@@ -43,7 +45,7 @@ export function FeaturedProjectCard({
         </div>
         <Button className="mt-6" asChild>
           <a href={`/projects/${project.slug}`} onClick={() => onView?.(project.slug)}>
-            Read the case study <ArrowRight className="ml-2 h-4 w-4 rtl:rotate-180" />
+            {t("projectWorkspace.openCaseStudy")} <ArrowRight className="ms-2 h-4 w-4 rtl:rotate-180" />
           </a>
         </Button>
       </div>

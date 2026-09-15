@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { Link, useNavigate, useParams } from "react-router-dom"
-import { Check, Eye, ImagePlus, Loader2, Send, X } from "lucide-react"
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
+import { Check, Eye, ImagePlus, Loader2, X } from "lucide-react"
 
 import { PageWrapper } from "@/app/layouts/PageWrapper"
 import { useLanguage } from "@/app/language/useLanguage"
@@ -18,7 +18,17 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { useAuthorization } from "@/features/auth/hooks/useAuthorization"
 import { CAPABILITIES } from "@/features/auth/role-config"
-import { useEnsureWorkflowMutation, useSubmitForReviewMutation, useWorkflowForContent } from "@/features/editorial/hooks"
+import {
+  useEnsureWorkflowMutation,
+  usePublishMutation,
+  useScheduleMutation,
+  useSubmitForReviewMutation,
+  useWorkflow,
+  useWorkflowForContent,
+} from "@/features/editorial/hooks"
+import { PublicationPanel } from "@/features/editorial/components"
+import { scheduleActionError } from "@/features/editorial/api"
+import { OgImageField, SeoPreviewCard, seoHealthItems } from "@/features/cms/seo"
 import { MediaPicker } from "@/features/media/components/MediaPicker"
 import type { MediaFile } from "@/features/media/types"
 import { toApiError } from "@/shared/api/axiosClient"
@@ -27,6 +37,8 @@ import { useStaffArticle, useCreateStaffArticle, useUpdateStaffArticle } from ".
 import { useArticleCategories, useArticleTags } from "../hooks"
 import type { ArticleStatus } from "../api/staff"
 import { resolveMediaFile, resolveMediaUrl } from "@/shared/lib"
+import { useDirtyGuard } from "@/shared/hooks"
+import { studioLocaleFromSearchParams } from "@/shared/lib/studioLocale"
 import { RichTextEditor, editorStatsFor } from "./RichTextEditor"
 import type { StudioLocale } from "@/components/ui"
 
@@ -61,8 +73,9 @@ export function ArticleEditPage() {
   const categoriesQuery = useArticleCategories()
   const tagsQuery = useArticleTags()
 
-  const [editingLocale, setEditingLocale] = useState<StudioLocale>(
-    language === "fa" || language === "ar" ? language : "en",
+  const [searchParams] = useSearchParams()
+  const [editingLocale, setEditingLocale] = useState<StudioLocale>(() =>
+    studioLocaleFromSearchParams(searchParams, language === "fa" || language === "ar" ? language : "en"),
   )
   const [titles, setTitles] = useState<Trilingual>(emptyTrilingual)
   const [excerpts, setExcerpts] = useState<Trilingual>(emptyTrilingual)
@@ -73,8 +86,11 @@ export function ArticleEditPage() {
   const [tagIds, setTagIds] = useState<number[]>([])
   const [coverId, setCoverId] = useState<number | null>(null)
   const [coverPreview, setCoverPreview] = useState<string | null>(null)
+  const [ogId, setOgId] = useState<number | null>(null)
+  const [ogPreview, setOgPreview] = useState<string | null>(null)
   const [metaTitle, setMetaTitle] = useState("")
   const [metaDescription, setMetaDescription] = useState("")
+  const [canonicalUrl, setCanonicalUrl] = useState("")
   const [status, setStatus] = useState<ArticleStatus>("draft")
   const [isFeatured, setIsFeatured] = useState(false)
   const [isPublic, setIsPublic] = useState(true)
@@ -84,7 +100,7 @@ export function ArticleEditPage() {
   const [savedAt, setSavedAt] = useState<string | null>(null)
   const [dirty, setDirty] = useState(false)
   const [pickerOpen, setPickerOpen] = useState(false)
-  const [pickerMode, setPickerMode] = useState<"cover" | "body">("cover")
+  const [pickerMode, setPickerMode] = useState<"cover" | "og" | "body">("cover")
   const [imageSignal, setImageSignal] = useState<{ url: string; alt: string; nonce: number } | null>(null)
 
   const hydratedFor = useRef<number | string | null>(null)
@@ -96,16 +112,21 @@ export function ArticleEditPage() {
   const ensureWorkflow = useEnsureWorkflowMutation("articles.article", articleId ?? 0)
   const workflowId = workflowsQuery.data?.[0]?.id ?? 0
   const submitReview = useSubmitForReviewMutation(workflowId)
+  const scheduleMut = useScheduleMutation(workflowId)
+  const publishMut = usePublishMutation(workflowId)
+  const workflowDetail = useWorkflow(workflowId)
   const canSubmitReview = can(CAPABILITIES.EDITORIAL_MANAGE)
+  const canSchedule = can(CAPABILITIES.EDITORIAL_SCHEDULE)
+  const canPublish = can(CAPABILITIES.EDITORIAL_MANAGE)
 
   const snapshot = useMemo(
     () =>
       JSON.stringify({
-        titles, excerpts, bodies, slug, categoryId, tagIds, coverId,
-        metaTitle, metaDescription, status, isFeatured, isPublic,
+        titles, excerpts, bodies, slug, categoryId, tagIds, coverId, ogId,
+        metaTitle, metaDescription, canonicalUrl, status, isFeatured, isPublic,
       }),
-    [titles, excerpts, bodies, slug, categoryId, tagIds, coverId,
-      metaTitle, metaDescription, status, isFeatured, isPublic],
+    [titles, excerpts, bodies, slug, categoryId, tagIds, coverId, ogId,
+      metaTitle, metaDescription, canonicalUrl, status, isFeatured, isPublic],
   )
 
   useEffect(() => {
@@ -117,7 +138,9 @@ export function ArticleEditPage() {
       description_ar?: string
       meta_title?: string
       meta_description?: string
+      canonical_url?: string
       cover_image?: { id: number; file: string } | null
+      og_image?: { id: number; file: string } | null
     }
     setTitles({ en: article.title_en ?? "", fa: article.title_fa ?? "", ar: article.title_ar ?? "" })
     setSlug(article.slug ?? "")
@@ -136,8 +159,11 @@ export function ArticleEditPage() {
     setTagIds((article.tags ?? []).map((tag) => tag.id))
     setCoverId(detail.cover_image?.id ?? null)
     setCoverPreview(resolveMediaUrl(detail.cover_image?.file) ?? null)
+    setOgId(detail.og_image?.id ?? null)
+    setOgPreview(resolveMediaUrl(detail.og_image?.file) ?? null)
     setMetaTitle(detail.meta_title ?? "")
     setMetaDescription(detail.meta_description ?? "")
+    setCanonicalUrl(detail.canonical_url ?? "")
     setStatus(article.status)
     setIsFeatured(article.is_featured)
     setIsPublic(article.is_public)
@@ -181,14 +207,16 @@ export function ArticleEditPage() {
       category: categoryId === "none" ? null : Number(categoryId),
       tags: tagIds,
       cover_image: coverId,
+      og_image: ogId,
       meta_title: metaTitle || undefined,
       meta_description: metaDescription || undefined,
+      canonical_url: canonicalUrl || undefined,
       status: nextStatus,
       is_featured: isFeatured,
       is_public: isPublic,
     }),
-    [titles, excerpts, bodies, slug, categoryId, tagIds, coverId,
-      metaTitle, metaDescription, isFeatured, isPublic],
+    [titles, excerpts, bodies, slug, categoryId, tagIds, coverId, ogId,
+      metaTitle, metaDescription, canonicalUrl, isFeatured, isPublic],
   )
 
   const persist = useCallback(
@@ -216,8 +244,8 @@ export function ArticleEditPage() {
         }
         const onSuccess = () => {
           snapshotRef.current = JSON.stringify({
-            titles, excerpts, bodies, slug, categoryId, tagIds, coverId,
-            metaTitle, metaDescription, status: nextStatus, isFeatured, isPublic,
+            titles, excerpts, bodies, slug, categoryId, tagIds, coverId, ogId,
+            metaTitle, metaDescription, canonicalUrl, status: nextStatus, isFeatured, isPublic,
           })
           setSavedAt(new Date().toISOString())
           setDirty(false)
@@ -233,8 +261,8 @@ export function ArticleEditPage() {
         }
       }),
     [articleId, buildPayload, create, isNew, t, update,
-      titles, excerpts, bodies, slug, categoryId, tagIds, coverId,
-      metaTitle, metaDescription, isFeatured, isPublic],
+      titles, excerpts, bodies, slug, categoryId, tagIds, coverId, ogId,
+      metaTitle, metaDescription, canonicalUrl, isFeatured, isPublic],
   )
 
   const pending = create.isPending || update.isPending
@@ -247,13 +275,7 @@ export function ArticleEditPage() {
     return () => window.clearTimeout(timer)
   }, [snapshot, isNew, dirty, status, persist])
 
-  useEffect(() => {
-    const handler = (event: BeforeUnloadEvent) => {
-      if (dirtyRef.current) event.preventDefault()
-    }
-    window.addEventListener("beforeunload", handler)
-    return () => window.removeEventListener("beforeunload", handler)
-  }, [])
+  useDirtyGuard(dirty)
 
   const handleManualSave = async () => {
     const ok = await persist(status)
@@ -276,7 +298,7 @@ export function ArticleEditPage() {
     }
   }
 
-  const openPicker = (mode: "cover" | "body") => {
+  const openPicker = (mode: "cover" | "og" | "body") => {
     setPickerMode(mode)
     setPickerOpen(true)
   }
@@ -287,6 +309,9 @@ export function ArticleEditPage() {
     if (pickerMode === "cover") {
       setCoverId(media.id)
       setCoverPreview(url || null)
+    } else if (pickerMode === "og") {
+      setOgId(media.id)
+      setOgPreview(url || null)
     } else {
       setImageSignal({ url, alt: media.alt_text_en || media.title_en || media.original_name, nonce: Date.now() })
     }
@@ -349,6 +374,25 @@ export function ArticleEditPage() {
       { label: t("articleEditor.bodyImages"), value: images },
     ]
   }, [bodies, t])
+
+  const seoItems = useMemo(
+    () =>
+      seoHealthItems(
+        {
+          slug,
+          meta_title: metaTitle,
+          meta_description: metaDescription,
+          canonical_url: canonicalUrl,
+          og_image: (ogPreview ?? coverPreview) ? { file: (ogPreview ?? coverPreview) as string } : null,
+          title_en: titles.en,
+          title_fa: titles.fa,
+          title_ar: titles.ar,
+        },
+        t,
+        { title: "article-meta-title", description: "article-meta-description", slug: "article-slug", canonical: "article-canonical", og: "article-og" },
+      ),
+    [slug, metaTitle, metaDescription, canonicalUrl, ogPreview, coverPreview, titles, t],
+  )
 
   const FieldError = ({ name }: { name: string }) =>
     fieldErrors[name] ? <p className="text-xs text-destructive">{fieldErrors[name]}</p> : null
@@ -436,17 +480,18 @@ export function ArticleEditPage() {
         </div>
       }
     >
-      <div className="mx-auto max-w-4xl space-y-4">
-        {error ? (
-          <Alert variant="destructive">
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        ) : null}
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <div className="min-w-0 space-y-4">
+          {error ? (
+            <Alert variant="destructive">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          ) : null}
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">{t("articleWorkspace.form.identity")}</CardTitle>
-          </CardHeader>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">{t("articleWorkspace.form.identity")}</CardTitle>
+            </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
             <div className="grid gap-2">
               <Label htmlFor="article-title">{titleLabel}</Label>
@@ -535,32 +580,6 @@ export function ArticleEditPage() {
 
         <Card>
           <CardHeader>
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <CardTitle className="text-base">{t("articleEditor.coverTitle")}</CardTitle>
-              <Button type="button" variant="outline" size="sm" onClick={() => openPicker("cover")}>
-                <ImagePlus className="h-4 w-4" aria-hidden="true" />
-                {t("articleEditor.chooseCover")}
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent>
-            {coverPreview ? (
-              <div id="article-cover" className="overflow-hidden rounded-xl border">
-                <img src={coverPreview} alt={titles[editingLocale] || slug} className="aspect-[21/9] h-full w-full object-cover" loading="lazy" />
-              </div>
-            ) : (
-              <p id="article-cover" className="text-sm text-muted-foreground">{t("articleEditor.noCover")}</p>
-            )}
-            {coverId != null ? (
-              <Button type="button" variant="ghost" size="sm" className="mt-2" onClick={() => { setCoverId(null); setCoverPreview(null) }}>
-                {t("articleEditor.removeCover")}
-              </Button>
-            ) : null}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
             <CardTitle className="text-base">{t("articleWorkspace.form.content")}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-6">
@@ -600,73 +619,136 @@ export function ArticleEditPage() {
             </div>
           </CardContent>
         </Card>
+        </div>
 
-        <ContentHealthPanel
-          items={healthItems}
-          stats={healthStats}
-          healthyLabel={t("articleEditor.healthGood")}
-          onNavigate={handleHealthNavigate}
-        />
+        <aside className="min-w-0 space-y-4 lg:sticky lg:top-20 lg:self-start">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">{t("articleWorkspace.form.publishing")}</CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="article-status">{t("articleWorkspace.form.status")}</Label>
+                <Select value={status} onValueChange={(value) => setStatus(value as ArticleStatus)}>
+                  <SelectTrigger id="article-status">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {STATUS_OPTIONS.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {t(option.label)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground">{t("articleEditor.statusHint")}</p>
+              </div>
+              <div className="flex flex-wrap items-center gap-4">
+                <label className="flex items-center gap-2 text-sm">
+                  <Checkbox checked={isFeatured} onCheckedChange={(checked) => setIsFeatured(Boolean(checked))} />
+                  {t("articleWorkspace.form.isFeatured")}
+                </label>
+                <label className="flex items-center gap-2 text-sm">
+                  <Checkbox checked={isPublic} onCheckedChange={(checked) => setIsPublic(Boolean(checked))} />
+                  {t("articleWorkspace.form.isPublic")}
+                </label>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="article-meta-title">{t("articleEditor.metaTitle")}</Label>
+                <Input id="article-meta-title" value={metaTitle} maxLength={70} onChange={(e) => setMetaTitle(e.target.value)} dir="auto" />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="article-meta-description">{t("articleEditor.metaDescription")}</Label>
+                <Textarea id="article-meta-description" rows={2} value={metaDescription} maxLength={160} onChange={(e) => setMetaDescription(e.target.value)} dir="auto" />
+              </div>
+              <div className="grid gap-2 sm:col-span-2">
+                <Label htmlFor="article-canonical">Canonical URL</Label>
+                <Input id="article-canonical" value={canonicalUrl} onChange={(e) => setCanonicalUrl(e.target.value)} dir="ltr" placeholder="https://" />
+                <FieldError name="canonical_url" />
+              </div>
+              <div className="grid gap-2 sm:col-span-2">
+                <OgImageField
+                  id="article-og"
+                  preview={ogPreview ?? coverPreview}
+                  onChoose={() => openPicker("og")}
+                  onRemove={() => { setOgId(null); setOgPreview(null) }}
+                />
+                <FieldError name="og_image" />
+              </div>
+            </CardContent>
+          </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">{t("articleWorkspace.form.publishing")}</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-4 sm:grid-cols-2">
-            <div className="grid gap-2">
-              <Label htmlFor="article-status">{t("articleWorkspace.form.status")}</Label>
-              <Select value={status} onValueChange={(value) => setStatus(value as ArticleStatus)}>
-                <SelectTrigger id="article-status">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {STATUS_OPTIONS.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {t(option.label)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <p className="text-xs text-muted-foreground">{t("articleEditor.statusHint")}</p>
-            </div>
-            <div className="flex items-end gap-6 pb-2">
-              <label className="flex items-center gap-2 text-sm">
-                <Checkbox checked={isFeatured} onCheckedChange={(checked) => setIsFeatured(Boolean(checked))} />
-                {t("articleWorkspace.form.isFeatured")}
-              </label>
-              <label className="flex items-center gap-2 text-sm">
-                <Checkbox checked={isPublic} onCheckedChange={(checked) => setIsPublic(Boolean(checked))} />
-                {t("articleWorkspace.form.isPublic")}
-              </label>
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="article-meta-title">{t("articleEditor.metaTitle")}</Label>
-              <Input id="article-meta-title" value={metaTitle} maxLength={70} onChange={(e) => setMetaTitle(e.target.value)} dir="auto" />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="article-meta-description">{t("articleEditor.metaDescription")}</Label>
-              <Textarea id="article-meta-description" rows={2} value={metaDescription} maxLength={160} onChange={(e) => setMetaDescription(e.target.value)} dir="auto" />
-            </div>
-          </CardContent>
-        </Card>
+          <Card>
+            <CardHeader>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <CardTitle className="text-base">{t("articleEditor.coverTitle")}</CardTitle>
+                <Button type="button" variant="outline" size="sm" onClick={() => openPicker("cover")}>
+                  <ImagePlus className="h-4 w-4" aria-hidden="true" />
+                  {t("articleEditor.chooseCover")}
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {coverPreview ? (
+                <div id="article-cover" className="overflow-hidden rounded-xl border">
+                  <img src={coverPreview} alt={titles[editingLocale] || slug} className="aspect-[16/10] h-full w-full object-cover" loading="lazy" />
+                </div>
+              ) : (
+                <p id="article-cover" className="text-sm text-muted-foreground">{t("articleEditor.noCover")}</p>
+              )}
+              {coverId != null ? (
+                <Button type="button" variant="ghost" size="sm" className="mt-2" onClick={() => { setCoverId(null); setCoverPreview(null) }}>
+                  {t("articleEditor.removeCover")}
+                </Button>
+              ) : null}
+            </CardContent>
+          </Card>
 
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <Button variant="ghost" asChild>
-            <Link to="/dashboard/articles">{t("common.cancel")}</Link>
-          </Button>
-          <div className="flex flex-wrap items-center gap-2">
-            {canSubmitReview && !isNew && articleId != null ? (
-              <Button type="button" variant="outline" disabled={pending || ensureWorkflow.isPending || submitReview.isPending} onClick={() => void handleSubmitReview()}>
-                {(ensureWorkflow.isPending || submitReview.isPending) ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Send className="h-4 w-4" aria-hidden="true" />}
-                {t("articleWorkspace.submitForReview")}
-              </Button>
-            ) : null}
+          <ContentHealthPanel
+            items={[...healthItems, ...seoItems]}
+            stats={healthStats}
+            healthyLabel={t("articleEditor.healthGood")}
+            onNavigate={handleHealthNavigate}
+          />
+
+          <SeoPreviewCard
+            title={metaTitle || titles[editingLocale] || slug}
+            description={metaDescription || excerpts[editingLocale]}
+            url={typeof window !== "undefined" ? `${window.location.origin}/articles/${slug}` : `/articles/${slug}`}
+            robots="index,follow"
+            locale={editingLocale}
+            image={ogPreview ?? coverPreview}
+          />
+
+          {!isNew && articleId != null ? (
+            <PublicationPanel
+              status={status}
+              workflowStage={workflowDetail.data?.stage.code ?? workflowsQuery.data?.[0]?.stage.code ?? "draft"}
+              scheduledFor={workflowDetail.data?.schedules.find((s) => s.status === "scheduled")?.scheduled_for ?? null}
+              publishedAt={article?.published_at ?? null}
+              canSubmit={canSubmitReview}
+              canSchedule={canSchedule}
+              canPublish={canPublish}
+              pending={pending || scheduleMut.isPending || publishMut.isPending}
+              localeCompleteness={completeness}
+              blocking={scheduleActionError(scheduleMut.error ?? publishMut.error).blocking}
+              actionError={scheduleActionError(scheduleMut.error ?? publishMut.error).message}
+              onSubmit={() => void handleSubmitReview()}
+              onSchedule={(when) => scheduleMut.mutate(when)}
+              onPublish={() => publishMut.mutate({ soft: false })}
+            />
+          ) : null}
+
+          <div className="flex flex-col gap-2">
             <Button onClick={() => void handleManualSave()} disabled={pending}>
               {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
               {isNew ? t("articleWorkspace.createDraft") : t("common.save")}
             </Button>
+            <Button variant="ghost" asChild>
+              <Link to="/dashboard/articles">{t("common.cancel")}</Link>
+            </Button>
           </div>
-        </div>
+        </aside>
       </div>
 
       <MediaPicker open={pickerOpen} onOpenChange={setPickerOpen} onSelect={handlePickMedia} title={t("articleEditor.mediaTitle")} />

@@ -40,6 +40,7 @@ class ServiceListSerializer(PublishableSerializerMixin, serializers.ModelSeriali
 
     section = serializers.SerializerMethodField(read_only=True)
     cover_image = serializers.SerializerMethodField(read_only=True)
+    og_image = serializers.SerializerMethodField(read_only=True)
     status_display = serializers.CharField(source="get_status_display", read_only=True)
     is_published = serializers.SerializerMethodField(read_only=True)
 
@@ -60,6 +61,7 @@ class ServiceListSerializer(PublishableSerializerMixin, serializers.ModelSeriali
             "section",
             "icon",
             "cover_image",
+            "og_image",
             "status",
             "status_display",
             "is_published",
@@ -96,6 +98,14 @@ class ServiceListSerializer(PublishableSerializerMixin, serializers.ModelSeriali
             }
         return None
 
+    def get_og_image(self, obj) -> dict | None:
+        if obj.og_image:
+            return {
+                "id": obj.og_image.id,
+                "file": media_file_url(self.context.get("request"), obj.og_image.file),
+            }
+        return None
+
     def get_is_published(self, obj) -> bool:
         return obj.status == "published" and obj.is_public
 
@@ -111,4 +121,57 @@ class ServiceDetailSerializer(ServiceListSerializer):
             "canonical_url",
         )
         read_only_fields = ServiceListSerializer.Meta.read_only_fields
+
+
+class ServiceCreateUpdateSerializer(serializers.ModelSerializer):
+    """Staff write serializer for Service (Phase 15.5).
+
+    Reuses every existing model field — no new schema. Mirrors the
+    Article/Project create-update serializers: Persian title + description
+    required for publishing, everything else writable.
+    """
+
+    id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Service
+        fields = (
+            "id",
+            "title_fa",
+            "title_en",
+            "title_ar",
+            "slug",
+            "short_description_fa",
+            "short_description_en",
+            "short_description_ar",
+            "description_fa",
+            "description_en",
+            "description_ar",
+            "section",
+            "icon",
+            "cover_image",
+            "og_image",
+            "status",
+            "is_featured",
+            "is_public",
+            "published_at",
+            "sort_order",
+            "meta_title",
+            "meta_description",
+            "meta_keywords",
+            "canonical_url",
+        )
+
+    def validate(self, attrs):
+        """Validate required Persian fields for publishing."""
+        errors = {}
+        status = attrs.get("status", getattr(self.instance, "status", "draft"))
+        if status == "published":
+            if not attrs.get("title_fa", getattr(self.instance, "title_fa", "")):
+                errors["title_fa"] = "Persian title is required for publishing."
+            if not attrs.get("description_fa", getattr(self.instance, "description_fa", "")):
+                errors["description_fa"] = "Persian description is required for publishing."
+        if errors:
+            raise serializers.ValidationError(errors)
+        return attrs
 

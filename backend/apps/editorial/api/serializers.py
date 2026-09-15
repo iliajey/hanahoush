@@ -113,18 +113,108 @@ class ApprovalSerializer(serializers.ModelSerializer):
 class ScheduleSerializer(serializers.ModelSerializer):
     scheduled_by = UserBriefSerializer(read_only=True)
     cancelled_by = UserBriefSerializer(read_only=True)
+    workflow = serializers.IntegerField(source="workflow_id", read_only=True)
+    content_label = serializers.SerializerMethodField()
+    content_type = serializers.SerializerMethodField()
+    object_id = serializers.SerializerMethodField()
+    stage = serializers.SerializerMethodField()
+    locale_readiness = serializers.SerializerMethodField()
+    has_failed = serializers.SerializerMethodField()
+    last_failed_at = serializers.SerializerMethodField()
+    last_failed_details = serializers.SerializerMethodField()
 
     class Meta:
         model = PublicationSchedule
         fields = (
             "id",
+            "workflow",
+            "content_label",
+            "content_type",
+            "object_id",
+            "stage",
             "scheduled_for",
             "published_at",
             "status",
             "scheduled_by",
             "cancelled_by",
             "created_at",
+            "locale_readiness",
+            "has_failed",
+            "last_failed_at",
+            "last_failed_details",
         )
+
+    def get_content_label(self, obj):
+        try:
+            return str(obj.workflow.content_object) if obj.workflow_id else ""
+        except Exception:  # noqa: BLE001
+            return ""
+
+    def get_content_type(self, obj):
+        ct = getattr(getattr(obj, "workflow", None), "content_type", None)
+        if ct is None:
+            return ""
+        return f"{ct.app_label}.{ct.model}"
+
+    def get_object_id(self, obj):
+        return getattr(getattr(obj, "workflow", None), "object_id", None)
+
+    def get_stage(self, obj):
+        stage = getattr(getattr(obj, "workflow", None), "stage", None)
+        if stage is None:
+            return None
+        return {"code": stage.code, "name": stage.name}
+
+    def get_locale_readiness(self, obj):
+        from ..readiness import locale_readiness
+
+        try:
+            content = obj.workflow.content_object if obj.workflow_id else None
+            if content is None or not hasattr(content, "slug"):
+                return {"fa": {"ready": True, "critical": 0, "warnings": 0, "issues": []},
+                        "en": {"ready": True, "critical": 0, "warnings": 0, "issues": []},
+                        "ar": {"ready": True, "critical": 0, "warnings": 0, "issues": []}}
+            return locale_readiness(content)
+        except Exception:  # noqa: BLE001
+            return None
+
+    def _failure_state(self, obj):
+        """(has_failed, last_failed_at, last_failed_details) for a row.
+
+        Uses view annotations when present (one query for the whole list);
+        falls back to a direct check for nested serializations
+        (e.g. workflow detail → schedules) that skip the annotation.
+        """
+        missing = object()
+        failed_at = obj.__dict__.get("last_failed_at", missing)
+        if failed_at is not missing:
+            published_at = obj.__dict__.get("last_published_at", None)
+            has_failed = bool(failed_at and (published_at is None or failed_at > published_at))
+            return has_failed, failed_at, obj.__dict__.get("last_failed_details")
+        try:
+            from ..models import AuditEvent
+
+            latest = (
+                AuditEvent.objects.filter(
+                    workflow_id=obj.workflow_id, action="publish.failed", is_deleted=False
+                )
+                .order_by("-created_at")
+                .first()
+            )
+            if latest is None:
+                return False, None, None
+            return True, latest.created_at, latest.details
+        except Exception:  # noqa: BLE001
+            return False, None, None
+
+    def get_has_failed(self, obj):
+        return self._failure_state(obj)[0]
+
+    def get_last_failed_at(self, obj):
+        return self._failure_state(obj)[1]
+
+    def get_last_failed_details(self, obj):
+        return self._failure_state(obj)[2]
 
 
 class AuditSerializer(serializers.ModelSerializer):

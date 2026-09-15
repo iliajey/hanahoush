@@ -16,6 +16,8 @@ import { useDebouncedValue, useGlobalSearch } from "@/features/search/hooks"
 import { SearchPage } from "@/features/search/pages/SearchPage"
 import type { SearchResult } from "@/features/search/types"
 import LanguageProvider from "@/app/language/LanguageProvider"
+import ThemeProvider from "@/app/theme/ThemeProvider"
+import { AuthContext } from "@/features/auth/services/AuthProvider"
 import { renderHook, act } from "@testing-library/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { MemoryRouter } from "react-router-dom"
@@ -26,14 +28,35 @@ vi.mock("@/features/search/api", async (importOriginal) => {
   return { ...original, fetchSearch: vi.fn() }
 })
 
+vi.mock("@/features/auth/hooks/useUser", () => ({
+  useUser: () => ({
+    user: { id: 1, username: "boss", is_staff: true, is_superuser: true, role: { codename: "SUPER_ADMIN" }, permissions: [] },
+    status: "authenticated",
+    isAuthenticated: true,
+    refreshUser: async () => undefined,
+  }),
+}))
+
 const mockFetchSearch = vi.mocked(fetchSearch)
 
 function wrapper({ children }: { children: ReactNode }) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+  const authValue = {
+    user: { id: 1, username: "boss", is_staff: true, is_superuser: true, role: { codename: "SUPER_ADMIN" }, permissions: [] },
+    status: "authenticated",
+    isAuthenticated: true,
+    login: async () => { throw new Error("noop") },
+    logout: async () => undefined,
+    refreshUser: async () => undefined,
+  } as never
   return (
     <MemoryRouter initialEntries={["/"]}>
       <QueryClientProvider client={queryClient}>
-        <LanguageProvider>{children}</LanguageProvider>
+        <AuthContext.Provider value={authValue}>
+          <ThemeProvider>
+            <LanguageProvider>{children}</LanguageProvider>
+          </ThemeProvider>
+        </AuthContext.Provider>
       </QueryClientProvider>
     </MemoryRouter>
   )

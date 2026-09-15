@@ -313,9 +313,9 @@ export function ArticlesWorkspacePage() {
                 <tbody>
                   {data.items.map((article) => (
                     <tr key={article.id} className="border-b last:border-0 hover:bg-muted/40">
-                      <td className="px-4 py-3">
+                      <td className="max-w-0 px-4 py-3">
                         <div className="flex items-center gap-2">
-                          <div className="max-w-[24rem] truncate font-medium">
+                          <div className="max-w-[10rem] truncate font-medium sm:max-w-[24rem]">
                             {article.title_en || article.title_fa || article.slug}
                           </div>
                           {article.is_featured ? (

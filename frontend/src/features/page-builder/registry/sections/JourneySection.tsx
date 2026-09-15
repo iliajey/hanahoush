@@ -45,7 +45,7 @@ export default function JourneySection({ config }: SectionProps) {
                 transition={{ duration: 0.5, delay: 0.05 * i }}
                 className={cn(
                   "grid items-center gap-8 lg:grid-cols-2",
-                  reverse && "lg:direction-rtl",
+                  reverse && "lg:[direction:rtl]",
                 )}
               >
                 <div className={cn(reverse && "lg:col-start-2")}>

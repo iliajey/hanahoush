@@ -1,4 +1,5 @@
 import { motion } from "framer-motion"
+import { useTranslation } from "react-i18next"
 import { ArrowRight, Clock } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -17,6 +18,7 @@ export function FeaturedArticle({
   locale: string
   onOpen?: (slug: string) => void
 }) {
+  const { t } = useTranslation()
   if (!article) return null
   const title = article.title_en
   const excerpt = article.short_description_en || ""
@@ -58,7 +60,7 @@ export function FeaturedArticle({
           }}
           className="mt-6 inline-flex items-center gap-1 font-medium text-brand-700 hover:underline dark:text-brand-300"
         >
-          Read the article <ArrowRight className="h-4 w-4 rtl:rotate-180" />
+          {t("app.readMore")} <ArrowRight className="h-4 w-4 rtl:rotate-180" />
         </a>
       </div>
     </motion.article>

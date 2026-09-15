@@ -42,7 +42,11 @@ class SitemapTests(TestCase):
         self.assertIn("/about", body)
         self.assertIn("/articles/published-post/", body)
         self.assertIn("/projects/project-x/", body)
-        self.assertIn("/services/service-y/", body)
+        # Phase 17 decision A: services are section-based (no /services/:slug
+        # route), so the sitemap lists only the /services hub, never dead
+        # per-service URLs.
+        self.assertIn("/services", body)
+        self.assertNotIn("/services/service-y/", body)
 
     def test_sitemap_excludes_drafts(self):
         response = self.client.get("/sitemap.xml")

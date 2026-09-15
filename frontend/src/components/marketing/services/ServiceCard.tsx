@@ -1,4 +1,5 @@
 import type { ReactNode } from "react"
+import { useTranslation } from "react-i18next"
 import { cn } from "@/shared/lib/cn"
 import { RevealContainer } from "../common/RevealContainer"
 import { Button } from "@/components/ui/button"
@@ -13,6 +14,7 @@ export interface ServiceCardProps {
 }
 
 export function ServiceCard({ icon, title, description, href, features, className }: ServiceCardProps) {
+  const { t } = useTranslation()
   return (
     <RevealContainer className={cn("group relative rounded-2xl border bg-card p-6 transition-all duration-200 hover:border-ring/30 hover:shadow-lg", className)}>
       <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-500/10 text-brand-600 transition-colors group-hover:bg-brand-500/20 dark:text-brand-400">
@@ -25,7 +27,7 @@ export function ServiceCard({ icon, title, description, href, features, classNam
           {features.map((f) => (<li key={f} className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-brand-500/60" />{f}</li>))}
         </ul>
       )}
-      {href && <Button variant="link" className="h-auto p-0 text-sm font-medium" asChild><a href={href}>Learn more →</a></Button>}
+      {href && <Button variant="link" className="h-auto p-0 text-sm font-medium" asChild><a href={href}>{t("services.learnMore")} <span aria-hidden="true" className="inline-block rtl:rotate-180">→</span></a></Button>}
     </RevealContainer>
   )
 }

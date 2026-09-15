@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
-import { ExternalLink, Pencil, Plus, Search } from "lucide-react"
+import { ExternalLink, Eye, Pencil, Plus, Search } from "lucide-react"
 
 import { PageWrapper } from "@/app/layouts/PageWrapper"
 import { Badge } from "@/components/ui/badge"
@@ -162,8 +162,8 @@ export function ProjectsWorkspacePage() {
                 <tbody>
                   {data.items.map((project) => (
                     <tr key={project.id} className="border-b last:border-0 hover:bg-muted/40">
-                      <td className="px-4 py-3">
-                        <div className="max-w-[24rem] truncate font-medium">
+                      <td className="max-w-0 px-4 py-3">
+                        <div className="max-w-[10rem] truncate font-medium sm:max-w-[24rem]">
                           {project.title_en || project.title_fa || project.slug}
                         </div>
                         <div className="truncate text-xs text-muted-foreground" dir="ltr">{project.slug}</div>
@@ -181,6 +181,10 @@ export function ProjectsWorkspacePage() {
                               <span className="sr-only">{t("projectWorkspace.edit")}</span>
                             </Button>
                           ) : null}
+                          <Button size="sm" variant="ghost" onClick={() => navigate(`/dashboard/projects/${project.id}/preview`)} title={t("projectWorkspace.previewLink")}>
+                            <Eye className="h-4 w-4" aria-hidden="true" />
+                            <span className="sr-only">{t("projectWorkspace.previewLink")}</span>
+                          </Button>
                           <Button size="sm" variant="ghost" asChild>
                             <Link to={`/projects/${project.slug}`} title={t("projectWorkspace.openCaseStudy")}>
                               <ExternalLink className="h-4 w-4" aria-hidden="true" />

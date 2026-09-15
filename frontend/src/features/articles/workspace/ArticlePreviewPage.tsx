@@ -11,7 +11,8 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { ErrorState } from "@/components/ui/error-state"
 import { Breadcrumb } from "@/components/ui/breadcrumb"
 import { ArticleContent } from "../components/ArticleContent"
-import { ArticleMeta } from "../components/RelatedContent"
+import { ArticleCTA, ArticleMeta, ArticleTableOfContents, NewsletterCTA, ReadingProgress } from "../components"
+import { transformArticleContent } from "../services/content"
 import { resolveMediaUrl } from "@/shared/lib"
 import { editorStatsFor } from "./RichTextEditor"
 import { useStaffArticle } from "../hooks/staff"
@@ -52,6 +53,8 @@ export function ArticlePreviewPage() {
   }, [article, previewLocale])
 
   const stats = useMemo(() => editorStatsFor(localized?.body ?? ""), [localized])
+  const transformed = useMemo(() => transformArticleContent(localized?.body ?? ""), [localized])
+  const toc = transformed.toc
 
   if (!Number.isFinite(articleId)) {
     return (
@@ -86,6 +89,8 @@ export function ArticlePreviewPage() {
   }
 
   return (
+    <>
+    <ReadingProgress />
     <PageWrapper
       title={t("articlePreview.title")}
       description={t("articlePreview.subtitle")}
@@ -166,12 +171,34 @@ export function ArticlePreviewPage() {
           </div>
         ) : null}
 
-        <div className="article-body prose prose-slate mt-8 max-w-none dark:prose-invert" dir={previewLocale === "en" ? "ltr" : "rtl"}>
-          {localized.body ? (
-            <ArticleContent html={localized.body} />
-          ) : (
-            <p className="text-muted-foreground">{t("articlePreview.emptyBody")}</p>
-          )}
+        <div className="mt-8 grid gap-10 lg:grid-cols-[220px_minmax(0,1fr)]">
+          {toc.length > 0 ? (
+            <aside className="hidden lg:block">
+              <div className="sticky top-24">
+                <ArticleTableOfContents toc={toc} />
+              </div>
+            </aside>
+          ) : null}
+          <div className="article-body prose prose-slate max-w-none dark:prose-invert" dir={previewLocale === "en" ? "ltr" : "rtl"}>
+            {localized.body ? (
+              <ArticleContent html={localized.body} />
+            ) : (
+              <p className="text-muted-foreground">{t("articlePreview.emptyBody")}</p>
+            )}
+          </div>
+        </div>
+
+        {article.tags?.length ? (
+          <div className="mt-8 flex flex-wrap gap-1.5" aria-label={t("articlePreview.tagsLabel")}>
+            {article.tags.map((tag) => (
+              <Badge key={tag.id} variant="secondary">{tag.title_en}</Badge>
+            ))}
+          </div>
+        ) : null}
+
+        <div className="mt-10 space-y-8">
+          <ArticleCTA hasRelatedProject={false} />
+          <NewsletterCTA source="article-preview" title={t("article.newsletterTitle")} description={t("article.newsletterDescription")} />
         </div>
 
         <div className="mt-10 flex flex-wrap gap-2">
@@ -181,8 +208,22 @@ export function ArticlePreviewPage() {
               {t("articlePreview.backToList")}
             </Link>
           </Button>
+          <Button variant="outline" size="sm" asChild>
+            <Link to={`/dashboard/articles/${article.id}/edit`}>
+              <Pencil className="h-4 w-4" aria-hidden="true" />
+              {t("articleWorkspace.edit")}
+            </Link>
+          </Button>
+          {article.status === "published" ? (
+            <Button variant="outline" size="sm" asChild>
+              <Link to={`/articles/${article.slug}`} target="_blank" rel="noreferrer">
+                {t("articleWorkspace.view")}
+              </Link>
+            </Button>
+          ) : null}
         </div>
       </div>
     </PageWrapper>
+    </>
   )
 }

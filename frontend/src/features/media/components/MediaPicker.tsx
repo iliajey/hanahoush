@@ -125,13 +125,13 @@ export function MediaPicker({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl">
-        <DialogHeader>
+      <DialogContent className="flex max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-3xl flex-col gap-0 overflow-hidden p-0 sm:max-h-[calc(100dvh-4rem)]">
+        <DialogHeader className="shrink-0 px-6 pt-6">
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{t("mediaWorkspace.pickerDescription")}</DialogDescription>
         </DialogHeader>
 
-        <div className="flex flex-col gap-4">
+        <div data-testid="media-picker-scroll" className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto px-6 py-4 overscroll-contain">
           <div className="flex flex-wrap items-center gap-3">
             <div className="relative flex-1 min-w-[200px]">
               <Search className="pointer-events-none absolute start-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -412,6 +412,15 @@ export function MediaPicker({
               </div>
             </div>
           ) : null}
+        </div>
+
+        <div className="flex shrink-0 flex-wrap items-center justify-end gap-2 border-t bg-background px-6 py-3">
+          <Button type="button" variant="outline" size="sm" onClick={() => onOpenChange(false)}>
+            {t("common.cancel")}
+          </Button>
+          <Button type="button" size="sm" disabled={!selected} onClick={() => selected && onSelect?.(selected)}>
+            {t("mediaWorkspace.pickerUse")}
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

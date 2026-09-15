@@ -12,6 +12,8 @@ from rest_framework.exceptions import NotFound, PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from config.api.base.pagination import DefaultPagination
+
 from .. import permissions as perms
 from ..models import (
     AuditEvent,
@@ -75,7 +77,25 @@ def _get_content_object(ct: ContentType, object_id: int):
     return model.objects.filter(pk=object_id).first()
 
 
-def _error(exc: WorkflowError) -> Response:
+def _error(exc: Exception) -> Response:
+    from ..readiness import PublicationBlocked
+
+    if isinstance(exc, PublicationBlocked):
+        return Response(
+            {
+                "success": False,
+                "message": "Publication blocked by critical health issues.",
+                "data": None,
+                "errors": {
+                    "code": ["PUBLICATION_BLOCKED"],
+                    "blocking": [
+                        {"field": b.get("field"), "locale": b.get("locale"), "message": b.get("message")}
+                        for b in exc.blocking
+                    ],
+                },
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
     return Response(
         {"success": False, "message": str(exc), "data": None, "errors": {"workflow": [str(exc)]}},
         status=status.HTTP_400_BAD_REQUEST,
@@ -85,6 +105,98 @@ def _error(exc: WorkflowError) -> Response:
 def _detail(workflow, request) -> Response:
     serializer = WorkflowDetailSerializer(workflow, context={"request": request})
     return Response({"success": True, "message": "", "data": serializer.data, "errors": None})
+
+
+def _unresolved_failure_map():
+    """workflow_id → timestamp of the latest *unresolved* ``publish.failed``.
+
+    A failure clears on the next successful ``workflow.publish`` for the same
+    workflow, so a fixed-and-retried item stops being actionable. Two grouped
+    ``MAX`` queries — no per-row cost.
+    """
+    from django.db.models import Max
+
+    failed = dict(
+        AuditEvent.objects.filter(action="publish.failed", is_deleted=False)
+        .values("workflow_id")
+        .annotate(at=Max("created_at"))
+        .values_list("workflow_id", "at")
+    )
+    published = dict(
+        AuditEvent.objects.filter(action="workflow.publish", is_deleted=False)
+        .values("workflow_id")
+        .annotate(at=Max("created_at"))
+        .values_list("workflow_id", "at")
+    )
+    return {
+        wid: at
+        for wid, at in failed.items()
+        if wid is not None and (wid not in published or at > published[wid])
+    }
+
+
+def _failed_schedule_ids():
+    """Scheduled rows whose workflow has an unresolved failed publication."""
+    unresolved = _unresolved_failure_map()
+    if not unresolved:
+        return []
+    return list(
+        PublicationSchedule.objects.filter(
+            workflow_id__in=list(unresolved), status="scheduled", is_deleted=False
+        ).values_list("pk", flat=True)
+    )
+
+
+def _annotate_failures(qs):
+    """Per-row failure state in one query: latest failed/published timestamps
+    plus the latest failure details, so the serializer never queries per row."""
+    from django.db.models import Max, OuterRef, Q, Subquery
+
+    failed_events = AuditEvent.objects.filter(
+        workflow=OuterRef("workflow"), action="publish.failed", is_deleted=False
+    ).order_by("-created_at")
+    return qs.annotate(
+        last_failed_at=Max(
+            "workflow__audit_events__created_at",
+            filter=Q(workflow__audit_events__action="publish.failed"),
+        ),
+        last_failed_details=Subquery(failed_events.values("details")[:1]),
+        last_published_at=Max(
+            "workflow__audit_events__created_at",
+            filter=Q(workflow__audit_events__action="workflow.publish"),
+        ),
+    )
+
+
+
+
+
+def _attention_ids(now):
+    """IDs of scheduled rows needing action: overdue, failed publication,
+    or blocking health on the current content. Blocking-health uses the same
+    ``blocking_issues`` gate as schedule/publish, so the server stays
+    authoritative."""
+    from ..readiness import blocking_issues
+
+    ids = set(
+        PublicationSchedule.objects.filter(
+            status="scheduled", scheduled_for__lt=now, is_deleted=False
+        ).values_list("pk", flat=True)
+    )
+    ids.update(_failed_schedule_ids())
+    rows = (
+        PublicationSchedule.objects.filter(status="scheduled", is_deleted=False)
+        .select_related("workflow", "workflow__content_type")
+        .exclude(pk__in=ids)
+    )
+    for schedule in rows:
+        try:
+            content = schedule.workflow.content_object
+        except Exception:  # noqa: BLE001
+            content = None
+        if content is not None and blocking_issues(content):
+            ids.add(schedule.pk)
+    return list(ids)
 
 
 class WorkflowViewSet(
@@ -197,7 +309,7 @@ class WorkflowViewSet(
                 ip=_client_ip(request),
                 soft=serializer.validated_data["soft"],
             )
-        except WorkflowError as exc:
+        except Exception as exc:  # WorkflowError + PublicationBlocked → structured error
             return _error(exc)
         return _detail(workflow, request)
 
@@ -357,7 +469,7 @@ class WorkflowViewSet(
                 request.user,
                 ip=_client_ip(request),
             )
-        except WorkflowError as exc:
+        except Exception as exc:  # WorkflowError + PublicationBlocked → structured error
             return _error(exc)
         return Response(
             {
@@ -459,15 +571,115 @@ class ContentLockViewSet(
 
 
 class ScheduleViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """All publication schedules (calendar view)."""
+    """All publication schedules (calendar view).
+
+    Server-side buckets (Phase 18): ``upcoming`` / ``today`` / ``overdue`` /
+    ``attention`` / ``published`` / ``cancelled`` / ``done``. ``attention`` is
+    the actionable set: overdue OR failed-publication OR blocking-health
+    items. List is paginated with the project-default pagination; use
+    ``GET /schedules/counts/`` for header badges without fetching rows.
+    """
 
     serializer_class = ScheduleSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = DefaultPagination
+    filterset_fields = ["status", "workflow"]
+    ordering_fields = ["scheduled_for", "created_at"]
+    ordering = ["scheduled_for"]
+
+    def list(self, request, *args, **kwargs):
+        """Paginated schedule list using the project-default pagination."""
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({"success": True, "message": "", "data": serializer.data, "errors": None})
 
     def get_queryset(self):
+        from django.utils import timezone as _tz
+
         _require_perm(self.request.user, perms.can_view)
-        return PublicationSchedule.objects.filter(is_deleted=False).select_related(
-            "scheduled_by", "workflow"
+        qs = PublicationSchedule.objects.filter(is_deleted=False).select_related(
+            "scheduled_by", "cancelled_by", "workflow", "workflow__stage", "workflow__content_type"
+        )
+        qs = _annotate_failures(qs)
+        bucket = self.request.query_params.get("bucket")
+        now = _tz.now()
+        if bucket == "upcoming":
+            qs = qs.filter(status="scheduled", scheduled_for__gte=now)
+        elif bucket == "overdue":
+            qs = qs.filter(status="scheduled", scheduled_for__lt=now)
+        elif bucket == "today":
+            start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+            end = start + _tz.timedelta(days=1)
+            qs = qs.filter(scheduled_for__gte=start, scheduled_for__lt=end)
+        elif bucket == "published":
+            qs = qs.filter(status="published")
+        elif bucket == "cancelled":
+            qs = qs.filter(status="cancelled")
+        elif bucket == "done":
+            qs = qs.filter(status__in=["published", "cancelled"])
+        elif bucket == "attention":
+            qs = qs.filter(pk__in=_attention_ids(now))
+        return qs
+
+    @action(detail=False, methods=["get"], url_path="counts")
+    def counts(self, request):
+        """Lightweight header counts for the timeline (no row payload)."""
+        from django.utils import timezone as _tz
+
+        _require_perm(request.user, perms.can_view)
+        now = _tz.now()
+        start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        end = start + _tz.timedelta(days=1)
+        base = PublicationSchedule.objects.filter(is_deleted=False)
+        scheduled = base.filter(status="scheduled")
+        failed_ids = _failed_schedule_ids()
+        data = {
+            "total": base.count(),
+            "scheduled": scheduled.count(),
+            "upcoming": scheduled.filter(scheduled_for__gte=now).count(),
+            "overdue": scheduled.filter(scheduled_for__lt=now).count(),
+            "today": base.filter(scheduled_for__gte=start, scheduled_for__lt=end).count(),
+            "attention": len(_attention_ids(now)),
+            "published": base.filter(status="published").count(),
+            "cancelled": base.filter(status="cancelled").count(),
+            "failed": scheduled.filter(pk__in=failed_ids).count(),
+        }
+        return Response({"success": True, "message": "", "data": data, "errors": None})
+
+    @action(detail=True, methods=["post"], url_path="cancel")
+    def cancel(self, request, pk=None):
+        from ..services import ScheduleService
+
+        _require_perm(request.user, lambda u: perms.can_schedule(u) or perms.can_manage(u))
+        schedule = self.get_object()
+        try:
+            sched = ScheduleService.cancel(schedule, request.user, ip=_client_ip(request))
+        except WorkflowError as exc:
+            return _error(exc)
+        return Response(
+            {"success": True, "message": "Cancelled", "data": ScheduleSerializer(sched).data, "errors": None}
+        )
+
+    @action(detail=True, methods=["post"], url_path="reschedule")
+    def reschedule(self, request, pk=None):
+        from ..services import ScheduleService
+
+        _require_perm(request.user, lambda u: perms.can_schedule(u) or perms.can_manage(u))
+        schedule = self.get_object()
+        serializer = ScheduleInSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        try:
+            sched = ScheduleService.reschedule(
+                schedule, serializer.validated_data["scheduled_for"], request.user, ip=_client_ip(request)
+            )
+        except WorkflowError as exc:
+            return _error(exc)
+        return Response(
+            {"success": True, "message": "Rescheduled", "data": ScheduleSerializer(sched).data, "errors": None}
         )
 
     def get_serializer_context(self):

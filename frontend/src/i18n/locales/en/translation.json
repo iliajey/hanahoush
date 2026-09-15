@@ -40,7 +40,8 @@
     "back": "Back",
     "submit": "Submit",
     "close": "Close",
-    "breadcrumb": "Breadcrumb"
+    "breadcrumb": "Breadcrumb",
+    "clear": "Clear"
   },
   "errors": {
     "unexpected": "An unexpected error occurred",
@@ -195,7 +196,8 @@
   },
   "services": {
     "notFoundTitle": "Services unavailable",
-    "notFoundDescription": "Our services catalogue is temporarily unavailable. Please try again."
+    "notFoundDescription": "Our services catalogue is temporarily unavailable. Please try again.",
+    "learnMore": "Learn more"
   },
   "projects": {
     "notFoundTitle": "Case study not found",
@@ -410,7 +412,12 @@
       "pendingApprovals": "Pending approvals",
       "activeLocks": "Active content locks",
       "openInquiries": "Open inquiries",
-      "projectsAwaitingReview": "Projects awaiting review"
+      "projectsAwaitingReview": "Projects awaiting review",
+      "servicesAwaitingReview": "Services awaiting review",
+      "attention": {
+        "failedPublications": "Failed publications"
+      },
+      "failedPublications": "Failed publications"
     },
     "actions": {
       "title": "Quick actions",
@@ -420,7 +427,8 @@
       "uploadMedia": "Upload media",
       "reviewQueue": "Review queue",
       "inquiries": "Inquiries",
-      "subscribers": "Subscribers"
+      "subscribers": "Subscribers",
+      "newService": "New service"
     },
     "quickLinksTitle": "Workspace shortcuts",
     "quickLinksDescription": "Jump to any available workspace section.",
@@ -490,7 +498,8 @@
         "title": "Recently updated",
         "description": "Jump back into the content you touched last.",
         "articles": "Articles",
-        "projects": "Projects"
+        "projects": "Projects",
+        "services": "Services"
       },
       "system": {
         "title": "System",
@@ -522,7 +531,9 @@
         "migrations": "Migrations",
         "environment": "Environment",
         "version": "Version",
-        "debug": "Debug mode"
+        "debug": "Debug mode",
+        "servicesDrafts": "Service drafts",
+        "servicesAwaitingReview": "Services awaiting review"
       }
     },
     "overview": {
@@ -537,7 +548,9 @@
     },
     "translationGaps": {
       "title": "Translation gaps",
-      "description": "Published content missing a locale."
+      "description": "Published content missing a locale.",
+      "servicesFA": "FA · Services",
+      "servicesAR": "AR · Services"
     }
   },
   "roles": {
@@ -587,15 +600,15 @@
     "dashboardDescription": "Role-aware overview",
     "content": "Content",
     "articles": "Articles",
-    "articlesDescription": "Manage articles and their workflow",
+    "articlesDescription": "Shape and publish the editorial voice of Hanahoush",
     "projects": "Projects",
-    "projectsDescription": "Manage projects and case studies",
+    "projectsDescription": "Turn completed work into compelling case studies",
     "editorial": "Editorial",
     "editorialDescription": "Review queue, revisions and approvals",
     "workflowDetail": "Workflow",
     "workflowDetailDescription": "Workflow detail",
     "media": "Media",
-    "mediaDescription": "Media library",
+    "mediaDescription": "Upload once, reuse everywhere",
     "communication": "Communication",
     "contact": "Contact requests",
     "contactDescription": "Inquiries and follow-ups",
@@ -604,7 +617,11 @@
     "profile": "Profile",
     "profileDescription": "Account settings and permissions",
     "users": "Users",
-    "usersDescription": "Super Admin account management"
+    "usersDescription": "Super Admin account management",
+    "services": "Services",
+    "servicesDescription": "Keep the public service catalog clear and current",
+    "timeline": "Timeline",
+    "timelineDescription": "See what's coming, what's late, and what needs attention"
   },
   "workflowStage": {
     "draft": "Draft",
@@ -617,7 +634,7 @@
   },
   "articleWorkspace": {
     "title": "Articles",
-    "subtitle": "Create, edit and move articles through the editorial workflow.",
+    "subtitle": "Shape and publish the editorial voice of Hanahoush.",
     "searchPlaceholder": "Search articles…",
     "createDraft": "New draft",
     "statusAll": "All",
@@ -629,8 +646,8 @@
     "startReview": "Start review",
     "submitForReview": "Submit",
     "submitComment": "Ready for review",
-    "empty": "No articles found",
-    "emptyDescription": "Try changing the filters, or create a new draft.",
+    "empty": "No articles yet.",
+    "emptyDescription": "Create the first article to start building the editorial library.",
     "errorTitle": "Couldn't load articles",
     "errorDescription": "Something went wrong while fetching the article list.",
     "column": {
@@ -765,11 +782,12 @@
     "notFoundDescription": "The requested article does not exist.",
     "errorTitle": "Couldn't load the preview",
     "errorDescription": "Something went wrong while fetching the article.",
-    "backToList": "Back to articles"
+    "backToList": "Back to articles",
+    "tagsLabel": "Tags"
   },
   "projectWorkspace": {
     "title": "Projects",
-    "subtitle": "Manage portfolio projects and their case studies.",
+    "subtitle": "Turn completed work into compelling case studies.",
     "searchPlaceholder": "Search projects…",
     "newProject": "New project",
     "totalCount_one": "{{count}} project",
@@ -779,8 +797,8 @@
     "statusReview": "In review",
     "statusPublished": "Published",
     "statusArchived": "Archived",
-    "empty": "No projects found",
-    "emptyDescription": "Try changing the filters, or create a new project.",
+    "empty": "No projects yet.",
+    "emptyDescription": "Create the first project to start building the portfolio.",
     "errorTitle": "Couldn't load projects",
     "errorDescription": "Something went wrong while fetching the project list.",
     "column": {
@@ -792,6 +810,7 @@
     },
     "edit": "Edit project",
     "openCaseStudy": "Open case study",
+    "previewLink": "Preview",
     "saveFailed": "The project could not be saved.",
     "loadFailed": "The project could not be loaded.",
     "savedAt": "Saved {{time}}",
@@ -874,7 +893,7 @@
   },
   "mediaWorkspace": {
     "title": "Media library",
-    "subtitle": "Upload, tag and manage media used across the site.",
+    "subtitle": "Upload once, reuse everywhere across your content.",
     "searchPlaceholder": "Search media…",
     "upload": "Upload",
     "uploading": "Uploading…",
@@ -891,8 +910,8 @@
     "uploadDialogDescription": "Select a file and optional metadata.",
     "referenceCount_one": "{{count}} reference",
     "referenceCount_other": "{{count}} references",
-    "empty": "No media found",
-    "emptyDescription": "Try changing the filters, or upload a new file.",
+    "empty": "No media uploaded yet.",
+    "emptyDescription": "Upload images to reuse them across your content.",
     "uploadSuccess": "Media uploaded",
     "uploadFailed": "Upload failed",
     "metadataSaved": "Metadata saved",
@@ -1251,5 +1270,252 @@
       "noTags": "No tags selected.",
       "removeTag": "Remove tag"
     }
+  },
+  "serviceWorkspace": {
+    "title": "Services",
+    "subtitle": "Keep the public service catalog clear and current.",
+    "searchPlaceholder": "Search services.",
+    "newService": "New service",
+    "totalCount_one": "{{count}} service",
+    "totalCount_other": "{{count}} services",
+    "statusAll": "All",
+    "statusDraft": "Draft",
+    "statusReview": "In review",
+    "statusPublished": "Published",
+    "statusArchived": "Archived",
+    "empty": "No services yet.",
+    "emptyDescription": "Create the first service to start building the catalog.",
+    "errorTitle": "Couldn't load services",
+    "errorDescription": "Something went wrong while fetching the service list.",
+    "column": {
+      "service": "Service",
+      "status": "Status",
+      "section": "Section",
+      "order": "Order",
+      "actions": "Actions"
+    },
+    "edit": "Edit service",
+    "view": "Open public services",
+    "previewLink": "Preview",
+    "saveFailed": "The service could not be saved.",
+    "loadFailed": "The service could not be loaded.",
+    "savedAt": "Saved {{time}}",
+    "unsavedChanges": "Unsaved changes",
+    "preview": "Preview",
+    "wordCount": "{{count}} words",
+    "totalWords": "Total words",
+    "readingTime": "{{count}} min read",
+    "sortOrder": "Sort order",
+    "insertImage": "Insert image",
+    "excerptEN": "Summary (English)",
+    "excerptFA": "Summary (Persian)",
+    "excerptAR": "Summary (Arabic)",
+    "coverTitle": "Cover image",
+    "chooseCover": "Choose cover",
+    "noCover": "No cover image selected. Pick one from the media library.",
+    "removeCover": "Remove cover",
+    "mediaTitle": "Insert from media library",
+    "metaTitle": "Meta title (SEO)",
+    "metaDescription": "Meta description (SEO)",
+    "statusHint": "Publishing runs through the editorial workflow; changing status here only stores metadata.",
+    "createDraft": "Create draft",
+    "healthNoSection": "No section assigned",
+    "filters": {
+      "section": "Section",
+      "sectionAll": "All sections"
+    },
+    "form": {
+      "createTitle": "New service",
+      "editTitle": "Edit service",
+      "subtitle": "Save service content here; publishing runs through the editorial workflow.",
+      "identity": "Identity",
+      "content": "Content",
+      "publishing": "Publishing",
+      "titleEN": "Title (English)",
+      "titleFA": "Title (Persian)",
+      "titleAR": "Title (Arabic)",
+      "slug": "Slug",
+      "section": "Section",
+      "sectionPlaceholder": "Select a section",
+      "noSection": "No section",
+      "icon": "Icon",
+      "iconHint": "Lucide icon key, e.g. code, cloud, cpu.",
+      "sortOrder": "Sort order",
+      "descriptionEN": "Description (English)",
+      "descriptionFA": "Description (Persian)",
+      "descriptionAR": "Description (Arabic)",
+      "status": "Status",
+      "isFeatured": "Featured",
+      "isPublic": "Public",
+      "noIcon": "No icon"
+    }
+  },
+  "servicePreview": {
+    "title": "Service preview",
+    "subtitle": "How the saved service reads on the public site. Preview only - nothing here publishes.",
+    "localeLabel": "Preview language",
+    "draftBadge": "Draft preview",
+    "featured": "Featured",
+    "emptyBody": "No description saved for this language yet.",
+    "notFound": "Service not found",
+    "notFoundDescription": "The requested service does not exist.",
+    "errorTitle": "Couldn't load the preview",
+    "errorDescription": "Something went wrong while fetching the service.",
+    "backToList": "Back to services"
+  },
+  "timeline": {
+    "title": "Publication timeline",
+    "subtitle": "See what's coming, what's late, and what needs attention.",
+    "search": "Search scheduled content…",
+    "empty": "Nothing is scheduled.",
+    "emptyDescription": "Your publication calendar is clear.",
+    "loadFailed": "Timeline failed to load.",
+    "rescheduled": "Rescheduled",
+    "cancelled": "Cancelled",
+    "actionFailed": "Action failed"
+  },
+  "seo": {
+    "health": {
+      "missingSlug": "Slug missing — links/preview break.",
+      "missingTitle": "SEO title missing.",
+      "titleLong": "SEO title long ({{count}}/60).",
+      "titleWeak": "SEO title weak (under 10 chars).",
+      "missingDescription": "SEO description missing.",
+      "descriptionLong": "SEO description long ({{count}}/160).",
+      "missingCanonical": "Canonical URL missing.",
+      "missingOgImage": "Social image missing.",
+      "missingLocale": "{{locale}} SEO title missing.",
+      "canonicalMismatch": "Canonical does not contain slug."
+    },
+    "ogImage": "Social image (OG)",
+    "chooseOgImage": "Choose social image",
+    "replaceOgImage": "Replace social image",
+    "noOgImage": "No social image selected. Falls back to cover image.",
+    "removeOgImage": "Remove social image"
+  },
+  "publication": {
+    "title": "Publication operations",
+    "description": "Upcoming, today and overdue schedules.",
+    "openTimeline": "Open timeline",
+    "upcoming": "Upcoming",
+    "today": "Today",
+    "overdue": "Overdue",
+    "empty": "Nothing is scheduled.",
+    "failed": "Failed",
+    "failedTitle": "Failed publications — fix and retry",
+    "publishedOk": "Published successfully.",
+    "scheduledOk": "Scheduled successfully.",
+    "countdown": {
+      "minutes": "Publishes in {{count}}m",
+      "hours": "Publishes in {{h}}h {{m}}m",
+      "tomorrow": "Tomorrow · {{time}}",
+      "weekday": "{{weekday}} · {{time}}",
+      "date": "{{date}}",
+      "overdue": "Overdue by {{ago}}",
+      "now": "Publishing now"
+    }
+  },
+  "commandCenter": {
+    "title": "Command Center",
+    "placeholder": "Type a command or search…",
+    "hint": "↑↓ navigate · Enter open · Esc close",
+    "recent": "Recent",
+    "searchSection": "Search",
+    "emptyTitle": "No matching results",
+    "emptyDescription": "Try searching articles, projects, services, media, or commands.",
+    "resultHint": "Enter opens the highlighted result",
+    "categories": {
+      "navigation": "Navigation",
+      "create": "Create",
+      "content": "Content",
+      "publishing": "Publishing",
+      "admin": "Administration",
+      "system": "System"
+    },
+    "nav": {
+      "dashboard": "Go to Dashboard",
+      "articles": "Go to Articles",
+      "projects": "Go to Projects",
+      "services": "Go to Services",
+      "media": "Go to Media",
+      "timeline": "Go to Timeline",
+      "editorial": "Go to Editorial",
+      "users": "Go to Users",
+      "profile": "Open Profile"
+    },
+    "create": {
+      "article": "Create Article",
+      "project": "Create Project",
+      "service": "Create Service",
+      "media": "Upload Media"
+    },
+    "pub": {
+      "attention": "Review attention queue",
+      "timeline": "Open Timeline"
+    },
+    "system": {
+      "theme": "Toggle theme",
+      "language": "Change language",
+      "shortcuts": "Keyboard shortcuts"
+    },
+    "admin": {
+      "settings": "Open Settings"
+    }
+  },
+  "shortcuts": {
+    "title": "Keyboard shortcuts",
+    "description": "Work faster with the keyboard.",
+    "keys": {
+      "command": "Ctrl K / ⌘K",
+      "close": "Esc",
+      "navigate": "↑ ↓",
+      "open": "Enter"
+    },
+    "desc": {
+      "command": "Command Center",
+      "close": "Close overlay",
+      "navigate": "Navigate",
+      "open": "Open"
+    }
+  },
+  "credits": {
+    "eyebrow": "Well… you found it.",
+    "title": "Designed & Built by",
+    "nameFa": "ایلیا جمالی",
+    "nameEn": "Ilia Jamali",
+    "tagline": "This product was designed, engineered, and brought to life with attention to detail, performance, and a little bit of obsession.",
+    "back": "Back to home",
+    "coming": "More to come — additional credits will appear here.",
+    "sections": {
+      "creator": "Creator",
+      "product": "Product",
+      "design": "Design",
+      "engineering": "Engineering",
+      "thanks": "Special Thanks",
+      "tech": "Technologies",
+      "story": "Story"
+    }
+  },
+  "today": {
+    "title": "Today",
+    "description": "What needs you most, right now.",
+    "attention": "{{count}} items need attention",
+    "scheduled": "{{count}} publications scheduled today",
+    "failed": "{{count}} failed publications",
+    "review": "{{count}} articles awaiting review",
+    "openQueue": "Open attention queue",
+    "allClearTitle": "Everything looks good today.",
+    "allClearDescription": "Nothing needs intervention right now."
+  },
+  "health": {
+    "healthy": "Healthy",
+    "attention": "Needs attention",
+    "blocking": "Blocking"
+  },
+  "systemPulse": {
+    "title": "System",
+    "operational": "Operational",
+    "degraded": "Degraded",
+    "unknown": "Unknown"
   }
 }

@@ -16,7 +16,7 @@ export function TestimonialCard({ quote, name, role, company, avatar, rating = 5
           <div className="text-sm font-semibold">{name}</div>
           <div className="text-xs text-muted-foreground">{role}, {company}</div>
         </div>
-        {logo && <img src={logo} alt={company} className="ml-auto h-6 opacity-50" />}
+        {logo && <img src={logo} alt={company} className="ms-auto h-6 opacity-50" />}
       </div>
     </RevealContainer>
   )

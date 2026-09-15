@@ -14,6 +14,7 @@ import {
   fetchDiff,
   fetchLocks,
   fetchRevisions,
+  fetchScheduleCounts,
   fetchSchedules,
   fetchWorkflow,
   fetchWorkflowForContent,
@@ -27,6 +28,7 @@ import {
   submitForReview,
   transitionWorkflow,
 } from "../api"
+import type { ScheduleListParams } from "../api"
 import type {
   Approval,
   AuditEvent,
@@ -82,10 +84,11 @@ export function useEnsureWorkflowMutation(contentType: string, objectId: number)
   })
 }
 
-export function useWorkflow(id: number) {
+export function useWorkflow(id: number | undefined) {
   return useQuery<WorkflowDetail>({
-    queryKey: editorialKeys.workflow(id),
-    queryFn: ({ signal }) => fetchWorkflow(id, signal),
+    queryKey: editorialKeys.workflow(id ?? 0),
+    queryFn: ({ signal }) => fetchWorkflow(id as number, signal),
+    enabled: id != null && id > 0,
   })
 }
 
@@ -125,10 +128,53 @@ export function useAuditEvents(params: Record<string, unknown> = {}) {
   })
 }
 
-export function useSchedules() {
+export function useSchedules(bucket?: string) {
   return useQuery<PublicationSchedule[]>({
-    queryKey: editorialKeys.schedules,
-    queryFn: ({ signal }) => fetchSchedules(signal),
+    queryKey: bucket ? [...editorialKeys.schedules, bucket] : editorialKeys.schedules,
+    queryFn: ({ signal }) => fetchSchedules(bucket, signal) as Promise<PublicationSchedule[]>,
+  })
+}
+
+/** Server-side bucket + pagination (timeline). Compact pages; counts come
+ * from `useScheduleCounts` so badges never need the full list. */
+export function useSchedulePage(params: ScheduleListParams) {
+  return useQuery({
+    queryKey: [...editorialKeys.schedules, "page", params],
+    queryFn: ({ signal }) => fetchSchedules(params, signal),
+    placeholderData: (prev) => prev,
+  })
+}
+
+/** Header badges (overdue/today/attention/total/failed) without row payload. */
+export function useScheduleCounts() {
+  return useQuery({
+    queryKey: [...editorialKeys.schedules, "counts"],
+    queryFn: ({ signal }) => fetchScheduleCounts(signal),
+    staleTime: 1000 * 30,
+  })
+}
+
+export function useCancelScheduleMutation() {
+  const queryClient = useQueryClient()
+  return useMutation<PublicationSchedule, Error, number>({
+    mutationFn: (id) => import("../api").then((m) => m.cancelSchedule(id)),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: editorialKeys.schedules })
+      void queryClient.invalidateQueries({ queryKey: editorialKeys.workflows })
+      void queryClient.invalidateQueries({ queryKey: ["dashboard"] })
+    },
+  })
+}
+
+export function useRescheduleMutation() {
+  const queryClient = useQueryClient()
+  return useMutation<PublicationSchedule, Error, { id: number; when: string }>({
+    mutationFn: ({ id, when }) => import("../api").then((m) => m.rescheduleSchedule(id, when)),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: editorialKeys.schedules })
+      void queryClient.invalidateQueries({ queryKey: editorialKeys.workflows })
+      void queryClient.invalidateQueries({ queryKey: ["dashboard"] })
+    },
   })
 }
 

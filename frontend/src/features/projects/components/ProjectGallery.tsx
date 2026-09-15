@@ -83,7 +83,7 @@ const close = useCallback(() => setOpen(null), [])
               }}
               className="rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
             >
-              <ChevronLeft className="h-6 w-6" />
+              <ChevronLeft className="h-6 w-6 rtl:rotate-180" />
             </button>
             <div className="flex-1">
               <ResponsiveImage src={images[open].src} alt={images[open].alt} className="max-h-[70vh] w-full rounded-xl object-contain" />
@@ -100,14 +100,14 @@ const close = useCallback(() => setOpen(null), [])
               }}
               className="rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
             >
-              <ChevronRight className="h-6 w-6" />
+              <ChevronRight className="h-6 w-6 rtl:rotate-180" />
             </button>
           </div>
           <button
             type="button"
             aria-label="Close gallery"
             onClick={close}
-            className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
+            className="absolute end-4 top-4 rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
           >
             <X className="h-5 w-5" />
           </button>

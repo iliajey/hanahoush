@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { Link, useNavigate, useParams } from "react-router-dom"
-import { ArrowUp, ArrowDown, Check, Eye, ImagePlus, Loader2, Send, Star, Trash2 } from "lucide-react"
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
+import { ArrowUp, ArrowDown, Check, Eye, ImagePlus, Loader2, Star, Trash2 } from "lucide-react"
 
 import { PageWrapper } from "@/app/layouts/PageWrapper"
 import { useLanguage } from "@/app/language/useLanguage"
@@ -18,11 +18,23 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { useAuthorization } from "@/features/auth/hooks/useAuthorization"
 import { CAPABILITIES } from "@/features/auth/role-config"
-import { useEnsureWorkflowMutation, useSubmitForReviewMutation, useWorkflowForContent } from "@/features/editorial/hooks"
+import {
+  useEnsureWorkflowMutation,
+  usePublishMutation,
+  useScheduleMutation,
+  useSubmitForReviewMutation,
+  useWorkflow,
+  useWorkflowForContent,
+} from "@/features/editorial/hooks"
+import { PublicationPanel } from "@/features/editorial/components"
+import { scheduleActionError } from "@/features/editorial/api"
+import { OgImageField, SeoPreviewCard, seoHealthItems } from "@/features/cms/seo"
 import { MediaPicker } from "@/features/media/components/MediaPicker"
 import type { MediaFile } from "@/features/media/types"
 import { toApiError } from "@/shared/api/axiosClient"
 import { resolveMediaFile, resolveMediaUrl } from "@/shared/lib"
+import { useDirtyGuard } from "@/shared/hooks"
+import { studioLocaleFromSearchParams } from "@/shared/lib/studioLocale"
 
 import {
   useAddProjectGalleryImage,
@@ -87,8 +99,9 @@ export function ProjectEditPage() {
   const removeGallery = useRemoveProjectGalleryImage(isNew ? undefined : projectId)
   const reorderGallery = useReorderProjectGallery(isNew ? undefined : projectId)
 
-  const [editingLocale, setEditingLocale] = useState<StudioLocale>(
-    language === "fa" || language === "ar" ? language : "en",
+  const [searchParams] = useSearchParams()
+  const [editingLocale, setEditingLocale] = useState<StudioLocale>(() =>
+    studioLocaleFromSearchParams(searchParams, language === "fa" || language === "ar" ? language : "en"),
   )
   const [titles, setTitles] = useState<Trilingual>(emptyTrilingual)
   const [excerpts, setExcerpts] = useState<Trilingual>(emptyTrilingual)
@@ -104,10 +117,13 @@ export function ProjectEditPage() {
   const [endDate, setEndDate] = useState("")
   const [coverId, setCoverId] = useState<number | null>(null)
   const [coverPreview, setCoverPreview] = useState<string | null>(null)
+  const [ogId, setOgId] = useState<number | null>(null)
+  const [ogPreview, setOgPreview] = useState<string | null>(null)
   const [caseStudy, setCaseStudy] = useState<CaseStudyForm>(emptyCaseStudyForm)
   const [hiddenSections, setHiddenSections] = useState<Record<string, boolean>>({})
   const [metaTitle, setMetaTitle] = useState("")
   const [metaDescription, setMetaDescription] = useState("")
+  const [canonicalUrl, setCanonicalUrl] = useState("")
   const [status, setStatus] = useState<ProjectStatus>("draft")
   const [isFeatured, setIsFeatured] = useState(false)
   const [isPublic, setIsPublic] = useState(true)
@@ -117,7 +133,7 @@ export function ProjectEditPage() {
   const [savedAt, setSavedAt] = useState<string | null>(null)
   const [dirty, setDirty] = useState(false)
   const [pickerOpen, setPickerOpen] = useState(false)
-  const [pickerMode, setPickerMode] = useState<"cover" | "gallery" | "body">("cover")
+  const [pickerMode, setPickerMode] = useState<"cover" | "og" | "gallery" | "body">("cover")
   const [imageSignal, setImageSignal] = useState<{ url: string; alt: string; nonce: number } | null>(null)
 
   const hydratedFor = useRef<number | string | null>(null)
@@ -129,18 +145,23 @@ export function ProjectEditPage() {
   const ensureWorkflow = useEnsureWorkflowMutation("projects.project", projectId ?? 0)
   const workflowId = workflowsQuery.data?.[0]?.id ?? 0
   const submitReview = useSubmitForReviewMutation(workflowId)
+  const scheduleMut = useScheduleMutation(workflowId)
+  const publishMut = usePublishMutation(workflowId)
+  const workflowDetail = useWorkflow(workflowId)
   const canSubmitReview = can(CAPABILITIES.EDITORIAL_MANAGE)
+  const canSchedule = can(CAPABILITIES.EDITORIAL_SCHEDULE)
+  const canPublish = can(CAPABILITIES.EDITORIAL_MANAGE)
 
   const snapshot = useMemo(
     () =>
       JSON.stringify({
         titles, excerpts, bodies, slug, categoryId, techIds, client, location, liveUrl,
-        startDate, endDate, coverId, caseStudy, hiddenSections,
-        metaTitle, metaDescription, status, isFeatured, isPublic,
+        startDate, endDate, coverId, ogId, caseStudy, hiddenSections,
+        metaTitle, metaDescription, canonicalUrl, status, isFeatured, isPublic,
       }),
     [titles, excerpts, bodies, slug, categoryId, techIds, client, location, liveUrl,
-      startDate, endDate, coverId, caseStudy, hiddenSections,
-      metaTitle, metaDescription, status, isFeatured, isPublic],
+      startDate, endDate, coverId, ogId, caseStudy, hiddenSections,
+      metaTitle, metaDescription, canonicalUrl, status, isFeatured, isPublic],
   )
 
   useEffect(() => {
@@ -152,7 +173,9 @@ export function ProjectEditPage() {
       description_ar?: string
       meta_title?: string
       meta_description?: string
+      canonical_url?: string
       cover_image?: { id: number; file: string } | null
+      og_image?: { id: number; file: string } | null
       case_study_raw?: Parameters<typeof caseStudyToForm>[0]
     }
     setTitles({ en: project.title_en ?? "", fa: project.title_fa ?? "", ar: project.title_ar ?? "" })
@@ -178,8 +201,11 @@ export function ProjectEditPage() {
     setEndDate(project.end_date ? project.end_date.slice(0, 10) : "")
     setCoverId(detail.cover_image?.id ?? null)
     setCoverPreview(resolveMediaUrl(detail.cover_image?.file) ?? null)
+    setOgId(detail.og_image?.id ?? null)
+    setOgPreview(resolveMediaUrl(detail.og_image?.file) ?? null)
     setMetaTitle(detail.meta_title ?? "")
     setMetaDescription(detail.meta_description ?? "")
+    setCanonicalUrl(detail.canonical_url ?? "")
     setStatus(project.status)
     setIsFeatured(project.is_featured)
     setIsPublic(project.is_public)
@@ -228,15 +254,17 @@ export function ProjectEditPage() {
       start_date: startDate || null,
       end_date: endDate || null,
       cover_image: coverId,
+      og_image: ogId,
       case_study: formToCaseStudy(caseStudy),
       meta_title: metaTitle || undefined,
       meta_description: metaDescription || undefined,
+      canonical_url: canonicalUrl || undefined,
       status: nextStatus,
       is_featured: isFeatured,
       is_public: isPublic,
     }),
     [titles, excerpts, bodies, slug, categoryId, techIds, client, location, liveUrl,
-      startDate, endDate, coverId, caseStudy, metaTitle, metaDescription, isFeatured, isPublic],
+      startDate, endDate, coverId, ogId, caseStudy, metaTitle, metaDescription, canonicalUrl, isFeatured, isPublic],
   )
 
   const persist = useCallback(
@@ -265,8 +293,8 @@ export function ProjectEditPage() {
         const onSuccess = () => {
           snapshotRef.current = JSON.stringify({
             titles, excerpts, bodies, slug, categoryId, techIds, client, location, liveUrl,
-            startDate, endDate, coverId, caseStudy, hiddenSections,
-            metaTitle, metaDescription, status: nextStatus, isFeatured, isPublic,
+            startDate, endDate, coverId, ogId, caseStudy, hiddenSections,
+            metaTitle, metaDescription, canonicalUrl, status: nextStatus, isFeatured, isPublic,
           })
           setSavedAt(new Date().toISOString())
           setDirty(false)
@@ -283,8 +311,8 @@ export function ProjectEditPage() {
       }),
     [projectId, buildPayload, create, isNew, t, update,
       titles, excerpts, bodies, slug, categoryId, techIds, client, location, liveUrl,
-      startDate, endDate, coverId, caseStudy, hiddenSections,
-      metaTitle, metaDescription, isFeatured, isPublic],
+      startDate, endDate, coverId, ogId, caseStudy, hiddenSections,
+      metaTitle, metaDescription, canonicalUrl, isFeatured, isPublic],
   )
 
   const pending = create.isPending || update.isPending
@@ -297,13 +325,7 @@ export function ProjectEditPage() {
     return () => window.clearTimeout(timer)
   }, [snapshot, isNew, dirty, status, persist])
 
-  useEffect(() => {
-    const handler = (event: BeforeUnloadEvent) => {
-      if (dirtyRef.current) event.preventDefault()
-    }
-    window.addEventListener("beforeunload", handler)
-    return () => window.removeEventListener("beforeunload", handler)
-  }, [])
+  useDirtyGuard(dirty)
 
   const handleManualSave = async () => {
     const ok = await persist(status)
@@ -326,7 +348,7 @@ export function ProjectEditPage() {
     }
   }
 
-  const openPicker = (mode: "cover" | "gallery" | "body") => {
+  const openPicker = (mode: "cover" | "og" | "gallery" | "body") => {
     setPickerMode(mode)
     setPickerOpen(true)
   }
@@ -337,6 +359,9 @@ export function ProjectEditPage() {
     if (pickerMode === "cover") {
       setCoverId(media.id)
       setCoverPreview(url || null)
+    } else if (pickerMode === "og") {
+      setOgId(media.id)
+      setOgPreview(url || null)
     } else if (pickerMode === "gallery") {
       if (projectId != null) {
         addGallery.mutate({ image: media.id, sort_order: galleryQuery.data?.length ?? 0 })
@@ -438,6 +463,25 @@ export function ProjectEditPage() {
       { label: t("studio.health.nodes", { defaultValue: "Architecture nodes" }), value: caseStudy.archNodes.length },
     ]
   }, [bodies, caseStudy, t])
+
+  const seoItems = useMemo(
+    () =>
+      seoHealthItems(
+        {
+          slug,
+          meta_title: metaTitle,
+          meta_description: metaDescription,
+          canonical_url: canonicalUrl,
+          og_image: (ogPreview ?? coverPreview) ? { file: (ogPreview ?? coverPreview) as string } : null,
+          title_en: titles.en,
+          title_fa: titles.fa,
+          title_ar: titles.ar,
+        },
+        t,
+        { title: "project-meta-title", description: "project-meta-description", slug: "project-slug", canonical: "project-canonical", og: "project-og" },
+      ),
+    [slug, metaTitle, metaDescription, canonicalUrl, ogPreview, coverPreview, titles, t],
+  )
 
   const FieldError = ({ name }: { name: string }) =>
     fieldErrors[name] ? <p className="text-xs text-destructive">{fieldErrors[name]}</p> : null
@@ -657,6 +701,20 @@ export function ProjectEditPage() {
                   <Label htmlFor="project-meta-description">{t("projectWorkspace.metaDescription")}</Label>
                   <Textarea id="project-meta-description" rows={2} value={metaDescription} maxLength={160} onChange={(e) => setMetaDescription(e.target.value)} dir="auto" />
                 </div>
+                <div className="grid gap-2 sm:col-span-2">
+                  <Label htmlFor="project-canonical">Canonical URL</Label>
+                  <Input id="project-canonical" value={canonicalUrl} onChange={(e) => setCanonicalUrl(e.target.value)} dir="ltr" placeholder="https://" />
+                  <FieldError name="canonical_url" />
+                </div>
+                <div className="grid gap-2 sm:col-span-2">
+                  <OgImageField
+                    id="project-og"
+                    preview={ogPreview ?? coverPreview}
+                    onChoose={() => openPicker("og")}
+                    onRemove={() => { setOgId(null); setOgPreview(null) }}
+                  />
+                  <FieldError name="og_image" />
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -850,20 +908,37 @@ export function ProjectEditPage() {
             </CardContent>
           </Card>
 
-          <ContentHealthPanel items={healthItems} stats={healthStats} onNavigate={handleHealthNavigate} />
+          <ContentHealthPanel items={[...healthItems, ...seoItems]} stats={healthStats} onNavigate={handleHealthNavigate} />
+
+          <SeoPreviewCard
+            title={metaTitle || titles[editingLocale] || slug}
+            description={metaDescription || excerpts[editingLocale]}
+            url={typeof window !== "undefined" ? `${window.location.origin}/projects/${slug}` : `/projects/${slug}`}
+            robots="index,follow"
+            locale={editingLocale}
+            image={ogPreview ?? coverPreview}
+          />
+
+          {!isNew && projectId != null ? (
+            <PublicationPanel
+              status={status}
+              workflowStage={workflowDetail.data?.stage.code ?? workflowsQuery.data?.[0]?.stage.code ?? "draft"}
+              scheduledFor={workflowDetail.data?.schedules.find((s) => s.status === "scheduled")?.scheduled_for ?? null}
+              publishedAt={project?.published_at ?? null}
+              canSubmit={canSubmitReview}
+              canSchedule={canSchedule}
+              canPublish={canPublish}
+              pending={pending || scheduleMut.isPending || publishMut.isPending}
+              localeCompleteness={completeness}
+              blocking={scheduleActionError(scheduleMut.error ?? publishMut.error).blocking}
+              actionError={scheduleActionError(scheduleMut.error ?? publishMut.error).message}
+              onSubmit={() => void handleSubmitReview()}
+              onSchedule={(when) => scheduleMut.mutate(when)}
+              onPublish={() => publishMut.mutate({ soft: false })}
+            />
+          ) : null}
 
           <div className="flex flex-col gap-2">
-            {canSubmitReview && !isNew && projectId != null ? (
-              <Button
-                type="button"
-                variant="outline"
-                disabled={pending || ensureWorkflow.isPending || submitReview.isPending}
-                onClick={() => void handleSubmitReview()}
-              >
-                {(ensureWorkflow.isPending || submitReview.isPending) ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Send className="h-4 w-4" aria-hidden="true" />}
-                {t("projectWorkspace.submitForReview")}
-              </Button>
-            ) : null}
             <Button onClick={() => void handleManualSave()} disabled={pending}>
               {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
               {isNew ? t("projectWorkspace.createDraft") : t("common.save")}

@@ -10,6 +10,8 @@
  */
 import type { LucideIcon } from "lucide-react"
 import {
+  Briefcase,
+  CalendarClock,
   FileText,
   FolderKanban,
   Images,
@@ -81,6 +83,15 @@ export const WORKSPACE_ROUTES: readonly WorkspaceRouteMeta[] = [
     inNav: true,
   },
   {
+    path: "services",
+    labelKey: "navWorkspace.services",
+    descriptionKey: "navWorkspace.servicesDescription",
+    icon: Briefcase,
+    section: "content",
+    capability: CAPABILITIES.CONTENT_SERVICES,
+    inNav: true,
+  },
+  {
     path: "editorial",
     labelKey: "navWorkspace.editorial",
     descriptionKey: "navWorkspace.editorialDescription",
@@ -97,6 +108,15 @@ export const WORKSPACE_ROUTES: readonly WorkspaceRouteMeta[] = [
     section: "editorial",
     capability: CAPABILITIES.EDITORIAL,
     inNav: false,
+  },
+  {
+    path: "timeline",
+    labelKey: "navWorkspace.timeline",
+    descriptionKey: "navWorkspace.timelineDescription",
+    icon: CalendarClock,
+    section: "editorial",
+    capability: CAPABILITIES.EDITORIAL,
+    inNav: true,
   },
   {
     path: "media",

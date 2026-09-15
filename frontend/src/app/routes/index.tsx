@@ -48,6 +48,7 @@ const ArticlesPage = lazyPage(() =>
 const ArticleDetailPage = lazyPage(() =>
   import("@/features/articles/pages/ArticleDetailPage").then((m) => ({ default: m.ArticleDetailPage })),
 )
+const CreditsPage = lazyPage(() => import("./pages/CreditsPage").then((m) => ({ default: m.CreditsPage })))
 const NotFoundPage = lazyPage(() => import("./pages/NotFoundPage").then((m) => ({ default: m.NotFoundPage })))
 const LoginPage = lazyPage(() =>
   import("../../features/auth/pages/LoginPage").then((m) => ({ default: m.LoginPage })),
@@ -91,6 +92,9 @@ const EditorialWorkspaceHub = lazyPage(() =>
 const WorkflowDetailWorkspacePage = lazyPage(() =>
   import("@/features/editorial/pages/WorkflowDetailWorkspacePage").then((m) => ({ default: m.WorkflowDetailWorkspacePage })),
 )
+const PublicationTimelinePage = lazyPage(() =>
+  import("@/features/editorial/pages/PublicationTimelinePage").then((m) => ({ default: m.PublicationTimelinePage })),
+)
 const ArticlesWorkspacePage = lazyPage(() =>
   import("@/features/articles/workspace/ArticlesWorkspacePage").then((m) => ({ default: m.ArticlesWorkspacePage })),
 )
@@ -108,6 +112,15 @@ const ProjectEditPage = lazyPage(() =>
 )
 const ProjectPreviewPage = lazyPage(() =>
   import("@/features/projects/workspace/ProjectPreviewPage").then((m) => ({ default: m.ProjectPreviewPage })),
+)
+const ServicesWorkspacePage = lazyPage(() =>
+  import("@/features/services/workspace/ServicesWorkspacePage").then((m) => ({ default: m.ServicesWorkspacePage })),
+)
+const ServiceEditPage = lazyPage(() =>
+  import("@/features/services/workspace/ServiceEditPage").then((m) => ({ default: m.ServiceEditPage })),
+)
+const ServicePreviewPage = lazyPage(() =>
+  import("@/features/services/workspace/ServicePreviewPage").then((m) => ({ default: m.ServicePreviewPage })),
 )
 const MediaWorkspacePage = lazyPage(() =>
   import("@/features/media/workspace/MediaWorkspacePage").then((m) => ({ default: m.MediaWorkspacePage })),
@@ -169,6 +182,7 @@ const routes: RouteObject[] = [
       { path: "about", element: <AboutPage /> },
       { path: "contact", element: <ContactPage /> },
       { path: "search", element: <SearchPage /> },
+      { path: "credits", element: <CreditsPage /> },
 
       // Development-only design laboratory + marketing library
       ...devRoutes,
@@ -236,6 +250,14 @@ const routes: RouteObject[] = [
             ),
           },
           {
+            path: "timeline",
+            element: (
+              <RequirePermission permissions={[PERMISSIONS.EDITORIAL_VIEW]}>
+                <PublicationTimelinePage />
+              </RequirePermission>
+            ),
+          },
+          {
             path: "articles",
             element: (
               <RequireAnyPermission permissions={[PERMISSIONS.ARTICLES_VIEW]} staffOnly>
@@ -296,6 +318,38 @@ const routes: RouteObject[] = [
             element: (
               <RequireAnyPermission permissions={[PERMISSIONS.PROJECTS_VIEW]} staffOnly>
                 <ProjectPreviewPage />
+              </RequireAnyPermission>
+            ),
+          },
+          {
+            path: "services",
+            element: (
+              <RequireAnyPermission permissions={[PERMISSIONS.SERVICES_VIEW]} staffOnly>
+                <ServicesWorkspacePage />
+              </RequireAnyPermission>
+            ),
+          },
+          {
+            path: "services/new",
+            element: (
+              <RequirePermission permissions={[PERMISSIONS.SERVICES_UPDATE]} staffOnly>
+                <ServiceEditPage />
+              </RequirePermission>
+            ),
+          },
+          {
+            path: "services/:id/edit",
+            element: (
+              <RequirePermission permissions={[PERMISSIONS.SERVICES_UPDATE]} staffOnly>
+                <ServiceEditPage />
+              </RequirePermission>
+            ),
+          },
+          {
+            path: "services/:id/preview",
+            element: (
+              <RequireAnyPermission permissions={[PERMISSIONS.SERVICES_VIEW]} staffOnly>
+                <ServicePreviewPage />
               </RequireAnyPermission>
             ),
           },

@@ -32,7 +32,7 @@ from apps.accounts.models import Permission, Role
 
 from .permissions import IsSuperAdmin
 from .serializers import RoleBriefSerializer
-from .services import audit
+from .services import audit, blacklist_user_tokens
 from .throttles import UserRateThrottle
 
 User = get_user_model()
@@ -429,6 +429,7 @@ class AdminUserViewSet(viewsets.ModelViewSet):
         target.save(update_fields=["password"])
         # Invalidate the target's active sessions after a password reset.
         target.sessions.filter(revoked_at__isnull=True).update(revoked_at=timezone.now())
+        blacklist_user_tokens(target)
         audit(
             "password_change",
             request,
@@ -481,6 +482,7 @@ class AdminUserViewSet(viewsets.ModelViewSet):
         target.save(update_fields=["is_active"])
         # End the deactivated user's sessions immediately.
         target.sessions.filter(revoked_at__isnull=True).update(revoked_at=timezone.now())
+        blacklist_user_tokens(target)
         audit(
             "password_change",
             request,

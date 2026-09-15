@@ -40,7 +40,8 @@
     "back": "رجوع",
     "submit": "إرسال",
     "close": "إغلاق",
-    "breadcrumb": "مسار الصفحة"
+    "breadcrumb": "مسار الصفحة",
+    "clear": "مسح"
   },
   "errors": {
     "unexpected": "حدث خطأ غير متوقع",
@@ -195,7 +196,8 @@
   },
   "services": {
     "notFoundTitle": "الخدمات غير متاحة",
-    "notFoundDescription": "كتالوج خدماتنا غير متاح مؤقتاً. يرجى المحاولة مرة أخرى."
+    "notFoundDescription": "كتالوج خدماتنا غير متاح مؤقتاً. يرجى المحاولة مرة أخرى.",
+    "learnMore": "اعرف المزيد"
   },
   "projects": {
     "notFoundTitle": "دراسة الحالة غير موجودة",
@@ -422,7 +424,12 @@
       "pendingApprovals": "موافقات معلقة",
       "activeLocks": "أقفال المحتوى النشطة",
       "openInquiries": "استفسارات مفتوحة",
-      "projectsAwaitingReview": "المشاريع بانتظار المراجعة"
+      "projectsAwaitingReview": "المشاريع بانتظار المراجعة",
+      "servicesAwaitingReview": "خدمات بانتظار المراجعة",
+      "attention": {
+        "failedPublications": "منشورات فاشلة"
+      },
+      "failedPublications": "منشورات فاشلة"
     },
     "actions": {
       "title": "إجراءات سريعة",
@@ -432,7 +439,8 @@
       "uploadMedia": "رفع وسائط",
       "reviewQueue": "قائمة المراجعة",
       "inquiries": "الاستفسارات",
-      "subscribers": "المشتركون"
+      "subscribers": "المشتركون",
+      "newService": "خدمة جديدة"
     },
     "quickLinksTitle": "اختصارات مساحة العمل",
     "quickLinksDescription": "انتقل إلى أي قسم متاح في مساحة العمل.",
@@ -502,7 +510,8 @@
         "title": "حُدّث مؤخراً",
         "description": "عُد إلى المحتوى الذي لمسته أخيراً.",
         "articles": "المقالات",
-        "projects": "المشاريع"
+        "projects": "المشاريع",
+        "services": "الخدمات"
       },
       "system": {
         "title": "النظام",
@@ -534,7 +543,9 @@
         "migrations": "الترحيلات",
         "environment": "البيئة",
         "version": "الإصدار",
-        "debug": "وضع التصحيح"
+        "debug": "وضع التصحيح",
+        "servicesDrafts": "مسودات الخدمات",
+        "servicesAwaitingReview": "خدمات بانتظار المراجعة"
       }
     },
     "overview": {
@@ -549,7 +560,9 @@
     },
     "translationGaps": {
       "title": "فجوات الترجمة",
-      "description": "محتوى منشور يفتقد لغة."
+      "description": "محتوى منشور يفتقد لغة.",
+      "servicesFA": "الفارسية · الخدمات",
+      "servicesAR": "العربية · الخدمات"
     }
   },
   "roles": {
@@ -607,7 +620,7 @@
     "workflowDetail": "مسار العمل",
     "workflowDetailDescription": "تفاصيل مسار العمل",
     "media": "الوسائط",
-    "mediaDescription": "مكتبة الوسائط",
+    "mediaDescription": "ارفع مرة واحدة وأعد الاستخدام في كل مكان",
     "communication": "الاتصالات",
     "contact": "طلبات التواصل",
     "contactDescription": "الاستفسارات والمتابعات",
@@ -616,7 +629,11 @@
     "profile": "الملف الشخصي",
     "profileDescription": "إعدادات الحساب والأذونات",
     "users": "المستخدمون",
-    "usersDescription": "إدارة الحسابات (المشرف الأعلى)"
+    "usersDescription": "إدارة الحسابات (المشرف الأعلى)",
+    "services": "الخدمات",
+    "servicesDescription": "إدارة عروض الخدمات",
+    "timeline": "الخط الزمني",
+    "timelineDescription": "شاهد ما هو قادم وما تأخر وما يحتاج إلى انتباه"
   },
   "workflowStage": {
     "draft": "مسودة",
@@ -629,7 +646,7 @@
   },
   "articleWorkspace": {
     "title": "المقالات",
-    "subtitle": "أنشئ المقالات وعدّلها وحرّكها عبر مسار العمل التحريري.",
+    "subtitle": "اصنع الصوت التحريري لهاناهوش وانشره.",
     "searchPlaceholder": "ابحث في المقالات…",
     "createDraft": "مسودة جديدة",
     "statusAll": "الكل",
@@ -641,8 +658,8 @@
     "startReview": "بدء المراجعة",
     "submitForReview": "إرسال",
     "submitComment": "جاهز للمراجعة",
-    "empty": "لا توجد مقالات",
-    "emptyDescription": "غيّر عوامل التصفية أو أنشئ مسودة جديدة.",
+    "empty": "لا توجد مقالات بعد.",
+    "emptyDescription": "أنشئ المقالة الأولى لبدء بناء المكتبة التحريرية.",
     "errorTitle": "تعذّر تحميل المقالات",
     "errorDescription": "حدث خطأ أثناء جلب قائمة المقالات.",
     "column": {
@@ -777,11 +794,12 @@
     "notFoundDescription": "المقالة المطلوبة غير موجودة.",
     "errorTitle": "تعذّر تحميل المعاينة",
     "errorDescription": "حدث خطأ أثناء جلب المقالة.",
-    "backToList": "عودة إلى المقالات"
+    "backToList": "عودة إلى المقالات",
+    "tagsLabel": "الوسوم"
   },
   "projectWorkspace": {
     "title": "المشاريع",
-    "subtitle": "إدارة مشاريع المحفظة ودراسات الحالة.",
+    "subtitle": "حوّل الأعمال المنجزة إلى دراسات حالة مقنعة.",
     "searchPlaceholder": "ابحث في المشاريع…",
     "newProject": "مشروع جديد",
     "totalCount_one": "{{count}} مشروع",
@@ -791,8 +809,8 @@
     "statusReview": "قيد المراجعة",
     "statusPublished": "منشور",
     "statusArchived": "مؤرشف",
-    "empty": "لا توجد مشاريع",
-    "emptyDescription": "غيّر عوامل التصفية أو أنشئ مشروعاً جديداً.",
+    "empty": "لا توجد مشاريع بعد.",
+    "emptyDescription": "أنشئ المشروع الأول لبدء بناء معرض الأعمال.",
     "errorTitle": "تعذّر تحميل المشاريع",
     "errorDescription": "حدث خطأ أثناء جلب قائمة المشاريع.",
     "column": {
@@ -804,6 +822,7 @@
     },
     "edit": "تعديل المشروع",
     "openCaseStudy": "فتح دراسة الحالة",
+    "previewLink": "معاينة",
     "saveFailed": "تعذّر حفظ المشروع.",
     "loadFailed": "تعذّر تحميل المشروع.",
     "savedAt": "حُفظ {{time}}",
@@ -886,7 +905,7 @@
   },
   "mediaWorkspace": {
     "title": "مكتبة الوسائط",
-    "subtitle": "ارفع الوسائط المستخدمة في الموقع ووسمها وإدارتها.",
+    "subtitle": "ارفع مرة واحدة وأعد الاستخدام عبر كل المحتوى.",
     "searchPlaceholder": "ابحث في الوسائط…",
     "upload": "رفع",
     "uploading": "جارٍ الرفع…",
@@ -907,8 +926,8 @@
     "referenceCount_few": "{{count}} مراجع",
     "referenceCount_many": "{{count}} مرجعاً",
     "referenceCount_other": "{{count}} مرجعاً",
-    "empty": "لا توجد وسائط",
-    "emptyDescription": "غيّر عوامل التصفية أو ارفع ملفاً جديداً.",
+    "empty": "لا توجد وسائط مرفوعة بعد.",
+    "emptyDescription": "ارفع الصور لإعادة استخدامها عبر المحتوى.",
     "uploadSuccess": "تم رفع الوسائط",
     "uploadFailed": "فشل الرفع",
     "metadataSaved": "تم حفظ البيانات الوصفية",
@@ -1267,5 +1286,252 @@
       "noTags": "لم تختر وسوم.",
       "removeTag": "إزالة الوسم"
     }
+  },
+  "serviceWorkspace": {
+    "title": "الخدمات",
+    "subtitle": "حافظ على كتالوج الخدمات واضحاً ومحدّثاً.",
+    "searchPlaceholder": "ابحث في الخدمات.",
+    "newService": "خدمة جديدة",
+    "totalCount_one": "{{count}} خدمة",
+    "totalCount_other": "{{count}} خدمة",
+    "statusAll": "الكل",
+    "statusDraft": "مسودة",
+    "statusReview": "قيد المراجعة",
+    "statusPublished": "منشورة",
+    "statusArchived": "مؤرشفة",
+    "empty": "لا توجد خدمات بعد.",
+    "emptyDescription": "أنشئ الخدمة الأولى لبدء بناء الكتالوج.",
+    "errorTitle": "تعذّر تحميل الخدمات",
+    "errorDescription": "حدث خطأ أثناء جلب قائمة الخدمات.",
+    "column": {
+      "service": "الخدمة",
+      "status": "الحالة",
+      "section": "القسم",
+      "order": "الترتيب",
+      "actions": "إجراءات"
+    },
+    "edit": "تحرير الخدمة",
+    "view": "عرض الخدمات العامة",
+    "previewLink": "معاينة",
+    "saveFailed": "تعذّر حفظ الخدمة.",
+    "loadFailed": "تعذّر تحميل الخدمة.",
+    "savedAt": "حُفظت في {{time}}",
+    "unsavedChanges": "تغييرات غير محفوظة",
+    "preview": "معاينة",
+    "wordCount": "{{count}} كلمة",
+    "totalWords": "إجمالي الكلمات",
+    "readingTime": "{{count}} دقيقة قراءة",
+    "sortOrder": "الترتيب",
+    "insertImage": "إدراج صورة",
+    "excerptEN": "الملخص (الإنجليزية)",
+    "excerptFA": "الملخص (الفارسية)",
+    "excerptAR": "الملخص (العربية)",
+    "coverTitle": "صورة الغلاف",
+    "chooseCover": "اختيار الغلاف",
+    "noCover": "لم تُختر صورة بعد. اختر واحدة من مكتبة الوسائط.",
+    "removeCover": "إزالة الغلاف",
+    "mediaTitle": "إدراج من مكتبة الوسائط",
+    "metaTitle": "عنوان ميتا (SEO)",
+    "metaDescription": "وصف ميتا (SEO)",
+    "statusHint": "يتم النشر عبر سير العمل التحريري؛ تغيير الحالة هنا يخزّن البيانات فقط.",
+    "createDraft": "إنشاء مسودة",
+    "healthNoSection": "لم يُعيَّن قسم",
+    "filters": {
+      "section": "القسم",
+      "sectionAll": "كل الأقسام"
+    },
+    "form": {
+      "createTitle": "خدمة جديدة",
+      "editTitle": "تحرير الخدمة",
+      "subtitle": "احفظ محتوى الخدمة هنا؛ يتم النشر عبر سير العمل التحريري.",
+      "identity": "الهوية",
+      "content": "المحتوى",
+      "publishing": "النشر",
+      "titleEN": "العنوان (الإنجليزية)",
+      "titleFA": "العنوان (الفارسية)",
+      "titleAR": "العنوان (العربية)",
+      "slug": "المعرّف",
+      "section": "القسم",
+      "sectionPlaceholder": "اختر قسمًا",
+      "noSection": "بدون قسم",
+      "icon": "الأيقونة",
+      "iconHint": "مفتاح أيقونة Lucide، مثل code أو cloud أو cpu.",
+      "sortOrder": "الترتيب",
+      "descriptionEN": "الوصف (الإنجليزية)",
+      "descriptionFA": "الوصف (الفارسية)",
+      "descriptionAR": "الوصف (العربية)",
+      "status": "الحالة",
+      "isFeatured": "مميزة",
+      "isPublic": "عامة",
+      "noIcon": "بدون أيقونة"
+    }
+  },
+  "servicePreview": {
+    "title": "معاينة الخدمة",
+    "subtitle": "هكذا تظهر الخدمة المحفوظة على الموقع العام. معاينة فقط — لا يتم نشر شيء.",
+    "localeLabel": "لغة المعاينة",
+    "draftBadge": "معاينة مسودة",
+    "featured": "مميزة",
+    "emptyBody": "لا يوجد وصف محفوظ لهذه اللغة بعد.",
+    "notFound": "الخدمة غير موجودة",
+    "notFoundDescription": "الخدمة المطلوبة غير موجودة.",
+    "errorTitle": "تعذّر تحميل المعاينة",
+    "errorDescription": "حدث خطأ أثناء جلب الخدمة.",
+    "backToList": "عودة إلى الخدمات"
+  },
+  "timeline": {
+    "title": "الخط الزمني للنشر",
+    "subtitle": "شاهد ما هو قادم وما تأخر وما يحتاج إلى انتباه.",
+    "search": "ابحث في المحتوى المجدول…",
+    "empty": "لا شيء مجدول.",
+    "emptyDescription": "تقويم النشر فارغ.",
+    "loadFailed": "تعذّر تحميل الخط الزمني.",
+    "rescheduled": "تمت إعادة الجدولة",
+    "cancelled": "تم الإلغاء",
+    "actionFailed": "فشل الإجراء"
+  },
+  "seo": {
+    "health": {
+      "missingSlug": "المعرّف مفقود — الروابط/المعاينة تتعطل.",
+      "missingTitle": "عنوان SEO مفقود.",
+      "titleLong": "عنوان SEO طويل ({{count}}/60).",
+      "titleWeak": "عنوان SEO ضعيف (أقل من 10 أحرف).",
+      "missingDescription": "وصف SEO مفقود.",
+      "descriptionLong": "وصف SEO طويل ({{count}}/160).",
+      "missingCanonical": "الرابط المعياري مفقود.",
+      "missingOgImage": "صورة المشاركة مفقودة.",
+      "missingLocale": "عنوان SEO لـ {{locale}} مفقود.",
+      "canonicalMismatch": "الرابط المعياري لا يحتوي المعرّف."
+    },
+    "ogImage": "صورة المشاركة (OG)",
+    "chooseOgImage": "اختيار صورة المشاركة",
+    "replaceOgImage": "استبدال صورة المشاركة",
+    "noOgImage": "لم يتم اختيار صورة مشاركة. يتم استخدام صورة الغلاف.",
+    "removeOgImage": "إزالة صورة المشاركة"
+  },
+  "publication": {
+    "title": "عمليات النشر",
+    "description": "الجداول القادمة واليوم والمتأخرة.",
+    "openTimeline": "فتح الخط الزمني",
+    "upcoming": "القادمة",
+    "today": "اليوم",
+    "overdue": "المتأخرة",
+    "empty": "تقويم النشر فارغ.",
+    "failed": "فاشلة",
+    "failedTitle": "منشورات فاشلة — أصلح وأعد المحاولة",
+    "publishedOk": "تم النشر بنجاح.",
+    "scheduledOk": "تمت الجدولة بنجاح.",
+    "countdown": {
+      "minutes": "يُنشر بعد {{count}} دقيقة",
+      "hours": "يُنشر بعد {{h}} ساعة و{{m}} دقيقة",
+      "tomorrow": "غداً · {{time}}",
+      "weekday": "{{weekday}} · {{time}}",
+      "date": "{{date}}",
+      "overdue": "متأخر بمقدار {{ago}}",
+      "now": "يُنشر الآن"
+    }
+  },
+  "commandCenter": {
+    "title": "مركز الأوامر",
+    "placeholder": "اكتب أمراً أو ابحث…",
+    "hint": "↑↓ للتنقل · Enter للفتح · Esc للإغلاق",
+    "recent": "الأخيرة",
+    "searchSection": "بحث",
+    "emptyTitle": "لا توجد نتائج مطابقة",
+    "emptyDescription": "جرّب البحث في المقالات أو المشاريع أو الخدمات أو الوسائط أو الأوامر.",
+    "resultHint": "Enter يفتح النتيجة المحددة",
+    "categories": {
+      "navigation": "التنقل",
+      "create": "إنشاء",
+      "content": "المحتوى",
+      "publishing": "النشر",
+      "admin": "الإدارة",
+      "system": "النظام"
+    },
+    "nav": {
+      "dashboard": "الذهاب إلى اللوحة",
+      "articles": "الذهاب إلى المقالات",
+      "projects": "الذهاب إلى المشاريع",
+      "services": "الذهاب إلى الخدمات",
+      "media": "الذهاب إلى الوسائط",
+      "timeline": "الذهاب إلى الخط الزمني",
+      "editorial": "الذهاب إلى التحرير",
+      "users": "الذهاب إلى المستخدمين",
+      "profile": "فتح الملف الشخصي"
+    },
+    "create": {
+      "article": "إنشاء مقالة",
+      "project": "إنشاء مشروع",
+      "service": "إنشاء خدمة",
+      "media": "رفع وسائط"
+    },
+    "pub": {
+      "attention": "مراجعة قائمة الانتباه",
+      "timeline": "فتح الخط الزمني"
+    },
+    "system": {
+      "theme": "تبديل المظهر",
+      "language": "تغيير اللغة",
+      "shortcuts": "اختصارات لوحة المفاتيح"
+    },
+    "admin": {
+      "settings": "فتح الإعدادات"
+    }
+  },
+  "shortcuts": {
+    "title": "اختصارات لوحة المفاتيح",
+    "description": "اعمل أسرع بلوحة المفاتيح.",
+    "keys": {
+      "command": "Ctrl K / ⌘K",
+      "close": "Esc",
+      "navigate": "↑ ↓",
+      "open": "Enter"
+    },
+    "desc": {
+      "command": "مركز الأوامر",
+      "close": "إغلاق النافذة",
+      "navigate": "التنقل",
+      "open": "الفتح"
+    }
+  },
+  "credits": {
+    "eyebrow": "حسناً… وجدتها.",
+    "title": "صُمم وبُني بواسطة",
+    "nameFa": "ایلیا جمالی",
+    "nameEn": "Ilia Jamali",
+    "tagline": "صُمم هذا المنتج وهُندس وأُحيي بعناية فائقة بالتفاصيل والأداء وقليل من الشغف.",
+    "back": "العودة إلى الرئيسية",
+    "coming": "القادم أكثر — ستُضاف اعتمادات إضافية هنا.",
+    "sections": {
+      "creator": "المبتكر",
+      "product": "المنتج",
+      "design": "التصميم",
+      "engineering": "الهندسة",
+      "thanks": "شكر خاص",
+      "tech": "التقنيات",
+      "story": "القصة"
+    }
+  },
+  "today": {
+    "title": "اليوم",
+    "description": "ما يحتاجك أكثر الآن.",
+    "attention": "{{count}} عناصر تحتاج إلى انتباه",
+    "scheduled": "{{count}} منشورات مجدولة اليوم",
+    "failed": "{{count}} منشورات فاشلة",
+    "review": "{{count}} مقالات بانتظار المراجعة",
+    "openQueue": "فتح قائمة الانتباه",
+    "allClearTitle": "كل شيء بخير اليوم.",
+    "allClearDescription": "لا شيء يحتاج إلى تدخل الآن."
+  },
+  "health": {
+    "healthy": "سليم",
+    "attention": "يحتاج إلى انتباه",
+    "blocking": "مانع"
+  },
+  "systemPulse": {
+    "title": "النظام",
+    "operational": "يعمل",
+    "degraded": "متدهور",
+    "unknown": "غير معروف"
   }
 }

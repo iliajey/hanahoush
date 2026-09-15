@@ -17,6 +17,8 @@ const EXPECTED: Record<string, Record<string, boolean>> = {
     [CAPABILITIES.CONTENT_PROJECTS]: true,
     [CAPABILITIES.CONTENT_ARTICLES_WRITE]: true,
     [CAPABILITIES.CONTENT_PROJECTS_WRITE]: true,
+    [CAPABILITIES.CONTENT_SERVICES]: true,
+    [CAPABILITIES.CONTENT_SERVICES_WRITE]: true,
     [CAPABILITIES.EDITORIAL]: true,
     [CAPABILITIES.EDITORIAL_REVIEW]: false,
     [CAPABILITIES.EDITORIAL_MANAGE]: true,
@@ -37,6 +39,8 @@ const EXPECTED: Record<string, Record<string, boolean>> = {
     [CAPABILITIES.CONTENT_PROJECTS]: false,
     [CAPABILITIES.CONTENT_ARTICLES_WRITE]: true,
     [CAPABILITIES.CONTENT_PROJECTS_WRITE]: false,
+    [CAPABILITIES.CONTENT_SERVICES]: true,
+    [CAPABILITIES.CONTENT_SERVICES_WRITE]: true,
     [CAPABILITIES.EDITORIAL]: true,
     [CAPABILITIES.EDITORIAL_REVIEW]: true,
     [CAPABILITIES.EDITORIAL_MANAGE]: true,
@@ -57,6 +61,8 @@ const EXPECTED: Record<string, Record<string, boolean>> = {
     [CAPABILITIES.CONTENT_PROJECTS]: true,
     [CAPABILITIES.CONTENT_ARTICLES_WRITE]: false,
     [CAPABILITIES.CONTENT_PROJECTS_WRITE]: true,
+    [CAPABILITIES.CONTENT_SERVICES]: true,
+    [CAPABILITIES.CONTENT_SERVICES_WRITE]: false,
     [CAPABILITIES.EDITORIAL]: true,
     [CAPABILITIES.EDITORIAL_REVIEW]: true,
     [CAPABILITIES.EDITORIAL_MANAGE]: false,
@@ -77,6 +83,8 @@ const EXPECTED: Record<string, Record<string, boolean>> = {
     [CAPABILITIES.CONTENT_PROJECTS]: false,
     [CAPABILITIES.CONTENT_ARTICLES_WRITE]: false,
     [CAPABILITIES.CONTENT_PROJECTS_WRITE]: false,
+    [CAPABILITIES.CONTENT_SERVICES]: false,
+    [CAPABILITIES.CONTENT_SERVICES_WRITE]: false,
     [CAPABILITIES.EDITORIAL]: true,
     [CAPABILITIES.EDITORIAL_REVIEW]: true,
     [CAPABILITIES.EDITORIAL_MANAGE]: false,
@@ -97,6 +105,8 @@ const EXPECTED: Record<string, Record<string, boolean>> = {
     [CAPABILITIES.CONTENT_PROJECTS]: false,
     [CAPABILITIES.CONTENT_ARTICLES_WRITE]: false,
     [CAPABILITIES.CONTENT_PROJECTS_WRITE]: false,
+    [CAPABILITIES.CONTENT_SERVICES]: false,
+    [CAPABILITIES.CONTENT_SERVICES_WRITE]: false,
     [CAPABILITIES.EDITORIAL]: true,
     [CAPABILITIES.EDITORIAL_REVIEW]: false,
     [CAPABILITIES.EDITORIAL_MANAGE]: false,
@@ -197,18 +207,18 @@ describe("navigation authorization (workspaceNavForUser)", () => {
   }
 
   it("SUPER_ADMIN sees every nav link", () => {
-    expect(linkPaths("SUPER_ADMIN")).toEqual(["", "articles", "contact", "editorial", "media", "newsletter", "profile", "projects", "users"])
+    expect(linkPaths("SUPER_ADMIN")).toEqual(["", "articles", "contact", "editorial", "media", "newsletter", "profile", "projects", "services", "timeline", "users"])
   })
 
   it("VIEWER sees only dashboard + editorial", () => {
-    expect(linkPaths("VIEWER")).toEqual(["", "editorial", "profile"])
+    expect(linkPaths("VIEWER")).toEqual(["", "editorial", "profile", "timeline"])
   })
 
   it("EDITOR sees only dashboard + editorial", () => {
-    expect(linkPaths("EDITOR")).toEqual(["", "editorial", "profile"])
+    expect(linkPaths("EDITOR")).toEqual(["", "editorial", "profile", "timeline"])
   })
 
   it("PROJECT_MANAGER sees dashboard, articles, projects, editorial, media, communication", () => {
-    expect(linkPaths("PROJECT_MANAGER")).toEqual(["", "articles", "contact", "editorial", "media", "newsletter", "profile", "projects"])
+    expect(linkPaths("PROJECT_MANAGER")).toEqual(["", "articles", "contact", "editorial", "media", "newsletter", "profile", "projects", "services", "timeline"])
   })
 })

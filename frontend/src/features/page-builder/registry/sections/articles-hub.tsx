@@ -43,10 +43,10 @@ export function ArticlesHeroSection({ config }: SectionProps) {
         </h1>
         <p className="max-w-2xl text-lg text-muted-foreground">{cfgString(config, "subtitle")}</p>
         <div className="relative w-full max-w-md">
-          <Search className="pointer-events-none absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
+          <Search className="pointer-events-none absolute start-3 top-3 h-5 w-5 text-muted-foreground" />
           <Input
             placeholder={t("search.placeholder")}
-            className="h-11 pl-10"
+            className="h-11 ps-10"
             value={value}
             onChange={(e) => setValue(e.target.value)}
             aria-label={t("search.placeholder")}

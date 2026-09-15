@@ -27,7 +27,7 @@ function CommentItem({
 }) {
   const [replyText, setReplyText] = useState("")
   return (
-    <div className={cn("space-y-2", depth > 0 && "ml-6 border-l pl-3")}>
+    <div className={cn("space-y-2", depth > 0 && "ms-6 border-s ps-3")}>
       <div className="rounded-xl border bg-card p-3">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 text-xs text-muted-foreground">

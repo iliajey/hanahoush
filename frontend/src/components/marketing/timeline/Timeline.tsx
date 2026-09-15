@@ -6,8 +6,8 @@ export interface MilestoneProps { date: string; title: string; description?: str
 
 export function Milestone({ date, title, description, icon, className }: MilestoneProps) {
   return (
-    <RevealContainer className={cn("relative flex gap-6 pl-10 before:absolute before:left-5 before:top-2 before:h-full before:w-px before:bg-border", className)}>
-      <div className="absolute left-0 top-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-card text-sm font-bold text-brand-600 shadow-sm">{icon || date}</div>
+    <RevealContainer className={cn("relative flex gap-6 ps-10 before:absolute before:start-5 before:top-2 before:h-full before:w-px before:bg-border", className)}>
+      <div className="absolute start-0 top-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-card text-sm font-bold text-brand-600 shadow-sm">{icon || date}</div>
       <div className="pb-8">
         <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{date}</span>
         <h4 className="mt-1 font-semibold">{title}</h4>

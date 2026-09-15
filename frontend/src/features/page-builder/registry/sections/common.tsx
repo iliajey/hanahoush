@@ -22,6 +22,13 @@ export function SectionHeading({ config }: { config: SectionConfig }) {
   return <SectionHeader eyebrow={eyebrow || undefined} title={title} description={description || undefined} />
 }
 
+export const SERVICE_ICON_KEYS = [
+  "globe", "layers", "settings", "bot", "code",
+  "zap", "database", "cloud", "cpu", "chart", "shield",
+] as const
+
+export type ServiceIconKey = (typeof SERVICE_ICON_KEYS)[number]
+
 const ICON_MAP: Record<string, LucideIcon> = {
   globe: Globe, layers: Layers, settings: Settings, bot: Bot, code: Code2,
   zap: Zap, database: Database, cloud: Cloud, cpu: Cpu, chart: LineChart, shield: Shield,

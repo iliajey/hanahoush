@@ -17,6 +17,7 @@ import { getDisplayName } from "@/features/auth/utils"
 import { useNavigation, useSiteSettings } from "@/features/cms"
 import { SearchCommand } from "@/features/search"
 import { BrandLogo } from "@/components/brand/BrandLogo"
+import { useHomeClickEgg } from "@/shared/hooks"
 
 /**
  * App navigation. CMS pages (services/projects/articles/about) are driven by
@@ -39,6 +40,7 @@ export function Navbar() {
 
   const navigation = useNavigation()
   const settings = useSiteSettings()
+  const { onHomeClick } = useHomeClickEgg(true)
 
   const cmsItems =
     navigation.data?.items
@@ -81,7 +83,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur">
       <Container className="flex h-16 items-center justify-between gap-4">
-        <Link to="/" className="flex items-center gap-2 font-bold tracking-tight" onClick={() => setOpen(false)}>
+        <Link to="/" className="flex items-center gap-2 font-bold tracking-tight" onClick={() => { setOpen(false); onHomeClick() }}>
           {settings.data?.logo?.file ? (
             <img
               src={resolveMediaUrl(settings.data.logo.file) ?? settings.data.logo.file}
@@ -95,21 +97,38 @@ export function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-1 xl:flex" aria-label={t("nav.main")}>
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.end}
-              className={({ isActive }) =>
-                cn(
-                  "rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
-                  isActive && "bg-accent text-accent-foreground",
-                )
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
+          {navItems.map((item) =>
+            item.to === "/" ? (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                onClick={onHomeClick}
+                className={({ isActive }) =>
+                  cn(
+                    "rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
+                    isActive && "bg-accent text-accent-foreground",
+                  )
+                }
+              >
+                {item.label}
+              </NavLink>
+            ) : (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                className={({ isActive }) =>
+                  cn(
+                    "rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
+                    isActive && "bg-accent text-accent-foreground",
+                  )
+                }
+              >
+                {item.label}
+              </NavLink>
+            ),
+          )}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -148,7 +167,7 @@ export function Navbar() {
                 key={item.to}
                 to={item.to}
                 end={item.end}
-                onClick={() => setOpen(false)}
+                onClick={() => { setOpen(false); if (item.to === "/") onHomeClick() }}
                 className={drawerItemClass}
               >
                 {item.label}

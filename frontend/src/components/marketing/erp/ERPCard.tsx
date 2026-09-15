@@ -30,9 +30,9 @@ export function ERPModules({ modules, className }: { modules: { name: string; st
 
 export function ERPTimeline({ items, className }: { items: { year: string; title: string; description: string }[]; className?: string }) {
   return (
-    <div className={cn("relative space-y-8 before:absolute before:left-4 before:top-2 before:h-[calc(100%-1rem)] before:w-px before:bg-border", className)}>
+    <div className={cn("relative space-y-8 before:absolute before:start-4 before:top-2 before:h-[calc(100%-1rem)] before:w-px before:bg-border", className)}>
       {items.map((item, i) => (
-        <RevealContainer key={i} className="flex gap-6 pl-10">
+        <RevealContainer key={i} className="flex gap-6 ps-10">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-brand-500/30 bg-card text-xs font-bold text-brand-600">{item.year}</div>
           <div><h4 className="font-semibold">{item.title}</h4><p className="text-sm text-muted-foreground">{item.description}</p></div>
         </RevealContainer>

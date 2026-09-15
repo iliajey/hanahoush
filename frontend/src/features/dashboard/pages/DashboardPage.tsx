@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import {
   Activity,
   ArrowRight,
+  Briefcase,
   Database,
   FileText,
   FolderKanban,
@@ -36,6 +37,8 @@ import { workspaceNavForUser, workspaceRouteHref } from "@/app/workspace/workspa
 
 import { useOperationalDashboard } from "../hooks"
 import { ProfileCard } from "../components/ProfileCard"
+import { TodayCard } from "../components/TodayCard"
+import { SystemPulse } from "../components/SystemPulse"
 import { StatTile } from "../components/StatTile"
 import type { OperationalDashboard } from "../types"
 
@@ -61,7 +64,7 @@ function SectionCard({
           {action}
         </div>
       </CardHeader>
-      <CardContent className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">{children}</CardContent>
+      <CardContent className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:[grid-template-columns:repeat(2,minmax(0,1fr))] xl:grid-cols-3 xl:[grid-template-columns:repeat(3,minmax(0,1fr))]">{children}</CardContent>
     </Card>
   )
 }
@@ -105,6 +108,13 @@ function AttentionQueue({ data }: { data: OperationalDashboard }) {
       show: can(CAPABILITIES.CONTENT_PROJECTS),
     },
     {
+      key: "service-review",
+      label: t("dashboard.attention.servicesAwaitingReview"),
+      count: data.content.services_awaiting_review ?? 0,
+      to: "/dashboard/services?status=review",
+      show: can(CAPABILITIES.CONTENT_SERVICES),
+    },
+    {
       key: "approvals",
       label: t("dashboard.attention.pendingApprovals"),
       count: data.editorial.pending_approvals,
@@ -116,6 +126,13 @@ function AttentionQueue({ data }: { data: OperationalDashboard }) {
       label: t("dashboard.attention.activeLocks"),
       count: data.editorial.active_locks,
       to: "/dashboard/editorial",
+      show: can(CAPABILITIES.EDITORIAL),
+    },
+    {
+      key: "failed",
+      label: t("dashboard.attention.failedPublications"),
+      count: data.editorial.failed_count ?? 0,
+      to: "/dashboard/timeline",
       show: can(CAPABILITIES.EDITORIAL),
     },
     {
@@ -146,8 +163,8 @@ function AttentionQueue({ data }: { data: OperationalDashboard }) {
                 to={item.to}
                 className="flex items-center justify-between gap-3 rounded-xl border bg-card px-4 py-3 text-sm transition-colors hover:border-amber-500/50 hover:bg-accent"
               >
-                <span className="font-medium">{item.label}</span>
-                <Badge variant="secondary" className="tabular-nums">{item.count}</Badge>
+                <span className="min-w-0 flex-1 truncate font-medium" dir="auto">{item.label}</span>
+                <Badge variant="secondary" className="shrink-0 tabular-nums">{item.count}</Badge>
               </Link>
             </li>
           ))}
@@ -175,6 +192,13 @@ function QuickActions() {
       to: "/dashboard/projects/new",
       icon: FolderKanban,
       show: can(CAPABILITIES.CONTENT_PROJECTS_WRITE),
+    },
+    {
+      key: "service",
+      label: t("dashboard.actions.newService"),
+      to: "/dashboard/services/new",
+      icon: Briefcase,
+      show: can(CAPABILITIES.CONTENT_SERVICES_WRITE),
     },
     {
       key: "media",
@@ -262,11 +286,15 @@ function OperationalDashboardSection() {
     )
   }
 
-  const showContent = can(CAPABILITIES.CONTENT_ARTICLES) || can(CAPABILITIES.CONTENT_PROJECTS)
+  const showContent =
+    can(CAPABILITIES.CONTENT_ARTICLES) ||
+    can(CAPABILITIES.CONTENT_PROJECTS) ||
+    can(CAPABILITIES.CONTENT_SERVICES)
 
   return (
     <div className="grid gap-6">
       <AttentionQueue data={data} />
+      <TodayCard data={data} />
       <QuickActions />
 
       {showContent ? (
@@ -290,7 +318,13 @@ function OperationalDashboardSection() {
               <StatTile label={t("dashboard.attention.projectsAwaitingReview")} value={data.content.projects_awaiting_review ?? 0} />
             </>
           ) : null}
-          <StatTile label={t("dashboard.widgets.metrics.services")} value={data.content.services} />
+          {can(CAPABILITIES.CONTENT_SERVICES) ? (
+            <>
+              <StatTile label={t("dashboard.widgets.metrics.services")} value={data.content.services} icon={Briefcase} />
+              <StatTile label={t("dashboard.widgets.metrics.servicesDrafts")} value={data.content.services_drafts ?? 0} />
+              <StatTile label={t("dashboard.widgets.metrics.servicesAwaitingReview")} value={data.content.services_awaiting_review ?? 0} />
+            </>
+          ) : null}
         </SectionCard>
       ) : null}
 
@@ -298,7 +332,9 @@ function OperationalDashboardSection() {
       ((data.content.articles_missing_fa ?? 0) +
         (data.content.articles_missing_ar ?? 0) +
         (data.content.projects_missing_fa ?? 0) +
-        (data.content.projects_missing_ar ?? 0) >
+        (data.content.projects_missing_ar ?? 0) +
+        (data.content.services_missing_fa ?? 0) +
+        (data.content.services_missing_ar ?? 0) >
         0) ? (
         <SectionCard
           title={t("dashboard.translationGaps.title")}
@@ -316,6 +352,12 @@ function OperationalDashboardSection() {
               <StatTile label="AR · Projects" value={data.content.projects_missing_ar ?? 0} />
             </>
           ) : null}
+          {can(CAPABILITIES.CONTENT_SERVICES) ? (
+            <>
+              <StatTile label={t("dashboard.translationGaps.servicesFA")} value={data.content.services_missing_fa ?? 0} />
+              <StatTile label={t("dashboard.translationGaps.servicesAR")} value={data.content.services_missing_ar ?? 0} />
+            </>
+          ) : null}
         </SectionCard>
       ) : null}
 
@@ -330,6 +372,73 @@ function OperationalDashboardSection() {
           <StatTile label={t("dashboard.widgets.metrics.scheduledPublications")} value={data.editorial.scheduled_publications} icon={Activity} />
           <StatTile label={t("dashboard.widgets.metrics.activeLocks")} value={data.editorial.active_locks} />
           <StatTile label={t("dashboard.widgets.metrics.recentRevisions")} value={data.editorial.recent_revisions} />
+        </SectionCard>
+      ) : null}
+
+      {can(CAPABILITIES.EDITORIAL) ? (
+        <SectionCard
+          title={t("publication.title")}
+          description={t("publication.description")}
+          action={<ViewAllLink to="/dashboard/timeline" label={t("publication.openTimeline")} />}
+        >
+          <StatTile label={t("publication.upcoming")} value={data.editorial.upcoming_count ?? data.editorial.scheduled_publications} icon={Activity} />
+          <StatTile label={t("publication.today")} value={data.editorial.today_count ?? 0} />
+          <StatTile label={t("publication.overdue")} value={data.editorial.overdue_count ?? 0} />
+          <StatTile label={t("publication.failed")} value={data.editorial.failed_count ?? 0} />
+          {(data.editorial.failed_count ?? 0) > 0 ? (
+            <Card className="border-destructive/40 sm:col-span-2 xl:col-span-3">
+              <CardContent className="space-y-1 p-4">
+                <p className="flex items-center justify-between text-sm font-semibold">
+                  <span className="text-destructive">{t("publication.failedTitle")}</span>
+                  <ViewAllLink to="/dashboard/timeline" label={t("publication.openTimeline")} />
+                </p>
+                <ul className="space-y-1 text-sm">
+                  {(data.editorial.failed ?? []).slice(0, 6).map((item) => (
+                    <li key={item.id}>
+                      <Link
+                        to={`/dashboard/editorial/${item.workflow}`}
+                        className="flex items-center justify-between gap-2 truncate rounded-md px-2 py-1 hover:bg-accent"
+                      >
+                        <span className="min-w-0 flex-1 truncate text-muted-foreground" dir="auto">
+                          {item.content_type} · {item.scheduled_by ?? "—"}
+                        </span>
+                        <span className="shrink-0 tabular-nums text-xs text-muted-foreground" dir="ltr">
+                          {item.scheduled_for ? new Date(item.scheduled_for).toLocaleString() : "—"}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          ) : null}
+          {((data.editorial.upcoming ?? []).length || (data.editorial.today ?? []).length || (data.editorial.overdue ?? []).length) ? (
+            <Card className="sm:col-span-2 xl:col-span-3">
+              <CardContent className="space-y-1 p-4">
+                <ul className="space-y-1 text-sm">
+                  {[...(data.editorial.overdue ?? []), ...(data.editorial.today ?? []), ...(data.editorial.upcoming ?? [])].slice(0, 6).map((item) => (
+                    <li key={item.id}>
+                      <Link
+                        to={`/dashboard/editorial/${item.workflow}`}
+                        className="flex items-center justify-between gap-2 truncate rounded-md px-2 py-1 hover:bg-accent"
+                      >
+                        <span className="min-w-0 flex-1 truncate text-muted-foreground" dir="auto">
+                          {item.content_type} · {item.scheduled_by ?? "—"}
+                        </span>
+                        <span className="shrink-0 tabular-nums text-xs text-muted-foreground" dir="ltr">
+                          {item.scheduled_for ? new Date(item.scheduled_for).toLocaleString() : "—"}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="sm:col-span-2 xl:col-span-3">
+              <EmptyState title={t("publication.empty")} description={t("publication.description")} />
+            </div>
+          )}
         </SectionCard>
       ) : null}
 
@@ -420,7 +529,8 @@ function OperationalDashboardSection() {
           !data.operations.recent_contact_requests.length &&
           !data.operations.recent_editorial_activity.length &&
           !(data.operations.recent_articles ?? []).length &&
-          !(data.operations.recent_projects ?? []).length ? (
+          !(data.operations.recent_projects ?? []).length &&
+          !(data.operations.recent_services ?? []).length ? (
             <div className="sm:col-span-2 xl:col-span-3">
               <EmptyState title={t("dashboard.widgets.empty")} description={t("dashboard.widgets.operations.emptyDescription")} />
             </div>
@@ -428,8 +538,12 @@ function OperationalDashboardSection() {
         </SectionCard>
       ) : null}
 
-      {(can(CAPABILITIES.CONTENT_ARTICLES) || can(CAPABILITIES.CONTENT_PROJECTS)) &&
-      ((data.operations.recent_articles ?? []).length > 0 || (data.operations.recent_projects ?? []).length > 0) ? (
+      {(can(CAPABILITIES.CONTENT_ARTICLES) ||
+        can(CAPABILITIES.CONTENT_PROJECTS) ||
+        can(CAPABILITIES.CONTENT_SERVICES)) &&
+      ((data.operations.recent_articles ?? []).length > 0 ||
+        (data.operations.recent_projects ?? []).length > 0 ||
+        (data.operations.recent_services ?? []).length > 0) ? (
         <SectionCard
           title={t("dashboard.widgets.recent.title")}
           description={t("dashboard.widgets.recent.description")}
@@ -480,11 +594,36 @@ function OperationalDashboardSection() {
               </CardContent>
             </Card>
           ) : null}
+          {can(CAPABILITIES.CONTENT_SERVICES) && (data.operations.recent_services ?? []).length > 0 ? (
+            <Card className="sm:col-span-2">
+              <CardContent className="space-y-2 p-4">
+                <p className="flex items-center justify-between text-sm font-semibold">
+                  {t("dashboard.widgets.recent.services")}
+                  <ViewAllLink to="/dashboard/services" label={t("dashboard.viewAll")} />
+                </p>
+                <ul className="space-y-1 text-sm">
+                  {(data.operations.recent_services ?? []).map((item) => (
+                    <li key={item.id}>
+                      <Link
+                        to={`/dashboard/services/${item.id}/edit`}
+                        className="flex items-center justify-between gap-2 truncate rounded-md px-2 py-1 hover:bg-accent"
+                      >
+                        <span className="truncate" dir="auto">{item.title_en || item.slug}</span>
+                        <Badge variant="outline" className="shrink-0">{item.status}</Badge>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          ) : null}
         </SectionCard>
       ) : null}
 
       {can(CAPABILITIES.SYSTEM) ? (
-        <SectionCard title={t("dashboard.widgets.system.title")} description={t("dashboard.widgets.system.description")}>
+        <>
+          <SystemPulse data={data} />
+          <SectionCard title={t("dashboard.widgets.system.title")} description={t("dashboard.widgets.system.description")}>
           <StatTile
             label={t("dashboard.widgets.metrics.database")}
             value={data.system.database.status}
@@ -503,7 +642,8 @@ function OperationalDashboardSection() {
             label={t("dashboard.widgets.metrics.debug")}
             value={data.system.debug ? t("common.confirm") : t("common.cancel")}
           />
-        </SectionCard>
+          </SectionCard>
+        </>
       ) : null}
     </div>
   )

@@ -70,12 +70,13 @@ def _build_sitemap_xml() -> str:
     ):
         _url_entry(root, _loc(f"/projects/{project.slug}/"), project.updated_at, "monthly", 0.7)
 
-    for service in (
-        Service.objects.filter(status=Status.PUBLISHED, is_public=True, is_active=True, is_deleted=False)
-        .order_by("sort_order")
-        .only("slug", "updated_at")
-    ):
-        _url_entry(root, _loc(f"/services/{service.slug}/"), service.updated_at, "monthly", 0.6)
+    # Services are section-based (Phase 17 decision A): no /services/:slug route
+    # exists, so per-service URLs would 404. Only the hub page is indexed.
+    _sitemap_service_count = Service.objects.filter(
+        status=Status.PUBLISHED, is_public=True, is_active=True, is_deleted=False
+    ).count()
+    if _sitemap_service_count:
+        _url_entry(root, _loc("/services"), None, "weekly", 0.6)
 
     return ET.tostring(root, encoding="utf-8", xml_declaration=True)
 

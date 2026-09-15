@@ -9,7 +9,7 @@ export function FAQAccordion({ items, className, onValueChange }: { items: FAQIt
     <Accordion type="single" collapsible className={cn("w-full", className)} onValueChange={onValueChange}>
       {items.map((item, i) => (
         <AccordionItem key={i} value={`faq-${i}`}>
-          <AccordionTrigger className="text-left text-base font-medium">{item.question}</AccordionTrigger>
+          <AccordionTrigger className="text-start text-base font-medium">{item.question}</AccordionTrigger>
           <AccordionContent className="text-sm text-muted-foreground">{item.answer}</AccordionContent>
         </AccordionItem>
       ))}

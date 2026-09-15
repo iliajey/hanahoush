@@ -5,6 +5,7 @@ import { MemoryRouter, Route, Routes } from "react-router-dom"
 import type { ReactNode } from "react"
 
 import LanguageProvider from "@/app/language/LanguageProvider"
+import { ToastProvider } from "@/components/ui/toast"
 import i18n from "@/i18n"
 import { roleUsers } from "@/features/auth/tests/fixtures"
 import { ArticleEditPage } from "./ArticleEditPage"
@@ -34,6 +35,9 @@ vi.mock("@/features/editorial/hooks", () => ({
   useWorkflowForContent: () => mockWorkflow(),
   useEnsureWorkflowMutation: () => ({ mutate: vi.fn(), mutateAsync: vi.fn(), isPending: false }),
   useSubmitForReviewMutation: () => ({ mutate: vi.fn(), mutateAsync: vi.fn(), isPending: false }),
+  useScheduleMutation: () => ({ mutate: vi.fn(), isPending: false, error: null }),
+  usePublishMutation: () => ({ mutate: vi.fn(), isPending: false, error: null }),
+  useWorkflow: () => ({ data: undefined, isLoading: false, isError: false }),
 }))
 vi.mock("@/features/media/components/MediaPicker", () => ({ MediaPicker: () => null }))
 
@@ -71,11 +75,13 @@ function renderEdit() {
   const ui: ReactNode = (
     <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
       <LanguageProvider>
-        <MemoryRouter initialEntries={["/dashboard/articles/7/edit"]}>
-          <Routes>
-            <Route path="/dashboard/articles/:id/edit" element={<ArticleEditPage />} />
-          </Routes>
-        </MemoryRouter>
+        <ToastProvider>
+          <MemoryRouter initialEntries={["/dashboard/articles/7/edit"]}>
+            <Routes>
+              <Route path="/dashboard/articles/:id/edit" element={<ArticleEditPage />} />
+            </Routes>
+          </MemoryRouter>
+        </ToastProvider>
       </LanguageProvider>
     </QueryClientProvider>
   )
@@ -107,11 +113,13 @@ describe("ArticleEditPage — hydrate-once regression (Phase 13 root cause)", ()
     rerender(
       <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
         <LanguageProvider>
-          <MemoryRouter initialEntries={["/dashboard/articles/7/edit"]}>
-            <Routes>
-              <Route path="/dashboard/articles/:id/edit" element={<ArticleEditPage />} />
-            </Routes>
-          </MemoryRouter>
+          <ToastProvider>
+            <MemoryRouter initialEntries={["/dashboard/articles/7/edit"]}>
+              <Routes>
+                <Route path="/dashboard/articles/:id/edit" element={<ArticleEditPage />} />
+              </Routes>
+            </MemoryRouter>
+          </ToastProvider>
         </LanguageProvider>
       </QueryClientProvider>,
     )

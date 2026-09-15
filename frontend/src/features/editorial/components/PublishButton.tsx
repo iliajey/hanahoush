@@ -25,7 +25,7 @@ export function PublishButton({
   return (
     <div className={cn("flex flex-wrap items-center gap-2", className)}>
       <Button size="sm" disabled={!canPublish || !onPublish} onClick={() => onPublish?.(soft)}>
-        <Send className="mr-2 h-3.5 w-3.5" />
+        <Send className="me-2 h-3.5 w-3.5" />
         Publish
       </Button>
       <label className="flex cursor-pointer items-center gap-1.5 text-xs text-muted-foreground">

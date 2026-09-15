@@ -26,9 +26,24 @@ logger = logging.getLogger(__name__)
 
 LOCK_TTL_SECONDS = 15 * 60  # auto-unlock timeout
 
+# Max rows processed per publish_due() tick. Retries are safe (idempotent,
+# cancelled never re-run), but an unbounded tick could do excessive DB work
+# when many broken schedules pile up. Oldest-due first; leftovers retry next
+# tick. No job queue — cron remains the scheduler.
+PUBLISH_DUE_BATCH_SIZE = 50
+
 
 class WorkflowError(Exception):
     """Raised on invalid workflow operations."""
+
+
+def _fresh_content(workflow):
+    """Fresh content object (GenericForeignKey may cache a stale instance)."""
+    obj = workflow.content_object
+    if obj is not None:
+        fresh = obj._meta.model.objects.filter(pk=workflow.object_id).first()
+        return fresh or obj
+    return obj
 
 
 def _get_ip(request=None, ip=None) -> str | None:
@@ -186,6 +201,7 @@ class WorkflowService:
         workflow.stage = target
         workflow.is_soft_published = False
         workflow.save(update_fields=["stage", "is_soft_published", "updated_at"])
+        _clear_ops_cache()
 
         if target.requires_approval:
             approver = None
@@ -236,6 +252,9 @@ class WorkflowService:
     def schedule(workflow, when, actor, ip=None):
         if workflow.stage.code not in ("approved", "scheduled"):
             raise WorkflowError("Only approved content can be scheduled.")
+        from .readiness import assert_ready
+
+        assert_ready(_fresh_content(workflow))
         old = workflow.stage.code
         schedule = PublicationSchedule.objects.create(
             workflow=workflow,
@@ -260,6 +279,10 @@ class WorkflowService:
     def publish(workflow, actor, ip=None, soft=False, schedule=None):
         if workflow.stage.code not in ("scheduled", "approved"):
             raise WorkflowError("Only scheduled or approved content can be published.")
+        if not soft:
+            from .readiness import assert_ready
+
+            assert_ready(_fresh_content(workflow))
         old = workflow.stage.code
         if not soft:
             WorkflowService._set_content_status(workflow, "published", is_public=True)
@@ -268,6 +291,7 @@ class WorkflowService:
 
         workflow.stage = WorkflowStage.get("published")
         workflow.save(update_fields=["stage", "is_soft_published", "updated_at"])
+        _clear_ops_cache()
 
         if schedule is not None:
             schedule.status = "published"
@@ -291,6 +315,7 @@ class WorkflowService:
         old = workflow.stage.code
         workflow.stage = WorkflowStage.get("archived")
         workflow.save(update_fields=["stage", "updated_at"])
+        _clear_ops_cache()
         WorkflowService._set_content_status(workflow, "archived")
         AuditService.record(
             workflow,
@@ -333,25 +358,107 @@ class ApprovalService:
         return approval
 
 
+def _clear_ops_cache() -> None:
+    try:
+        from apps.core.services.dashboard import clear_dashboard_cache
+
+        clear_dashboard_cache()
+    except Exception:  # noqa: BLE001
+        pass
+
+
 class ScheduleService:
     """Scheduled publishing."""
 
     @staticmethod
-    def publish_due():
+    def publish_due(batch_size: int = PUBLISH_DUE_BATCH_SIZE):
+        from .readiness import PublicationBlocked
+
         now = timezone.now()
         due = PublicationSchedule.objects.filter(
             status="scheduled",
             scheduled_for__lte=now,
-        ).select_related("workflow", "workflow__content_type")
+        ).select_related("workflow", "workflow__content_type").order_by("scheduled_for")[:batch_size]
         published = []
         for schedule in due:
             try:
                 actor = schedule.scheduled_by
+                fresh = _fresh_content(schedule.workflow)
+                if fresh is not None and getattr(fresh, "status", None) == "published":
+                    # Already public (e.g. manually published) — mark done, no republish.
+                    schedule.status = "published"
+                    schedule.published_at = schedule.published_at or now
+                    schedule.save(update_fields=["status", "published_at"])
+                    published.append(schedule)
+                    continue
                 WorkflowService.publish(schedule.workflow, actor, schedule=schedule, soft=False)
                 published.append(schedule)
+            except PublicationBlocked as exc:
+                # Blocking health: never publish. Audit + log, keep processing others.
+                logger.warning("Scheduled publish blocked for %s: %s", schedule.pk, exc)
+                AuditService.record(
+                    schedule.workflow,
+                    None,
+                    "publish.failed",
+                    old={"schedule": schedule.pk, "status": "scheduled"},
+                    new={"schedule": schedule.pk, "status": "scheduled"},
+                    details="Blocked: " + "; ".join(
+                        f"[{b.get('locale', '-')}] {b.get('field')}" for b in exc.blocking
+                    ),
+                )
             except WorkflowError as exc:
                 logger.warning("Scheduled publish failed for %s: %s", schedule.pk, exc)
+                AuditService.record(
+                    schedule.workflow,
+                    None,
+                    "publish.failed",
+                    old={"schedule": schedule.pk, "status": "scheduled"},
+                    new={"schedule": schedule.pk, "status": "scheduled"},
+                    details=str(exc)[:500],
+                )
+        if published:
+            _clear_ops_cache()
         return published
+
+    @staticmethod
+    def cancel(schedule: PublicationSchedule, actor, ip=None):
+        if schedule.status != "scheduled":
+            raise WorkflowError("Only scheduled items can be cancelled.")
+        schedule.status = "cancelled"
+        schedule.cancelled_by = actor
+        schedule.save(update_fields=["status", "cancelled_by", "updated_at"])
+        AuditService.record(
+            schedule.workflow,
+            actor,
+            "schedule.cancelled",
+            old={"schedule": schedule.pk, "status": "scheduled"},
+            new={"schedule": schedule.pk, "status": "cancelled"},
+            details=f"Schedule {schedule.pk} cancelled",
+            ip=ip,
+        )
+        _clear_ops_cache()
+        return schedule
+
+    @staticmethod
+    def reschedule(schedule: PublicationSchedule, when, actor, ip=None):
+        if schedule.status != "scheduled":
+            raise WorkflowError("Only scheduled items can be rescheduled.")
+        if when <= timezone.now():
+            raise WorkflowError("Scheduled time must be in the future.")
+        old = schedule.scheduled_for
+        schedule.scheduled_for = when
+        schedule.save(update_fields=["scheduled_for", "updated_at"])
+        AuditService.record(
+            schedule.workflow,
+            actor,
+            "schedule.rescheduled",
+            old={"schedule": schedule.pk, "scheduled_for": str(old)},
+            new={"schedule": schedule.pk, "scheduled_for": str(when)},
+            details=f"Schedule {schedule.pk} rescheduled",
+            ip=ip,
+        )
+        _clear_ops_cache()
+        return schedule
 
 
 class LockService:

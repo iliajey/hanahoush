@@ -27,7 +27,7 @@ const DropdownMenuSubTrigger = forwardRef<
     {...props}
   >
     {children}
-    <ChevronRight className="ms-auto" />
+    <ChevronRight className="ms-auto rtl:rotate-180" />
   </DropdownMenuPrimitive.SubTrigger>
 ))
 DropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayName
@@ -87,7 +87,7 @@ const DropdownMenuItem = forwardRef<
 >(({ className, inset, variant, ...props }, ref) => (
   <DropdownMenuPrimitive.Item
     ref={ref}
-    className={cn(dropdownMenuItemVariants({ variant }), inset && "pl-8", className)}
+    className={cn(dropdownMenuItemVariants({ variant }), inset && "ps-8", className)}
     {...props}
   />
 ))

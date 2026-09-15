@@ -35,6 +35,7 @@ from .serializers import (
 )
 from .services import (
     audit,
+    blacklist_user_tokens,
     clear_login_attempts,
     create_session,
     is_account_locked,
@@ -310,6 +311,7 @@ class ChangePasswordView(AuthAPIView):
         user.save(update_fields=["password"])
         # Invalidate the user's other sessions after a password change.
         user.sessions.filter(revoked_at__isnull=True).update(revoked_at=timezone.now())
+        blacklist_user_tokens(user)
         audit("password_change", request, user.username, user=user, success=True)
         return build_response(message="Password changed successfully", request=request)
 
@@ -386,6 +388,7 @@ class PasswordResetConfirmView(AuthAPIView):
         user.set_password(serializer.validated_data["new_password"])
         user.save(update_fields=["password"])
         user.sessions.filter(revoked_at__isnull=True).update(revoked_at=timezone.now())
+        blacklist_user_tokens(user)
         audit("password_reset", request, user.username, user=user, success=True)
         return build_response(message="Password reset successfully", request=request)
 

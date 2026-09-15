@@ -1,6 +1,7 @@
 import { Link, NavLink, useLocation } from "react-router-dom"
 import { useTranslation } from "react-i18next"
-import { ExternalLink, LogOut, type LucideIcon } from "lucide-react"
+import { ExternalLink, Keyboard, LogOut, type LucideIcon } from "lucide-react"
+import { useState } from "react"
 
 import { useUser } from "@/features/auth/hooks/useUser"
 import { useAuthorization } from "@/features/auth/hooks/useAuthorization"
@@ -11,6 +12,7 @@ import { getRoleDefinition } from "@/features/auth/role-config"
 import { BrandLogo } from "@/components/brand/BrandLogo"
 import { LanguageDropdown } from "@/components/ui/language-dropdown"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
+import { SearchCommand, KeyboardShortcutsDialog } from "@/features/search"
 import { cn } from "@/shared/lib/cn"
 import {
   workspaceNavForUser,
@@ -140,6 +142,7 @@ export function StaffLayoutTopbar({ onOpenMenu }: { onOpenMenu: () => void }) {
   const { mutate: logout } = useLogout()
   const { isSuperAdmin } = useAuthorization()
   const role = user?.role ? getRoleDefinition(user.role.codename) : null
+  const [shortcutsOpen, setShortcutsOpen] = useState(false)
 
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b bg-background/80 px-4 backdrop-blur">
@@ -159,6 +162,17 @@ export function StaffLayoutTopbar({ onOpenMenu }: { onOpenMenu: () => void }) {
         </p>
       </div>
       <div className="ms-auto flex items-center gap-2">
+        <SearchCommand className="hidden sm:inline-flex" />
+        <button
+          type="button"
+          onClick={() => setShortcutsOpen(true)}
+          className="rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          aria-label={t("shortcuts.title")}
+          title={t("shortcuts.title")}
+        >
+          <Keyboard className="h-4 w-4" aria-hidden="true" />
+        </button>
+        <KeyboardShortcutsDialog open={shortcutsOpen} onOpenChange={setShortcutsOpen} />
         <span className="hidden md:inline-flex">
           <LanguageDropdown />
         </span>

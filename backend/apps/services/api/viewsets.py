@@ -13,11 +13,20 @@ from apps.services.models import Service, ServiceSection
 from config.api.base.viewsets import PublishableViewSet
 
 from .filters import ServiceFilterSet
-from .serializers import ServiceDetailSerializer, ServiceListSerializer, ServiceSectionSerializer
+from .serializers import (
+    ServiceCreateUpdateSerializer,
+    ServiceDetailSerializer,
+    ServiceListSerializer,
+    ServiceSectionSerializer,
+)
 
 
 class ServiceViewSet(PublishableViewSet):
-    """List/retrieve published services.
+    """CRUD for Service.
+
+    Public reads (published content only). Writes require staff privileges —
+    the CMS admin and staff tooling remain the write surface (Phase 15.5:
+    Services Studio). Mirrors the Article/Project viewsets.
 
     Supports:
     - Filtering: section, section_slug, status, is_featured, is_public
@@ -29,18 +38,35 @@ class ServiceViewSet(PublishableViewSet):
     queryset = Service.objects.all()
     filterset_class = ServiceFilterSet
     permission_classes = [IsStaffOrReadOnly]
-    http_method_names = ("get", "head", "options")
+    search_fields = [
+        "title_en",
+        "title_fa",
+        "title_ar",
+        "description_en",
+        "description_fa",
+        "description_ar",
+        "short_description_en",
+        "short_description_fa",
+        "short_description_ar",
+    ]
+    ordering_fields = [
+        "title_en",
+        "created_at",
+        "updated_at",
+        "published_at",
+        "sort_order",
+    ]
 
     def get_serializer_class(self):
         if self.action == "list":
             return ServiceListSerializer
         if self.action in ("retrieve",):
             return ServiceDetailSerializer
-        return ServiceListSerializer
+        return ServiceCreateUpdateSerializer
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.select_related("section", "cover_image").filter(is_active=True)
+        return qs.select_related("section", "cover_image", "og_image").filter(is_active=True)
 
 
 class ServiceSectionViewSet(

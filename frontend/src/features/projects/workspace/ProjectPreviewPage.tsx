@@ -301,6 +301,19 @@ export function ProjectPreviewPage() {
               {t("projectPreview.backToList")}
             </Link>
           </Button>
+          <Button variant="outline" size="sm" asChild>
+            <Link to={`/dashboard/projects/${project.id}/edit`}>
+              <Pencil className="h-4 w-4" aria-hidden="true" />
+              {t("projectWorkspace.edit")}
+            </Link>
+          </Button>
+          {project.status === "published" ? (
+            <Button variant="outline" size="sm" asChild>
+              <Link to={`/projects/${project.slug}`} target="_blank" rel="noreferrer">
+                {t("projectWorkspace.openCaseStudy")}
+              </Link>
+            </Button>
+          ) : null}
         </div>
       </div>
     </PageWrapper>

@@ -34,7 +34,7 @@ export function LockIndicator({
         </Badge>
       </span>
       {showRelease && onRelease ? (
-        <Button size="sm" variant="ghost" className="ml-auto h-7 px-2 text-xs" onClick={onRelease}>
+        <Button size="sm" variant="ghost" className="ms-auto h-7 px-2 text-xs" onClick={onRelease}>
           Release
         </Button>
       ) : null}

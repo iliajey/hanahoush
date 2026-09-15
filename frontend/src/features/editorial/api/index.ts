@@ -1,5 +1,5 @@
 import { apiClient } from "@/shared/api/axiosClient"
-import type { ApiEnvelope } from "@/shared/types/api"
+import type { ApiEnvelope, PaginatedResponse } from "@/shared/types/api"
 
 import type {
   Approval,
@@ -73,8 +73,98 @@ export async function fetchAuditEvents(params: Record<string, unknown> = {}, sig
   return getEnvelope<AuditEvent[]>(`${BASE}/audit/`, params, signal)
 }
 
-export async function fetchSchedules(signal?: AbortSignal): Promise<PublicationSchedule[]> {
-  return getEnvelope<PublicationSchedule[]>(`${BASE}/schedules/`, undefined, signal)
+export interface ScheduleListParams {
+  bucket?: string
+  page?: number
+  pageSize?: number
+  status?: string
+  workflow?: number
+  ordering?: string
+}
+
+export interface ScheduleListResult {
+  items: PublicationSchedule[]
+  pagination: PaginatedResponse<PublicationSchedule>["pagination"] | null
+}
+
+export interface ScheduleCounts {
+  total: number
+  scheduled: number
+  upcoming: number
+  overdue: number
+  today: number
+  attention: number
+  published: number
+  cancelled: number
+  failed: number
+}
+
+export async function fetchSchedules(
+  bucket?: string,
+  signal?: AbortSignal,
+): Promise<PublicationSchedule[]>
+export async function fetchSchedules(params: ScheduleListParams, signal?: AbortSignal): Promise<ScheduleListResult>
+export async function fetchSchedules(
+  bucketOrParams?: string | ScheduleListParams,
+  signal?: AbortSignal,
+): Promise<PublicationSchedule[] | ScheduleListResult> {
+  const params: Record<string, unknown> =
+    typeof bucketOrParams === "string"
+      ? bucketOrParams ? { bucket: bucketOrParams } : {}
+      : {
+          ...(bucketOrParams?.bucket ? { bucket: bucketOrParams.bucket } : {}),
+          ...(bucketOrParams?.page != null ? { page: bucketOrParams.page } : {}),
+          ...(bucketOrParams?.pageSize != null ? { page_size: bucketOrParams.pageSize } : {}),
+          ...(bucketOrParams?.status ? { status: bucketOrParams.status } : {}),
+          ...(bucketOrParams?.workflow != null ? { workflow: bucketOrParams.workflow } : {}),
+          ...(bucketOrParams?.ordering ? { ordering: bucketOrParams.ordering } : {}),
+        }
+  const { data } = await apiClient.get<PaginatedResponse<PublicationSchedule>>(`${BASE}/schedules/`, {
+    params,
+    signal,
+  })
+  if (typeof bucketOrParams === "string" || bucketOrParams === undefined) {
+    return data.data ?? []
+  }
+  return { items: data.data ?? [], pagination: data.pagination ?? null }
+}
+
+export async function fetchScheduleCounts(signal?: AbortSignal): Promise<ScheduleCounts> {
+  return getEnvelope<ScheduleCounts>(`${BASE}/schedules/counts/`, undefined, signal)
+}
+
+/** Blocking issues + human message from a schedule/publish mutation error.
+ * The API error shape is `{ success:false, message, errors:{ blocking:[...] } }`
+ * delivered via axios rejection (not toApiError-normalized), so read both. */
+export function scheduleActionError(error: unknown): {
+  blocking: Array<{ field: string; locale: string | null; message: string }>
+  message: string | null
+} {
+  const raw = error as {
+    response?: { data?: { errors?: { blocking?: unknown }; message?: string } }
+    errors?: { blocking?: unknown }
+    message?: string
+  } | null
+  const body = raw?.response?.data ?? raw
+  const blocking = (body?.errors as { blocking?: unknown } | undefined)?.blocking
+  const list = Array.isArray(blocking)
+    ? blocking.filter(
+        (b): b is { field: string; locale: string | null; message: string } =>
+          typeof b === "object" && b !== null && typeof (b as { message?: unknown }).message === "string",
+      )
+    : []
+  // When structured blockers render, suppress the generic message (the panel
+  // shows the per-locale list instead). Otherwise surface message verbatim.
+  const message = list.length > 0 ? null : typeof body?.message === "string" && body.message.length > 0 ? body.message : null
+  return { blocking: list, message }
+}
+
+export async function cancelSchedule(scheduleId: number): Promise<PublicationSchedule> {
+  return postEnvelope<PublicationSchedule>(`${BASE}/schedules/${scheduleId}/cancel/`, {})
+}
+
+export async function rescheduleSchedule(scheduleId: number, scheduledFor: string): Promise<PublicationSchedule> {
+  return postEnvelope<PublicationSchedule>(`${BASE}/schedules/${scheduleId}/reschedule/`, { scheduled_for: scheduledFor })
 }
 
 export async function fetchLocks(signal?: AbortSignal): Promise<ContentLock[]> {

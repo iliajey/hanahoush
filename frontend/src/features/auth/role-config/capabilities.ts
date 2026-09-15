@@ -19,6 +19,10 @@ export const CAPABILITIES = {
   CONTENT_PROJECTS: "content.projects",
   CONTENT_ARTICLES_WRITE: "content.articles.write",
   CONTENT_PROJECTS_WRITE: "content.projects.write",
+  /** Services Studio (Phase 15.5) — staff-only writes on the backend
+   * (IsStaffOrReadOnly), mirroring the article/project capabilities. */
+  CONTENT_SERVICES: "content.services",
+  CONTENT_SERVICES_WRITE: "content.services.write",
   /** Editorial pipeline reads (editorial.view). */
   EDITORIAL: "editorial.workspace",
   EDITORIAL_REVIEW: "editorial.review",
@@ -70,6 +74,14 @@ export const CAPABILITY_DEFINITIONS: Record<CapabilityKey, CapabilityDefinition>
   },
   [CAPABILITIES.CONTENT_PROJECTS_WRITE]: {
     requiresAll: [PERMISSIONS.PROJECTS_UPDATE],
+    staffOnly: true,
+  },
+  [CAPABILITIES.CONTENT_SERVICES]: {
+    requiresAny: [PERMISSIONS.SERVICES_VIEW],
+    staffOnly: true,
+  },
+  [CAPABILITIES.CONTENT_SERVICES_WRITE]: {
+    requiresAll: [PERMISSIONS.SERVICES_UPDATE],
     staffOnly: true,
   },
   [CAPABILITIES.EDITORIAL]: {

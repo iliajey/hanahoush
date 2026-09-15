@@ -60,15 +60,33 @@ export interface Approval {
   created_at: string
 }
 
+export interface LocaleReadiness {
+  ready: boolean
+  critical: number
+  warnings: number
+  issues: string[]
+}
+
 export interface PublicationSchedule {
   id: number
+  workflow?: number
+  content_label?: string
+  content_type?: string
+  object_id?: number | null
+  stage?: { code: string; name: string } | null
   scheduled_for: string
   published_at: string | null
-  status: "scheduled" | "publishing" | "published" | "cancelled"
+  status: "scheduled" | "published" | "cancelled"
   scheduled_by: UserBrief | null
   cancelled_by: UserBrief | null
   created_at: string
+  locale_readiness?: Record<"fa" | "en" | "ar", LocaleReadiness> | null
+  has_failed?: boolean
+  last_failed_at?: string | null
+  last_failed_details?: string | null
 }
+
+export type ScheduleBucket = "upcoming" | "overdue" | "today" | "attention" | "published" | "cancelled" | "done" | "all"
 
 export interface AuditEvent {
   id: number

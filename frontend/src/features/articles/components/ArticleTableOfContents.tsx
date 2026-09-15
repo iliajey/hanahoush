@@ -16,7 +16,7 @@ export function ArticleTableOfContents({ toc, className }: { toc: TocEntry[]; cl
           href={`#${entry.id}`}
           className={cn(
             "block rounded-md px-2 py-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
-            entry.level === 3 && "pl-5",
+            entry.level === 3 && "ps-5",
           )}
         >
           {entry.text}

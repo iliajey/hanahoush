@@ -35,7 +35,7 @@ export function ArticlesPage() {
     return <div className="p-8"><Skeleton className="mx-auto h-12 w-2/3" /><Skeleton className="mx-auto h-24 w-full max-w-4xl" /></div>
   }
   if (page.isError || !page.data) {
-    return <div className="p-8"><ErrorState title="Couldn't load the knowledge hub" description={t("errors.unexpected")} onRetry={() => page.refetch()} /></div>
+    return <div className="p-8"><ErrorState title={t("errors.loadingPageTitle")} description={t("errors.loadingPageDescription")} onRetry={() => page.refetch()} /></div>
   }
   return (
     <div>

@@ -54,6 +54,22 @@ export interface DashboardContentSection {
   projects_missing_fa: number
   projects_missing_ar: number
   services: number
+  /** Present on backends with the Phase 15.5 dashboard extension. */
+  services_drafts?: number
+  services_awaiting_review?: number
+  services_missing_fa?: number
+  services_missing_ar?: number
+}
+
+export interface ScheduleBrief {
+  id: number
+  workflow: number
+  object_id: number
+  content_type: string
+  stage: { code: string; name: string }
+  scheduled_for: string | null
+  status: string
+  scheduled_by: string | null
 }
 
 export interface DashboardEditorialSection {
@@ -62,6 +78,14 @@ export interface DashboardEditorialSection {
   scheduled_publications: number
   active_locks: number
   recent_revisions: number
+  upcoming_count?: number
+  overdue_count?: number
+  today_count?: number
+  failed_count?: number
+  upcoming?: ScheduleBrief[]
+  overdue?: ScheduleBrief[]
+  today?: ScheduleBrief[]
+  failed?: ScheduleBrief[]
 }
 
 export interface DashboardEngagementSection {
@@ -91,6 +115,8 @@ export interface DashboardOperationsSection {
    * payloads omit them and the UI degrades to hiding the section. */
   recent_articles?: RecentContentBrief[]
   recent_projects?: RecentContentBrief[]
+  /** Present on backends with the Phase 15.5 dashboard extension. */
+  recent_services?: RecentContentBrief[]
 }
 
 export interface DashboardSystemSection {
